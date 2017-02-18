@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysDictDao">
+
+	<sql id="commCols">
+		dict_id dictId,type_code typeCode,name name,value value,remark remark,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+			CREATE TABLE sys_dict (
+			  	dict_id varchar(32) NOT NULL COMMENT '编号',
+			  	type_code varchar(32) NOT NULL COMMENT '类型编码',
+			  	name varchar(50) NOT NULL COMMENT '名称',
+			  	value varchar(200) NOT NULL COMMENT '值',
+			  	remark varchar(200) default NULL COMMENT '备注',
+			  	add_user_id varchar(32) NOT NULL COMMENT '添加人',
+			  	create_time datetime NOT NULL COMMENT '添加时间',
+			  	PRIMARY KEY  (dict_id),
+  				UNIQUE KEY unique_type_code_name (type_code, name)
+			) COMMENT='系统字典值表'
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysDict" flushCache="true">
+		 insert into sys_dict(dict_id,type_code,name,value,remark,add_user_id,create_time)
+		 values(#{dictId},#{typeCode},#{name},#{value},#{remark},#{addUserId},now())
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from sys_dict
+  		<where>dict_id=#{dictId}</where>
+	</delete>
+	<delete id="deleteByTypeCode" flushCache="true">
+		delete from sys_dict
+  		<where>type_code=#{typeCode}</where>
+	</delete>
+	
+	<update id="update" parameterType="sysDict" flushCache="true">
+		update sys_dict
+		<set>
+			name=#{name},value=#{value},remark=#{remark}
+		</set>
+		<where>dict_id=#{dictId}</where>
+	</update>
+	
+	<select id="get" resultType="sysDict">
+		select <include refid="commCols"/> from sys_dict
+  		<where>type_code=#{typeCode} and dict_id=#{dictId}</where>
+  		limit 1
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_dict
+	</select>
+	
+	<select id="findByTypeCodeValue" resultType="sysDict">
+		select <include refid="commCols"/> from sys_dict
+  		<where>type_code=#{typeCode} and value=#{value}</where>
+	</select>
+	
+	<select id="findSysDict" parameterType="sysDict" resultType="sysDict">
+		select <include refid="commCols"/> from sys_dict
+		<where>
+			<if test="typeCode!=null and typeCode!=''">and type_code=#{typeCode}</if>
+		</where>
+		<choose>
+		<when test="orderbys!=null and orderbys.size()>0">
+			order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+				${item.property} ${item.type}
+			</foreach>
+		</when>
+		<otherwise></otherwise>
+		</choose>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findSysDictCount" parameterType="sysDict" resultType="int">
+		select count(*) from sys_dict
+		<where>
+			<if test="typeCode!=null and typeCode!=''">and type_code=#{typeCode}</if>
+		</where>
+	</select>
+	
+</mapper>

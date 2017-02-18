@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysDictTypeDao">
+
+	<sql id="commCols">
+		code code,name name,remark remark,parent_code parentCode,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table sys_dict_type 
+			(
+			   code               VARCHAR2(32)         not null,
+			   name               VARCHAR2(100)        not null,
+			   remark             VARCHAR2(200),
+			   parent_code        VARCHAR2(32)         not null,
+			   add_user_id        VARCHAR2(32)         not null,
+			   create_time        DATE                 not null,
+			   constraint PK_SYS_DICT_TYPE primary key (code)
+			)';
+			execute immediate 'comment on table sys_dict_type is ''系统字典类型表''';
+			execute immediate 'comment on column sys_dict_type.code is ''编号''';
+			execute immediate 'comment on column sys_dict_type.name is ''类型名称''';
+			execute immediate 'comment on column sys_dict_type.remark is ''备注''';
+			execute immediate 'comment on column sys_dict_type.parent_code is ''父级编码''';
+			execute immediate 'comment on column sys_dict_type.add_user_id is ''添加人''';
+			execute immediate 'comment on column sys_dict_type.create_time is ''添加时间''';
+		end;
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysDictType" flushCache="true">
+		 insert into sys_dict_type(code,name,parent_code,remark,add_user_id,create_time)
+		 values(#{code},#{name},#{parentCode},#{remark},#{addUserId},sysdate)
+	</insert>
+	
+	<update id="update" parameterType="sysDictType" flushCache="true">
+		update sys_dict_type
+		<set>
+			name=#{name},parent_code=#{parentCode},remark=#{remark}
+		</set>
+		<where>code=#{code}</where>
+	</update>
+	
+	<select id="get" resultType="sysDictType">
+		select <include refid="commCols"/> from sys_dict_type
+  		<where>code=#{code}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_dict_type
+	</select>
+	
+</mapper>

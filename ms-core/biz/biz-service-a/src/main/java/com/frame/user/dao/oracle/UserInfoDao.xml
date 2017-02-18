@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.user.dao.UserInfoDao">
+
+	<sql id="commCols">
+		user_id userId,user_name userName,name name,password password,add_user_id addUserId,create_time createTime,
+		is_delete isDelete,status status
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table user_info 
+			(
+			   user_id            VARCHAR2(32)         not null,
+			   user_name          VARCHAR2(50)         not null,
+			   password           VARCHAR2(100)        not null,
+			   name               VARCHAR2(30)         not null,
+			   add_user_id        VARCHAR2(32)         not null,
+			   create_time        DATE                 not null,
+			   is_delete          INTEGER              not null,
+			   status             INTEGER              not null
+			)';
+			execute immediate 'comment on table user_info is ''用户表''';
+			execute immediate 'comment on column user_info.user_id is ''编号''';
+			execute immediate 'comment on column user_info.user_name is ''用户名''';
+			execute immediate 'comment on column user_info.password is ''密码''';
+			execute immediate 'comment on column user_info.name is ''名称''';
+			execute immediate 'comment on column user_info.add_user_id is ''添加人''';
+			execute immediate 'comment on column user_info.create_time is ''添加时间''';
+			execute immediate 'comment on column user_info.is_delete is ''是否删除''';
+			execute immediate 'comment on column user_info.status is ''状态[10正常、20冻结]''';
+		end;
+		]]>
+	</update>
+	
+	<select id="isExistTable" resultType="int">
+		select count(*) from user_info
+	</select>
+	
+	<insert id="save" parameterType="userInfo" flushCache="true">
+		 insert into user_info(user_id,user_name,password,name,status,add_user_id,create_time,is_delete)
+		 values(#{userId},#{userName},#{password},#{name},#{status},#{addUserId},sysdate,#{isDelete})
+	</insert>
+	
+	<update id="update" parameterType="userInfo" flushCache="true">
+		update user_info
+		<set>name=#{name},status=#{status}</set>
+  		<where>user_id=#{userId}</where>
+	</update>
+	<update id="updateIsDelete" flushCache="true">
+		update user_info
+		<set>is_delete=#{isDelete}</set>
+  		<where>user_id=#{userId}</where>
+	</update>
+	<update id="updatePassword" flushCache="true">
+		update user_info
+		<set>password=#{password}</set>
+  		<where>user_id=#{userId}</where>
+	</update>
+	
+	<select id="get" resultType="userInfo">
+		select <include refid="commCols"/> from user_info
+  		<where>user_id=#{userId}</where>
+	</select>
+	<select id="getByUserName" resultType="userInfo">
+		select <include refid="commCols"/> from user_info
+  		<where>user_name=#{userName}</where>
+  	</select>
+	
+	<select id="findUserInfo" parameterType="userInfo" resultType="userInfo">
+		select * from ( select a.*, rownum rn from (
+		select <include refid="commCols"/> from user_info
+		<where>
+			<if test="userName!=null and userName!=''">and user_name like concat(concat('%', #{userName}), '%')</if>
+			<if test="isDelete!=null">and is_delete=#{isDelete}</if>
+		</where>
+		<choose>
+		<when test="orderbys!=null and orderbys.size()>0">
+			order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+				${item.property} ${item.type}
+			</foreach>
+		</when>
+		<otherwise></otherwise>
+		</choose>
+		) a where rownum &lt;= #{orclEnd} ) where rn &gt;= #{orclBegin}
+	</select>
+	<select id="findUserInfoCount" parameterType="userInfo" resultType="int">
+		select count(*) from user_info
+		<where>
+			<if test="userName!=null and userName!=''">and user_name like concat(concat('%', #{userName}), '%')</if>
+			<if test="isDelete!=null">and is_delete=#{isDelete}</if>
+		</where>
+	</select>
+</mapper>

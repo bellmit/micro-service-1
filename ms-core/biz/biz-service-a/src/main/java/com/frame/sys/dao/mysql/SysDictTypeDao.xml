@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysDictTypeDao">
+
+	<sql id="commCols">
+		code code,name name,remark remark,parent_code parentCode,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+			CREATE TABLE sys_dict_type (
+				code varchar(32) NOT NULL COMMENT '编码',
+				name varchar(100) NOT NULL COMMENT '名称',
+			  	parent_code varchar(32) default '0' COMMENT '上级编码',
+				remark varchar(200) default NULL COMMENT '备注',
+				add_user_id varchar(32) NOT NULL COMMENT '添加人',
+				create_time datetime NOT NULL COMMENT '添加时间',
+			  	PRIMARY KEY (code),
+  				UNIQUE KEY unique_name (name)
+			) COMMENT='系统字典分类表'
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysDictType" flushCache="true">
+		 insert into sys_dict_type(code,name,parent_code,remark,add_user_id,create_time)
+		 values(#{code},#{name},#{parentCode},#{remark},#{addUserId},now())
+	</insert>
+	
+	<update id="update" parameterType="sysDictType" flushCache="true">
+		update sys_dict_type
+		<set>
+			name=#{name},parent_code=#{parentCode},remark=#{remark}
+		</set>
+		<where>code=#{code}</where>
+	</update>
+	
+	<select id="get" resultType="sysDictType">
+		select <include refid="commCols"/> from sys_dict_type
+  		<where>code=#{code}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_dict_type
+	</select>
+	
+</mapper>

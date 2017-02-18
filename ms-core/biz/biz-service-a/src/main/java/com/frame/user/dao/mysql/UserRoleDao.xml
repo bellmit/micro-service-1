@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.user.dao.UserRoleDao">
+
+	<sql id="commCols">
+		role_id roleId,user_id userId,add_user_id addUserId,create_time createTime
+	</sql>
+	<sql id="resCols">
+		res.res_id resId,res.type type,res.parent_res_id parentResId,res.name name,res.show_name showName,res.url url,res.remark remark,res.orderby orderby,res.add_user_id addUserId,res.create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+			CREATE TABLE user_role (
+			  	user_id varchar(32) NOT NULL COMMENT '用户编号',
+			  	role_id varchar(32) NOT NULL COMMENT '角色编号',
+			  	add_user_id varchar(32) NOT NULL COMMENT '添加人',
+			  	create_time datetime NOT NULL COMMENT '添加时间',
+			  	PRIMARY KEY  (role_id, user_id)
+			) COMMENT='用户角色表'
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="userRole" flushCache="true">
+		 insert into user_role(role_id,user_id,add_user_id,create_time)
+		 values(#{roleId},#{userId},#{addUserId},now())
+	</insert>
+	
+	<select id="isExistTable" resultType="int">
+		select count(*) from user_role
+	</select>
+	
+	<select id="get" resultType="userRole">
+		select <include refid="commCols"></include> from user_role
+		<where>
+			role_id=#{roleId} and user_id=#{userId}
+		</where>
+	</select>
+	
+	<select id="findResListByUserId" resultType="sysRes">
+		select <include refid="resCols"></include> from sys_res res inner join sys_role_res srr on(res.res_id=srr.res_id)
+		inner join user_role ur on(srr.role_id=ur.role_id)
+		<where>
+			ur.user_id=#{userId}
+		</where>
+		order by res.orderby
+	</select>
+	
+</mapper>

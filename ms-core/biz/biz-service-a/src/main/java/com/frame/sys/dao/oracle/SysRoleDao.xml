@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysRoleDao">
+
+	<sql id="commCols">
+		role_id roleId,name name,remark remark,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table sys_role 
+			(
+			   role_id            VARCHAR2(32)         not null,
+			   name               VARCHAR2(30)         not null,
+			   remark             VARCHAR2(200)        not null,
+			   add_user_id        VARCHAR2(32)         not null,
+			   create_time        DATE                 not null,
+			   constraint PK_SYS_ROLE primary key (role_id)
+			)';
+			execute immediate 'comment on table sys_role is ''系统角色表''';
+			execute immediate 'comment on column sys_role.role_id is ''编号''';
+			execute immediate 'comment on column sys_role.name is ''名称''';
+			execute immediate 'comment on column sys_role.remark is ''备注''';
+			execute immediate 'comment on column sys_role.add_user_id is ''添加人''';
+			execute immediate 'comment on column sys_role.create_time is ''添加时间''';
+		end;
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysRole" flushCache="true">
+		 insert into sys_role(role_id,name,remark,add_user_id,create_time)
+		 values(#{roleId},#{name},#{remark},#{addUserId},sysdate)
+	</insert>
+	
+	<update id="update" parameterType="sysRole" flushCache="true">
+		update sys_role
+		<set>
+			name=#{name},value=#{value},remark=#{remark}
+		</set>
+		<where>role_id=#{roleId}</where>
+	</update>
+	
+	<select id="get" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+  		<where>role_id=#{roleId}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_role
+	</select>
+	
+	<select id="findSysRole" parameterType="sysRole" resultType="sysRole">
+		select * from ( select a.*, rownum rn from (
+		select <include refid="commCols"/> from sys_role
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+		<choose>
+		<when test="orderbys!=null and orderbys.size()>0">
+			order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+				${item.property} ${item.type}
+			</foreach>
+		</when>
+		<otherwise></otherwise>
+		</choose>
+		) a where rownum &lt;= #{orclEnd} ) where rn &gt;= #{orclBegin}
+	</select>
+	<select id="findSysRoleCount" parameterType="sysRole" resultType="int">
+		select count(*) from sys_role
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+	</select>
+</mapper>

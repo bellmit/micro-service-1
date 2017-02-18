@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<!-- 控制台輸出 -->
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				<!-- [%highlight(%-5level)] [%date] %cyan(%logger) [%line] - %msg %n -->
+				[%date] (%logger) [%line] - %msg %n
+			</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+	</appender>
+
+	<springProfile name="dev">
+		<root level="INFO">
+			<appender-ref ref="Console"/>
+		</root>
+	</springProfile>
+	<springProfile name="test">
+		<root level="WARN">
+		</root>
+	</springProfile>
+	<springProfile name="prod">
+		<root level="WARN">
+		</root>
+	</springProfile>
+</configuration>

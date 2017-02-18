@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysRoleDao">
+
+	<sql id="commCols">
+		role_id roleId,name name,remark remark,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+			CREATE TABLE sys_role (
+			  	role_id varchar(32) NOT NULL COMMENT '编号',
+			  	name varchar(30) NOT NULL COMMENT '名称',
+			  	remark varchar(200) NOT NULL COMMENT '备注',
+			  	add_user_id varchar(32) NOT NULL COMMENT '添加人',
+			  	create_time datetime NOT NULL COMMENT '添加时间',
+			  	PRIMARY KEY  (role_id),
+  				UNIQUE KEY unique_name (name)
+			) COMMENT='系统角色表'
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysRole" flushCache="true">
+		 insert into sys_role(role_id,name,remark,add_user_id,create_time)
+		 values(#{roleId},#{name},#{remark},#{addUserId},now())
+	</insert>
+	
+	<update id="update" parameterType="sysRole" flushCache="true">
+		update sys_role
+		<set>
+			name=#{name},value=#{value},remark=#{remark}
+		</set>
+		<where>role_id=#{roleId}</where>
+	</update>
+	
+	<select id="get" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+  		<where>role_id=#{roleId}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_role
+	</select>
+	
+	<select id="findSysRole" parameterType="sysRole" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+		<choose>
+		<when test="orderbys!=null and orderbys.size()>0">
+			order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+				${item.property} ${item.type}
+			</foreach>
+		</when>
+		<otherwise></otherwise>
+		</choose>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findSysRoleCount" parameterType="sysRole" resultType="int">
+		select count(*) from sys_role
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+	</select>
+</mapper>

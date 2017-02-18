@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysResDao">
+
+	<sql id="commCols">
+		res_id resId,type type,parent_res_id parentResId,name name,show_name showName,url url,remark remark,
+		orderby orderby,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table sys_res 
+			(
+			   res_id             varchar2(32)         not null,
+			   type               INTEGER              not null,
+			   parent_res_id      varchar2(32)         not null,
+			   name               varchar2(50)         not null,
+			   show_name          varchar2(50)         not null,
+			   url                varchar2(200),
+			   remark             varchar2(200),
+			   add_user_id        varchar2(32)         not null,
+			   create_time        DATE                 not null,
+			   orderby            INTEGER              not null,
+			   constraint PK_SYS_RES primary key (res_id)
+			)';
+			execute immediate 'comment on table sys_res is ''系统资源表''';
+			execute immediate 'comment on column sys_res.res_id is ''资源编号''';
+			execute immediate 'comment on column sys_res.type is ''类型[10菜单、20功能]''';
+			execute immediate 'comment on column sys_res.parent_res_id is ''父级功能编码''';
+			execute immediate 'comment on column sys_res.name is ''名称''';
+			execute immediate 'comment on column sys_res.show_name is ''显示名称''';
+			execute immediate 'comment on column sys_res.url is ''跳转地址''';
+			execute immediate 'comment on column sys_res.remark is ''备注''';
+			execute immediate 'comment on column sys_res.add_user_id is ''添加人''';
+			execute immediate 'comment on column sys_res.create_time is ''添加时间''';
+			execute immediate 'comment on column sys_res.orderby is ''排序号''';
+		end;
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysDict" flushCache="true">
+		 insert into sys_res(res_id,type,parent_res_id,name,show_name,url,remark,orderby,add_user_id,create_time)
+		 values(#{resId},#{type},#{parentResId},#{name},#{showName},#{url},#{remark},#{orderby},#{addUserId},sysdate)
+	</insert>
+	
+	<update id="update" parameterType="sysRes" flushCache="true">
+		update sys_res
+		<set>
+			type=#{type},parent_res_id=#{parentResId},name=#{name},show_name=#{showName},url=#{url},remark=#{remark},orderby=#{orderby}
+		</set>
+		<where>res_id=#{resId}</where>
+	</update>
+	
+	<select id="get" resultType="sysRes">
+		select <include refid="commCols"/> from sys_res
+  		<where>res_id=#{resId}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_res
+	</select>
+	
+</mapper>

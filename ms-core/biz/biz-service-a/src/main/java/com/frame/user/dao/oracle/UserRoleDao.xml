@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.user.dao.UserRoleDao">
+
+	<sql id="commCols">
+		role_id roleId,user_id userId,add_user_id addUserId,create_time createTime
+	</sql>
+	<sql id="resCols">
+		res.res_id resId,res.type type,res.parent_res_id parentResId,res.name name,res.show_name showName,res.url url,res.remark remark,res.orderby orderby,res.add_user_id addUserId,res.create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table user_role 
+			(
+			   user_id            VARCHAR2(32)         not null,
+			   role_id            VARCHAR2(32)         not null,
+			   add_user_id        VARCHAR2(32)         not null,
+			   create_time        DATE                 not null,
+			   constraint PK_USER_ROLE primary key (user_id, role_id)
+			)';
+			execute immediate 'comment on table user_role is ''用户角色表''';
+			execute immediate 'comment on column user_role.user_id is ''用户编号''';
+			execute immediate 'comment on column user_role.role_id is ''角色编号''';
+			execute immediate 'comment on column user_role.add_user_id is ''添加人''';
+			execute immediate 'comment on column user_role.create_time is ''添加时间''';
+		end;
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="userRole" flushCache="true">
+		 insert into user_role(role_id,user_id,add_user_id,create_time)
+		 values(#{roleId},#{userId},#{addUserId},sysdate)
+	</insert>
+	
+	<select id="isExistTable" resultType="int">
+		select count(*) from user_role
+	</select>
+	
+	<select id="get" resultType="userRole">
+		select <include refid="commCols"></include> from user_role
+		<where>
+			role_id=#{roleId} and user_id=#{userId}
+		</where>
+	</select>
+	
+	<select id="findResListByUserId" resultType="sysRes">
+		select <include refid="resCols"></include> from sys_res res inner join sys_role_res srr on(res.res_id=srr.res_id)
+		inner join user_role ur on(srr.role_id=ur.role_id)
+		<where>
+			ur.user_id=#{userId}
+		</where>
+		order by res.orderby
+	</select>
+	
+</mapper>

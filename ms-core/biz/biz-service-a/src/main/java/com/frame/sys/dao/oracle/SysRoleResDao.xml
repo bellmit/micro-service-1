@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysRoleResDao">
+
+	<sql id="commCols">
+		role_id roleId,res_id resId,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table sys_role_res 
+			(
+			   role_id            VARCHAR2(32)         not null,
+			   res_id             VARCHAR2(32)         not null,
+			   add_user_id        VARCHAR2(32)         not null,
+			   create_time        DATE                 not null,
+			   constraint PK_SYS_ROLE_RES primary key (role_id, res_id)
+			)';
+			execute immediate 'comment on table sys_role_res is ''系统角色资源表''';
+			execute immediate 'comment on column sys_role_res.role_id is ''角色编号''';
+			execute immediate 'comment on column sys_role_res.res_id is ''资源编号''';
+			execute immediate 'comment on column sys_role_res.add_user_id is ''添加人''';
+			execute immediate 'comment on column sys_role_res.create_time is ''添加时间''';
+		end;
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysRoleRes" flushCache="true">
+		 insert into sys_role_res(role_id,res_id,add_user_id,create_time)
+		 values(#{roleId},#{resId},#{addUserId},sysdate)
+	</insert>
+	
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_role_res
+	</select>
+	
+	
+	<select id="get" resultType="sysRoleRes">
+		select <include refid="commCols"></include> from sys_role_res
+		<where>
+			role_id=#{roleId} and res_id=#{resId}
+		</where>
+	</select>
+</mapper>

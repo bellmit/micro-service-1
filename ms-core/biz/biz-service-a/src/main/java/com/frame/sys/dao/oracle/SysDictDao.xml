@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysDictDao">
+
+	<sql id="commCols">
+		dict_id dictId,type_code typeCode,name name,value value,remark remark,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table sys_dict 
+			(
+			   dict_id            VARCHAR2(32)         not null,
+			   type_code          VARCHAR2(32)         not null,
+			   name               VARCHAR2(50)         not null,
+			   value              VARCHAR2(200)        not null,
+			   remark             VARCHAR2(200),
+			   add_user_id        VARCHAR2(32)         not null,
+			   create_time        DATE                 not null,
+			   constraint PK_SYS_DICT primary key (dict_id)
+			)';
+			execute immediate 'comment on table sys_dict is ''系统字典值表''';
+			execute immediate 'comment on column sys_dict.dict_id is ''编号''';
+			execute immediate 'comment on column sys_dict.type_code is ''类型编码''';
+			execute immediate 'comment on column sys_dict.name is ''名称''';
+			execute immediate 'comment on column sys_dict.value is ''值''';
+			execute immediate 'comment on column sys_dict.remark is ''备注''';
+			execute immediate 'comment on column sys_dict.add_user_id is ''添加人''';
+			execute immediate 'comment on column sys_dict.create_time is ''添加时间''';
+		end;
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysDict" flushCache="true">
+		 insert into sys_dict(dict_id,type_code,name,value,remark,add_user_id,create_time)
+		 values(#{dictId},#{typeCode},#{name},#{value},#{remark},#{addUserId},sysdate)
+	</insert>
+	
+	<update id="update" parameterType="sysDict" flushCache="true">
+		update sys_dict
+		<set>
+			name=#{name},value=#{value},remark=#{remark}
+		</set>
+		<where>dict_id=#{dictId}</where>
+	</update>
+	
+	<select id="get" resultType="sysDict">
+		select <include refid="commCols"/> from sys_dict
+  		<where>dict_id=#{dictId}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_dict
+	</select>
+	
+</mapper>

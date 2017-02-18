@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.sys.dao.SysResDao">
+
+	<sql id="commCols">
+		res_id resId,type type,parent_res_id parentResId,name name,show_name showName,url url,remark remark,
+		orderby orderby,add_user_id addUserId,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+			CREATE TABLE sys_res (
+			  	res_id varchar(32) NOT NULL COMMENT '资源编号',
+			  	type int(11) NOT NULL COMMENT '类型[10菜单、20功能]',
+			  	parent_res_id varchar(32) NOT NULL COMMENT '父级功能编码',
+				name varchar(50) NOT NULL COMMENT '名称',
+			  	show_name varchar(50) NOT NULL COMMENT '显示名称',
+			  	url varchar(200) default NULL COMMENT '跳转地址',
+			  	remark varchar(200) default NULL COMMENT '备注',
+			  	orderby int(11) NOT NULL COMMENT '排序号',
+			  	add_user_id varchar(32) NOT NULL COMMENT '添加人',
+			  	create_time datetime NOT NULL COMMENT '添加时间',
+			  	PRIMARY KEY  (res_id)
+			) COMMENT='系统资源表'
+		]]>
+	</update>
+	
+	<insert id="save" parameterType="sysDict" flushCache="true">
+		 insert into sys_res(res_id,type,parent_res_id,name,show_name,url,remark,orderby,add_user_id,create_time)
+		 values(#{resId},#{type},#{parentResId},#{name},#{showName},#{url},#{remark},#{orderby},#{addUserId},now())
+	</insert>
+	
+	<update id="update" parameterType="sysRes" flushCache="true">
+		update sys_res
+		<set>
+			type=#{type},parent_res_id=#{parentResId},name=#{name},show_name=#{showName},url=#{url},remark=#{remark},orderby=#{orderby}
+		</set>
+		<where>res_id=#{resId}</where>
+	</update>
+	
+	<select id="get" resultType="sysRes">
+		select <include refid="commCols"/> from sys_res
+  		<where>res_id=#{resId}</where>
+	</select>
+	<select id="isExistTable" resultType="int">
+		select count(*) from sys_res
+	</select>
+	
+</mapper>
