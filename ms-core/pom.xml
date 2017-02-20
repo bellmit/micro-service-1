@@ -24,8 +24,8 @@
 		<module>ms-cloud-eureka</module>
 		<module>ms-cloud-config</module>
 		<module>ms-cloud-zuul</module>
-		<module>biz/biz-service-a</module>
-		<module>biz/biz-service-b</module>
+		<module>biz/biz-service-api</module>
+		<module>biz/biz-service-admin</module>
 	</modules>
 
 	<properties>
@@ -70,7 +70,7 @@
 		<!--util <dependency> <groupId>com.alibaba</groupId> <artifactId>fastjson</artifactId> 
 			<version>1.2.16</version> </dependency> -->
 
-		<!-- spring -->
+		<!-- spring
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -90,7 +90,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>${springframework.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- redis -->
 		<dependency>

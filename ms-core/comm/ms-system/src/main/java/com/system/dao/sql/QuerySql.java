@@ -150,14 +150,14 @@ public class QuerySql extends Sql {
 			if(columnPk != null) {
 				//为主键的列
 				pkColumn = FrameStringUtil.setUpcaseConvertUnderline(field.getName());
-				continue;
+				break;
 			}
 			/*if(field.getName().equals(pkKey)) {
 					//为主键的列
 					pkColumn = FrameStringUtil.setUpcaseConvertUnderline(field.getName());
 					continue;
 }*/
-			sqlStr.append(FrameStringUtil.setUpcaseConvertUnderline(field.getName())).append("=?,");
+			//sqlStr.append(FrameStringUtil.setUpcaseConvertUnderline(field.getName())).append("=?,");
 		}
 		if(FrameStringUtil.isEmpty(pkColumn)) {
 			throw new RuntimeException("实体 [ " + getClazz().getName() + " ] 没有设置主键注解 [ @ColumnPk ]");
