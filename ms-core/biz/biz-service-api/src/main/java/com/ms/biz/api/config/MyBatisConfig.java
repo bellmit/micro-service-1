@@ -42,8 +42,10 @@ public class MyBatisConfig {
         		+ "com.frame.user.pojo;";
         fb.setTypeAliasesPackage(typeAliasesPackage);//env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
         List<Resource> resources = new ArrayList<Resource>();
-        resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver().getResources("classpath*:com/frame/sys/dao/mysql/*.xml")));
-        resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver().getResources("classpath*:com/frame/user/dao/mysql/*.xml")));
+        resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver()
+        .getResources("classpath*:com/frame/sys/dao/mysql/*.xml")));
+        resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver()
+        .getResources("classpath*:com/frame/user/dao/mysql/*.xml")));
         fb.setMapperLocations(resources.toArray(new Resource[resources.size()]));//env.getProperty("mybatis.mapperLocations")));//
 
         return fb.getObject();

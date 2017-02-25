@@ -46,7 +46,7 @@ public class RedisClient {
 	private static final long REDIS_STOP_DIFF_TIME = 3 * 60;
 
 	/** Redis的key前缀 */
-	private String keyPrefix = null;
+	private static String keyPrefix = null;
 	//hosts
 	private static List<String> hosts;
 	//maxIdle
@@ -111,8 +111,8 @@ public class RedisClient {
 	}
 
 
-	public void setKeyPrefix(String keyPrefix) {
-		this.keyPrefix = keyPrefix;
+	public static void setKeyPrefix(String keyPrefix) {
+		RedisClient.keyPrefix = keyPrefix;
 	}
 
 	/**

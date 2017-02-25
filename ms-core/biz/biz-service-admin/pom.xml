@@ -12,7 +12,7 @@
 
 
 	<artifactId>biz-service-admin</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>biz-service-admin</name>
 	<description>Demo project for Spring Boot</description>
@@ -21,6 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
+		<shiro.version>1.3.2</shiro.version>
 	</properties>
 
 	<dependencies>
@@ -54,10 +55,41 @@
 			<!--<scope>provided</scope> -->
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
+		<!-- shiro begin -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- shiro end -->
 	</dependencies>
 
 	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.cloud</groupId> 

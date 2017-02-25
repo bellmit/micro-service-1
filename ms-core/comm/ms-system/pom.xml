@@ -20,6 +20,25 @@
 	</properties>
 	
 	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		
 		<!-- spring -->
 		<dependency>
@@ -102,7 +121,6 @@
 		    <artifactId>httpmime</artifactId>
 		    <version>${httpmime.version}</version>
 		</dependency>
-		
 		
 		<dependency>
 			<groupId>log4j</groupId>

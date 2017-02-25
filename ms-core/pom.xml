@@ -44,6 +44,7 @@
 		<aspectjrt.version>1.8.9</aspectjrt.version>
 		<aspectjweaver.version>1.8.9</aspectjweaver.version>
 		<springframework.version>4.3.2.RELEASE</springframework.version>
+		<oracle.ojdbc14.version>10.2.0.4</oracle.ojdbc14.version>
 	</properties>
 
 	<dependencies>
@@ -161,6 +162,30 @@
 	</dependencyManagement>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.class</include>
+				</includes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**/*.class</include>
+				</includes>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
