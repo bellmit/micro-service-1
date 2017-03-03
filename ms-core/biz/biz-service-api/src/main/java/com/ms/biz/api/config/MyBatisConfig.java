@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -16,6 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.system.ds.DynamicDataSource;
+import com.system.springboot.SpringBootVFS;
 
 /**
  * springboot集成mybatis的基本入口 1）创建数据源(如果采用的是默认的tomcat-jdbc数据源，则不需要)
@@ -33,6 +35,8 @@ public class MyBatisConfig {
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DynamicDataSource ds) throws Exception {
+		//解决myBatis下 不能嵌套jar文件的问题
+    	VFS.addImplClass(SpringBootVFS.class);
         SqlSessionFactoryBean fb = new SqlSessionFactoryBean();
         fb.setDataSource(ds);// 指定数据源(这个必须有，否则报错)
         Resource configLocation = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
