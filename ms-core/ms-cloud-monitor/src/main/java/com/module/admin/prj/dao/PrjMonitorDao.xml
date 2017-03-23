@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.prj.dao.PrjMonitorDao">
+
+	<sql id="commCols">
+		prjm_id prjmId,prj_id prjId,type type,remark remark,monitor_is monitorIs,monitor_succ_str monitorSuccStr,monitor_status monitorStatus,monitor_url monitorUrl,monitor_time monitorTime,monitor_fail_num monitorFailNum,monitor_fail_num_remind monitorFailNumRemind,monitor_fail_email monitorFailEmail,monitor_fail_send_time monitorFailSendTime,monitor_fail_send_interval monitorFailSendInterval
+	</sql>
+
+	<insert id="save" parameterType="prjMonitor" useGeneratedKeys="true" keyProperty="prjmId" flushCache="true">
+		 insert into prj_monitor(prj_id,type,remark,monitor_is,monitor_succ_str,monitor_status,monitor_url,monitor_time,monitor_fail_num,monitor_fail_num_remind,monitor_fail_email,monitor_fail_send_time,monitor_fail_send_interval)
+		 values(#{prjId},#{type},#{remark},#{monitorIs},#{monitorSuccStr},#{monitorStatus},#{monitorUrl},#{monitorTime},0,#{monitorFailNumRemind},#{monitorFailEmail},#{monitorFailSendTime},#{monitorFailSendInterval})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from prj_monitor
+		<where>prjm_id=#{prjmId}</where>
+	</delete>
+	
+	<update id="update" parameterType="prjMonitor" flushCache="true">
+		update prj_monitor
+		<set>
+			prj_id=#{prjId},type=#{type},remark=#{remark},monitor_is=#{monitorIs},monitor_succ_str=#{monitorSuccStr},
+			monitor_url=#{monitorUrl},
+			monitor_fail_num_remind=#{monitorFailNumRemind},
+			monitor_fail_email=#{monitorFailEmail},
+			monitor_fail_send_interval=#{monitorFailSendInterval}
+			<if test="monitorTime!=null">,monitor_time=#{monitorTime}</if>
+		</set>
+		<where>prjm_id=#{prjmId}</where>
+	</update>
+	<update id="updateMonitorStatus" flushCache="true">
+		update prj_monitor
+		<set>
+			monitor_status=#{monitorStatus},monitor_time=now()
+			<if test="monitorFailNum!=null">,monitor_fail_num=#{monitorFailNum}</if>
+		</set>
+		<where>prjm_id=#{prjmId}</where>
+	</update>
+	<update id="updateMonitorFailSendTime" flushCache="true">
+		update prj_monitor
+		<set>
+			monitor_fail_send_time=now(),monitor_fail_num=0
+		</set>
+		<where>prjm_id=#{prjmId}</where>
+	</update>
+	
+	<select id="get" resultType="prjMonitor">
+		select <include refid="commCols"/> from prj_monitor
+  		<where>prjm_id=#{prjmId}</where>
+	</select>
+	<select id="getByPrjIdRemark" resultType="prjMonitor">
+		select <include refid="commCols"/> from prj_monitor
+  		<where>prj_id=#{prjId} and remark=#{remark}</where>
+  		limit 1
+	</select>
+	
+	<select id="findMonitor" resultType="prjMonitor">
+		select <include refid="commCols"/> from prj_monitor
+		<where>
+			monitor_is=1
+		</where>
+	</select>
+	
+	<select id="findPrjMonitor" parameterType="prjMonitor" resultType="prjMonitor">
+		select <include refid="commCols"/> from prj_monitor
+		<where>
+			<if test="prjId!=null">and prj_id=#{prjId}</if>
+			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0 -->
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjMonitorCount" parameterType="prjMonitor" resultType="int">
+		select count(*) from prj_monitor
+		<where>
+			<if test="prjId!=null">and prj_id=#{prjId}</if>
+		</where>
+	</select>
+</mapper>

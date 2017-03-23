@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.sys.dao.SysUserDao">
+
+	<sql id="commCols">
+		user_id userId,username username,nickname nickname,password password,create_time createTime,status status
+	</sql>
+
+	<insert id="save" parameterType="sysUser" useGeneratedKeys="true" keyProperty="userId" flushCache="true">
+		 insert into sys_user(username,nickname,password,create_time,status)
+		 values(#{username},#{nickname},#{password},now(),#{status})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from sys_user
+		<where>user_id=#{userId}</where>
+	</delete>
+	
+	<update id="update" parameterType="sysUser" flushCache="true">
+		update sys_user
+		<set>
+			username=#{username}
+			<if test="password!=null and password!=''">,password=#{password}</if>
+			<if test="nickname!=null and nickname!=''">,nickname=#{nickname}</if>
+			<if test="status!=null and status!=''">,status=#{status}</if>
+		</set>
+		<where>user_id=#{userId}</where>
+	</update>
+	<update id="updatePassword" flushCache="true">
+		update sys_user
+		<set>password=#{password}</set>
+		<where>user_id=#{userId}</where>
+	</update>
+	<update id="updateStatus" flushCache="true">
+		update sys_user
+		<set>status=#{status}</set>
+		<where>user_id=#{userId}</where>
+	</update>
+	
+	<select id="get" resultType="sysUser">
+		select <include refid="commCols"/> from sys_user
+  		<where>user_id=#{userId}</where>
+	</select>
+	<select id="getByUsername" resultType="sysUser">
+		select <include refid="commCols"/> from sys_user
+  		<where>username=#{username}</where>
+	</select>
+	<select id="getByCustomNo" resultType="sysUser">
+		select <include refid="commCols"/> from sys_user
+  		<where>custom_no=#{customNo}</where>
+	</select>
+	
+	<select id="findByUsernamePassword" resultType="sysUser">
+		select <include refid="commCols"/> from sys_user
+  		<where>
+  			username=#{username}
+  			and password=#{password}
+  		</where>
+	</select>
+	
+	<select id="findUserInfo" parameterType="sysUser" resultType="sysUser">
+		select <include refid="commCols"/> from sys_user
+		<where>
+			<if test="username!=null and username!=''">and username like concat(concat('%', #{username}), '%')</if>
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findUserInfoCount" parameterType="sysUser" resultType="int">
+		select count(*) from sys_user
+		<where>
+			<if test="username!=null and username!=''">and username like concat(concat('%', #{username}), '%')</if>
+		</where>
+	</select>
+</mapper>

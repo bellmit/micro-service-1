@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.prj.dao.PrjVersionDao">
+
+	<sql id="commCols">
+		prj_id prjId,version version,remark remark,create_time createTime,user_id userId,is_release isRelease,path_url pathUrl
+	</sql>
+
+	<insert id="save" parameterType="prjVersion" flushCache="true">
+		 insert into prj_version(prj_id,version,remark,create_time,user_id,is_release,path_url)
+		 values(#{prjId},#{version},#{remark},now(),#{userId},#{isRelease},#{pathUrl})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from prj_version
+		<where>prj_id=#{prjId} and version=#{version}</where>
+	</delete>
+	
+	<update id="update" parameterType="prjVersion" flushCache="true">
+		update prj_version
+		<set>
+			remark=#{remark},is_release=#{isRelease},path_url=#{pathUrl}
+		</set>
+		<where>prj_id=#{prjId} and version=#{version}</where>
+	</update>
+	<update id="updateNotRelease" flushCache="true">
+		update prj_version
+		<set>
+			is_release=0
+		</set>
+	</update>
+	
+	<select id="get" resultType="prjVersion">
+		select <include refid="commCols"/> from prj_version
+  		<where>prj_id=#{prjId} and version=#{version}</where>
+	</select>
+	<select id="getCountByIsRelease" resultType="int">
+		select count(*) from prj_version
+  		<where>prj_id=#{prjId} and is_release=#{isRelease}</where>
+	</select>
+	
+	<select id="findPrjVersion" parameterType="prjVersion" resultType="prjVersion">
+		select <include refid="commCols"/> from prj_version
+		<where>
+			prj_id=#{prjId}
+		</where>
+		order by is_release desc,create_time desc
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjVersionCount" parameterType="prjVersion" resultType="int">
+		select count(*) from prj_version
+		<where>
+			prj_id=#{prjId}
+		</where>
+	</select>
+</mapper>

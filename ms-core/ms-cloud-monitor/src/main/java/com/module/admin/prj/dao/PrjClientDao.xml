@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.prj.dao.PrjClientDao">
+
+	<sql id="commCols">
+		prj_id prjId,client_id clientId,status status,release_time releaseTime,shell_script shellScript,status_msg statusMsg
+	</sql>
+	<sql id="pcPiCols">
+		pi.prj_id prjId,pi.code code,pi.name name,pi.create_time createTime,pi.release_version releaseVersion,pi.release_time releaseTime,pi.status status,pi.container container,pi.shell_script shellScript,
+		pc.shell_script clientShellScript
+	</sql>
+	<sql id="pcCiCols">
+		ci.client_id clientId,ci.name name,ci.remark remark,ci.ip ip,ci.port port,ci.token token,ci.create_time createTime,ci.user_id userId,ci.status status,ci.activity_time activityTime,
+		pc.shell_script shellScript
+	</sql>
+
+	<insert id="save" parameterType="prjClient" flushCache="true">
+		 insert into prj_client(prj_id,client_id,status,release_time)
+		 values(#{prjId},#{clientId},#{status},#{releaseTime})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from prj_client
+		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+	</delete>
+	
+	<update id="updateStatus" flushCache="true">
+		update prj_client
+		<set>
+			status=#{status},status_msg=#{statusMsg},
+			<choose>
+			<when test="status==10 or status==20">release_time=null</when>
+			<otherwise>release_time=now()</otherwise>
+			</choose>
+		</set>
+		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+	</update>
+	<update id="updateShellScript" flushCache="true">
+		update prj_client
+		<set>shell_script=#{shellScript}</set>
+		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+	</update>
+	
+	<select id="get" resultType="prjClient">
+		select <include refid="commCols"/> from prj_client
+  		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+	</select>
+	
+	<select id="findByClientId" resultType="prjInfo">
+		select <include refid="pcPiCols"></include> from prj_client pc
+			inner join prj_info pi on(pc.prj_id=pi.prj_id)
+  		<where>pc.client_id=#{clientId} and pi.status=#{status} and pi.release_version is not null</where>
+	</select>
+	<select id="findByPrjId" resultType="cliInfo">
+		select <include refid="pcCiCols"></include> from prj_client pc 
+			inner join cli_info ci on(pc.client_id=ci.client_id)
+		<where>
+			pc.prj_id=#{prjId}
+		</where>
+	</select>
+	
+	<select id="findPrjClient" parameterType="prjClient" resultType="prjClient">
+		select <include refid="commCols"/> from prj_client
+		<where>
+			prj_id=#{prjId}
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjClientCount" parameterType="prjClient" resultType="int">
+		select count(*) from prj_client
+		<where>
+			prj_id=#{prjId}
+		</where>
+	</select>
+</mapper>

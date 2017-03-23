@@ -31,6 +31,7 @@ import com.system.auth.model.AuthClient;
 //@ImportResource(locations={"classpath:applicationContext.xml"})
 public class BizServiceApiApplication extends WebMvcConfigurerAdapter {
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BizServiceApiApplication.class, args);
 		
@@ -40,6 +41,7 @@ public class BizServiceApiApplication extends WebMvcConfigurerAdapter {
 	private static void initAuthClient() {
 		AuthClient client = new AuthClient("196845682", "测试调用", "http://127.0.0.1", "708c80644e3f868c429c24cd2cdb7c8e", "http://127.0.0.1/callback.htm");
 		AuthUtil.addAuthClient(client);
+		
 	}
 
 	/**
@@ -48,5 +50,4 @@ public class BizServiceApiApplication extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new AuthSecurityInterceptor()).addPathPatterns("/*");
 	}
-
 }

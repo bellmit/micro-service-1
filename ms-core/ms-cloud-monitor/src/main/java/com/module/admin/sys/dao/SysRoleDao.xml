@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.sys.dao.SysRoleDao">
+
+	<sql id="commCols">
+		role_id roleId,name name,remark remark,grantids grantids,pid pid,duty_user_ids dutyUserIds
+	</sql>
+
+	<insert id="save" parameterType="sysRole" useGeneratedKeys="true" keyProperty="roleId" flushCache="true">
+		 insert into sys_role(name, remark, grantids, pid, duty_user_ids)
+		 values(#{name},#{remark},#{grantids},#{pid}, #{dutyUserIds})
+	</insert>
+	
+	<update id="update" parameterType="sysRole" flushCache="true">
+		update sys_role
+		<set>name=#{name},remark=#{remark},grantids=#{grantids},pid=#{pid},duty_user_ids=#{dutyUserIds}</set>
+		<where>role_id=#{roleId}</where>
+	</update>
+	
+	<delete id="delete" flushCache="true">
+		delete from sys_role
+		<where>role_id=#{roleId}</where>
+	</delete>
+	
+	<select id="get" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+  		<where>role_id=#{roleId}</where>
+	</select>
+	
+	<select id="getByName" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+  		<where>name=#{name}</where>
+	</select>
+	
+	<select id="findSysRole" parameterType="sysRole" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	
+	<select id="findAll" resultType="sysRole">
+		select <include refid="commCols"/> from sys_role
+	</select>
+	
+	<select id="findSysRoleCount" parameterType="sysRole" resultType="int">
+		select count(*) from sys_role
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+	</select>
+</mapper>

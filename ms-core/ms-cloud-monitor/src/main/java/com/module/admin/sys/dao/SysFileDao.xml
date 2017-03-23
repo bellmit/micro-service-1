@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.sys.dao.SysFileDao">
+
+	<sql id="commCols">
+		file_id fileId,type type,org_name orgName,sys_name sysName,url url,file_type fileType,file_size fileSize,status status,create_time createTime
+	</sql>
+
+	<insert id="save" parameterType="sysFile" flushCache="true">
+		 insert into sys_file(file_id,type,org_name,sys_name,url,file_type,file_size,status,create_time)
+		 values(#{fileId},#{type},#{orgName},#{sysName},#{url},#{fileType},#{fileSize},#{status},now())
+	</insert>
+	
+	<update id="update" parameterType="sysFile" flushCache="true">
+		update sys_file
+		<set>
+			type=#{type},org_name=#{orgName},sys_name=#{sysName},url=#{url},file_type=#{fileType},file_size=#{fileSize},status=#{status},create_time=#{createTime}
+		</set>
+		<where>file_id=#{fileId}</where>
+	</update>
+	<update id="updateStatus" flushCache="true">
+		update sys_file
+		<set>status=#{status}</set>
+		<where>file_id=#{fileId}</where>
+	</update>
+	<update id="updateStatusByFileIds" flushCache="true">
+		update sys_file
+		<set>status=#{status}</set>
+		<where>
+			id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach>
+		</where>
+	</update>
+	
+	<select id="get" resultType="sysFile">
+		select <include refid="commCols"/> from sys_file
+  		<where>file_id=#{fileId}</where>
+	</select>
+	
+	<select id="findSysFile" parameterType="sysFile" resultType="sysFile">
+		select <include refid="commCols"/> from sys_file
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findSysFileCount" parameterType="sysFile" resultType="int">
+		select count(*) from sys_file
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0
+		</where>
+	</select>
+</mapper>

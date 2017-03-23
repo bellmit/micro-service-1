@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.cli.dao.CliInfoDao">
+
+	<sql id="commCols">
+		client_id clientId,name name,remark remark,ip ip,port port,token token,create_time createTime,user_id userId,status status,
+		activity_status activityStatus,activity_time activityTime
+	</sql>
+
+	<insert id="save" parameterType="cliInfo" flushCache="true">
+		 insert into cli_info(client_id,name,remark,ip,port,token,create_time,user_id,status,activity_time)
+		 values(#{clientId},#{name},#{remark},#{ip},#{port},#{token},now(),#{userId},#{status},#{activityTime})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from cli_info
+		<where>client_id=#{clientId}</where>
+	</delete>
+	
+	<update id="update" parameterType="cliInfo" flushCache="true">
+		update cli_info
+		<set>
+			name=#{name},remark=#{remark},ip=#{ip},port=#{port},token=#{token},status=#{status}
+		</set>
+		<where>client_id=#{clientId}</where>
+	</update>
+	<update id="updateActivityTime" flushCache="true">
+		update cli_info
+		<set>activity_time=now()</set>
+		<where>client_id=#{clientId}</where>
+	</update>
+	<update id="updateActivityStatusNormal" flushCache="true">
+		update cli_info
+		<set>activity_status=#{activityStatus}</set>
+	</update>
+	<update id="updateActivityStatusError" flushCache="true">
+		update cli_info
+		<set>activity_status=#{activityStatus}</set>
+		<where>timestampdiff(second, activity_time, now())&gt;15</where>
+	</update>
+	
+	<select id="get" resultType="cliInfo">
+		select <include refid="commCols"/> from cli_info
+  		<where>client_id=#{clientId}</where>
+	</select>
+	
+	<select id="find" parameterType="cliInfo" resultType="cliInfo">
+		select <include refid="commCols"/> from cli_info
+		<where>
+			<if test="searchString!=null and searchString!=''">and (
+					client_id like concat(concat('%', #{searchString}), '%')
+					or ip like concat(concat('%', #{searchString}), '%')
+				)
+			</if>
+		</where>
+		order by create_time desc
+  		limit #{size}
+	</select>
+	
+	<select id="findCliInfo" parameterType="cliInfo" resultType="cliInfo">
+		select <include refid="commCols"/> from cli_info
+		<where>
+			<if test="searchString!=null and searchString!=''">and (
+					client_id like concat(concat('%', #{searchString}), '%')
+					or ip like concat(concat('%', #{searchString}), '%')
+				)
+			</if>
+		</where>
+		<choose>
+			<when test="orderbys!=null and orderbys.size()>0">
+				order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+					${item.property} ${item.type}
+				</foreach>
+			</when>
+		<otherwise>order by create_time desc</otherwise>
+		</choose>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findCliInfoCount" parameterType="cliInfo" resultType="int">
+		select count(*) from cli_info
+		<where>
+			<if test="searchString!=null and searchString!=''">and (
+					client_id like concat(concat('%', #{searchString}), '%')
+					or ip like concat(concat('%', #{searchString}), '%')
+				)
+			</if>
+		</where>
+	</select>
+</mapper>

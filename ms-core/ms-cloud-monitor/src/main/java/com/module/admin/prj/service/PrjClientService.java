@@ -1,0 +1,80 @@
+package com.module.admin.prj.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.module.admin.cli.pojo.CliInfo;
+import com.module.admin.prj.pojo.PrjClient;
+import com.system.handle.model.ResponseFrame;
+
+/**
+ * prj_client的Service
+ * @author yuejing
+ * @date 2016-10-20 17:54:59
+ * @version V1.0.0
+ */
+@Component
+public interface PrjClientService {
+	
+	/**
+	 * 保存或修改
+	 * @param prjClient
+	 * @return
+	 */
+	public ResponseFrame saveOrUpdate(PrjClient prjClient);
+	
+	/**
+	 * 根据prjId获取对象
+	 * @param prjId
+	 * @return
+	 */
+	public PrjClient get(Integer prjId, String clientId);
+
+	/**
+	 * 分页获取对象
+	 * @param prjClient
+	 * @return
+	 */
+	public ResponseFrame pageQuery(PrjClient prjClient);
+	
+	/**
+	 * 根据prjId删除对象
+	 * @param prjId
+	 * @return
+	 */
+	public ResponseFrame delete(Integer prjId, String clientId);
+
+	/**
+	 * 根据客户端编号获取要发布的项目
+	 * @param clientId
+	 * @return
+	 */
+	//public List<PrjInfo> findByClientId(String clientId);
+
+	/**
+	 * 修改客户端发布项目成功
+	 * @param clientId
+	 * @param prjId
+	 * @param status
+	 * @param statusMsg 
+	 */
+	public void updateStatus(String clientId, Integer prjId, Integer status, String statusMsg);
+
+	/**
+	 * 根据项目编号获取发布的客户端
+	 * @param prjId
+	 * @return
+	 */
+	public List<CliInfo> findByPrjId(Integer prjId);
+
+	/**
+	 * 修改shell
+	 * @param clientId
+	 * @param prjId
+	 * @param shellScript
+	 * @return
+	 */
+	public ResponseFrame updateShellScript(String clientId, Integer prjId,
+			String shellScript);
+}
