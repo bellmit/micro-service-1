@@ -25,7 +25,7 @@
 		</div>
 		<div id="monitorPanel">
 			<hr/>
-	  		<div class="form-group">
+	  		<div class="form-group" style="display: none;">
 				<input type="text" class="form-control" id="monitorSuccStr" placeholder="检测成功的标识符" value="<c:out value="${prjMonitor.monitorSuccStr}"></c:out>">
 			</div>
 	  		<div class="form-group">
@@ -93,11 +93,11 @@
 			var _monitorIs = $('input[name="monitorIs"]:checked').val();
 			if('<%=Boolean.TRUE.getCode()%>'===_monitorIs) {
 				//是
-				if(JUtil.isEmpty(_monitorSuccStr.val())) {
+				/* if(JUtil.isEmpty(_monitorSuccStr.val())) {
 					_saveMsg.append('请输入检测成功的标识符');
 					_monitorSuccStr.focus();
 					return;
-				}
+				} */
 				if(JUtil.isEmpty(_monitorUrl.val())) {
 					_saveMsg.append('请输入检测地址');
 					_monitorUrl.focus();

@@ -20,11 +20,13 @@
 	<update id="update" parameterType="prjMonitor" flushCache="true">
 		update prj_monitor
 		<set>
-			prj_id=#{prjId},type=#{type},remark=#{remark},monitor_is=#{monitorIs},monitor_succ_str=#{monitorSuccStr},
-			monitor_url=#{monitorUrl},
-			monitor_fail_num_remind=#{monitorFailNumRemind},
-			monitor_fail_email=#{monitorFailEmail},
-			monitor_fail_send_interval=#{monitorFailSendInterval}
+			prj_id=#{prjId},type=#{type},remark=#{remark}
+			,monitor_url=#{monitorUrl}
+			<if test="monitorIs!=null">,monitor_is=#{monitorIs}</if>
+			<if test="monitorSuccStr!=null">,monitor_succ_str=#{monitorSuccStr}</if>
+			<if test="monitorFailNumRemind!=null">,monitor_fail_num_remind=#{monitorFailNumRemind}</if>
+			<if test="monitorFailEmail!=null">,monitor_fail_email=#{monitorFailEmail}</if>
+			<if test="monitorFailSendInterval!=null">,monitor_fail_send_interval=#{monitorFailSendInterval}</if>
 			<if test="monitorTime!=null">,monitor_time=#{monitorTime}</if>
 		</set>
 		<where>prjm_id=#{prjmId}</where>
@@ -66,6 +68,7 @@
 		select <include refid="commCols"/> from prj_monitor
 		<where>
 			<if test="prjId!=null">and prj_id=#{prjId}</if>
+			<if test="monitorStatus!=null">and monitor_status=#{monitorStatus}</if>
 			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 			and isdel=0 -->
 		</where>
@@ -75,6 +78,7 @@
 		select count(*) from prj_monitor
 		<where>
 			<if test="prjId!=null">and prj_id=#{prjId}</if>
+			<if test="monitorStatus!=null">and monitor_status=#{monitorStatus}</if>
 		</where>
 	</select>
 </mapper>

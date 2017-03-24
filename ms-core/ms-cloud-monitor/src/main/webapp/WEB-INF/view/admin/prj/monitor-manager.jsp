@@ -22,7 +22,10 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="btn-group">
-							<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="请选择项目" cssCls="form-control" />
+							<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control" value="${param.prjId}"/>
+							</div>
+							<div class="btn-group">
+							<my:select id="monitorStatus" headerKey="" headerValue="全部状态" dictcode="prj_monitor_monitor_status" cssCls="form-control" />
 							</div>
 						</div>
 						<div class="col-sm-6 text-right">
@@ -30,7 +33,7 @@
 								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control">
 									<option value="">关闭自动刷新</option>
 									<option value="5">5s刷新一次</option>
-									<option value="10">10s刷新一次</option>
+									<option value="10" selected="selected">10s刷新一次</option>
 								</select>
 						  	</div>
 						  	<div class="btn-group">
@@ -61,7 +64,7 @@ var info = {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
 				                         '<th>项目名称</th>',
-				                         '<th>服务明细</th>',
+				                         '<th>服务信息</th>',
 				                         '<th>类型</th>',
 				                         '<th>是否开启监控</th>',
 				                         '<th>监控状态</th>',
@@ -75,7 +78,9 @@ var info = {
 
 			JUtil.ajax({
 				url : '${webroot}/prjMonitor/f-json/pageQuery.shtml',
-				data : { page:infoPage.page, size:infoPage.size, prjId:$('#prjId').val() },
+				data : { page:infoPage.page, size:infoPage.size,
+					prjId:$('#prjId').val(), monitorStatus:$('#monitorStatus').val()
+				},
 				beforeSend: function(){ infoPage.beforeSend('加载信息中...'); },
 				error : function(json){ infoPage.error('加载信息出错了!'); },
 				success : function(json){
@@ -115,7 +120,7 @@ var info = {
 				url: webroot + '/prjMonitor/f-view/edit.shtml?prjmId='+(id?id:''),
 				type: 'iframe',
 				width: 600,
-				height: 580
+				height: 530
 			});
 		},
 		del : function(id) {
@@ -158,6 +163,9 @@ var info = {
 $(function() {
 	info.loadInfo(1);
 	$('#prjId').change(function() {
+		info.loadInfo(1);
+	});
+	$('#monitorStatus').change(function() {
 		info.loadInfo(1);
 	});
 });

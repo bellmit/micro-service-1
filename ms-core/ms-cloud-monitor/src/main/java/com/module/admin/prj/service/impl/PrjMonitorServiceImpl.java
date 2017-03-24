@@ -11,8 +11,11 @@ import com.module.admin.prj.enums.PrjMonitorType;
 import com.module.admin.prj.pojo.PrjMonitor;
 import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjMonitorService;
+import com.module.admin.sys.enums.SysConfigCode;
+import com.module.admin.sys.service.SysConfigService;
 import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
+import com.system.comm.utils.FrameStringUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -29,15 +32,41 @@ public class PrjMonitorServiceImpl implements PrjMonitorService {
 	private PrjMonitorDao prjMonitorDao;
 	@Autowired
 	private PrjInfoService prjInfoService;
+	@Autowired
+	private SysConfigService sysConfigService;
 	
 	@Override
 	public ResponseFrame saveOrUpdate(PrjMonitor prjMonitor) {
 		ResponseFrame frame = new ResponseFrame();
 		PrjMonitor org = prjMonitorDao.getByPrjIdRemark(prjMonitor.getPrjId(), prjMonitor.getRemark());
 		if(org == null) {
+			if(prjMonitor.getMonitorIs() == null) {
+				prjMonitor.setMonitorIs(Boolean.TRUE.getCode());
+			}
+			if(prjMonitor.getMonitorFailNumRemind() == null) {
+				prjMonitor.setMonitorFailNumRemind(3);
+			}
+			if(prjMonitor.getMonitorFailSendInterval() == null) {
+				prjMonitor.setMonitorFailSendInterval(30);
+			}
+			if(FrameStringUtil.isEmpty(prjMonitor.getMonitorFailEmail())) {
+				prjMonitor.setMonitorFailEmail(sysConfigService.getValue(SysConfigCode.PRJ_MONITOR_FAIL_EMAIL));
+			}
 			prjMonitorDao.save(prjMonitor);
 		} else {
 			prjMonitor.setPrjmId(org.getPrjmId());
+			if(org.getMonitorFailNumRemind() == null) {
+				prjMonitor.setMonitorFailNumRemind(3);
+			}
+			if(org.getMonitorFailSendInterval() == null) {
+				prjMonitor.setMonitorFailSendInterval(30);
+			}
+			if(FrameStringUtil.isEmpty(org.getMonitorFailEmail())) {
+				prjMonitor.setMonitorFailEmail(sysConfigService.getValue(SysConfigCode.PRJ_MONITOR_FAIL_EMAIL));
+			}
+			if(org.getMonitorIs().intValue() == Boolean.FALSE.getCode()) {
+				prjMonitor.setMonitorTime(null);
+			}
 			prjMonitorDao.update(prjMonitor);
 		}
 		frame.setCode(ResponseCode.SUCC.getCode());

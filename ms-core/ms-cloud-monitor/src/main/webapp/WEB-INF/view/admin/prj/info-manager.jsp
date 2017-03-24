@@ -53,7 +53,8 @@ var info = {
 				                         '<th>名称</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布的版本号</th>',
-				                         '<th width="200">操作</th>',
+				                         '<th>创建时间</th>',
+				                         '<th width="260">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -73,8 +74,10 @@ var info = {
 							    	'<td>',obj.name,'</td>',
 							    	'<td>',obj.statusName,'</td>',
 							    	'<td>',obj.releaseVersion,'</td>',
+							    	'<td>',obj.createTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,')" title="删除"></a>',
+							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a>',
 							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本管理">版本管理</a>',
 							    	'&nbsp; <a class="glyphicon text-success" href="javascript:info.cli(',obj.prjId,')" title="发到对应的客户端">发布到客户端</a>',
 							    	'</td>',
@@ -121,6 +124,10 @@ var info = {
 		//发布到客户端的管理
 		cli : function(prjId) {
 			location = '${webroot}/prjClient/f-view/manager.shtml?prjId=' + prjId;
+		},
+		//查看监控
+		monitor : function(prjId) {
+			location = '${webroot}/prjMonitor/f-view/manager.shtml?prjId=' + prjId;
 		}
 };
 $(function() {

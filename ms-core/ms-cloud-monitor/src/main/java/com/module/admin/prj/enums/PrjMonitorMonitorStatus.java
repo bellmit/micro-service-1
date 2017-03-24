@@ -21,7 +21,7 @@ public enum PrjMonitorMonitorStatus {
 	ERROR	(20, "异常"),
 	;
 	
-	public static final String KEY = "prj_info_status";
+	public static final String KEY = "prj_monitor_monitor_status";
 
 	private int code;
 	private String name;

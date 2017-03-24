@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.module.admin.cli.enums.CliInfoStatus;
 import com.module.admin.prj.enums.PrjInfoContainer;
 import com.module.admin.prj.enums.PrjInfoStatus;
+import com.module.admin.prj.enums.PrjMonitorMonitorStatus;
 import com.module.admin.prj.enums.PrjMonitorType;
 import com.module.admin.sys.enums.SysUserStatus;
 import com.system.comm.model.KvEntity;
@@ -39,7 +40,8 @@ public class DictCons {
 		DictCons.addValue(PrjInfoStatus.KEY, 		PrjInfoStatus.getList(), servletContext);
 		DictCons.addValue(PrjInfoContainer.KEY, 	PrjInfoContainer.getList(), servletContext);
 		DictCons.addValue(PrjMonitorType.KEY, 		PrjMonitorType.getList(), servletContext);
-
+		DictCons.addValue(PrjMonitorMonitorStatus.KEY, PrjMonitorMonitorStatus.getList(), servletContext);
+		
 		DictCons.addValue(CliInfoStatus.KEY, 	CliInfoStatus.getList(), servletContext);
 		
 		
