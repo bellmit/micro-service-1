@@ -89,4 +89,9 @@ public class CliInfoServiceImpl implements CliInfoService {
 		cliInfoDao.updateActivityStatusNormal(CliInfoActivityStatus.NORMAL.getCode());
 		cliInfoDao.updateActivityStatusError(CliInfoActivityStatus.ERROR.getCode());
 	}
+
+	@Override
+	public List<CliInfo> findAll() {
+		return cliInfoDao.findAll();
+	}
 }

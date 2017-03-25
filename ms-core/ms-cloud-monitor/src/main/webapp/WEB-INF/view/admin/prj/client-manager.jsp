@@ -23,13 +23,13 @@
 						</div>
 						<div class="col-sm-6 text-right">
 						  	<div class="btn-group">
-						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.releaseAll()">发布项目</a>
-						  	</div>
-						  	<div class="btn-group">
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增客户端</a>
 						  	</div>
 						  	<div class="btn-group">
-						  		<a href="${webroot}/prjInfo/f-view/manager.shtml" class="btn btn-default btn-sm">返回</a>
+						  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="info.releaseAll()">发布项目</a>
+						  	</div>
+						  	<div class="btn-group">
+						  		<a href="${webroot}/prjVersion/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 						  	</div>
 						</div>

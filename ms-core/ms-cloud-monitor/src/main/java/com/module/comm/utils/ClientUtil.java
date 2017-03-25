@@ -1,7 +1,6 @@
 package com.module.comm.utils;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.system.auth.AuthUtil;
@@ -23,14 +22,12 @@ public class ClientUtil {
 	 * @param paramsMap
 	 * @return
 	 */
-	public static ResponseFrame post(String clientId, String clientToken, String ip, Integer port, String url, Map<String, Object> paramsMap) {
+	public static ResponseFrame post(String clientId, String clientToken, String ip, Integer port, String url, Map<String, Object> params) {
 		String time = String.valueOf(System.currentTimeMillis());
 		String sercret = clientToken;
-		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("clientId", clientId);
 		params.put("time", time);
 		params.put("sign", AuthUtil.auth(clientId, time, sercret));
-		params.put("params", FrameJsonUtil.toString(paramsMap));
 		try {
 			String result = FrameHttpUtil.post("http://" + ip + ":" + port + url, params);
 			return FrameJsonUtil.toObject(result, ResponseFrame.class);

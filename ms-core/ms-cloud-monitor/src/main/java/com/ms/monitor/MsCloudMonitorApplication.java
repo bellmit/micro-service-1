@@ -1,5 +1,7 @@
 package com.ms.monitor;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -17,10 +19,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.module.admin.cli.pojo.CliInfo;
+import com.module.admin.cli.service.CliInfoService;
 import com.ms.monitor.interceptor.AuthSecurityInterceptor;
 import com.ms.monitor.interceptor.UserSecurityInterceptor;
 import com.system.auth.AuthUtil;
 import com.system.auth.model.AuthClient;
+import com.system.comm.utils.FrameSpringBeanUtil;
 
 @EnableEurekaClient
 @ComponentScan("com.*")
@@ -59,6 +64,11 @@ public class MsCloudMonitorApplication extends SpringBootServletInitializer impl
 	private static void initAuthClient() {
 		AuthClient client = new AuthClient("196845682", "测试调用", "http://127.0.0.1", "708c80644e3f868c429c24cd2cdb7c8e", "http://127.0.0.1/callback.htm");
 		AuthUtil.addAuthClient(client);
+		CliInfoService cliInfoService = FrameSpringBeanUtil.getBean(CliInfoService.class);
+		List<CliInfo> cis = cliInfoService.findAll();
+		for (CliInfo ci : cis) {
+			AuthUtil.addAuthClient(new AuthClient(ci.getClientId(), ci.getName(), "http://" + ci.getIp() + ":" + ci.getPort(), ci.getToken(), "http://127.0.0.1/callback.htm"));
+		}
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.module.api.service.ServiceService;
+import com.module.api.service.ApiServiceService;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -16,12 +16,12 @@ import com.system.handle.model.ResponseFrame;
  * @version V1.0.0
  */
 @RestController
-public class ServiceController {
+public class ApiServiceController {
 
     private final Logger LOGGER = Logger.getLogger(getClass());
     
 	@Autowired
-	private ServiceService serviceService;
+	private ApiServiceService serviceService;
 
 	/**
 	 * 根据服务ID获取服务列表的信息

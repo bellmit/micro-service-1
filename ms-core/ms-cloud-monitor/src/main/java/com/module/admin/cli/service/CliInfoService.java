@@ -1,5 +1,7 @@
 package com.module.admin.cli.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.module.admin.cli.pojo.CliInfo;
@@ -59,4 +61,10 @@ public interface CliInfoService {
 	 * 修改心跳失败
 	 */
 	public void updateActivityStatusError();
+
+	/**
+	 * 获取所有客户端
+	 * @return
+	 */
+	public List<CliInfo> findAll();
 }

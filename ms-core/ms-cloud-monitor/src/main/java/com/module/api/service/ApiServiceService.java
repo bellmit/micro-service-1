@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.cloud.client.ServiceInstance;
 
-public interface ServiceService {
+public interface ApiServiceService {
 
 	/**
 	 * 根据服务ID获取列表

@@ -33,4 +33,6 @@ public interface CliInfoDao {
 	public abstract void updateActivityStatusError(@Param("activityStatus")Integer activityStatus);
 
 	public abstract void updateActivityStatusNormal(@Param("activityStatus")Integer activityStatus);
+
+	public abstract List<CliInfo> findAll();
 }

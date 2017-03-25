@@ -26,6 +26,9 @@
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增版本</a>
 						  	</div>
 						  	<div class="btn-group">
+						  		<a class="btn btn-info btn-sm" href="javascript:info.cli(${param.prjId})" title="发到对应的客户端">发布到客户端</a>
+						  	</div>
+						  	<div class="btn-group">
 						  		<a href="${webroot}/prjInfo/f-view/manager.shtml" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 						  	</div>
@@ -110,6 +113,10 @@ var info = {
 					}
 				});
 			}
+		},
+		//发布到客户端的管理
+		cli : function(prjId) {
+			location = '${webroot}/prjClient/f-view/manager.shtml?prjId=' + prjId;
 		}
 };
 $(function() {

@@ -58,6 +58,10 @@
   		limit #{size}
 	</select>
 	
+	<select id="findAll" resultType="cliInfo">
+		select <include refid="commCols"/> from cli_info
+	</select>
+	
 	<select id="findCliInfo" parameterType="cliInfo" resultType="cliInfo">
 		select <include refid="commCols"/> from cli_info
 		<where>

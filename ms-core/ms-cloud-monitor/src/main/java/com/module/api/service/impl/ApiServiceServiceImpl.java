@@ -8,10 +8,10 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Component;
 
-import com.module.api.service.ServiceService;
+import com.module.api.service.ApiServiceService;
 
 @Component
-public class ServiceServiceImpl implements ServiceService {
+public class ApiServiceServiceImpl implements ApiServiceService {
 
 	@Autowired
 	private DiscoveryClient discoveryClient;

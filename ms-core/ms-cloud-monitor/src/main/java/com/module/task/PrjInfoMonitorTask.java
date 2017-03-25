@@ -21,7 +21,7 @@ import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjMonitorService;
 import com.module.admin.sys.enums.SysConfigCode;
 import com.module.admin.sys.service.SysConfigService;
-import com.module.api.service.ServiceService;
+import com.module.api.service.ApiServiceService;
 import com.system.comm.utils.FrameMailUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
 import com.system.comm.utils.FrameTimeUtil;
@@ -43,7 +43,7 @@ public class PrjInfoMonitorTask {
 		final PrjMonitorService monitorService = FrameSpringBeanUtil.getBean(PrjMonitorService.class);
 		final PrjInfoService prjInfoService = FrameSpringBeanUtil.getBean(PrjInfoService.class);
 		final PrjMonitorService prjMonitorService = FrameSpringBeanUtil.getBean(PrjMonitorService.class);
-		final ServiceService serviceService = FrameSpringBeanUtil.getBean(ServiceService.class);
+		final ApiServiceService serviceService = FrameSpringBeanUtil.getBean(ApiServiceService.class);
 		//线程，每隔5秒调用一次
 		Runnable runnable = new Runnable() {
 			public void run() {

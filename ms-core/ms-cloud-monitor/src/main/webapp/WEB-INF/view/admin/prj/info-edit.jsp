@@ -92,7 +92,7 @@
 				//类型为自定义
 				_shellScript.val(['@echo off & setlocal enabledelayedexpansion\n',
 						'echo Starting ...\n',
-						'java -Xms256m -Xmx256m -XX:MaxPermSize=64M -Dproject.dir=<%out.print("$");%>{user.dir}/../../ -jar ../../project.restful-1.0.0.jar\n',
+						'java -Xms256m -Xmx256m -XX:MaxPermSize=64M -jar ../../project.restful-1.0.0.jar\n',
 						':end\n',
 						'pause'].join(''));
 			} else {

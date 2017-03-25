@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>ms</groupId>
+		<artifactId>ms-core</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>ms-cloud-client</artifactId>
+	<packaging>jar</packaging>
+
+	<name>ms-cloud-client</name>
+	<description>Demo project for Spring Boot</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+	        <!-- The configuration of maven-jar-plugin -->
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-jar-plugin</artifactId>
+	            <version>2.4</version>
+	            <!-- The configuration of the plugin -->
+	            <configuration>
+	                <!-- Configuration of the archiver -->
+	                <archive>
+	                    <!-- 生成的jar中，不要包含pom.xml和pom.properties这两个文件 -->
+	                    <addMavenDescriptor>false</addMavenDescriptor>
+	
+	                    <!-- Manifest specific configuration -->
+	                    <manifest>
+	                        <!-- 是否要把第三方jar放到manifest的classpath中 -->
+	                        <addClasspath>true</addClasspath>
+	                        <!-- 生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/ -->
+	                        <classpathPrefix>lib/</classpathPrefix>
+	                        <!-- 应用的main class -->
+	                        <mainClass>com.ms.client.MsClientApplication</mainClass>
+	                    </manifest>
+	                </archive>
+	                <!-- 过滤掉不希望包含在jar中的文件 -->
+	                <!-- <excludes>
+	                    <exclude>${project.basedir}/resources/*</exclude>
+	                </excludes> -->
+	                <!--考虑不要把配置文件信息打包到jar文件里 -->
+                    <!--这样就可以只修改配置文件,不用修改到jar,部署时相对灵活一些 -->
+                    <excludes>
+                    	<!-- <exclude>*.properties</exclude>
+                    	<exclude>config/*</exclude>
+                    	<exclude>dev/*</exclude>
+                    	<exclude>beta/*</exclude>
+                    	<exclude>config/*</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>*.properties</exclude>
+                        <exclude>*.bat</exclude>
+                        <exclude>*.conf</exclude>
+                        <exclude>*.sh</exclude> -->
+                    </excludes>
+	            </configuration>
+	        </plugin>
+	
+	        <!-- The configuration of maven-assembly-plugin -->
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-assembly-plugin</artifactId>
+	            <version>2.4</version>
+	            <!-- The configuration of the plugin -->
+	            <configuration>
+	                <!-- Specifies the configuration file of the assembly plugin -->
+	                <descriptors>
+	                    <descriptor>assembly.xml</descriptor>
+	                </descriptors>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                    <id>make-assembly</id>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>single</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+	    </plugins>
+	</build>
+</project>
