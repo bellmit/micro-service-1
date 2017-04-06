@@ -5,7 +5,8 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.system.comm.model.BaseEntity;
 
 /**
@@ -16,7 +17,7 @@ import com.system.comm.model.BaseEntity;
  */
 @Alias("cliInfo")
 @SuppressWarnings("serial")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class CliInfo extends BaseEntity implements Serializable {
 	//客户端编号
 	private String clientId;
@@ -50,6 +51,10 @@ public class CliInfo extends BaseEntity implements Serializable {
 	private String searchString;
 	//客户端shell
 	private String shellScript;
+	//版本编号
+	private String version;
+	//版本地址
+	private String pathUrl;
 	
 	public String getClientId() {
 		return clientId;
@@ -149,5 +154,17 @@ public class CliInfo extends BaseEntity implements Serializable {
 	}
 	public void setActivityStatusName(String activityStatusName) {
 		this.activityStatusName = activityStatusName;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getPathUrl() {
+		return pathUrl;
+	}
+	public void setPathUrl(String pathUrl) {
+		this.pathUrl = pathUrl;
 	}
 }

@@ -4,13 +4,13 @@
 <mapper namespace="com.module.admin.prj.dao.PrjInfoDao">
 
 	<sql id="commCols">
-		prj_id prjId,code code,name name,remark remark,create_time createTime,user_id userId,release_version releaseVersion,release_time releaseTime,status status,container container,shell_script shellScript,
+		prj_id prjId,code code,name name,remark remark,create_time createTime,user_id userId,status status,container container,shell_script shellScript,
 		monitor_status monitorStatus,monitor_msg monitorMsg
 	</sql>
 
 	<insert id="save" parameterType="prjInfo" useGeneratedKeys="true" keyProperty="prjId" flushCache="true">
-		 insert into prj_info(code,name,remark,create_time,user_id,release_version,release_time,status,container,shell_script,monitor_status)
-		 values(#{code},#{name},#{remark},now(),#{userId},#{releaseVersion},#{releaseTime},#{status},#{container},#{shellScript},#{monitorStatus})
+		 insert into prj_info(code,name,remark,create_time,user_id,status,container,shell_script,monitor_status)
+		 values(#{code},#{name},#{remark},now(),#{userId},#{status},#{container},#{shellScript},#{monitorStatus})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -24,16 +24,6 @@
 			code=#{code},name=#{name},remark=#{remark},status=#{status}
 			<if test="container!=null">,container=#{container}</if>
 			<if test="shellScript!=null and shellScript!=''">,shell_script=#{shellScript}</if>
-		</set>
-		<where>prj_id=#{prjId}</where>
-	</update>
-	<update id="updateReleaseVersion" flushCache="true">
-		update prj_info
-		<set>
-			<choose>
-				<when test="releaseVersion==null">release_version=null,release_time=null</when>
-				<otherwise>release_version=#{releaseVersion},release_time=now()</otherwise>
-			</choose>
 		</set>
 		<where>prj_id=#{prjId}</where>
 	</update>

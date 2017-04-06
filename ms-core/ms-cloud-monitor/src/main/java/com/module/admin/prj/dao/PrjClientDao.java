@@ -20,9 +20,9 @@ public interface PrjClientDao {
 
 	public abstract void update(PrjClient prjClient);
 
-	public abstract void delete(@Param("prjId")Integer prjId, @Param("clientId")String clientId);
+	public abstract void delete(@Param("prjId")Integer prjId, @Param("version")String version, @Param("clientId")String clientId);
 
-	public abstract PrjClient get(@Param("prjId")Integer prjId, @Param("clientId")String clientId);
+	public abstract PrjClient get(@Param("prjId")Integer prjId, @Param("version")String version, @Param("clientId")String clientId);
 
 	public abstract List<PrjClient> findPrjClient(PrjClient prjClient);
 	
@@ -31,10 +31,11 @@ public interface PrjClientDao {
 	public abstract List<PrjInfo> findByClientId(@Param("clientId")String clientId, @Param("status")Integer status);
 
 	public abstract void updateStatus(@Param("clientId")String clientId, @Param("prjId")Integer prjId,
-			@Param("status")Integer status, @Param("statusMsg")String statusMsg);
+			@Param("version")String version, @Param("status")Integer status, @Param("statusMsg")String statusMsg);
 
-	public abstract List<CliInfo> findByPrjId(@Param("prjId")Integer prjId);
+	public abstract List<CliInfo> findByPrjId(@Param("prjId")Integer prjId, @Param("version")String version);
 
 	public abstract void updateShellScript(@Param("clientId")String clientId, @Param("prjId")Integer prjId,
+			@Param("version")String version,
 			@Param("shellScript")String shellScript);
 }

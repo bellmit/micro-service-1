@@ -26,9 +26,6 @@
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增版本</a>
 						  	</div>
 						  	<div class="btn-group">
-						  		<a class="btn btn-info btn-sm" href="javascript:info.cli(${param.prjId})" title="发到对应的客户端">发布到客户端</a>
-						  	</div>
-						  	<div class="btn-group">
 						  		<a href="${webroot}/prjInfo/f-view/manager.shtml" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 						  	</div>
@@ -77,7 +74,7 @@ var info = {
 							    	'<td><a href="',webroot,'/sysFile/f-view/download.shtml?url=',obj.pathUrl,'" target="_blank">下载项目</a></td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.version,'\')" title="修改"></a> ',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.version,'\')" title="删除"></a>',
-							    	'</td>',
+							    	' &nbsp; | &nbsp; <a class="text-success" href="javascript:info.cli(${param.prjId}, \'',obj.version,'\')" title="发到对应的客户端">发布到客户端</a>',
 								'</tr>'].join('');
 						}
 						infoPage.operate(json.body, { resultFn:getResult, dataNull:'没有记录噢' });
@@ -115,8 +112,8 @@ var info = {
 			}
 		},
 		//发布到客户端的管理
-		cli : function(prjId) {
-			location = '${webroot}/prjClient/f-view/manager.shtml?prjId=' + prjId;
+		cli : function(prjId, version) {
+			location = '${webroot}/prjClient/f-view/manager.shtml?prjId=' + prjId + '&version=' + version;
 		}
 };
 $(function() {

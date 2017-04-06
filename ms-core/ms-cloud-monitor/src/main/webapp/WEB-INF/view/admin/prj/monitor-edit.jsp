@@ -18,7 +18,7 @@
 			<my:select id="type" headerKey="" headerValue="请选择监控类型" dictcode="prj_monitor_type" value="${prjMonitor.type}" cssCls="form-control" />
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${prjMonitor.remark}">
+			<input type="text" class="form-control" id="remark" placeholder="服务信息(备注)" value="${prjMonitor.remark}">
 		</div>
 		<div class="form-group">是否检测：
 			<my:radio id="monitorIs" name="monitorIs" dictcode="boolean" defvalue="1" value="${prjMonitor.monitorIs}" exp="onclick=\"info.monitorIs()\"" />
@@ -113,11 +113,11 @@
 					_monitorFailSendInterval.focus();
 					return;
 				}
-				if(JUtil.isEmpty(_monitorFailEmail.val())) {
+				/* if(JUtil.isEmpty(_monitorFailEmail.val())) {
 					_saveMsg.append('请输入检测失败接收邮箱');
 					_monitorFailEmail.focus();
 					return;
-				}
+				} */
 			}
 			
 			var _saveBtn = $('#saveBtn');

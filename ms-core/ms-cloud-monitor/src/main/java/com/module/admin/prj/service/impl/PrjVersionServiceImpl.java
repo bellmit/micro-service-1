@@ -32,24 +32,22 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 	public ResponseFrame saveOrUpdate(PrjVersion prjVersion) {
 		ResponseFrame frame = new ResponseFrame();
 		PrjVersion org = get(prjVersion.getPrjId(), prjVersion.getVersion());
-		if(Boolean.TRUE.getCode() == prjVersion.getIsRelease().intValue()) {
+		/*if(Boolean.TRUE.getCode() == prjVersion.getIsRelease().intValue()) {
 			prjVersionDao.updateNotRelease();
-			//修改项目的发布的版本号
-			prjInfoService.updateReleaseVersion(prjVersion.getPrjId(), prjVersion.getVersion());
-		}
+		}*/
 		if(org == null) {
 			prjVersionDao.save(prjVersion);
 		} else {
 			prjVersionDao.update(prjVersion);
 		}
-		if(Boolean.FALSE.getCode() == prjVersion.getIsRelease().intValue()) {
+		/*if(Boolean.FALSE.getCode() == prjVersion.getIsRelease().intValue()) {
 			//判断是否都没有发布版本
 			int num = prjVersionDao.getCountByIsRelease(prjVersion.getPrjId(), Boolean.TRUE.getCode());
 			if(num == 0) {
 				//修改项目的发布的版本号
 				prjInfoService.updateReleaseVersion(prjVersion.getPrjId(), null);
 			}
-		}
+		}*/
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}

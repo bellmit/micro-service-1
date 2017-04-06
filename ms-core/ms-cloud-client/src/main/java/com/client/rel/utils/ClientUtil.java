@@ -9,12 +9,13 @@ public class ClientUtil {
 
 	/**
 	 * 获取上传文件的目录<br>
-	 * 如：/home/www/1/
+	 * 如：/home/www/1/1.0.0/
 	 * @param prjId
+	 * @param version
 	 * @return
 	 */
-	public static String getPrjPath(Integer prjId) {
-		String prjPath = ConfigCons.versionDir + File.separator + ConfigCons.clientId + File.separator + prjId + File.separator;
+	public static String getPrjPath(Integer prjId, String version) {
+		String prjPath = ConfigCons.versionDir + File.separator + ConfigCons.clientId + File.separator + prjId + File.separator + version + File.separator;
 		FrameFileUtil.createDir(prjPath);
 		return prjPath;
 	}

@@ -63,10 +63,6 @@ public class PrjInfoMonitorTask {
 					prjInfo.setRemark("暂无");
 					//添加人
 					prjInfo.setUserId(1);
-					//发布的版本号
-					prjInfo.setReleaseVersion("暂无");
-					//发布的版本时间
-					prjInfo.setReleaseTime(FrameTimeUtil.getTime());
 					//状态[10正常、20停用]
 					prjInfo.setStatus(PrjInfoStatus.NORMAL.getCode());
 					//容器类型[10tomcat、20自定义服务、100其它]

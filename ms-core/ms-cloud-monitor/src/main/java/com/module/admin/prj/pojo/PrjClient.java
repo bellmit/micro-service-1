@@ -31,6 +31,8 @@ public class PrjClient extends BaseEntity implements Serializable {
 	private Date releaseTime;
 	//客户端执行的Shell命令
 	private String shellScript;
+	//版本编号
+	private String version;
 	
 	//=========================== 扩展属性
 	//状态名称
@@ -96,5 +98,11 @@ public class PrjClient extends BaseEntity implements Serializable {
 	}
 	public void setStatusMsg(String statusMsg) {
 		this.statusMsg = statusMsg;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
 	}
 }

@@ -23,10 +23,10 @@
 						</div>
 						<div class="col-sm-6 text-right">
 						  	<div class="btn-group">
-						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增客户端</a>
+						  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="info.releaseAll()">发布项目</a>
 						  	</div>
 						  	<div class="btn-group">
-						  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="info.releaseAll()">发布项目</a>
+						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增客户端</a>
 						  	</div>
 						  	<div class="btn-group">
 						  		<a href="${webroot}/prjVersion/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>
@@ -66,7 +66,7 @@ var info = {
 
 			JUtil.ajax({
 				url : '${webroot}/prjClient/f-json/pageQuery.shtml',
-				data : { prjId: '${param.prjId}', page:infoPage.page, size:infoPage.size },
+				data : { prjId: '${param.prjId}', version: '${param.version}', page:infoPage.page, size:infoPage.size },
 				beforeSend: function(){ infoPage.beforeSend('加载信息中...'); },
 				error : function(json){ infoPage.error('加载信息出错了!'); },
 				success : function(json){
@@ -100,7 +100,7 @@ var info = {
 		edit : function(clientId) {
 			dialog({
 				title: '编辑发布到的客户端',
-				url: webroot + '/prjClient/f-view/edit.shtml?prjId=${param.prjId}&clientId='+(clientId?clientId:''),
+				url: webroot + '/prjClient/f-view/edit.shtml?prjId=${param.prjId}&version=${param.version}&clientId='+(clientId?clientId:''),
 				type: 'iframe',
 				width: 400,
 				height: 350
@@ -110,7 +110,7 @@ var info = {
 		shell : function(clientId) {
 			dialog({
 				title: '设置发布的shell',
-				url: webroot + '/prjClient/f-view/shell.shtml?prjId=${param.prjId}&clientId='+(clientId?clientId:''),
+				url: webroot + '/prjClient/f-view/shell.shtml?prjId=${param.prjId}&version=${param.version}&clientId='+(clientId?clientId:''),
 				type: 'iframe',
 				width: 600,
 				height: 480
@@ -120,7 +120,7 @@ var info = {
 			if(confirm('您确定要删除该客户端吗?')) {
 				JUtil.ajax({
 					url : '${webroot}/prjClient/f-json/delete.shtml',
-					data : { prjId: '${param.prjId}', clientId: id },
+					data : { prjId: '${param.prjId}', version: '${param.version}', clientId: id },
 					success : function(json) {
 						if (json.code === 0) {
 							message('删除成功');
@@ -139,7 +139,7 @@ var info = {
 			if(confirm('您确定要发布到所有客户端吗?')) {
 				JUtil.ajax({
 					url : '${webroot}/prjClient/f-json/releaseAll.shtml',
-					data : { prjId: '${param.prjId}' },
+					data : { prjId: '${param.prjId}', version: '${param.version}' },
 					success : function(json) {
 						if (json.code === 0) {
 							message('操作成功');

@@ -18,11 +18,12 @@ public interface ApiClientService {
 	 * 修改客户端发布项目成功
 	 * @param clientId
 	 * @param prjId
+	 * @param version 
 	 * @param status
 	 * @param statusMsg 
 	 * @return
 	 */
-	public ResponseFrame updateRelease(String clientId, Integer prjId, Integer status, String statusMsg);
+	public ResponseFrame updateRelease(String clientId, Integer prjId, String version, Integer status, String statusMsg);
 
 	/**
 	 * 修改客户端的活动状态

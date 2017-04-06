@@ -58,10 +58,10 @@ public class ApiClientController extends BaseController {
 	@RequestMapping(value = "/api/client/updateRelease")
 	@ResponseBody
 	public void clientUpdateRelease(HttpServletRequest request, HttpServletResponse response,
-			String clientId, Integer prjId, Integer status, String statusMsg) {
+			String clientId, Integer prjId, String version, Integer status, String statusMsg) {
 		ResponseFrame frame = null;
 		try {
-			frame = apiClientService.updateRelease(clientId, prjId, status, statusMsg);
+			frame = apiClientService.updateRelease(clientId, prjId, version, status, statusMsg);
 		} catch (Exception e) {
 			LOGGER.error("修改客户端发布项目成功异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);

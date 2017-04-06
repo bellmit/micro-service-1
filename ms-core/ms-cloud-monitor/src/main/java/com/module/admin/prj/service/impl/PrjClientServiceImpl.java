@@ -10,7 +10,10 @@ import com.module.admin.cli.service.CliInfoService;
 import com.module.admin.prj.dao.PrjClientDao;
 import com.module.admin.prj.enums.PrjClientStatus;
 import com.module.admin.prj.pojo.PrjClient;
+import com.module.admin.prj.pojo.PrjVersion;
 import com.module.admin.prj.service.PrjClientService;
+import com.module.admin.prj.service.PrjVersionService;
+import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -28,13 +31,26 @@ public class PrjClientServiceImpl implements PrjClientService {
 	private PrjClientDao prjClientDao;
 	@Autowired
 	private CliInfoService cliInfoService;
+	@Autowired
+	private PrjVersionService prjVersionService;
 	
 	@Override
 	public ResponseFrame saveOrUpdate(PrjClient prjClient) {
 		ResponseFrame frame = new ResponseFrame();
-		PrjClient org = get(prjClient.getPrjId(), prjClient.getClientId());
-		if(org != null) {
+		PrjVersion pv = prjVersionService.get(prjClient.getPrjId(), prjClient.getVersion());
+		if(pv == null) {
 			frame.setCode(-2);
+			frame.setMessage("不存在该版本");
+			return frame;
+		}
+		if(pv != null && pv.getIsRelease().intValue() == Boolean.FALSE.getCode()) {
+			frame.setCode(-3);
+			frame.setMessage("该版本没有设置为发布");
+			return frame;
+		}
+		PrjClient org = get(prjClient.getPrjId(), prjClient.getVersion(), prjClient.getClientId());
+		if(org != null) {
+			frame.setCode(-4);
 			frame.setMessage("已经添加过了");
 			return frame;
 		}
@@ -45,8 +61,8 @@ public class PrjClientServiceImpl implements PrjClientService {
 	}
 
 	@Override
-	public PrjClient get(Integer prjId, String clientId) {
-		return prjClientDao.get(prjId, clientId);
+	public PrjClient get(Integer prjId, String version, String clientId) {
+		return prjClientDao.get(prjId, version, clientId);
 	}
 
 	@Override
@@ -72,9 +88,9 @@ public class PrjClientServiceImpl implements PrjClientService {
 	}
 	
 	@Override
-	public ResponseFrame delete(Integer prjId, String clientId) {
+	public ResponseFrame delete(Integer prjId, String version, String clientId) {
 		ResponseFrame frame = new ResponseFrame();
-		prjClientDao.delete(prjId, clientId);
+		prjClientDao.delete(prjId, version, clientId);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
@@ -85,20 +101,20 @@ public class PrjClientServiceImpl implements PrjClientService {
 	}*/
 
 	@Override
-	public void updateStatus(String clientId, Integer prjId, Integer status, String statusMsg) {
-		prjClientDao.updateStatus(clientId, prjId, status, statusMsg);
+	public void updateStatus(String clientId, Integer prjId, String version, Integer status, String statusMsg) {
+		prjClientDao.updateStatus(clientId, prjId, version, status, statusMsg);
 	}
 
 	@Override
-	public List<CliInfo> findByPrjId(Integer prjId) {
-		return prjClientDao.findByPrjId(prjId);
+	public List<CliInfo> findByPrjId(Integer prjId, String version) {
+		return prjClientDao.findByPrjId(prjId, version);
 	}
 
 	@Override
-	public ResponseFrame updateShellScript(String clientId, Integer prjId,
+	public ResponseFrame updateShellScript(String clientId, Integer prjId, String version,
 			String shellScript) {
 		ResponseFrame frame = new ResponseFrame();
-		prjClientDao.updateShellScript(clientId, prjId, shellScript);
+		prjClientDao.updateShellScript(clientId, prjId, version, shellScript);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}

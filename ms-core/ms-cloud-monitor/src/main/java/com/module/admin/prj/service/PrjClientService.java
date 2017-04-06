@@ -29,7 +29,7 @@ public interface PrjClientService {
 	 * @param prjId
 	 * @return
 	 */
-	public PrjClient get(Integer prjId, String clientId);
+	public PrjClient get(Integer prjId, String version, String clientId);
 
 	/**
 	 * 分页获取对象
@@ -43,7 +43,7 @@ public interface PrjClientService {
 	 * @param prjId
 	 * @return
 	 */
-	public ResponseFrame delete(Integer prjId, String clientId);
+	public ResponseFrame delete(Integer prjId, String version, String clientId);
 
 	/**
 	 * 根据客户端编号获取要发布的项目
@@ -56,17 +56,19 @@ public interface PrjClientService {
 	 * 修改客户端发布项目成功
 	 * @param clientId
 	 * @param prjId
+	 * @param version 
 	 * @param status
 	 * @param statusMsg 
 	 */
-	public void updateStatus(String clientId, Integer prjId, Integer status, String statusMsg);
+	public void updateStatus(String clientId, Integer prjId, String version, Integer status, String statusMsg);
 
 	/**
 	 * 根据项目编号获取发布的客户端
 	 * @param prjId
+	 * @param version 
 	 * @return
 	 */
-	public List<CliInfo> findByPrjId(Integer prjId);
+	public List<CliInfo> findByPrjId(Integer prjId, String version);
 
 	/**
 	 * 修改shell
@@ -75,6 +77,6 @@ public interface PrjClientService {
 	 * @param shellScript
 	 * @return
 	 */
-	public ResponseFrame updateShellScript(String clientId, Integer prjId,
+	public ResponseFrame updateShellScript(String clientId, Integer prjId, String version,
 			String shellScript);
 }

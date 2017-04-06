@@ -68,6 +68,7 @@
 				url : '${webroot}/prjClient/f-json/updateShellScript.shtml',
 				data : {
 					prjId: _prjId,
+					version: '${param.version}',
 					clientId: _clientId,
 					shellScript: _shellScript.val()
 				},

@@ -1,6 +1,11 @@
 package com.client;
 
 public class ConfigCons {
+	
+	/**
+	 * 执行发布shell卡住后，过指定时间kill对应的进程。单位:分钟
+	 */
+	public static Integer clientShellFailTime;
 
 	/**
 	 * 客户端编号
@@ -44,5 +49,11 @@ public class ConfigCons {
 	}
 	public static void setClientServerHost(String clientServerHost) {
 		ConfigCons.clientServerHost = clientServerHost;
+	}
+	public static Integer getClientShellFailTime() {
+		return clientShellFailTime;
+	}
+	public static void setClientShellFailTime(Integer clientShellFailTime) {
+		ConfigCons.clientShellFailTime = clientShellFailTime;
 	}
 }

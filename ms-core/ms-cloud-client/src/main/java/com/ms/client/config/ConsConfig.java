@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import com.client.ConfigCons;
+import com.system.comm.utils.FrameStringUtil;
 
 @Configuration
 public class ConsConfig {
@@ -20,6 +21,8 @@ public class ConsConfig {
 		ConfigCons.clientId = env.getProperty("client.id");
 		ConfigCons.clientToken = env.getProperty("client.token");
 		ConfigCons.clientServerHost = env.getProperty("client.server.host");
+		String clientShellFailTime = env.getProperty("client.shell.fail.time");
+		ConfigCons.clientShellFailTime = FrameStringUtil.isEmpty(clientShellFailTime) ? 5 : Integer.parseInt(clientShellFailTime);
 		return cons;
 	}
 }

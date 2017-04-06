@@ -31,10 +31,6 @@ public class PrjInfo extends BaseEntity implements Serializable {
 	private Date createTime;
 	//添加人
 	private Integer userId;
-	//发布的版本号
-	private String releaseVersion;
-	//发布的版本时间
-	private Date releaseTime;
 	//状态[10正常、20停用]
 	private Integer status;
 	//容器类型[10tomcat、20自定义服务、100其它]
@@ -90,20 +86,6 @@ public class PrjInfo extends BaseEntity implements Serializable {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-	
-	public String getReleaseVersion() {
-		return releaseVersion;
-	}
-	public void setReleaseVersion(String releaseVersion) {
-		this.releaseVersion = releaseVersion;
-	}
-	
-	public Date getReleaseTime() {
-		return releaseTime;
-	}
-	public void setReleaseTime(Date releaseTime) {
-		this.releaseTime = releaseTime;
 	}
 	
 	public Integer getStatus() {

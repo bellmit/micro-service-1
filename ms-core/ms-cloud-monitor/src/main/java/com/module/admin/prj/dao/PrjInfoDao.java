@@ -27,9 +27,6 @@ public interface PrjInfoDao {
 	
 	public abstract int findPrjInfoCount(PrjInfo prjInfo);
 
-	public abstract void updateReleaseVersion(@Param("prjId")Integer prjId,
-			@Param("releaseVersion")String releaseVersion);
-
 	public abstract List<KvEntity> findKvAll();
 
 	public abstract PrjInfo getCode(@Param("code")String code);

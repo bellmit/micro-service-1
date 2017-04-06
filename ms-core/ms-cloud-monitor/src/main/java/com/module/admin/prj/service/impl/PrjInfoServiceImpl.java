@@ -73,11 +73,6 @@ public class PrjInfoServiceImpl implements PrjInfoService {
 	}
 
 	@Override
-	public void updateReleaseVersion(Integer prjId, String releaseVersion) {
-		prjInfoDao.updateReleaseVersion(prjId, releaseVersion);
-	}
-
-	@Override
 	public List<KvEntity> findKvAll() {
 		return prjInfoDao.findKvAll();
 	}

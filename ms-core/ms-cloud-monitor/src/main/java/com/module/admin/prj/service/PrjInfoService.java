@@ -45,13 +45,6 @@ public interface PrjInfoService {
 	 */
 	public ResponseFrame delete(Integer prjId);
 
-	/**
-	 * 修改发布的版本号
-	 * @param prjId
-	 * @param releaseVersion
-	 */
-	public void updateReleaseVersion(Integer prjId, String releaseVersion);
-
 	public List<KvEntity> findKvAll();
 
 	/**

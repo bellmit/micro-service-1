@@ -53,9 +53,9 @@ public class ApiClientServiceImpl implements ApiClientService {
 	}*/
 
 	@Override
-	public ResponseFrame updateRelease(String clientId, Integer prjId, Integer status, String statusMsg) {
+	public ResponseFrame updateRelease(String clientId, Integer prjId, String version, Integer status, String statusMsg) {
 		ResponseFrame frame = new ResponseFrame();
-		prjClientService.updateStatus(clientId, prjId, status, statusMsg);
+		prjClientService.updateStatus(clientId, prjId, version, status, statusMsg);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}

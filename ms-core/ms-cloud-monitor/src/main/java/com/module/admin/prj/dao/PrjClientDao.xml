@@ -4,25 +4,25 @@
 <mapper namespace="com.module.admin.prj.dao.PrjClientDao">
 
 	<sql id="commCols">
-		prj_id prjId,client_id clientId,status status,release_time releaseTime,shell_script shellScript,status_msg statusMsg
+		prj_id prjId,client_id clientId,status status,release_time releaseTime,shell_script shellScript,status_msg statusMsg,version version
 	</sql>
 	<sql id="pcPiCols">
 		pi.prj_id prjId,pi.code code,pi.name name,pi.create_time createTime,pi.release_version releaseVersion,pi.release_time releaseTime,pi.status status,pi.container container,pi.shell_script shellScript,
 		pc.shell_script clientShellScript
 	</sql>
-	<sql id="pcCiCols">
+	<sql id="pcCiPvCols">
 		ci.client_id clientId,ci.name name,ci.remark remark,ci.ip ip,ci.port port,ci.token token,ci.create_time createTime,ci.user_id userId,ci.status status,ci.activity_time activityTime,
-		pc.shell_script shellScript
+		pc.shell_script shellScript,pv.version version,pv.path_url pathUrl
 	</sql>
 
 	<insert id="save" parameterType="prjClient" flushCache="true">
-		 insert into prj_client(prj_id,client_id,status,release_time)
-		 values(#{prjId},#{clientId},#{status},#{releaseTime})
+		 insert into prj_client(prj_id,client_id,status,release_time,version)
+		 values(#{prjId},#{clientId},#{status},#{releaseTime},#{version})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
 		delete from prj_client
-		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
 	</delete>
 	
 	<update id="updateStatus" flushCache="true">
@@ -34,17 +34,17 @@
 			<otherwise>release_time=now()</otherwise>
 			</choose>
 		</set>
-		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
 	</update>
 	<update id="updateShellScript" flushCache="true">
 		update prj_client
 		<set>shell_script=#{shellScript}</set>
-		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
 	</update>
 	
 	<select id="get" resultType="prjClient">
 		select <include refid="commCols"/> from prj_client
-  		<where>prj_id=#{prjId} and client_id=#{clientId}</where>
+  		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
 	</select>
 	
 	<select id="findByClientId" resultType="prjInfo">
@@ -53,24 +53,25 @@
   		<where>pc.client_id=#{clientId} and pi.status=#{status} and pi.release_version is not null</where>
 	</select>
 	<select id="findByPrjId" resultType="cliInfo">
-		select <include refid="pcCiCols"></include> from prj_client pc 
+		select <include refid="pcCiPvCols"></include> from prj_client pc 
 			inner join cli_info ci on(pc.client_id=ci.client_id)
+			inner join prj_version pv on(pc.prj_id=pv.prj_id and pc.version=pv.version)
 		<where>
-			pc.prj_id=#{prjId}
+			pc.prj_id=#{prjId} and pv.is_release=1 and pc.version=#{version}
 		</where>
 	</select>
 	
 	<select id="findPrjClient" parameterType="prjClient" resultType="prjClient">
 		select <include refid="commCols"/> from prj_client
 		<where>
-			prj_id=#{prjId}
+			prj_id=#{prjId} and version=#{version}
 		</where>
   		limit #{currentIndex}, #{size}
 	</select>
 	<select id="findPrjClientCount" parameterType="prjClient" resultType="int">
 		select count(*) from prj_client
 		<where>
-			prj_id=#{prjId}
+			prj_id=#{prjId} and version=#{version}
 		</where>
 	</select>
 </mapper>

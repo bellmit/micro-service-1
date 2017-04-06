@@ -11,7 +11,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.client.ConfigCons;
 import com.client.rel.data.DispatchFailData;
+import com.client.rel.data.ExecShellFailData;
 import com.client.rel.enums.PrjInfoContainer;
+import com.client.rel.model.ExecShell;
 import com.client.rel.utils.ClientUtil;
 import com.client.rel.utils.ServerUtil;
 import com.system.auth.AuthUtil;
@@ -28,21 +30,20 @@ public class ReleaseClient {
 		LOGGER.info("发布项目[" + prjId + "]中...");
 		ThreadPoolTaskExecutor threadPoolTaskExecutor = FrameSpringBeanUtil.getBean(ThreadPoolTaskExecutor.class);
 
+		String suffix = pathUrl.substring(pathUrl.lastIndexOf("."));
+		final String prjName = version + suffix;
+		final String path = ClientUtil.getPrjPath(prjId, version);
+		//判断操作系统
+		final PrjInfoContainer piContainer = PrjInfoContainer.get(container);
 		threadPoolTaskExecutor.execute(new Runnable() {
-
 			@Override
 			public void run() {
 				try {
 					//下载发布的项目包
-					String suffix = pathUrl.substring(pathUrl.lastIndexOf("."));
-					String prjName = version + suffix;
-					String path = ClientUtil.getPrjPath(prjId);
 					File file = download(pathUrl, path, prjName);
 					if(file == null) {
 						fail("下载项目异常");
 					}
-					//判断操作系统
-					PrjInfoContainer piContainer = PrjInfoContainer.get(container);
 					if("linux".equals(piContainer.getSysType())) {
 						releaseLinux(path, prjName);
 					} else if("win".equals(piContainer.getSysType())) {
@@ -59,6 +60,7 @@ public class ReleaseClient {
 				//生成可执行的bat文件
 				String batName = version + ".bat";
 				File shFile = FrameFileUtil.readFile(path + batName);
+				ExecShellFailData.add(new ExecShell(batName, version, path, piContainer));
 
 				String command = convertCommand(shellScript, prjId, prjName);
 				FrameFileUtil.writeFile(command, shFile);
@@ -69,39 +71,13 @@ public class ReleaseClient {
 				Runtime.getRuntime().exec(cmdChmod).waitFor();
 				LOGGER.info("执行命令返回结果: 成功");
 				succ("发布成功");
-				//ProcessBuilder pb = new ProcessBuilder("." + path + shellName, param1, param2, param3);
-				/*ProcessBuilder pb = new ProcessBuilder("./" + batName);
-				//设置要运行脚本的目录
-				pb.directory(new File(path));
-				int runningStatus = 0;
-				Process p = pb.start();
-				try {
-					runningStatus = p.waitFor();
-				} catch (InterruptedException e) {
-				}
-				BufferedReader br = new BufferedReader(new InputStreamReader(
-						p.getInputStream()));
-				StringBuffer sb = new StringBuffer();
-				String line;
-				int i=0;
-				while ((line = br.readLine()) != null) {
-					sb.append("["+(i++)+"]"+line).append("\n");
-				}
-				LOGGER.info("执行命令返回结果: " + sb.toString());
-				//runningStatus：运行状态，0标识正常。
-				if (runningStatus != 0) {
-					//发布失败调度回写服务端
-					fail("执行Shell命令出错");
-				} else {
-					//发布成功调度回写服务端
-					succ("发布成功");
-				}*/
 			}
 
 			private void releaseLinux(String path, String prjName) throws Exception {
 				//生成可执行的shell文件
 				String shellName = version + ".sh";
 				File shFile = FrameFileUtil.readFile(path + shellName);
+				ExecShellFailData.add(new ExecShell(shellName, version, path, piContainer));
 
 				String command = convertCommand(shellScript, prjId, prjName);
 				FrameFileUtil.writeFile(command, shFile);
@@ -139,39 +115,6 @@ public class ReleaseClient {
 					//发布成功调度回写服务端
 					succ("发布成功");
 				}
-				/*String[] cmd = {"/bin/sh", "-c", "chmod a+x " + path + shellName, path + shellName};
-			LOGGER.info("执行命令: " + FrameJsonUtil.toString(cmd));
-			Process process = Runtime.getRuntime().exec(cmd);
-			process.waitFor();
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					process.getInputStream()));
-			StringBuffer sb = new StringBuffer();
-			String line;
-			int i=0;
-			while ((line = br.readLine()) != null) {
-				sb.append("["+(i++)+"]"+line).append("\n");
-			}
-			LOGGER.info("执行命令返回结果: " + sb.toString());*/
-
-				//执行shell命令
-				/*String[] commands = shellScript.split("\n");
-			for (String command : commands) {
-				command = convertCommand(command, prjId, prjName);
-
-				String[] cmd = {"/bin/sh", "-c", command};
-				LOGGER.info("执行命令: " + command);
-				Process process = Runtime.getRuntime().exec(cmd);
-				process.waitFor();
-				BufferedReader br = new BufferedReader(new InputStreamReader(
-						process.getInputStream()));
-				StringBuffer sb = new StringBuffer();
-				String line;
-				int i=0;
-				while ((line = br.readLine()) != null) {
-					sb.append("["+(i++)+"]"+line).append("\n");
-				}
-				LOGGER.info("执行命令返回结果: " + sb.toString());
-			}*/
 			}
 
 			/**
@@ -185,7 +128,7 @@ public class ReleaseClient {
 			 */
 			private String convertCommand(String command, Integer prjId, String prjName) {
 				if(command.contains("[prj.path]")) {
-					command = command.replace("[prj.path]", ClientUtil.getPrjPath(prjId));
+					command = command.replace("[prj.path]", ClientUtil.getPrjPath(prjId, version));
 				}
 				if(command.contains("[prj.name]")) {
 					command = command.replace("[prj.name]", prjName);
@@ -202,14 +145,15 @@ public class ReleaseClient {
 						+ "&time=" + time + "&sign=" + sign + "&url=" + url;
 				LOGGER.info("下载项目地址: " + downUrl);
 				File file = FrameFileUtil.readFile(downUrl, savePath, saveName);
-
 				return file;
 			}
 
 			private void succ(String statusMsg) {
 				//发布成功调用接口，修改发布状态
+				ExecShellFailData.del(version);
 				Map<String, Object> paramsMap = new HashMap<String, Object>();
 				paramsMap.put("prjId", prjId.toString());
+				paramsMap.put("version", version);
 				//状态[10待发布、20发布中、30发布失败、40发布成功]
 				paramsMap.put("status", "40");
 				paramsMap.put("statusMsg", statusMsg);
@@ -229,8 +173,10 @@ public class ReleaseClient {
 
 			private void fail(String statusMsg) {
 				//发布成功调用接口，修改发布状态
+				ExecShellFailData.del(version);
 				Map<String, Object> paramsMap = new HashMap<String, Object>();
 				paramsMap.put("prjId", prjId.toString());
+				paramsMap.put("version", version);
 				//状态[10待发布、20发布中、30发布失败、40发布成功]
 				paramsMap.put("status", "30");
 				paramsMap.put("statusMsg", statusMsg);

@@ -31,7 +31,8 @@
 					url : '${webroot}/prjClient/f-json/save.shtml',
 					data : {
 						prjId: $('#prjId').val(),
-						clientId: clientId
+						clientId: clientId,
+						version: '${param.version}'
 					},
 					success : function(json) {
 						if (json.code === 0) {
