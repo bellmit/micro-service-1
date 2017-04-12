@@ -25,7 +25,7 @@ JAVA_OPTS="-Dproject.dir=$SERVICE_HOME"
 JAVA_MEM_OPTS="-server -Xmx1024m -Xms1024m -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
 
 # 整合JAVA启动参数
-JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME"
+JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME --spring.profiles.active=release"
 
 #建立日志目录
 mkdir -p $LOGS_DIR

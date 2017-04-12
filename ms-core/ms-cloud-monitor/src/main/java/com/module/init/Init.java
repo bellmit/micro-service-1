@@ -46,8 +46,6 @@ public class Init extends HttpServlet {
 */
 		ConfigCons.realpath = config.getServletContext().getRealPath("");
 		
-		DictCons.init(config.getServletContext());
-		
 		//初始化数据
 		DictCons.init(config.getServletContext());
 		

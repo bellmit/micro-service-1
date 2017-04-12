@@ -44,11 +44,12 @@ create table prj_client
 (
    prj_id               int not null comment '项目编号',
    client_id            varchar(32) not null comment '客户端编号',
+   version              varchar(50) not null comment '版本编号',
    status               int not null comment '状态[10待发布、20发布中、30发布失败、40发布成功]',
    status_msg           varchar(200) comment '状态消息',
    release_time         datetime comment '发布时间',
    shell_script         text comment '客户端执行的Shell命令',
-   primary key (prj_id, client_id)
+   primary key (prj_id, client_id, version)
 );
 
 alter table prj_client comment '项目客户端表';
@@ -64,8 +65,6 @@ create table prj_info
    remark               varchar(200) comment '描叙',
    create_time          datetime not null comment '添加时间',
    user_id              int not null comment '添加人',
-   release_version      varchar(50) comment '发布的版本号',
-   release_time         datetime comment '发布的版本时间',
    status               int not null comment '状态[10正常、20停用]',
    container            int not null comment '容器类型[10tomcat、50自定义服务、100其它]',
    shell_script         text comment 'shell脚本',

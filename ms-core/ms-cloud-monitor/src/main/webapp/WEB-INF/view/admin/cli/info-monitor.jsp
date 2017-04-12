@@ -1,3 +1,5 @@
+<%@page import="com.module.admin.cli.enums.CliInfoActivityStatus"%>
+<%@page import="com.module.admin.cli.enums.CliInfoStatus"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -82,12 +84,18 @@ var info = {
 				success : function(json){
 					if(json.code === 0) {
 						function getResult(obj) {
+							var _asCont = [];
+							if(obj.activityStatus === <%=CliInfoActivityStatus.NORMAL.getCode()%>) {
+								_asCont.push('<span class="text-success">',obj.activityStatusName,'</span>');
+							} else {
+								_asCont.push('<span class="text-danger">',obj.activityStatusName,'</span>');
+							}
 							return ['<tr>',
 							    	'<td>',obj.clientId,'</td>',
 							    	'<td>',obj.name,'</td>',
 							    	'<td>',obj.ip,' : ',obj.port,'</td>',
 							    	'<td>',obj.statusName,'</td>',
-							    	'<td>',obj.activityStatusName,'</td>',
+							    	'<td>',_asCont.join(''),'</td>',
 							    	'<td>上次心跳时间 ',obj.activityTime,'</td>',
 							    	//'<td>',
 							    	//'<a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.clientId,'\')" title="修改"></a> ',

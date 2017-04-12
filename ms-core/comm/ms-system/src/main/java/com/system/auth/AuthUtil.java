@@ -18,7 +18,9 @@ public class AuthUtil {
 	 * @param client
 	 */
 	public static void addAuthClient(AuthClient client) {
-		AuthCons.clientMap.put(client.getId(), client);
+		if(AuthCons.clientMap.get(client.getId()) == null) {
+			AuthCons.clientMap.put(client.getId(), client);
+		}
 	}
 	
 	/**

@@ -95,6 +95,7 @@
             <outputDirectory></outputDirectory>
             <includes>
                 <include>*.jar</include>
+                <include>*.war</include>
             </includes>
         </fileSet>
     </fileSets>

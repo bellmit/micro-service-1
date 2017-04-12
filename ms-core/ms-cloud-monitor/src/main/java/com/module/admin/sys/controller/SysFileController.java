@@ -58,7 +58,7 @@ public class SysFileController extends BaseController {
 		ResponseFrame frame = new ResponseFrame();
 		SysUser user = getSessionUser(request);
 		logger.info(String.format("%s 用户上传附件!", user.getNickname()));
-		String[] exts = new String[] { "doc", "docx", "txt", "xls", "xlsx", "zip", "rar", "jpg", "png", "gif", "bmp" };
+		String[] exts = new String[] { "doc", "docx", "txt", "xls", "xlsx", "jar", "war", "zip", "rar", "jpg", "png", "gif", "bmp" };
 		response.setCharacterEncoding("utf-8");
 		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;

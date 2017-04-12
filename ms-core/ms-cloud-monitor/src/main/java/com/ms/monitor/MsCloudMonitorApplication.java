@@ -38,19 +38,19 @@ import com.system.comm.utils.FrameSpringBeanUtil;
 @SpringBootApplication
 public class MsCloudMonitorApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
-	private static Logger logger = LoggerFactory.getLogger(MsCloudMonitorApplication.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(MsCloudMonitorApplication.class);
 
 	/*@Autowired
 	RabbitMessagingTemplate rabbitMessagingTemplate;*/
 
 	public static void main(String[] args) {
-		logger.debug("######## Monitor应用启动开始 ########");
+		LOGGER.debug("######## Monitor应用启动开始 ########");
 		SpringApplication.run(MsCloudMonitorApplication.class, args);
 	}
 	
 	@Override
 	public void run(String... args) throws Exception {
-		logger.debug("######## Monitor应用启动完成 ########");
+		LOGGER.debug("######## Monitor应用启动完成 ########");
 		/*Map<String,Object> map = new HashMap<>();
 		map.put("msg","SpringCloudEureka应用启动");
 		rabbitMessagingTemplate.convertAndSend("directExchange","queue.foo", JSON.toJSONString(map));

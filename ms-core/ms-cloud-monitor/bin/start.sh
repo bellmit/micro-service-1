@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # 设置启动的jar
-SERVICE_NAME="project.restful-1.0.0.jar"
+SERVICE_NAME="ms-cloud-monitor-1.0.0.war"
 
 PRJ_BIN_DIR=$(dirname $(readlink -f "$0"))
 SERVICE_HOME=$(dirname $PRJ_BIN_DIR)
