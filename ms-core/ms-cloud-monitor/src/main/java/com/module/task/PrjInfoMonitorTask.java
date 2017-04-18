@@ -58,9 +58,9 @@ public class PrjInfoMonitorTask {
 					//项目编码
 					prjInfo.setCode(serviceId);
 					//名称
-					prjInfo.setName(serviceId);
+					//prjInfo.setName(serviceId);
 					//描叙
-					prjInfo.setRemark("暂无");
+					//prjInfo.setRemark("暂无");
 					//添加人
 					prjInfo.setUserId(1);
 					//状态[10正常、20停用]

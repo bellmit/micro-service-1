@@ -52,7 +52,6 @@ var info = {
 				                         '<th>编号</th>',
 				                         '<th>名称</th>',
 				                         '<th>状态</th>',
-				                         '<th>发布的版本号</th>',
 				                         '<th>创建时间</th>',
 				                         '<th width="200">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
@@ -73,7 +72,6 @@ var info = {
 							    	'<td>',obj.code,'</td>',
 							    	'<td>',obj.name,'</td>',
 							    	'<td>',obj.statusName,'</td>',
-							    	'<td>',obj.releaseVersion,'</td>',
 							    	'<td>',obj.createTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,')" title="删除"></a>',

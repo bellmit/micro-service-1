@@ -21,7 +21,9 @@
 	<update id="update" parameterType="prjInfo" flushCache="true">
 		update prj_info
 		<set>
-			code=#{code},name=#{name},remark=#{remark},status=#{status}
+			code=#{code},status=#{status}
+			<if test="name!=null and name!=''">,name=#{name}</if>
+			<if test="remark!=null and remark!=''">,remark=#{remark}</if>
 			<if test="container!=null">,container=#{container}</if>
 			<if test="shellScript!=null and shellScript!=''">,shell_script=#{shellScript}</if>
 		</set>

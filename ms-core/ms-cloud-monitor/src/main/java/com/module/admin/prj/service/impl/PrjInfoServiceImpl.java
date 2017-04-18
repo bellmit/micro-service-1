@@ -12,6 +12,7 @@ import com.module.admin.prj.service.PrjInfoService;
 import com.system.comm.enums.Boolean;
 import com.system.comm.model.KvEntity;
 import com.system.comm.model.Page;
+import com.system.comm.utils.FrameStringUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -32,6 +33,12 @@ public class PrjInfoServiceImpl implements PrjInfoService {
 		ResponseFrame frame = new ResponseFrame();
 		PrjInfo org = prjInfoDao.getCode(prjInfo.getCode());
 		if(org == null) {
+			if(FrameStringUtil.isEmpty(prjInfo.getName())) {
+				prjInfo.setName(prjInfo.getCode());
+			}
+			if(FrameStringUtil.isEmpty(prjInfo.getRemark())) {
+				prjInfo.setRemark("暂无");
+			}
 			prjInfo.setMonitorStatus(Boolean.TRUE.getCode());
 			prjInfoDao.save(prjInfo);
 		} else {
