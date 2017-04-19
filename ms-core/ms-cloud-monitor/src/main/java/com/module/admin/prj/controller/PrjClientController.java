@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.module.admin.BaseController;
 import com.module.admin.cli.pojo.CliInfo;
+import com.module.admin.cli.service.CliInfoService;
 import com.module.admin.prj.enums.PrjClientStatus;
 import com.module.admin.prj.pojo.PrjClient;
 import com.module.admin.prj.pojo.PrjInfo;
@@ -44,7 +45,9 @@ public class PrjClientController extends BaseController {
 	private PrjInfoService prjInfoService;
 	@Autowired
 	private PrjVersionService prjVersionService;
-	
+	@Autowired
+	private CliInfoService cliInfoService;
+
 	/**
 	 * 跳转到管理页
 	 * @param request
@@ -103,7 +106,7 @@ public class PrjClientController extends BaseController {
 		}
 		writerJson(response, frame);
 	}
-	
+
 	/**
 	 * 删除
 	 * @return
@@ -124,6 +127,26 @@ public class PrjClientController extends BaseController {
 	}
 
 	/**
+	 * 发布到指定客户端
+	 * @return
+	 */
+	@RequestMapping(value = "/prjClient/f-json/release")
+	@ResponseBody
+	public void release(HttpServletRequest request, HttpServletResponse response,
+			Integer prjId, String version, String clientId) {
+		ResponseFrame frame = null;
+		try {
+			PrjInfo pi = prjInfoService.get(prjId);
+			List<CliInfo> clients = prjClientService.findByPrjId(prjId, version, clientId);
+			frame = release(pi, clients);
+		} catch (Exception e) {
+			LOGGER.error("发布到所有客户端异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+		}
+		writerJson(response, frame);
+	}
+
+	/**
 	 * 发布到所有客户端
 	 * @return
 	 */
@@ -131,7 +154,7 @@ public class PrjClientController extends BaseController {
 	@ResponseBody
 	public void releaseAll(HttpServletRequest request, HttpServletResponse response,
 			Integer prjId, String version) {
-		ResponseFrame frame = new ResponseFrame();
+		ResponseFrame frame = null;
 		try {
 			PrjInfo pi = prjInfoService.get(prjId);
 			/*PrjVersion version = prjVersionService.get(prjId, pi.getReleaseVersion());
@@ -141,51 +164,59 @@ public class PrjClientController extends BaseController {
 				writerJson(response, frame);
 				return;
 			}*/
-			List<CliInfo> clients = prjClientService.findByPrjId(prjId, version);
-			StringBuffer errorBuffer = new StringBuffer();
-			for (CliInfo cliInfo : clients) {
-				try {
-					Map<String, Object> paramsMap = new HashMap<String, Object>();
-					paramsMap.put("prjId", pi.getPrjId());
-					paramsMap.put("code", pi.getCode());
-					paramsMap.put("name", pi.getName());
-					paramsMap.put("version", cliInfo.getVersion());
-					//下载路径
-					paramsMap.put("pathUrl", cliInfo.getPathUrl());
-					//容器类型
-					paramsMap.put("container", pi.getContainer());
-					//执行的shell命令
-					if(FrameStringUtil.isNotEmpty(cliInfo.getShellScript())) {
-						paramsMap.put("shellScript", cliInfo.getShellScript());
-					} else {
-						paramsMap.put("shellScript", pi.getShellScript());
-					}
-					ResponseFrame clientFrame = ClientUtil.post(cliInfo.getClientId(), cliInfo.getToken(), cliInfo.getIp(), cliInfo.getPort(),
-							"/project/release", paramsMap);
-					if(ResponseCode.SUCC.getCode() == clientFrame.getCode().intValue()) {
-						//修改为发布中
-						prjClientService.updateStatus(cliInfo.getClientId(), prjId, cliInfo.getVersion(), PrjClientStatus.ING.getCode(), null);
-					} else {
-						//处理发布不成功的情况
-						errorBuffer.append("客户端[").append(cliInfo.getIp()).append(":").append(cliInfo.getPort()).append("]发布异常; ");
-					}
-				} catch (Exception e) {
-					LOGGER.error("发布到客户端[" + cliInfo.getIp() + ":" + cliInfo.getPort() + "]异常" + e.getMessage(), e);
-					errorBuffer.append("客户端[").append(cliInfo.getIp()).append(":").append(cliInfo.getPort()).append("]网络不通; ");
-				}
-				
-			}
-			if(errorBuffer.length() == 0) {
-				frame.setCode(ResponseCode.SUCC.getCode());
-			} else {
-				frame.setCode(-404);
-				frame.setMessage(errorBuffer.toString());
-			}
+			List<CliInfo> clients = prjClientService.findByPrjId(prjId, version, null);
+			frame = release(pi, clients);
 		} catch (Exception e) {
 			LOGGER.error("发布到所有客户端异常: " + e.getMessage(), e);
 			frame.setCode(ResponseCode.FAIL.getCode());
 		}
 		writerJson(response, frame);
+	}
+
+	private ResponseFrame release(PrjInfo pi, List<CliInfo> clients) {
+		ResponseFrame frame = new ResponseFrame();
+		StringBuffer errorBuffer = new StringBuffer();
+		for (CliInfo cliInfo : clients) {
+			try {
+				Map<String, Object> paramsMap = new HashMap<String, Object>();
+				paramsMap.put("prjId", pi.getPrjId());
+				paramsMap.put("code", pi.getCode());
+				paramsMap.put("name", pi.getName());
+				paramsMap.put("version", cliInfo.getVersion());
+				//下载路径
+				paramsMap.put("pathUrl", cliInfo.getPathUrl());
+				//容器类型
+				paramsMap.put("container", pi.getContainer());
+				//执行的shell命令
+				if(FrameStringUtil.isNotEmpty(cliInfo.getShellScript())) {
+					paramsMap.put("shellScript", cliInfo.getShellScript());
+				} else {
+					paramsMap.put("shellScript", pi.getShellScript());
+				}
+				ResponseFrame clientFrame = ClientUtil.post(cliInfo.getClientId(), cliInfo.getToken(), cliInfo.getIp(), cliInfo.getPort(),
+						"/project/release", paramsMap);
+				if(ResponseCode.SUCC.getCode() == clientFrame.getCode().intValue()) {
+					//修改为发布中
+					prjClientService.updateStatus(cliInfo.getClientId(), pi.getPrjId(), cliInfo.getVersion(), PrjClientStatus.ING.getCode(), null);
+				} else {
+					//处理发布不成功的情况
+					errorBuffer.append("客户端[").append(cliInfo.getIp()).append(":").append(cliInfo.getPort()).append("]发布异常; ");
+				}
+			} catch (Exception e) {
+				LOGGER.error("发布到客户端[" + cliInfo.getIp() + ":" + cliInfo.getPort() + "]异常" + e.getMessage(), e);
+				errorBuffer.append("客户端[").append(cliInfo.getIp()).append(":").append(cliInfo.getPort()).append("]网络不通; ");
+				prjClientService.updateStatus(cliInfo.getClientId(), pi.getPrjId(), cliInfo.getVersion(),
+						PrjClientStatus.FAIL.getCode(), "无法访问[" + cliInfo.getIp() + ":" + cliInfo.getPort() + "]，可能网络不通");
+			}
+
+		}
+		if(errorBuffer.length() == 0) {
+			frame.setCode(ResponseCode.SUCC.getCode());
+		} else {
+			frame.setCode(-404);
+			frame.setMessage(errorBuffer.toString());
+		}
+		return frame;
 	}
 
 	/**
@@ -203,7 +234,7 @@ public class PrjClientController extends BaseController {
 		}
 		return "admin/prj/client-shell";
 	}
-	
+
 	/**
 	 * 修改shell
 	 * @return

@@ -22,6 +22,13 @@
 						<div class="col-sm-6">
 						</div>
 						<div class="col-sm-6 text-right">
+							<div class="btn-group">
+								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control">
+									<option value="">自动刷新:关闭</option>
+									<option value="5">5s刷新一次</option>
+									<option value="10">10s刷新一次</option>
+								</select>
+						  	</div>
 						  	<div class="btn-group">
 						  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="info.releaseAll()">发布项目</a>
 						  	</div>
@@ -57,7 +64,7 @@ var info = {
 				                         '<th>IP : 端口</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布时间</th>',
-				                         '<th width="150">操作</th>',
+				                         '<th width="250">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -79,6 +86,7 @@ var info = {
 							    	'<td>',obj.releaseTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.clientId,'\')" title="删除"></a>',
 							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.shell(\'',obj.clientId,'\')" title="设置发布的Shell">发布的Shell</a>',
+							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.release(\'',obj.clientId,'\')" title="发布到客户端">发布到客户端</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
@@ -152,6 +160,35 @@ var info = {
 					}
 				});
 			}
+		},
+		//发布到指定客户端
+		release : function(clientId) {
+			if(confirm('您确定要发布到指定的客户端吗?')) {
+				JUtil.ajax({
+					url : '${webroot}/prjClient/f-json/release.shtml',
+					data : { prjId: '${param.prjId}', version: '${param.version}', clientId: clientId },
+					success : function(json) {
+						if (json.code === 0) {
+							message('操作成功');
+							info.loadInfo(1);
+						}
+						else if (json.code === -1)
+							message(JUtil.msg.ajaxErr);
+						else
+							message(json.message);
+					}
+				});
+			}
+		},
+		refreshChange: function() {
+			if(info.interval) {
+				window.clearInterval(info.interval);
+			}
+			var _refresh = $('#refreshInterval').val();
+			if(JUtil.isEmpty(_refresh)) {
+				return;
+			}
+			info.interval = window.setInterval('info.loadInfo()', _refresh * 1000);
 		}
 };
 $(function() {

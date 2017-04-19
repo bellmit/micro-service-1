@@ -33,7 +33,7 @@ public interface PrjClientDao {
 	public abstract void updateStatus(@Param("clientId")String clientId, @Param("prjId")Integer prjId,
 			@Param("version")String version, @Param("status")Integer status, @Param("statusMsg")String statusMsg);
 
-	public abstract List<CliInfo> findByPrjId(@Param("prjId")Integer prjId, @Param("version")String version);
+	public abstract List<CliInfo> findByPrjId(@Param("prjId")Integer prjId, @Param("version")String version, @Param("clientId")String clientId);
 
 	public abstract void updateShellScript(@Param("clientId")String clientId, @Param("prjId")Integer prjId,
 			@Param("version")String version,

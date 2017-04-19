@@ -66,9 +66,10 @@ public interface PrjClientService {
 	 * 根据项目编号获取发布的客户端
 	 * @param prjId
 	 * @param version 
+	 * @param clientId	客户端编号，不传代表获取所有关联的
 	 * @return
 	 */
-	public List<CliInfo> findByPrjId(Integer prjId, String version);
+	public List<CliInfo> findByPrjId(Integer prjId, String version, String clientId);
 
 	/**
 	 * 修改shell

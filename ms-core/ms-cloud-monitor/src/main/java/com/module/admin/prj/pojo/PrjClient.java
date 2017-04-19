@@ -23,7 +23,7 @@ public class PrjClient extends BaseEntity implements Serializable {
 	private Integer prjId;
 	//客户端编号
 	private String clientId;
-	//状态[10待发布、20发布中、30发布失败、40发布成功]
+	//状态[10待发布、20发布中、30发布失败、40发布成功]PrjClientStatus
 	private Integer status;
 	//状态消息
 	private String statusMsg;

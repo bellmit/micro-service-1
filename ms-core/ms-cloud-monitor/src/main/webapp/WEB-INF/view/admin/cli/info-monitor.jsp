@@ -33,7 +33,7 @@
 						  	</div> -->
 						  	<div class="btn-group">
 								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control">
-									<option value="">关闭自动刷新</option>
+									<option value="">自动刷新:关闭</option>
 									<option value="5">5s刷新一次</option>
 									<option value="10">10s刷新一次</option>
 								</select>

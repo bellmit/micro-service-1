@@ -58,6 +58,7 @@
 			inner join prj_version pv on(pc.prj_id=pv.prj_id and pc.version=pv.version)
 		<where>
 			pc.prj_id=#{prjId} and pv.is_release=1 and pc.version=#{version}
+			<if test="clientId!=null and clientId!=''">and ci.client_id=#{clientId}</if>
 		</where>
 	</select>
 	

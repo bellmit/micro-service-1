@@ -106,8 +106,8 @@ public class PrjClientServiceImpl implements PrjClientService {
 	}
 
 	@Override
-	public List<CliInfo> findByPrjId(Integer prjId, String version) {
-		return prjClientDao.findByPrjId(prjId, version);
+	public List<CliInfo> findByPrjId(Integer prjId, String version, String clientId) {
+		return prjClientDao.findByPrjId(prjId, version, clientId);
 	}
 
 	@Override
