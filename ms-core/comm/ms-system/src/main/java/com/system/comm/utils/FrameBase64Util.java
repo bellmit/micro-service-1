@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sun.misc.BASE64Decoder;
 
@@ -16,7 +17,7 @@ import sun.misc.BASE64Decoder;
 @SuppressWarnings("restriction")
 public class FrameBase64Util {
 
-	private static final Logger logger = Logger.getLogger(FrameBase64Util.class);
+	private static final Logger logger = LoggerFactory.getLogger(FrameBase64Util.class);
 	private static final String UTF_8 = "UTF-8";
 	private static FrameBase64Util base64Class;
 

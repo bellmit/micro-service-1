@@ -5,7 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.module.admin.cli.pojo.CliInfo;
 import com.module.admin.cli.service.CliInfoService;
@@ -21,7 +22,7 @@ import com.system.comm.utils.FrameSpringBeanUtil;
  */
 public class ClientTask {
 	
-	private static final Logger LOGGER = Logger.getLogger(ClientTask.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClientTask.class);
 
 	public void run() {
 		LOGGER.info("========================= 初始化客户端的任务 - 成功 ===========================");

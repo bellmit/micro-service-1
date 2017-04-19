@@ -6,7 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class FrameJsonUtil {
 
-private static final Logger LOGGER = Logger.getLogger(FrameJsonUtil.class);
+private static final Logger LOGGER = LoggerFactory.getLogger(FrameJsonUtil.class);
 	
 	private static ObjectMapper mapper;
 	

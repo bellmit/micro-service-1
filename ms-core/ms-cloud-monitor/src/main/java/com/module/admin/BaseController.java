@@ -5,7 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.module.admin.sys.pojo.SysUser;
@@ -20,7 +21,7 @@ import com.system.comm.utils.FrameJsonUtil;
 @Component
 public class BaseController {
 	
-	public static final Logger LOGGER = Logger.getLogger(BaseController.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 	
 	public static final String UTF_8 = "utf-8";
 

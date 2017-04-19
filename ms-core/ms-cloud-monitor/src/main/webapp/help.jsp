@@ -16,6 +16,8 @@
 	  			<ul>
 		  			<li>[prj.path]:项目在客户端的路径。 值如：/home/www/1/</li>
 		  			<li>[prj.name]:项目在客户端的名称包含后缀。 值如：omd.zip</li>
+		  			<li>[current.date]:系统的当前日期。 值如：20170101</li>
+		  			<li>[current.time]:系统的当前时间。 值如：20170101181920</li>
 		  		</ul>
 			</div>
 	  	</div>

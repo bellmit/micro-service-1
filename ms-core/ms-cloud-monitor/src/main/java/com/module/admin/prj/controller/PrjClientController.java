@@ -7,7 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,7 +38,7 @@ import com.system.handle.model.ResponseFrame;
 @Controller
 public class PrjClientController extends BaseController {
 
-	private static final Logger LOGGER = Logger.getLogger(PrjClientController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PrjClientController.class);
 
 	@Autowired
 	private PrjClientService prjClientService;
@@ -248,6 +249,28 @@ public class PrjClientController extends BaseController {
 			frame = prjClientService.updateShellScript(clientId, prjId, version, shellScript);
 		} catch (Exception e) {
 			LOGGER.error("修改shell异常: " + e.getMessage(), e);
+			frame = new ResponseFrame(ResponseCode.FAIL);
+		}
+		writerJson(response, frame);
+	}
+	
+	@RequestMapping(value = "/prjClient/f-json/lookLog")
+	@ResponseBody
+	public void lookLog(HttpServletRequest request, HttpServletResponse response,
+			String clientId, Integer prjId, String version, String logPath) {
+		ResponseFrame frame = null;
+		try {
+			CliInfo cliInfo = cliInfoService.get(clientId);
+			Map<String, Object> paramsMap = new HashMap<String, Object>();
+			paramsMap.put("prjId", prjId);
+			paramsMap.put("logPath", logPath);
+			paramsMap.put("readLine", 100);
+			ResponseFrame logFrame = ClientUtil.post(cliInfo.getClientId(), cliInfo.getToken(), cliInfo.getIp(), cliInfo.getPort(),
+					"/project/log", paramsMap);
+			writerJson(response, logFrame);
+			return;
+		} catch (Exception e) {
+			LOGGER.error("查看项目日志异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
 		}
 		writerJson(response, frame);

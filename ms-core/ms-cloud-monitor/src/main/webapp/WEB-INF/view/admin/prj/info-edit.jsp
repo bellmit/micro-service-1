@@ -31,7 +31,7 @@
 		</div>
 		<div>
 			<small>
-				<a href="${webroot}/help.jsp#prjInfoParam" target="_blank">[prj.path]、[prj.name]等参数帮助</a>
+				<a href="${webroot}/help.jsp#prjInfoParam" target="_blank">[prj.path]、[prj.name]、[current.date]、[current.time]等参数帮助</a>
 				<span>|</span>
 				<a href="${webroot}/help.jsp#prjInfoShell" target="_blank">Shell脚本内容解析</a>
 			</small>

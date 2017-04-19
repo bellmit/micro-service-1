@@ -1,6 +1,7 @@
 package com.module.api.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import com.system.handle.model.ResponseFrame;
 @RestController
 public class ApiServiceController {
 
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(ApiServiceController.class);
     
 	@Autowired
 	private ApiServiceService serviceService;

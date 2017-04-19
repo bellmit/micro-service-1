@@ -6,7 +6,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.system.comm.model.ContrastBean;
 import com.system.comm.model.Orderby;
@@ -29,7 +30,7 @@ import com.system.comm.model.Orderby;
  */
 public class FrameBeanUtil {
 	
-	private static final Logger LOGGER = Logger.getLogger(FrameBeanUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FrameBeanUtil.class);
 	
 	/**
 	 * 得到值相同的属性[类必须相同]<br>

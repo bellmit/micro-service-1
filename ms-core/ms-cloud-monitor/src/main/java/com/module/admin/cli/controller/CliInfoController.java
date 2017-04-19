@@ -6,7 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +31,7 @@ import com.system.handle.model.ResponseFrame;
 @Controller
 public class CliInfoController extends BaseController {
 
-	private static final Logger LOGGER = Logger.getLogger(CliInfoController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CliInfoController.class);
 
 	@Autowired
 	private CliInfoService cliInfoService;

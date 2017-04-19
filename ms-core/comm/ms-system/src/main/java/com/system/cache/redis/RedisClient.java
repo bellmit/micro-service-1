@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
@@ -35,7 +36,7 @@ import com.system.comm.utils.FrameTimeUtil;
  */
 public class RedisClient {
 
-	private static final Logger LOGGER = Logger.getLogger(RedisClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RedisClient.class);
 	//判断是否可用
 	private static int redisFailNum = 0;
 	//失败达到10次，停止使用redis

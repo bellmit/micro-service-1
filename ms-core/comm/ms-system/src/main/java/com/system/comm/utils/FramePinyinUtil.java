@@ -1,13 +1,14 @@
 package com.system.comm.utils;
 
-import org.apache.log4j.Logger;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 拼音工具类<br>
@@ -21,7 +22,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class FramePinyinUtil {
 
-	private static final Logger LOGGER = Logger.getLogger(FramePinyinUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FramePinyinUtil.class);
 	
 	/**
 	 * 获取汉字的首字母简拼<br>

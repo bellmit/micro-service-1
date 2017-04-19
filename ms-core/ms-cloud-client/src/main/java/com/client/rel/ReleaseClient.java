@@ -19,6 +19,7 @@ import com.client.rel.utils.ServerUtil;
 import com.system.auth.AuthUtil;
 import com.system.comm.utils.FrameFileUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
+import com.system.comm.utils.FrameTimeUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -62,7 +63,7 @@ public class ReleaseClient {
 				File shFile = FrameFileUtil.readFile(path + batName);
 				ExecShellFailData.add(new ExecShell(batName, version, path, piContainer));
 
-				String command = convertCommand(shellScript, prjId, prjName);
+				String command = convertCommand(shellScript, prjId, prjName, version);
 				FrameFileUtil.writeFile(command, shFile);
 
 				/*String[] cmdChmod = {"/bin/sh", "-c", "chmod a+x " + path + shellName};
@@ -79,7 +80,7 @@ public class ReleaseClient {
 				File shFile = FrameFileUtil.readFile(path + shellName);
 				ExecShellFailData.add(new ExecShell(shellName, version, path, piContainer));
 
-				String command = convertCommand(shellScript, prjId, prjName);
+				String command = convertCommand(shellScript, prjId, prjName, version);
 				FrameFileUtil.writeFile(command, shFile);
 
 				/*String[] cmdChmod = {"/bin/sh", "-c", "chmod a+x " + path + shellName};
@@ -115,25 +116,6 @@ public class ReleaseClient {
 					//发布成功调度回写服务端
 					succ("发布成功");
 				}
-			}
-
-			/**
-			 * 转换特殊参数<br>
-			 * 参数：
-			 * 		{prj.path}:项目在客户端的路径
-			 * 		{prj.name}:项目在客户端的名称包含后缀
-			 * @param command
-			 * @param prjId
-			 * @return
-			 */
-			private String convertCommand(String command, Integer prjId, String prjName) {
-				if(command.contains("[prj.path]")) {
-					command = command.replace("[prj.path]", ClientUtil.getPrjPath(prjId, version));
-				}
-				if(command.contains("[prj.name]")) {
-					command = command.replace("[prj.name]", prjName);
-				}
-				return command;
 			}
 
 			private File download(String url, String savePath, String saveName) {
@@ -194,5 +176,34 @@ public class ReleaseClient {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 转换特殊参数<br>
+	 * 参数：
+	 * 		{prj.path}:项目在客户端的路径
+	 * 		{prj.name}:项目在客户端的名称包含后缀
+	 * @param command
+	 * @param prjId
+	 * @return
+	 */
+	private String convertCommand(String command, Integer prjId, String prjName, String version) {
+		if(command.contains("[prj.path]")) {
+			//处理项目路径
+			command = command.replace("[prj.path]", ClientUtil.getPrjPath(prjId, version));
+		}
+		if(command.contains("[prj.name]")) {
+			//处理项目名称
+			command = command.replace("[prj.name]", prjName);
+		}
+		if(command.contains("[current.date]")) {
+			//处理当前日期
+			command = command.replace("[current.date]", FrameTimeUtil.parseString(FrameTimeUtil.getTime(), FrameTimeUtil.FMT_YYYYMMDD));
+		}
+		if(command.contains("[current.time]")) {
+			//处理当前时间
+			command = command.replace("[current.time]", FrameTimeUtil.parseString(FrameTimeUtil.getTime(), FrameTimeUtil.FMT_YYYYMMDDHHMMSS));
+		}
+		return command;
 	}
 }

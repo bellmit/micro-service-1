@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Map工具类
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 @SuppressWarnings("rawtypes")
 public class FrameMapUtil {
 	
-	private static final Logger LOGGER = Logger.getLogger(FrameMapUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FrameMapUtil.class);
 
 	public static String getString(Map map, String key) {
 		if(map == null) {

@@ -13,7 +13,8 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ import com.system.handle.model.ResponseFrame;
 @Controller
 public class SysFileController extends BaseController {
 
-	private static final Logger logger = Logger.getLogger(SysFileController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SysFileController.class);
 
 	@Autowired
 	private SysFileService sysFileService;

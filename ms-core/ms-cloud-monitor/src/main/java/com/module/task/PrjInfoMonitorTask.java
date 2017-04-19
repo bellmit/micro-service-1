@@ -8,7 +8,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;
 
 import com.module.admin.prj.enums.PrjInfoContainer;
@@ -34,7 +35,7 @@ import com.system.comm.utils.FrameTimeUtil;
  */
 public class PrjInfoMonitorTask {
 
-	private static final Logger LOGGER = Logger.getLogger(PrjInfoMonitorTask.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PrjInfoMonitorTask.class);
 	private static Map<Integer, java.lang.Boolean> failSendEmails = new HashMap<Integer, java.lang.Boolean>();
 
 	public void run() {

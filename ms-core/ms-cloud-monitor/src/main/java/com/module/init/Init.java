@@ -6,7 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.module.comm.constants.ConfigCons;
 import com.module.comm.constants.DictCons;
@@ -23,7 +24,7 @@ import com.system.comm.utils.FrameTimeUtil;
 @WebServlet(urlPatterns="/init", description="初始数据", loadOnStartup=1)
 public class Init extends HttpServlet {
 	private static final long serialVersionUID = 5764818908745849607L;
-	private static final Logger LOGGER = Logger.getLogger(Init.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Init.class);
 
 	/**
 	 * 初始化方法

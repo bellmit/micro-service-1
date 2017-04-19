@@ -3,14 +3,15 @@ package com.system.dao.utils;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.system.comm.utils.FrameSpringBeanUtil;
 
 public class DbUtil {
 
-	private static final Logger LOGGER = Logger.getLogger(DbUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DbUtil.class);
 
 	public static final String DB_MYSQL = "mysql";
 	public static final String DB_ORACLE = "oracle";

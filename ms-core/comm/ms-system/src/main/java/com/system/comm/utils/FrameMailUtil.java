@@ -15,7 +15,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 发送邮件<br>
@@ -43,7 +44,7 @@ import org.apache.log4j.Logger;
  */
 public class FrameMailUtil {
 	
-	private static final Logger LOGGER = Logger.getLogger(FrameMailUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FrameMailUtil.class);
 	
 	private MimeMessage mimeMsg;
 	private Session session;
