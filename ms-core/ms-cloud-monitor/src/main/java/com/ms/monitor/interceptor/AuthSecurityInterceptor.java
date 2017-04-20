@@ -3,7 +3,8 @@ package com.ms.monitor.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +23,7 @@ import com.system.handle.model.ResponseFrame;
 @Component
 public class AuthSecurityInterceptor implements HandlerInterceptor {
 	
-	private static final Logger LOGGER = Logger.getLogger(AuthSecurityInterceptor.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthSecurityInterceptor.class);
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {

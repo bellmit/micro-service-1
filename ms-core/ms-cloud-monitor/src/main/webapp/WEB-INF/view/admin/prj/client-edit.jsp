@@ -12,19 +12,31 @@
 	<div class="enter-panel">
 		<input type="hidden" id="prjId" value="${param.prjId}">
 		
-  		<div class="input-group has-success publish">
+		<div class="form-group">
+			<my:select id="clientId" items="${cliInfos}" value="${prjClient.clientId}" cssCls="form-control" />
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="logPath" placeholder="查看的日志路径" value="${prjClient.logPath}">
+		</div>
+		<div class="form-group">
+ 			<div class="btn-group">
+				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
+			</div>
+			<span id="saveMsg" class="label label-danger"></span>
+		</div>
+  		<!-- <div class="input-group has-success publish">
       		<input type="text" class="form-control" id="searchString" placeholder="输入客户端 [编号/ip地址] 都可搜索"/>
 	      	<span class="input-group-btn">
 	        	<button class="btn btn-success enter-fn" id="queryBtn">搜索</button>
 	      	</span>
 	    </div>
 	    <hr />
-	    <div id="listPanel"></div>
+	    <div id="listPanel"></div> -->
 	</div>
 
 	<jsp:include page="/WEB-INF/view/inc/js.jsp"></jsp:include>
 	<script type="text/javascript">
-	var info = {
+	/* var info = {
 			save: function(_this, clientId) {
 				$(_this).html('提交中');
 				JUtil.ajax({
@@ -49,9 +61,53 @@
 					}
 				});
 			}
-	};
+	}; */
 	$(function() {
-		$('#queryBtn').click(function() {
+		$('#saveBtn').click(function() {
+			var _saveMsg = $('#saveMsg').empty();
+			
+			/* var _prjId = $('#prjId').val();
+			var _code = $('#code');
+			if(JUtil.isEmpty(_code.val())) {
+				_saveMsg.append('请输入编码');
+				_code.focus();
+				return;
+			}
+			var _name = $('#name');
+			if(JUtil.isEmpty(_name.val())) {
+				_saveMsg.append('请输入名称');
+				_name.focus();
+				return;
+			} */
+			
+			var _saveBtn = $('#saveBtn');
+			var _orgVal = _saveBtn.html();
+			_saveBtn.attr('disabled', 'disabled').html('保存中...');
+			JUtil.ajax({
+				url : '${webroot}/prjClient/f-json/save.shtml',
+				data : {
+					prjId: $('#prjId').val(),
+					clientId: $('#clientId').val(),
+					version: '${param.version}',
+					logPath: $('#logPath').val()
+				},
+				success : function(json) {
+					if (json.code === 0) {
+						_saveMsg.attr('class', 'label label-success').append('保存成功');
+						setTimeout(function() {
+							parent.info.loadInfo(1);
+							parent.dialog.close();
+						}, 800);
+					}
+					else if (json.code === -1)
+						_saveMsg.append(JUtil.msg.ajaxErr);
+					else
+						_saveMsg.append(json.message);
+					_saveBtn.removeAttr('disabled').html(_orgVal);
+				}
+			});
+		});
+		/* $('#queryBtn').click(function() {
 			JUtil.ajax({
 				url : '${webroot}/cliInfo/f-json/find.shtml',
 				data : {
@@ -80,7 +136,7 @@
 			});
 		});
 		
-		$('#queryBtn').click();
+		$('#queryBtn').click(); */
 	});
 	</script>
 </body>

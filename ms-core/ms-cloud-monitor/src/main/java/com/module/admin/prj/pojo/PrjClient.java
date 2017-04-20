@@ -33,6 +33,8 @@ public class PrjClient extends BaseEntity implements Serializable {
 	private String shellScript;
 	//版本编号
 	private String version;
+	//日志路径
+	private String logPath;
 	
 	//=========================== 扩展属性
 	//状态名称
@@ -63,6 +65,12 @@ public class PrjClient extends BaseEntity implements Serializable {
 		this.status = status;
 	}
 	
+	public String getLogPath() {
+		return logPath;
+	}
+	public void setLogPath(String logPath) {
+		this.logPath = logPath;
+	}
 	public Date getReleaseTime() {
 		return releaseTime;
 	}

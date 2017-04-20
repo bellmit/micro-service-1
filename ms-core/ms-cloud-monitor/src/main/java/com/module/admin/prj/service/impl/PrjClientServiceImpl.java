@@ -33,7 +33,7 @@ public class PrjClientServiceImpl implements PrjClientService {
 	private CliInfoService cliInfoService;
 	@Autowired
 	private PrjVersionService prjVersionService;
-	
+
 	@Override
 	public ResponseFrame saveOrUpdate(PrjClient prjClient) {
 		ResponseFrame frame = new ResponseFrame();
@@ -49,13 +49,15 @@ public class PrjClientServiceImpl implements PrjClientService {
 			return frame;
 		}
 		PrjClient org = get(prjClient.getPrjId(), prjClient.getVersion(), prjClient.getClientId());
-		if(org != null) {
-			frame.setCode(-4);
+		if(org == null) {
+			/*frame.setCode(-4);
 			frame.setMessage("已经添加过了");
-			return frame;
+			return frame;*/
+			prjClient.setStatus(PrjClientStatus.WAIT.getCode());
+			prjClientDao.save(prjClient);
+		} else {
+			prjClientDao.update(prjClient);
 		}
-		prjClient.setStatus(PrjClientStatus.WAIT.getCode());
-		prjClientDao.save(prjClient);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
@@ -86,7 +88,7 @@ public class PrjClientServiceImpl implements PrjClientService {
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
-	
+
 	@Override
 	public ResponseFrame delete(Integer prjId, String version, String clientId) {
 		ResponseFrame frame = new ResponseFrame();

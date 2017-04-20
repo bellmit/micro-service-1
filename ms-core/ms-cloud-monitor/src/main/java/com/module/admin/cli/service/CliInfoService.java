@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.module.admin.cli.pojo.CliInfo;
+import com.system.comm.model.KvEntity;
 import com.system.handle.model.ResponseFrame;
 
 /**
@@ -67,4 +68,6 @@ public interface CliInfoService {
 	 * @return
 	 */
 	public List<CliInfo> findAll();
+
+	public List<KvEntity> findKvAll();
 }

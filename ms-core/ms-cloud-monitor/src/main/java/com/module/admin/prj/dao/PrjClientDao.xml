@@ -4,7 +4,8 @@
 <mapper namespace="com.module.admin.prj.dao.PrjClientDao">
 
 	<sql id="commCols">
-		prj_id prjId,client_id clientId,status status,release_time releaseTime,shell_script shellScript,status_msg statusMsg,version version
+		prj_id prjId,client_id clientId,status status,release_time releaseTime,shell_script shellScript,status_msg statusMsg,version version,
+		log_path logPath
 	</sql>
 	<sql id="pcPiCols">
 		pi.prj_id prjId,pi.code code,pi.name name,pi.create_time createTime,pi.release_version releaseVersion,pi.release_time releaseTime,pi.status status,pi.container container,pi.shell_script shellScript,
@@ -16,8 +17,8 @@
 	</sql>
 
 	<insert id="save" parameterType="prjClient" flushCache="true">
-		 insert into prj_client(prj_id,client_id,status,release_time,version)
-		 values(#{prjId},#{clientId},#{status},#{releaseTime},#{version})
+		 insert into prj_client(prj_id,client_id,status,release_time,version,log_path)
+		 values(#{prjId},#{clientId},#{status},#{releaseTime},#{version},#{logPath})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -25,6 +26,14 @@
 		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
 	</delete>
 	
+	
+	<update id="update" parameterType="prjClient" flushCache="true">
+		update prj_client
+		<set>
+			log_path=#{logPath}
+		</set>
+  		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
+	</update>
 	<update id="updateStatus" flushCache="true">
 		update prj_client
 		<set>

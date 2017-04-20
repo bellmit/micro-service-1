@@ -64,7 +64,8 @@ var info = {
 				                         '<th>IP : 端口</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布时间</th>',
-				                         '<th width="250">操作</th>',
+				                         '<th>项目</th>',
+				                         '<th width="230">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -82,11 +83,14 @@ var info = {
 							return ['<tr>',
 							    	'<td>',obj.clientId,'</td>',
 							    	'<td>',obj.ip,' : ',obj.port,'</td>',
-							    	'<td>',obj.statusName,' | <a href="javascript:info.lookResult(\'',obj.clientId,'\');">结果</a><textarea class="hidden" id="statusMsg',obj.clientId,'">',obj.statusMsg,'</textarea></td>',
+							    	'<td>',obj.statusName,(JUtil.isNotEmpty(obj.statusMsg) ? ' | <a href="javascript:info.lookResult(\''+obj.clientId+'\');">结果</a>':''),'<textarea class="hidden" id="statusMsg',obj.clientId,'">',obj.statusMsg,'</textarea></td>',
 							    	'<td>',obj.releaseTime,'</td>',
-							    	'<td><a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.clientId,'\')" title="删除"></a>',
-							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.shell(\'',obj.clientId,'\')" title="设置发布的Shell">发布的Shell</a>',
-							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.release(\'',obj.clientId,'\')" title="发布到客户端">发布到客户端</a>',
+							    	'<td><a class="glyphicon text-success" href="javascript:info.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">查看日志</a>',
+							    	'</td>',
+							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.clientId,'\')" title="修改"></a>',
+							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.clientId,'\')" title="删除"></a>',
+							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.shell(\'',obj.clientId,'\')" title="设置发布的Shell">设置执行命令</a>',
+							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.release(\'',obj.clientId,'\')" title="发布到客户端">发布项目</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
@@ -111,8 +115,21 @@ var info = {
 				url: webroot + '/prjClient/f-view/edit.shtml?prjId=${param.prjId}&version=${param.version}&clientId='+(clientId?clientId:''),
 				type: 'iframe',
 				width: 400,
-				height: 350
+				height: 230
 			});
+		},
+		//查看日志
+		lookLog : function(clientId) {
+			var url = webroot + '/prjClient/f-view/lookLog.shtml?prjId=${param.prjId}&version=${param.version}&clientId='+(clientId?clientId:'');
+			
+			open(url);
+			/* dialog({
+				title: '查看日志',
+				url: webroot + '/prjClient/f-view/lookLog.shtml?prjId=${param.prjId}&version=${param.version}&clientId='+(clientId?clientId:''),
+				type: 'iframe',
+				width: 700,
+				height: 500
+			}); */
 		},
 		//设置发布的shell
 		shell : function(clientId) {

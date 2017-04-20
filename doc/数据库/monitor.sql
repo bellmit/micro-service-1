@@ -49,6 +49,7 @@ create table prj_client
    status_msg           varchar(200) comment '状态消息',
    release_time         datetime comment '发布时间',
    shell_script         text comment '客户端执行的Shell命令',
+   log_path             varchar(150) comment '日志路径',
    primary key (prj_id, client_id, version)
 );
 

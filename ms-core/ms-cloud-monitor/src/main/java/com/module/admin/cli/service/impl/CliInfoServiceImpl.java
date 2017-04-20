@@ -1,5 +1,6 @@
 package com.module.admin.cli.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.module.admin.cli.enums.CliInfoActivityStatus;
 import com.module.admin.cli.enums.CliInfoStatus;
 import com.module.admin.cli.pojo.CliInfo;
 import com.module.admin.cli.service.CliInfoService;
+import com.system.comm.model.KvEntity;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -93,5 +95,15 @@ public class CliInfoServiceImpl implements CliInfoService {
 	@Override
 	public List<CliInfo> findAll() {
 		return cliInfoDao.findAll();
+	}
+
+	@Override
+	public List<KvEntity> findKvAll() {
+		List<KvEntity> data = new ArrayList<KvEntity>();
+		List<CliInfo> list = findAll();
+		for (CliInfo cliInfo : list) {
+			data.add(new KvEntity(cliInfo.getClientId(), cliInfo.getName()));
+		}
+		return data;
 	}
 }

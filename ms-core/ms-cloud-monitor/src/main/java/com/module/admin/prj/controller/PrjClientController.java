@@ -25,6 +25,7 @@ import com.module.admin.prj.service.PrjClientService;
 import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjVersionService;
 import com.module.comm.utils.ClientUtil;
+import com.system.comm.model.KvEntity;
 import com.system.comm.utils.FrameStringUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -87,6 +88,8 @@ public class PrjClientController extends BaseController {
 		if(prjId != null) {
 			modelMap.put("prjClient", prjClientService.get(prjId, version, clientId));
 		}
+		List<KvEntity> cliInfos = cliInfoService.findKvAll();
+		modelMap.put("cliInfos", cliInfos);
 		return "admin/prj/client-edit";
 	}
 
@@ -253,18 +256,27 @@ public class PrjClientController extends BaseController {
 		}
 		writerJson(response, frame);
 	}
+
+	@RequestMapping(value = "/prjClient/f-view/lookLog")
+	public String lookLogView(HttpServletRequest request, ModelMap modelMap,
+			String clientId, Integer prjId, String version) {
+		PrjClient prjClient = prjClientService.get(prjId, version, clientId);
+		modelMap.put("prjClient", prjClient);
+		return "admin/prj/client-lookLog";
+	}
 	
 	@RequestMapping(value = "/prjClient/f-json/lookLog")
 	@ResponseBody
 	public void lookLog(HttpServletRequest request, HttpServletResponse response,
-			String clientId, Integer prjId, String version, String logPath) {
+			String clientId, Integer prjId, String version, String logPath, Integer readLine) {
 		ResponseFrame frame = null;
 		try {
 			CliInfo cliInfo = cliInfoService.get(clientId);
 			Map<String, Object> paramsMap = new HashMap<String, Object>();
 			paramsMap.put("prjId", prjId);
 			paramsMap.put("logPath", logPath);
-			paramsMap.put("readLine", 100);
+			paramsMap.put("readLine", readLine);
+			
 			ResponseFrame logFrame = ClientUtil.post(cliInfo.getClientId(), cliInfo.getToken(), cliInfo.getIp(), cliInfo.getPort(),
 					"/project/log", paramsMap);
 			writerJson(response, logFrame);
