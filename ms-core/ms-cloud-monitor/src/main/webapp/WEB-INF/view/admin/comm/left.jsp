@@ -45,6 +45,24 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h4 class="panel-title text-center">
+					<a data-toggle="collapse" href="#mlCollapseMs">微服务<span
+						class="caret" style="border-top-color: #468847;"></span></a>
+				</h4>
+			</div>
+			<div id="mlCollapseMs" class="panel-collapse collapse <c:if test="${param.first == 'ms'}">in</c:if>">
+				<div class="panel-body">
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'msConfigManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/msConfig/f-view/manager.shtml">配置文件管理</a>
+					</div>
+					<%-- <div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'cliInfoMonitor'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cliInfo/f-view/monitor.shtml">客户端监控</a>
+					</div> --%>
+				</div>
+			</div>
+		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">

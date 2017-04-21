@@ -73,8 +73,8 @@ public class CreateJava {
 		Log.createDictory(dPath + "dao/oracle/");
 		Log.createDictory(dPath + "service/");
 		Log.createDictory(dPath + "service/impl/");
-		Log.createDictory(dPath + "handle/");
-		Log.createDictory(dPath + "handle/impl/");
+		//Log.createDictory(dPath + "handle/");
+		//Log.createDictory(dPath + "handle/impl/");
 		Log.createDictory(dPath + "controller/");
 		//Log.createDictory(this.resourcePath);
 	}

@@ -25,7 +25,7 @@ import com.system.springboot.SpringBootVFS;
  */
 @Configuration // 该注解类似于spring配置文件
 @MapperScan(basePackages = {"com.module.admin.sys.dao", "com.module.admin.cli.dao", 
-		"com.module.admin.prj.dao", "com.module.admin.rest.dao", })
+		"com.module.admin.prj.dao", "com.module.admin.rest.dao", "com.module.admin.ms.dao" })
 public class MyBatisConfig {
 
     @Autowired
@@ -46,7 +46,8 @@ public class MyBatisConfig {
         String typeAliasesPackage = "com.module.admin.sys.pojo;"
         		+ "com.module.admin.cli.pojo;"
         		+ "com.module.admin.prj.pojo;"
-        		+ "com.module.admin.rest.pojo;";
+        		+ "com.module.admin.rest.pojo;"
+        		+ "com.module.admin.ms.pojo;";
         fb.setTypeAliasesPackage(typeAliasesPackage);//env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
         List<Resource> resources = new ArrayList<Resource>();
         resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver()
@@ -57,6 +58,8 @@ public class MyBatisConfig {
         .getResources("classpath*:com/module/admin/prj/dao/*.xml")));
         resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver()
         .getResources("classpath*:com/module/admin/rest/dao/*.xml")));
+        resources.addAll(Arrays.asList(new PathMatchingResourcePatternResolver()
+        .getResources("classpath*:com/module/admin/ms/dao/*.xml")));
         fb.setMapperLocations(resources.toArray(new Resource[resources.size()]));//env.getProperty("mybatis.mapperLocations")));//
 
         return fb.getObject();

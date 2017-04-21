@@ -238,6 +238,25 @@ public class PrjClientController extends BaseController {
 		}
 		return "admin/prj/client-shell";
 	}
+	/**
+	 * 根据项目编号和客户端编号获取最后一个版本的路径
+	 * @return
+	 */
+	@RequestMapping(value = "/prjClient/f-json/getLastByPrjIdClientId")
+	@ResponseBody
+	public void getLastByPrjIdClientId(HttpServletRequest request, HttpServletResponse response,
+			Integer prjId, String clientId) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			PrjClient prjClient = prjClientService.getLastByPrjIdClientId(prjId, clientId);
+			frame.setBody(prjClient);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("修改shell异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+		}
+		writerJson(response, frame);
+	}
 
 	/**
 	 * 修改shell

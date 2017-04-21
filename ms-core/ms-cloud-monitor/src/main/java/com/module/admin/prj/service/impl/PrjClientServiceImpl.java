@@ -120,4 +120,9 @@ public class PrjClientServiceImpl implements PrjClientService {
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
+
+	@Override
+	public PrjClient getLastByPrjIdClientId(Integer prjId, String clientId) {
+		return prjClientDao.getLastByPrjIdClientId(prjId, clientId);
+	}
 }

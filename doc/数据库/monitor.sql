@@ -171,3 +171,62 @@ create unique index unique_username on sys_user
 (
    username
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*==============================================================*/
+/* 2017-04-21 新增 版本：1.0.2                                  */
+/*==============================================================*/
+
+
+
+
+
+
+drop table if exists ms_config;
+
+/*==============================================================*/
+/* Table: ms_config                                             */
+/*==============================================================*/
+create table ms_config
+(
+   config_id            int not null auto_increment comment '编号',
+   name                 varchar(100) not null comment '文件名称',
+   remark               varchar(250) comment '备注',
+   is_use               int not null comment '是否使用',
+   create_time          datetime not null comment '创建日期',
+   user_id              int not null comment '添加人',
+   primary key (config_id)
+);
+
+alter table ms_config comment '配置文件表';
+
+drop table if exists ms_config_value;
+
+/*==============================================================*/
+/* Table: ms_config_value                                       */
+/*==============================================================*/
+create table ms_config_value
+(
+   config_id            int not null comment '配置编号',
+   code                 varchar(150) not null comment 'key的编码',
+   value                varchar(250) comment 'value',
+   remark               varchar(250) comment '备注',
+   create_time          datetime not null comment '创建时间',
+   user_id              int not null comment '添加人',
+   primary key (config_id, code)
+);
+
+alter table ms_config_value comment '配置文件值表';

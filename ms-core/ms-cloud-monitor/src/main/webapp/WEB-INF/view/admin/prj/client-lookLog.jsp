@@ -46,13 +46,20 @@
 	var info = {
 			loadInfo: function() {
 				var _saveMsg = $('#saveMsg').empty();
+				_saveMsg.attr('class', 'text-danger');
+				var _logPath = $('#logPath');
+				if(JUtil.isEmpty(_logPath.val())) {
+					_saveMsg.append('请输入项目查看日志的地址');
+					_logPath.focus();
+					return;
+				}
 				JUtil.ajax({
 					url : '${webroot}/prjClient/f-json/lookLog.shtml',
 					data : {
 						prjId: '${param.prjId}',
 						version: '${param.version}',
 						clientId: '${param.clientId}',
-						logPath: $('#logPath').val(),
+						logPath: _logPath.val(),
 						readLine: $('#readLine').val()
 					},
 					success : function(json) {

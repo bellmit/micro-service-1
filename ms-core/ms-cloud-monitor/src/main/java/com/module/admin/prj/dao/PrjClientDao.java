@@ -38,4 +38,7 @@ public interface PrjClientDao {
 	public abstract void updateShellScript(@Param("clientId")String clientId, @Param("prjId")Integer prjId,
 			@Param("version")String version,
 			@Param("shellScript")String shellScript);
+
+	public abstract PrjClient getLastByPrjIdClientId(@Param("prjId")Integer prjId,
+			@Param("clientId")String clientId);
 }

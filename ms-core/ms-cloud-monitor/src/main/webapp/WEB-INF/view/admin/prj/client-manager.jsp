@@ -115,7 +115,7 @@ var info = {
 				url: webroot + '/prjClient/f-view/edit.shtml?prjId=${param.prjId}&version=${param.version}&clientId='+(clientId?clientId:''),
 				type: 'iframe',
 				width: 400,
-				height: 230
+				height: 250
 			});
 		},
 		//查看日志

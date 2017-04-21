@@ -55,6 +55,12 @@
 		select <include refid="commCols"/> from prj_client
   		<where>prj_id=#{prjId} and client_id=#{clientId} and version=#{version}</where>
 	</select>
+	<select id="getLastByPrjIdClientId" resultType="prjClient">
+		select <include refid="commCols"/> from prj_client
+  		<where>prj_id=#{prjId} and client_id=#{clientId} and log_path is not null and log_path!=''</where>
+  		order by version desc
+  		limit 1
+	</select>
 	
 	<select id="findByClientId" resultType="prjInfo">
 		select <include refid="pcPiCols"></include> from prj_client pc

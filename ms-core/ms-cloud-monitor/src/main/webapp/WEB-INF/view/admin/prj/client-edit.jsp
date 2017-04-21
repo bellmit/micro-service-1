@@ -18,6 +18,7 @@
 		<div class="form-group">
 			<input type="text" class="form-control" id="logPath" placeholder="查看的日志路径" value="${prjClient.logPath}">
 		</div>
+		<div class="text-right"><small><a href="javascript:info.loadLogPath()">加载上次使用路径</a></small></div>
 		<div class="form-group">
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
@@ -36,32 +37,26 @@
 
 	<jsp:include page="/WEB-INF/view/inc/js.jsp"></jsp:include>
 	<script type="text/javascript">
-	/* var info = {
-			save: function(_this, clientId) {
-				$(_this).html('提交中');
+	var info = {
+			loadLogPath: function() {
 				JUtil.ajax({
-					url : '${webroot}/prjClient/f-json/save.shtml',
+					url : '${webroot}/prjClient/f-json/getLastByPrjIdClientId.shtml',
 					data : {
 						prjId: $('#prjId').val(),
-						clientId: clientId,
-						version: '${param.version}'
+						clientId: $('#clientId').val()
 					},
 					success : function(json) {
 						if (json.code === 0) {
-							setTimeout(function() {
-								parent.info.loadInfo(1);
-								parent.dialog.close();
-							}, 800);
+							$('#logPath').val(json.body.logPath);
 						}
 						else if (json.code === -1)
 							parent.message(JUtil.msg.ajaxErr);
 						else
 							parent.message(json.message);
-						$(_this).html('确定');
 					}
 				});
 			}
-	}; */
+	};
 	$(function() {
 		$('#saveBtn').click(function() {
 			var _saveMsg = $('#saveMsg').empty();

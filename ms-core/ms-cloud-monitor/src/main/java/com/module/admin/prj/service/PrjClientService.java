@@ -80,4 +80,12 @@ public interface PrjClientService {
 	 */
 	public ResponseFrame updateShellScript(String clientId, Integer prjId, String version,
 			String shellScript);
+
+	/**
+	 * 根据项目编号和客户端编号获取最后一次的对象
+	 * @param prjId
+	 * @param clientId
+	 * @return
+	 */
+	public PrjClient getLastByPrjIdClientId(Integer prjId, String clientId);
 }

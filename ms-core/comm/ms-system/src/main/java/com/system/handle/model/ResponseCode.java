@@ -28,6 +28,9 @@ public enum ResponseCode {
     INVALID_URL(50005, "server error"),
     INVALID_REQUEST_PARAMETERS(50010, "invalid request parameters"),
     UNHANDLE_METHOD(50020, "request method is not handled"),
+
+    NOT_AUTHOR(-998, "用户没有权限"),
+    NOT_LOGIN(-999, "用户没有登录"),
     ;
 
     private int code;

@@ -129,7 +129,7 @@ public class ShiroConfig {
 		//安全管理器
 		sfb.setSecurityManager(securityManager());
 		//默认的登陆访问url
-		sfb.setLoginUrl("/index.shtml");
+		sfb.setLoginUrl("/unauthor.shtml");
 		//登陆成功后跳转的url
 		sfb.setSuccessUrl("/user/f-view/main.shtml");
 		//没有权限跳转的url
@@ -152,6 +152,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/csrf.shtml**", "anon");
 		filterChainDefinitionMap.put("/index.shtml**", "anon");
+		filterChainDefinitionMap.put("/unauthor.shtml**", "anon");
 		filterChainDefinitionMap.put("/help.shtml**", "anon");
 		filterChainDefinitionMap.put("/user/json/login**", "anon");
 		filterChainDefinitionMap.put("/**", "user");
