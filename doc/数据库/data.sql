@@ -9,3 +9,15 @@ insert into `sys_config` (`code`, `name`, `value`, `remark`, `exp1`, `exp2`) val
 
 
 insert  into `sys_user`(`user_id`,`username`,`password`,`nickname`,`create_time`,`status`) values (1,'admin','43286a86708820e38c333cdd4c496355','admin','2016-10-19 10:53:38',10);
+
+
+
+
+
+
+
+/*==============================================================*/
+/* 2017-04-21 新增 版本：1.0.2                                  */
+/*==============================================================*/
+insert into `sys_config` (`code`, `name`, `value`, `remark`, `exp1`, `exp2`) values('config.client.id','配置文件的客户ID','143756892',null,null,null);
+insert into `sys_config` (`code`, `name`, `value`, `remark`, `exp1`, `exp2`) values('config.client.token','配置文件的token','4307a39dfc7ecb783d6682f44s3911e2',null,null,null);

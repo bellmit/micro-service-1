@@ -24,6 +24,14 @@ public class AuthUtil {
 	}
 	
 	/**
+	 * 跟新需要授权的客户端
+	 * @param client
+	 */
+	public static void updateAuthClient(AuthClient client) {
+		AuthCons.clientMap.put(client.getId(), client);
+	}
+	
+	/**
 	 * 获取SSO的签名
 	 * @param clientId
 	 * @param time

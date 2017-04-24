@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import com.module.admin.ms.dao.MsConfigDao;
 import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.service.MsConfigService;
+import com.module.admin.ms.service.MsConfigValueService;
+import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
@@ -23,6 +25,8 @@ public class MsConfigServiceImpl implements MsConfigService {
 
 	@Autowired
 	private MsConfigDao msConfigDao;
+	@Autowired
+	private MsConfigValueService msConfigValueService;
 	
 	@Override
 	public ResponseFrame saveOrUpdate(MsConfig msConfig) {
@@ -49,6 +53,9 @@ public class MsConfigServiceImpl implements MsConfigService {
 		List<MsConfig> data = null;
 		if(total > 0) {
 			data = msConfigDao.findMsConfig(msConfig);
+			for (MsConfig mc : data) {
+				mc.setIsUseName(Boolean.getText(mc.getIsUse()));
+			}
 		}
 		Page<MsConfig> page = new Page<MsConfig>(msConfig.getPage(), msConfig.getSize(), total, data);
 		frame.setBody(page);
@@ -60,7 +67,15 @@ public class MsConfigServiceImpl implements MsConfigService {
 	public ResponseFrame delete(Integer configId) {
 		ResponseFrame frame = new ResponseFrame();
 		msConfigDao.delete(configId);
+		
+		//删除属性值
+		msConfigValueService.delete(configId);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public List<MsConfig> findUse() {
+		return msConfigDao.findUse();
 	}
 }

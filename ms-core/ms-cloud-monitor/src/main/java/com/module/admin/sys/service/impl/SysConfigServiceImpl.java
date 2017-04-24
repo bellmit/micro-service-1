@@ -9,6 +9,8 @@ import com.module.admin.sys.dao.SysConfigDao;
 import com.module.admin.sys.enums.SysConfigCode;
 import com.module.admin.sys.pojo.SysConfig;
 import com.module.admin.sys.service.SysConfigService;
+import com.system.auth.AuthUtil;
+import com.system.auth.model.AuthClient;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -24,7 +26,7 @@ public class SysConfigServiceImpl implements SysConfigService {
 
 	@Autowired
 	private SysConfigDao sysConfigDao;
-	
+
 	@Override
 	public ResponseFrame saveOrUpdate(SysConfig sysConfig) {
 		ResponseFrame frame = new ResponseFrame();
@@ -32,6 +34,13 @@ public class SysConfigServiceImpl implements SysConfigService {
 		if(org == null) {
 			sysConfigDao.save(sysConfig);
 		} else {
+			if(SysConfigCode.CONFIG_CLIENT_ID.getCode().equals(sysConfig.getCode())
+					|| SysConfigCode.CONFIG_CLIENT_TOKEN.getCode().equals(sysConfig.getCode())) {
+				String clientId = getValue(SysConfigCode.CONFIG_CLIENT_ID);
+				String token = getValue(SysConfigCode.CONFIG_CLIENT_TOKEN);
+				AuthUtil.updateAuthClient(new AuthClient(clientId, SysConfigCode.CONFIG_CLIENT_ID.getName(),
+						"http://xxxx:", token, ""));
+			}
 			sysConfigDao.update(sysConfig);
 		}
 		frame.setCode(ResponseCode.SUCC.getCode());
@@ -62,7 +71,7 @@ public class SysConfigServiceImpl implements SysConfigService {
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
-	
+
 	@Override
 	public ResponseFrame delete(String code) {
 		ResponseFrame frame = new ResponseFrame();

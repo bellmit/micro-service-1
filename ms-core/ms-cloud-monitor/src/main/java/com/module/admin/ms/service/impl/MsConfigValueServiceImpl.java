@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 import com.module.admin.ms.dao.MsConfigValueDao;
 import com.module.admin.ms.pojo.MsConfigValue;
 import com.module.admin.ms.service.MsConfigValueService;
-import com.system.comm.model.Page;
-import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
+import com.system.handle.model.ResponseFrame;
 
 /**
  * ms_config_value的Service
@@ -25,36 +24,21 @@ public class MsConfigValueServiceImpl implements MsConfigValueService {
 	private MsConfigValueDao msConfigValueDao;
 	
 	@Override
-	public ResponseFrame saveOrUpdate(MsConfigValue msConfigValue) {
+	public ResponseFrame saveList(Integer configId, List<MsConfigValue> values) {
 		ResponseFrame frame = new ResponseFrame();
-		if(msConfigValue.getConfigId() == null) {
-			msConfigValueDao.save(msConfigValue);
-		} else {
-			msConfigValueDao.update(msConfigValue);
+		delete(configId);
+		for (MsConfigValue mcv : values) {
+			msConfigValueDao.save(mcv);
 		}
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
 
 	@Override
-	public MsConfigValue get(Integer configId) {
-		return msConfigValueDao.get(configId);
+	public MsConfigValue get(Integer configId, String code) {
+		return msConfigValueDao.get(configId, code);
 	}
 
-	@Override
-	public ResponseFrame pageQuery(MsConfigValue msConfigValue) {
-		msConfigValue.setDefPageSize();
-		ResponseFrame frame = new ResponseFrame();
-		int total = msConfigValueDao.findMsConfigValueCount(msConfigValue);
-		List<MsConfigValue> data = null;
-		if(total > 0) {
-			data = msConfigValueDao.findMsConfigValue(msConfigValue);
-		}
-		Page<MsConfigValue> page = new Page<MsConfigValue>(msConfigValue.getPage(), msConfigValue.getSize(), total, data);
-		frame.setBody(page);
-		frame.setCode(ResponseCode.SUCC.getCode());
-		return frame;
-	}
 	
 	@Override
 	public ResponseFrame delete(Integer configId) {
@@ -63,4 +47,10 @@ public class MsConfigValueServiceImpl implements MsConfigValueService {
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
+
+	@Override
+	public List<MsConfigValue> findByConfigId(Integer configId) {
+		return msConfigValueDao.findByConfigId(configId);
+	}
+
 }

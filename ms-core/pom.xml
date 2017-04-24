@@ -150,12 +150,6 @@
 			<version>${mysql.version}</version>
 		</dependency>
 		
-		<!-- system -->
-		<dependency>
-			<groupId>ms.system</groupId>
-			<artifactId>ms-system</artifactId>
-			<version>${ms.system.version}</version>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

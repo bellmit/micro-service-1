@@ -32,6 +32,18 @@ public class MsConfigValue extends BaseEntity implements Serializable {
 	//添加人
 	private Integer userId;
 	
+	public MsConfigValue() {
+		super();
+	}
+	public MsConfigValue(Integer configId, String code, String value,
+			String remark, Integer userId) {
+		super();
+		this.configId = configId;
+		this.code = code;
+		this.value = value;
+		this.remark = remark;
+		this.userId = userId;
+	}
 	public Integer getConfigId() {
 		return configId;
 	}

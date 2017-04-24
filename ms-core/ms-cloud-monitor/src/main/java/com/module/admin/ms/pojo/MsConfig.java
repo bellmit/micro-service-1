@@ -2,6 +2,7 @@ package com.module.admin.ms.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -32,6 +33,12 @@ public class MsConfig extends BaseEntity implements Serializable {
 	//添加人
 	private Integer userId;
 	
+	//========================== 扩展属性
+	//是否使用显示值
+	private String isUseName;
+	//属性集合
+	private List<MsConfigValue> values;
+	
 	public Integer getConfigId() {
 		return configId;
 	}
@@ -39,6 +46,18 @@ public class MsConfig extends BaseEntity implements Serializable {
 		this.configId = configId;
 	}
 	
+	public String getIsUseName() {
+		return isUseName;
+	}
+	public void setIsUseName(String isUseName) {
+		this.isUseName = isUseName;
+	}
+	public List<MsConfigValue> getValues() {
+		return values;
+	}
+	public void setValues(List<MsConfigValue> values) {
+		this.values = values;
+	}
 	public String getName() {
 		return name;
 	}

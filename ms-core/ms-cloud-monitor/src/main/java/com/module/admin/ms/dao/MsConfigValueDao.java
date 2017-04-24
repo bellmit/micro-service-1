@@ -18,9 +18,8 @@ public interface MsConfigValueDao {
 
 	public abstract void delete(@Param("configId")Integer configId);
 
-	public abstract MsConfigValue get(@Param("configId")Integer configId);
+	public abstract MsConfigValue get(@Param("configId")Integer configId, @Param("code")String code);
 
-	public abstract List<MsConfigValue> findMsConfigValue(MsConfigValue msConfigValue);
+	public abstract List<MsConfigValue> findByConfigId(@Param("configId")Integer configId);
 	
-	public abstract int findMsConfigValueCount(MsConfigValue msConfigValue);
 }

@@ -10,17 +10,15 @@
 </head>
 <body class="cld_body">
 	<div class="enter-panel">
+		<input type="hidden" id="configId" value="${msConfig.configId}">
+  		<div class="form-group">
+			<input type="text" class="form-control" id="name" value="${msConfig.name}">
+		</div>
+  		<div class="form-group">
+			<input type="text" class="form-control" id="remark" placeholder="备注" value="${msConfig.remark}">
+		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" id="code" readonly="readonly" value="${sysConfig.code}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="name" readonly="readonly" value="${sysConfig.name}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="value" placeholder="值" value="${sysConfig.value}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${sysConfig.remark}">
+			<my:select id="isUse" headerKey="" headerValue="是否使用" dictcode="boolean" value="${msConfig.isUse}" cssCls="form-control" />
 		</div>
   		<div class="form-group">
  			<div class="btn-group">
@@ -36,22 +34,29 @@
 		$('#saveBtn').click(function() {
 			var _saveMsg = $('#saveMsg').empty();
 			
-			var _value = $('#value');
-			if(JUtil.isEmpty(_value.val())) {
-				_saveMsg.append('请输入值');
-				_value.focus();
+			var _name = $('#name');
+			if(JUtil.isEmpty(_name.val())) {
+				_saveMsg.append('请输入文件名称');
+				_name.focus();
 				return;
 			}
-
+			var _isUse = $('#isUse');
+			if(JUtil.isEmpty(_isUse.val())) {
+				_saveMsg.append('请选择是否使用');
+				_isUse.focus();
+				return;
+			}
+			
 			var _saveBtn = $('#saveBtn');
 			var _orgVal = _saveBtn.html();
 			_saveBtn.attr('disabled', 'disabled').html('保存中...');
 			JUtil.ajax({
-				url : '${webroot}/sysConfig/f-json/save.shtml',
+				url : '${webroot}/msConfig/f-json/save.shtml',
 				data : {
-					code: $('#code').val(),
-					value: _value.val(),
-					remark: $('#remark').val()
+					configId: $('#configId').val(),
+					name: _name.val(),
+					remark: $('#remark').val(),
+					isUse: _isUse.val()
 				},
 				success : function(json) {
 					if (json.code === 0) {

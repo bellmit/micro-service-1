@@ -38,6 +38,7 @@
 	<select id="findSysConfig" parameterType="sysConfig" resultType="sysConfig">
 		select <include refid="commCols"/> from sys_config
 		<where>
+			<if test="code!=null and code!=''">and code like concat(concat('%', #{code}), '%')</if>
 		</where>
 		order by code asc
   		limit #{currentIndex}, #{size}
@@ -45,6 +46,7 @@
 	<select id="findSysConfigCount" parameterType="sysConfig" resultType="int">
 		select count(*) from sys_config
 		<where>
+			<if test="code!=null and code!=''">and code like concat(concat('%', #{code}), '%')</if>
 		</where>
 	</select>
 </mapper>

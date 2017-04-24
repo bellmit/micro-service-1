@@ -8,8 +8,8 @@
 	</sql>
 
 	<insert id="save" parameterType="msConfigValue" flushCache="true">
-		 insert into ms_config_value(code,value,remark,create_time,user_id)
-		 values(#{code},#{value},#{remark},#{createTime},#{userId})
+		 insert into ms_config_value(config_id,code,value,remark,create_time,user_id)
+		 values(#{configId},#{code},#{value},#{remark},now(),#{userId})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,29 +20,20 @@
 	<update id="update" parameterType="msConfigValue" flushCache="true">
 		update ms_config_value
 		<set>
-			code=#{code},value=#{value},remark=#{remark},create_time=#{createTime},user_id=#{userId}
+			value=#{value},remark=#{remark}
 		</set>
-		<where>config_id=#{configId}</where>
+		<where>config_id=#{configId} and code=#{code}</where>
 	</update>
 	
 	<select id="get" resultType="msConfigValue">
 		select <include refid="commCols"/> from ms_config_value
-  		<where>config_id=#{configId}</where>
+  		<where>config_id=#{configId} and code=#{code}</where>
 	</select>
 	
-	<select id="findMsConfigValue" parameterType="msConfigValue" resultType="msConfigValue">
+	<select id="findByConfigId" resultType="msConfigValue">
 		select <include refid="commCols"/> from ms_config_value
 		<where>
-			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
-			and isdel=0
-		</where>
-  		limit #{currentIndex}, #{size}
-	</select>
-	<select id="findMsConfigValueCount" parameterType="msConfigValue" resultType="int">
-		select count(*) from ms_config_value
-		<where>
-			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
-			and isdel=0
+			config_id=#{configId}
 		</where>
 	</select>
 </mapper>

@@ -24,6 +24,7 @@
 						<div class="col-sm-6 text-right">
 						  	<div class="btn-group">
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增配置文件</a>
+						  		<a href="${webroot}/sysConfig/f-view/manager.shtml?code=config." class="btn btn-default btn-sm">设置配置系统参数</a>
 						  	</div>
 						  	<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
@@ -49,11 +50,11 @@ var info = {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th>编号</th>',
-				                         '<th>名称</th>',
-				                         '<th>状态</th>',
+				                         '<th>文件名称</th>',
+				                         '<th>备注</th>',
+				                         '<th>是否使用</th>',
 				                         '<th>创建时间</th>',
-				                         '<th width="200">操作</th>',
+				                         '<th width="150">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -69,15 +70,13 @@ var info = {
 					if(json.code === 0) {
 						function getResult(obj) {
 							return ['<tr>',
-							    	'<td>',obj.code,'</td>',
 							    	'<td>',obj.name,'</td>',
-							    	'<td>',obj.statusName,'</td>',
+							    	'<td>',obj.remark,'</td>',
+							    	'<td>',obj.isUseName,'</td>',
 							    	'<td>',obj.createTime,'</td>',
-							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjId,')" title="修改"></a>',
-							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,')" title="删除"></a>',
-							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a>',
-							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本发布管理">版本发布</a>',
-							    	//'&nbsp; <a class="glyphicon text-success" href="javascript:info.cli(',obj.prjId,')" title="发到对应的客户端">发布到客户端</a>',
+							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.configId,')" title="修改"></a>',
+							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.configId,')" title="删除"></a>',
+							    	'&nbsp; | &nbsp; <a class="glyphicon text-success" href="javascript:info.values(',obj.configId,')" title="跳转到属性管理，编辑属性">属性管理</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
@@ -91,11 +90,14 @@ var info = {
 		edit : function(id) {
 			dialog({
 				title: '编辑配置文件',
-				url: webroot + '/msConfig/f-view/edit.shtml?prjId='+(id?id:''),
+				url: webroot + '/msConfig/f-view/edit.shtml?configId='+(id?id:''),
 				type: 'iframe',
-				width: 600,
-				height: 580
+				width: 450,
+				height: 280
 			});
+		},
+		values : function(id) {
+			location = webroot + '/msConfigValue/f-view/edit.shtml?configId='+(id?id:'');
 		},
 		del : function(id) {
 			if(confirm('您确定要删除该配置文件吗?')) {

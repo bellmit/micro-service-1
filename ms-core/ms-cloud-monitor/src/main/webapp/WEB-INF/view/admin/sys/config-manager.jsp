@@ -19,9 +19,16 @@
 				<div class="panel-heading">系统管理 / <b>系统配置</b></div>
 				<div class="panel-body">
 				  	<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-4">
+							<span class="enter-panel">
+								<select id="code" class="form-control" onchange="info.loadInfo(1)">
+									<option value="">所有配置信息</option>
+									<option value="config.">配置系统的信息</option>
+									<option value="mail.">发送邮件的配置</option>
+								</select>
+					  		</span>
 						</div>
-						<div class="col-sm-6 text-right">
+						<div class="col-sm-8 text-right">
 						  	<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 						  	</div>
@@ -59,7 +66,7 @@ var info = {
 
 			JUtil.ajax({
 				url : '${webroot}/sysConfig/f-json/pageQuery.shtml',
-				data : { page:infoPage.page, size:infoPage.size },
+				data : { page:infoPage.page, size:infoPage.size, code:$('#code').val() },
 				beforeSend: function(){ infoPage.beforeSend('加载信息中...'); },
 				error : function(json){ infoPage.error('加载信息出错了!'); },
 				success : function(json){
@@ -91,6 +98,10 @@ var info = {
 		}
 };
 $(function() {
+	var _code = '${param.code}';
+	if(JUtil.isNotEmpty(_code)) {
+		$('#code').val(_code);
+	}
 	info.loadInfo(1);
 });
 </script>

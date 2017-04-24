@@ -43,4 +43,10 @@ public interface MsConfigService {
 	 * @return
 	 */
 	public ResponseFrame delete(Integer configId);
+
+	/**
+	 * 查找使用的属性文件
+	 * @return
+	 */
+	public List<MsConfig> findUse();
 }

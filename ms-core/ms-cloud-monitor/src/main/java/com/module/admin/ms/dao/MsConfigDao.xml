@@ -9,7 +9,7 @@
 
 	<insert id="save" parameterType="msConfig" flushCache="true">
 		 insert into ms_config(name,remark,is_use,create_time,user_id)
-		 values(#{name},#{remark},#{isUse},#{createTime},#{userId})
+		 values(#{name},#{remark},#{isUse},now(),#{userId})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +20,7 @@
 	<update id="update" parameterType="msConfig" flushCache="true">
 		update ms_config
 		<set>
-			name=#{name},remark=#{remark},is_use=#{isUse},create_time=#{createTime},user_id=#{userId}
+			name=#{name},remark=#{remark},is_use=#{isUse}
 		</set>
 		<where>config_id=#{configId}</where>
 	</update>
@@ -30,11 +30,15 @@
   		<where>config_id=#{configId}</where>
 	</select>
 	
+	<select id="findUse" resultType="msConfig">
+		select <include refid="commCols"/> from ms_config
+  		<where>is_use=1</where>
+	</select>
+	
 	<select id="findMsConfig" parameterType="msConfig" resultType="msConfig">
 		select <include refid="commCols"/> from ms_config
 		<where>
 			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
-			and isdel=0
 		</where>
   		limit #{currentIndex}, #{size}
 	</select>
@@ -42,7 +46,6 @@
 		select count(*) from ms_config
 		<where>
 			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
-			and isdel=0
 		</where>
 	</select>
 </mapper>

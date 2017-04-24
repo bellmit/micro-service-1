@@ -1,5 +1,6 @@
 package com.module.admin.ms.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,27 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.module.admin.BaseController;
-import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.pojo.MsConfigValue;
-import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
 import com.module.admin.sys.pojo.SysUser;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
 /**
- * 微服务配置文件的Controller
+ * 微服务配置文件值的Controller
  * @author yuejing
  * @date 2016-10-20 17:55:37
  * @version V1.0.0
  */
 @Controller
-public class MsConfigController extends BaseController {
+public class MsConfigValueController extends BaseController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MsConfigController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MsConfigValueController.class);
 
-	@Autowired
-	private MsConfigService msConfigService;
 	@Autowired
 	private MsConfigValueService msConfigValueService;
 	
@@ -43,58 +40,33 @@ public class MsConfigController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/msConfig/f-view/manager")
-	public String manger(HttpServletRequest request) {
-		return "admin/ms/config-manager";
-	}
-
-	/**
-	 * 分页获取信息
-	 * @return
-	 */
-	@RequestMapping(value = "/msConfig/f-json/pageQuery")
-	@ResponseBody
-	public void pageQuery(HttpServletRequest request, HttpServletResponse response,
-			MsConfig msConfig) {
-		ResponseFrame frame = null;
-		try {
-			frame = msConfigService.pageQuery(msConfig);
-		} catch (Exception e) {
-			LOGGER.error("分页获取信息异常: " + e.getMessage(), e);
-			frame = new ResponseFrame(ResponseCode.FAIL);
-		}
-		writerJson(response, frame);
-	}
-
-	/**
-	 * 跳转到编辑页[包含新增和编辑]
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/msConfig/f-view/edit")
-	public String edit(HttpServletRequest request, ModelMap modelMap, Integer configId) {
-		if(configId != null) {
-			modelMap.put("msConfig", msConfigService.get(configId));
-			//查询值
-			List<MsConfigValue> values = msConfigValueService.findByConfigId(configId);
-			modelMap.put("values", values);
-		}
-		return "admin/ms/config-edit";
+	@RequestMapping(value = "/msConfigValue/f-view/edit")
+	public String manger(HttpServletRequest request, ModelMap modelMap, Integer configId) {
+		List<MsConfigValue> values = msConfigValueService.findByConfigId(configId);
+		modelMap.put("values", values);
+		return "admin/ms/configValue-edit";
 	}
 
 	/**
 	 * 保存
 	 * @return
 	 */
-	@RequestMapping(value = "/msConfig/f-json/save")
+	@RequestMapping(value = "/msConfigValue/f-json/save")
 	@ResponseBody
 	public void save(HttpServletRequest request, HttpServletResponse response,
-			MsConfig msConfig) {
+			Integer configId, String code, String value, String remark, String regex) {
 		ResponseFrame frame = null;
 		try {
 			SysUser user = getSessionUser(request);
-			msConfig.setUserId(user.getUserId());
-			frame = msConfigService.saveOrUpdate(msConfig);
+			Integer userId = user.getUserId();
+			List<MsConfigValue> values = new ArrayList<MsConfigValue>();
+			String[] codeArr = code.split(regex);
+			String[] valueArr = value.split(regex);
+			String[] remarkArr = remark.split(regex);
+			for (int i = 0; i < codeArr.length; i++) {
+				values.add(new MsConfigValue(configId, codeArr[i], valueArr[i], remarkArr[i], userId));
+			}
+			frame = msConfigValueService.saveList(configId, values);
 		} catch (Exception e) {
 			LOGGER.error("保存异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
@@ -106,13 +78,13 @@ public class MsConfigController extends BaseController {
 	 * 删除
 	 * @return
 	 */
-	@RequestMapping(value = "/msConfig/f-json/delete")
+	@RequestMapping(value = "/msConfigValue/f-json/delete")
 	@ResponseBody
 	public void delete(HttpServletRequest request, HttpServletResponse response,
-			Integer configId) {
+			Integer configId, String code) {
 		ResponseFrame frame = null;
 		try {
-			frame = msConfigService.delete(configId);
+			frame = msConfigValueService.delete(configId);
 		} catch (Exception e) {
 			LOGGER.error("删除异常: " + e.getMessage(), e);
 			frame = new ResponseFrame();

@@ -21,21 +21,17 @@ public interface MsConfigValueService {
 	 * @param msConfigValue
 	 * @return
 	 */
-	public ResponseFrame saveOrUpdate(MsConfigValue msConfigValue);
+	public ResponseFrame saveList(Integer configId, List<MsConfigValue> values);
 	
 	/**
-	 * 根据configId获取对象
+	 * 根据configId/code获取对象
 	 * @param configId
+	 * @param code
 	 * @return
 	 */
-	public MsConfigValue get(Integer configId);
+	public MsConfigValue get(Integer configId, String code);
 
-	/**
-	 * 分页获取对象
-	 * @param msConfigValue
-	 * @return
-	 */
-	public ResponseFrame pageQuery(MsConfigValue msConfigValue);
+	public List<MsConfigValue> findByConfigId(Integer configId);
 	
 	/**
 	 * 根据configId删除对象
