@@ -1,6 +1,6 @@
 package com.ms.config.task;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +11,11 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ms.config.constants.ConfigCons;
 import com.ms.config.utils.ServerUtil;
-import com.system.comm.utils.FrameJsonUtil;
+import com.system.comm.utils.FrameFileUtil;
+import com.system.comm.utils.FrameMapUtil;
+import com.system.comm.utils.FrameStringUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -30,23 +33,49 @@ public class UpdateConfigTask {
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(100);
 		//线程，每隔5秒调用一次
 		Runnable runnable = new Runnable() {
+			@SuppressWarnings("unchecked")
 			public void run() {
-				LOGGER.info("更新配置文件");
 				//获取要更新的配置文件
 				try {
 					Map<String, Object> paramsMap = new HashMap<String, Object>();
 					ResponseFrame frame = ServerUtil.post("/api/msConfig/findAll.shtml", paramsMap);
 					if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
-						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> data = (List<Map<String, Object>>) frame.getBody();
 						for (Map<String, Object> map : data) {
-							System.out.println(FrameJsonUtil.toString(map));
+							String fileName = FrameMapUtil.getString(map, "name");
+							@SuppressWarnings("rawtypes")
+							List<Map> values = FrameMapUtil.getListMap(map, "values");
+							StringBuffer fileString = new StringBuffer();
+							for (Map<String, Object> valueMap : values) {
+								fileString.append("#").append(FrameMapUtil.getString(valueMap, "remark")).append("\n")
+								.append(FrameMapUtil.getString(valueMap, "code"))
+								.append("=").append(FrameMapUtil.getString(valueMap, "value"))
+								.append("\n");
+							}
+							
+							//读取本地文件
+							String path = ConfigCons.configSearchLocations + File.separator + fileName;
+							if(path.startsWith("file:")) {
+								path = path.substring(5);
+							}
+							String orgString = FrameFileUtil.readFileString(path);
+							if(FrameStringUtil.isEmpty(orgString)) {
+								//新增文件
+								LOGGER.info("新增配置文件[" + path + "]");
+								FrameFileUtil.writeFile(fileString.toString(), new File(path));
+							} else if(!fileString.toString().equals(orgString)) {
+								//更新内容
+								LOGGER.info("更新配置文件[" + path + "]");
+								FrameFileUtil.writeFile(fileString.toString(), new File(path));
+							} else {
+								//无需更新
+							}
 						}
 					} else {
 						LOGGER.error("请求服务端失败");
 					}
-				} catch (IOException e) {
-					LOGGER.error("根据配置文件异常: " + e.getMessage(), e);
+				} catch (Exception e) {
+					LOGGER.error("更新配置文件异常: " + e.getMessage(), e);
 				}
 			}
 		};

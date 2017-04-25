@@ -19,6 +19,7 @@ public class ConsConfig {
 		ConfigCons.clientId = env.getProperty("client.id");
 		ConfigCons.clientToken = env.getProperty("client.token");
 		ConfigCons.clientServerHost = env.getProperty("client.server.host");
+		ConfigCons.configSearchLocations = env.getProperty("spring.cloud.config.server.native.searchLocations");
 		return cons;
 	}
 }

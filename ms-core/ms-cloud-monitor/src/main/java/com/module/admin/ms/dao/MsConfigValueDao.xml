@@ -4,12 +4,13 @@
 <mapper namespace="com.module.admin.ms.dao.MsConfigValueDao">
 
 	<sql id="commCols">
-		config_id configId,code code,value value,remark remark,create_time createTime,user_id userId
+		config_id configId,code code,value value,remark remark,
+		create_time createTime,user_id userId,orderby orderby
 	</sql>
 
 	<insert id="save" parameterType="msConfigValue" flushCache="true">
-		 insert into ms_config_value(config_id,code,value,remark,create_time,user_id)
-		 values(#{configId},#{code},#{value},#{remark},now(),#{userId})
+		 insert into ms_config_value(config_id,code,value,remark,create_time,user_id,orderby)
+		 values(#{configId},#{code},#{value},#{remark},now(),#{userId},#{orderby})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +21,7 @@
 	<update id="update" parameterType="msConfigValue" flushCache="true">
 		update ms_config_value
 		<set>
-			value=#{value},remark=#{remark}
+			value=#{value},remark=#{remark},orderby=#{orderby}
 		</set>
 		<where>config_id=#{configId} and code=#{code}</where>
 	</update>
@@ -35,5 +36,6 @@
 		<where>
 			config_id=#{configId}
 		</where>
+		order by orderby asc
 	</select>
 </mapper>

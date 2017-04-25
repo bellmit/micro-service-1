@@ -27,6 +27,8 @@ public class MsConfigValue extends BaseEntity implements Serializable {
 	private String value;
 	//备注
 	private String remark;
+	//排序
+	private Integer orderby;
 	//创建时间
 	private Date createTime;
 	//添加人
@@ -36,12 +38,13 @@ public class MsConfigValue extends BaseEntity implements Serializable {
 		super();
 	}
 	public MsConfigValue(Integer configId, String code, String value,
-			String remark, Integer userId) {
+			String remark, Integer orderby, Integer userId) {
 		super();
 		this.configId = configId;
 		this.code = code;
 		this.value = value;
 		this.remark = remark;
+		this.orderby = orderby;
 		this.userId = userId;
 	}
 	public Integer getConfigId() {
@@ -84,5 +87,11 @@ public class MsConfigValue extends BaseEntity implements Serializable {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public Integer getOrderby() {
+		return orderby;
+	}
+	public void setOrderby(Integer orderby) {
+		this.orderby = orderby;
 	}
 }

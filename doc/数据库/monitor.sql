@@ -215,6 +215,7 @@ create table ms_config_value
    code                 varchar(150) not null comment 'key的编码',
    value                varchar(250) comment 'value',
    remark               varchar(250) comment '备注',
+   orderby	            int not null comment '排序',
    create_time          datetime not null comment '创建时间',
    user_id              int not null comment '添加人',
    primary key (config_id, code)

@@ -64,7 +64,7 @@ public class MsConfigValueController extends BaseController {
 			String[] valueArr = value.split(regex);
 			String[] remarkArr = remark.split(regex);
 			for (int i = 0; i < codeArr.length; i++) {
-				values.add(new MsConfigValue(configId, codeArr[i], valueArr[i], remarkArr[i], userId));
+				values.add(new MsConfigValue(configId, codeArr[i], valueArr[i], remarkArr[i], i, userId));
 			}
 			frame = msConfigValueService.saveList(configId, values);
 		} catch (Exception e) {

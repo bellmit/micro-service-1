@@ -1,6 +1,11 @@
 package com.ms.config.constants;
 
 public class ConfigCons {
+	
+	/**
+	 * config的本地加载路径
+	 */
+	public static String configSearchLocations;
 
 	/**
 	 * 客户端编号
@@ -33,5 +38,11 @@ public class ConfigCons {
 	}
 	public static void setClientServerHost(String clientServerHost) {
 		ConfigCons.clientServerHost = clientServerHost;
+	}
+	public static String getConfigSearchLocations() {
+		return configSearchLocations;
+	}
+	public static void setConfigSearchLocations(String configSearchLocations) {
+		ConfigCons.configSearchLocations = configSearchLocations;
 	}
 }

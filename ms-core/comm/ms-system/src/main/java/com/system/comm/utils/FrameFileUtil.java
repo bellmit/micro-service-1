@@ -194,9 +194,9 @@ public class FrameFileUtil {
 			reader.close();
 			is.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error("文件不存在");
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("读取文件异常");
 		}
 		return buffer.toString();
 	}
