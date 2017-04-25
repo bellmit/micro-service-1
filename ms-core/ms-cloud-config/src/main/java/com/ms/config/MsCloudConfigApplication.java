@@ -3,6 +3,7 @@ package com.ms.config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -16,6 +17,8 @@ import com.system.comm.utils.FrameSpringBeanUtil;
  * @author yuejing
  * @date 2017年2月16日 下午6:20:15
  */
+//通过该注解，实现服务发现，注册
+@EnableEurekaClient
 @EnableConfigServer
 @ComponentScan("com.*")
 @EnableTransactionManagement(order = 2)

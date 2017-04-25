@@ -1,5 +1,7 @@
 @echo off & setlocal enabledelayedexpansion
 
+title ms-zuul
+
 % 启动 %
 echo Starting ...
 

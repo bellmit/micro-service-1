@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.module.admin.BaseController;
+import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.pojo.MsConfigValue;
+import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
 import com.module.admin.sys.pojo.SysUser;
 import com.system.handle.model.ResponseCode;
@@ -34,6 +36,8 @@ public class MsConfigValueController extends BaseController {
 
 	@Autowired
 	private MsConfigValueService msConfigValueService;
+	@Autowired
+	private MsConfigService msConfigService;
 	
 	/**
 	 * 跳转到管理页
@@ -44,6 +48,8 @@ public class MsConfigValueController extends BaseController {
 	public String manger(HttpServletRequest request, ModelMap modelMap, Integer configId) {
 		List<MsConfigValue> values = msConfigValueService.findByConfigId(configId);
 		modelMap.put("values", values);
+		List<MsConfig> configs = msConfigService.findAll();
+		modelMap.put("configs", configs);
 		return "admin/ms/configValue-edit";
 	}
 
@@ -88,6 +94,26 @@ public class MsConfigValueController extends BaseController {
 		} catch (Exception e) {
 			LOGGER.error("删除异常: " + e.getMessage(), e);
 			frame = new ResponseFrame();
+			frame.setCode(ResponseCode.FAIL.getCode());
+		}
+		writerJson(response, frame);
+	}
+	
+	/**
+	 * 删除
+	 * @return
+	 */
+	@RequestMapping(value = "/msConfigValue/f-json/findByConfigId")
+	@ResponseBody
+	public void findByConfigId(HttpServletRequest request, HttpServletResponse response,
+			Integer configId) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			List<MsConfigValue> values = msConfigValueService.findByConfigId(configId);
+			frame.setBody(values);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("获取信息异常: " + e.getMessage(), e);
 			frame.setCode(ResponseCode.FAIL.getCode());
 		}
 		writerJson(response, frame);

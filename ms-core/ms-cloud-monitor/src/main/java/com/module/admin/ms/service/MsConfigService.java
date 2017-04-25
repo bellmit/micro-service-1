@@ -49,4 +49,6 @@ public interface MsConfigService {
 	 * @return
 	 */
 	public List<MsConfig> findUse();
+
+	public List<MsConfig> findAll();
 }

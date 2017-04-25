@@ -78,4 +78,9 @@ public class MsConfigServiceImpl implements MsConfigService {
 	public List<MsConfig> findUse() {
 		return msConfigDao.findUse();
 	}
+
+	@Override
+	public List<MsConfig> findAll() {
+		return msConfigDao.findAll();
+	}
 }

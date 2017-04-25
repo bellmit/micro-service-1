@@ -45,16 +45,51 @@
 	                        <tbody>
 	                        	<c:forEach items="${values}" var="info">
 	                        	<tr>
-	                        		<td><input type="text" name="code" class="form-control input-sm" placeholder="key" value="${info.code}"/></td>
+	                        		<td>
+	                        			<div class="input-group">
+		                        			<input type="text" name="code" class="form-control input-sm" placeholder="key" value="${info.code}"/>
+		                        			<div class="input-group-btn">
+											  	<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">常用 <span class="caret"></span>
+											  	</button>
+											  	<ul class="dropdown-menu">
+													<li><a href="javascript:;" onclick="info.setUse(this, 'spring.application.name', 'test')">application的名称</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'server.port', '8080')">服务端口</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'eureka.instance.preferIpAddress', 'true')">实例名称显示ip</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'eureka.client.serviceUrl.defaultZone', 'http://cjhxRc1:5201/eureka/,http://cjhxRc2:5202/eureka/')">注册中心地址</a></li>
+												    <li role="separator" class="divider"></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'spring.jackson.date-format', 'yyyy-MM-dd HH:mm:ss')">日期展示格式</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'spring.jackson.time-zone', 'GMT+8')">时区</a></li>
+												    <li role="separator" class="divider"></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'spring.view.prefix', '/WEB-INF/view/')">spring视图前缀</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'spring.view.suffix', '.jsp')">spring视图后缀</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'spring.thymeleaf.cache', 'false')">关闭thymeleaf缓存</a></li>
+												    <li><a href="javascript:;" onclick="info.setUse(this, 'spring.thymeleaf.enabled', 'false')">关闭thymeleaf模板</a></li>
+												</ul>
+											</div>
+										</div>
+	                        		</td>
 	                        		<td><input type="text" name="value" class="form-control input-sm" placeholder="值" value="${info.value}"/></td>
 	                        		<td><input type="text" name="remark" class="form-control input-sm" placeholder="描叙" value="${info.remark}"/></td>
-	                        		<td><a href="javascript:;" class="btn btn-link btn-sm" onclick="info.del(this)">删除</a></td>
+	                        		<td>
+	                        			<a href="javascript:;" class="btn btn-link btn-sm" onclick="info.del(this)">删除</a>
+	                        		</td>
 	                        	</tr>
 	                        	</c:forEach>
 							</tbody>
 						</table>
 						<div align="center">
-							<a href="javascript:info.add()" class="btn btn-default">新增属性</a>
+							<div class="btn-group">
+							  <button type="button" class="btn btn-default" onclick="info.add()">新增属性</button>
+							  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    &nbsp;<span class="caret"></span>&nbsp;
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu">
+							  <c:forEach items="${configs}" var="info">
+							  	<li><a href="javascript:info.loadValues(${info.configId});">从${info.name}中加载</a></li>
+							  </c:forEach>
+							  </ul>
+							</div>
 							<a href="javascript:info.save()" class="btn btn-success">确认保存</a>
 						</div>
 					</div>
@@ -69,19 +104,82 @@
 <script type="text/javascript">
 var info = {
 		//编辑
-		add : function() {
+		add : function(code, value, remark) {
+			if(code === undefined) {
+				code = '';
+			}
+			if(value === undefined) {
+				value = '';
+			}
+			if(remark === undefined) {
+				remark = '暂无';
+			}
 			var _table = $('#infoPanel').find('table');
 			_table.append(['<tr>',
-                   		'<td><input type="text" name="code" class="form-control input-sm" placeholder="key" value=""/></td>',
-                		'<td><input type="text" name="value" class="form-control input-sm" placeholder="值" value=""/></td>',
-                		'<td><input type="text" name="remark" class="form-control input-sm" placeholder="描叙" value="暂无"/></td>',
+                   		'<td>',
+			             '  <div class="input-group">',
+							'<input type="text" name="code" class="form-control input-sm" placeholder="key" value="',code,'"/>',
+							'<div class="input-group-btn">',
+							'  	<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">常用 <span class="caret"></span>',
+							 ' 	</button>',
+							  '	<ul class="dropdown-menu">',
+								'	<li><a href="javascript:;" onclick="info.setUse(this, \'spring.application.name\', \'test\')">application的名称</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'server.port\', \'8080\')">服务端口</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'eureka.instance.preferIpAddress\', \'true\')">实例名称显示ip</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'eureka.client.serviceUrl.defaultZone\', \'http://cjhxRc1:5201/eureka/,http://cjhxRc2:5202/eureka/\')">注册中心地址</a></li>',
+								'    <li role="separator" class="divider"></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'spring.jackson.date-format\', \'yyyy-MM-dd HH:mm:ss\')">日期展示格式</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'spring.jackson.time-zone\', \'GMT+8\')">时区</a></li>',
+								'    <li role="separator" class="divider"></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'spring.view.prefix\', \'/WEB-INF/view/\')">spring视图前缀</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'spring.view.suffix\', \'.jsp\')">spring视图后缀</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'spring.thymeleaf.cache\', \'false\')">关闭thymeleaf缓存</a></li>',
+								'    <li><a href="javascript:;" onclick="info.setUse(this, \'spring.thymeleaf.enabled\', \'false\')">关闭thymeleaf模板</a></li>',
+								'</ul>',
+							'</div>',
+						'</div>',
+							'</td>',
+                		'<td><input type="text" name="value" class="form-control input-sm" placeholder="值" value="',value,'"/></td>',
+                		'<td><input type="text" name="remark" class="form-control input-sm" placeholder="描叙" value="',remark,'"/></td>',
                 		'<td><a href="javascript:;" class="btn btn-link btn-sm" onclick="info.del(this)">删除</a></td>',
                 	'</tr>'].join(''));
 		},
+		loadValues : function(configId) {
+			JUtil.ajax({
+				url : '${webroot}/msConfigValue/f-json/findByConfigId.shtml',
+				data : {
+					configId: configId
+				},
+				success : function(json) {
+					if (json.code === 0) {
+						$.each(json.body, function(i, obj) {
+							info.add(obj.code, obj.value, obj.remark);
+						});
+					}
+					else if (json.code === -1)
+						message(JUtil.msg.ajaxErr);
+					else
+						message(json.message);
+				}
+			});
+		},
 		del : function(_this) {
-			if(confirm('您确定要删除该属性吗?')) {
+			$(_this).parent().parent().remove();
+			/* if(confirm('您确定要删除该属性吗?')) {
 				$(_this).parent().parent().remove();
+			} */
+		},
+		//设置使用
+		setUse : function(_this, key, value) {
+			$(_this).parent().parent().parent().parent().parent().parent().find('input[name="code"]').val(key);
+			var _value = $(_this).parent().parent().parent().parent().parent().parent().find('input[name="value"]');
+			if(JUtil.isEmpty(_value.val())) {
+				_value.val(value);
 			}
+			var _remark = $(_this).parent().parent().parent().parent().parent().parent().find('input[name="remark"]');
+			//if(JUtil.isEmpty(_remark.val())) {
+			_remark.val($(_this).text());
+			//}
 		},
 		save : function() {
 			var _code = [];

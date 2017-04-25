@@ -1,5 +1,7 @@
 @echo off & setlocal enabledelayedexpansion
 
+title ms-config
+
 % 启动 %
 echo Starting ...
 

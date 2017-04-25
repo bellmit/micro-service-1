@@ -25,4 +25,6 @@ public interface MsConfigDao {
 	public abstract int findMsConfigCount(MsConfig msConfig);
 
 	public abstract List<MsConfig> findUse();
+
+	public abstract List<MsConfig> findAll();
 }

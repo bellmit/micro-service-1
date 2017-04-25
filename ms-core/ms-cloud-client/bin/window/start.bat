@@ -1,5 +1,7 @@
 @echo off & setlocal enabledelayedexpansion
 
+title ms-client
+
 % 启动 %
 echo Starting ...
 

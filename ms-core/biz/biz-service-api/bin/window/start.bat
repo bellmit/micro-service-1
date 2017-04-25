@@ -1,5 +1,7 @@
 @echo off & setlocal enabledelayedexpansion
 
+title biz-service-api
+
 % 启动 %
 echo Starting ...
 

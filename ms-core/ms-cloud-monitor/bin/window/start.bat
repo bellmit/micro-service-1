@@ -1,5 +1,7 @@
 @echo off & setlocal enabledelayedexpansion
 
+title ms-monitor
+
 % 启动 %
 echo Starting ...
 

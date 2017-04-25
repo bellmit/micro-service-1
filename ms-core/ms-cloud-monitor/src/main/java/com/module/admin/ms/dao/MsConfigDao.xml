@@ -34,6 +34,9 @@
 		select <include refid="commCols"/> from ms_config
   		<where>is_use=1</where>
 	</select>
+	<select id="findAll" resultType="msConfig">
+		select <include refid="commCols"/> from ms_config
+	</select>
 	
 	<select id="findMsConfig" parameterType="msConfig" resultType="msConfig">
 		select <include refid="commCols"/> from ms_config
