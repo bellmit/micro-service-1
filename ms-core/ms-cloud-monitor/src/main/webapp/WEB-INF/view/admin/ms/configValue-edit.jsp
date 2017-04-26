@@ -90,7 +90,7 @@
 							  </c:forEach>
 							  </ul>
 							</div>
-							<a href="javascript:info.save()" class="btn btn-success">确认保存</a>
+							<button onclick="info.save()" class="btn btn-success" id="saveBtn">确认保存</button>
 						</div>
 					</div>
 				</div>

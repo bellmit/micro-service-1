@@ -52,20 +52,23 @@ public class UpdateConfigTask {
 								.append("=").append(FrameMapUtil.getString(valueMap, "value"))
 								.append("\n");
 							}
-							
+
 							//读取本地文件
-							String path = ConfigCons.configSearchLocations + File.separator + fileName;
-							if(path.startsWith("file:")) {
-								path = path.substring(5);
+							String dirPath = ConfigCons.configSearchLocations;
+							if(dirPath.startsWith("file:")) {
+								dirPath = dirPath.substring(5);
 							}
+							String path = dirPath + File.separator + fileName;
 							String orgString = FrameFileUtil.readFileString(path);
 							if(FrameStringUtil.isEmpty(orgString)) {
 								//新增文件
 								LOGGER.info("新增配置文件[" + path + "]");
+								FrameFileUtil.createDir(dirPath);
 								FrameFileUtil.writeFile(fileString.toString(), new File(path));
 							} else if(!fileString.toString().equals(orgString)) {
 								//更新内容
 								LOGGER.info("更新配置文件[" + path + "]");
+								FrameFileUtil.createDir(dirPath);
 								FrameFileUtil.writeFile(fileString.toString(), new File(path));
 							} else {
 								//无需更新
@@ -80,7 +83,7 @@ public class UpdateConfigTask {
 			}
 		};
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
-		service.scheduleAtFixedRate(runnable, 15, 30, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(runnable, 15, 45, TimeUnit.SECONDS);
 	}
 
 }
