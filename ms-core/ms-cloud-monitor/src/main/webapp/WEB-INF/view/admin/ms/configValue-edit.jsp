@@ -36,7 +36,7 @@
 						<table class="table table-striped table-hover">
 							<thead>
 							<tr class="info">
-	                        <th>key</th>
+	                        <th width="300">key</th>
 	                        <th>value</th>
 	                        <th>备注</th>
 	                        <th width="150">操作</th>

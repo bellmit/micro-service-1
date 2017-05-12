@@ -109,7 +109,7 @@ public class FrameFileUtil {
 	 */
 	public static List<String> getFiles(String dir, String filename) {
 		List<String> list = new ArrayList<String>();
-		Map<String, List<String>> map = getDirFile(dir);
+		Map<String, List<String>> map = getDirFile(dir, true);
 		List<String> allList = map.get("files");
 		if(allList == null) {
 			list = new ArrayList<String>();
@@ -126,12 +126,13 @@ public class FrameFileUtil {
 	/**
 	 * 获取目录下的文件和文件夹
 	 * @param dir
+	 * @param isRecursion	是否递归，true是 false否
 	 * @return
 	 */
-	public static Map<String, List<String>> getDirFile(String dir) {
+	public static Map<String, List<String>> getDirFile(String dir, boolean isRecursion) {
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		File file = new File(dir);
-		getDirFileDtl(file, map);
+		getDirFileDtl(file, map, isRecursion);
 		return map;
 	}
 	/*
@@ -139,14 +140,14 @@ public class FrameFileUtil {
 	 * @param file
 	 * @param map
 	 */
-	private static void getDirFileDtl(File file, Map<String, List<String>> map) {
+	private static void getDirFileDtl(File file, Map<String, List<String>> map, boolean isRecursion) {
 		File[] t = file.listFiles();
 		if(t == null) {
 			return;
 		}
 		for(int i = 0; i < t.length; i++){
 			//判断文件列表中的对象是否为文件夹对象，如果是则执行tree递归，直到把此文件夹中所有文件输出为止
-			if(t[i].isDirectory()){
+			if(t[i].isDirectory()) {
 				List<String> dirs = map.get("dirs");
 				if(dirs == null) {
 					dirs = new ArrayList<String>();
@@ -154,7 +155,9 @@ public class FrameFileUtil {
 				dirs.add(t[i].getAbsolutePath());
 				//System.out.println(t[i].getAbsolutePath()+"\n");
 				map.put("dirs", dirs);
-				getDirFileDtl(t[i], map);
+				if(isRecursion) {
+					getDirFileDtl(t[i], map, isRecursion);
+				}
 			} else{
 				List<String> files = map.get("files");
 				if(files == null) {
@@ -163,7 +166,7 @@ public class FrameFileUtil {
 				files.add(t[i].getAbsolutePath());
 				//System.out.println(t[i].getAbsolutePath()+"\n");
 				map.put("files", files);
-				getDirFileDtl(t[i], map);
+				getDirFileDtl(t[i], map, isRecursion);
 			}
 		}
 	}
@@ -291,80 +294,88 @@ public class FrameFileUtil {
 		}
 		return flag;
 	}
-	
+
 	/**
-     * 读取文件最后N行 
-     * 根据换行符判断当前的行数，
-     * 使用统计来判断当前读取第N行
-     * @param path		文件路径
-     * @param numRead 	读取的行数
-     * @return List<String>
-     */
-    public static List<String> readLastNLine(String path, int numRead) {
-    	File file = new File(path);
-        // 定义结果集
-        List<String> result = new ArrayList<String>();
-        //行数统计
-        long count = 0;
-        
-        // 排除不可读状态
-        if (!file.exists() || file.isDirectory() || !file.canRead()) {
-            return null;
-        }
-        
-        // 使用随机读取
-        RandomAccessFile fileRead = null;
-        try {
-            //使用读模式
-            fileRead = new RandomAccessFile(file, "r");
-            //读取文件长度
-            long length = fileRead.length();
-            //如果是0，代表是空文件，直接返回空结果
-            if (length == 0L) {
-                return result;
-            } else {
-                //初始化游标
-                long pos = length - 1;
-                while (pos > 0) {
-                    pos--;
-                    //开始读取
-                    fileRead.seek(pos);
-                    //如果读取到\n代表是读取到一行
-                    if (fileRead.readByte() == '\n') {
-                        //使用readLine获取当前行
-                        String line = fileRead.readLine();
-                        //保存结果
-                        result.add(new String(line.getBytes("ISO-8859-1"), "UTF-8"));
-                        //打印当前行
-                        //System.out.println(line);
-                        
-                        //行数统计，如果到达了numRead指定的行数，就跳出循环
-                        count++;
-                        if (count == numRead) {
-                            break;
-                        }
-                    }
-                }
-                if (pos == 0) {
-                    fileRead.seek(0);
-                    result.add(fileRead.readLine());
-                }
-            }
-        }
-        catch (IOException e) {
-        	LOGGER.error("读取文件异常: " + e.getMessage());
-        } finally {
-            if (fileRead != null) {
-                try {
-                    //关闭资源
-                    fileRead.close();
-                } catch (Exception e) {
-                }
-            }
-        }
-        Collections.reverse(result);
-        return result;
-    }
+	 * 读取文件最后N行 
+	 * 根据换行符判断当前的行数，
+	 * 使用统计来判断当前读取第N行
+	 * @param path		文件路径
+	 * @param numRead 	读取的行数
+	 * @return List<String>
+	 */
+	public static List<String> readLastNLine(String path, int numRead) {
+		File file = new File(path);
+		// 定义结果集
+		List<String> result = new ArrayList<String>();
+		//行数统计
+		long count = 0;
+
+		// 排除不可读状态
+		if (!file.exists() || file.isDirectory() || !file.canRead()) {
+			return null;
+		}
+
+		// 使用随机读取
+		RandomAccessFile fileRead = null;
+		try {
+			//使用读模式
+			fileRead = new RandomAccessFile(file, "r");
+			//读取文件长度
+			long length = fileRead.length();
+			//如果是0，代表是空文件，直接返回空结果
+			if (length == 0L) {
+				return result;
+			} else {
+				//初始化游标
+				long pos = length - 1;
+				while (pos > 0) {
+					pos--;
+					//开始读取
+					fileRead.seek(pos);
+					//如果读取到\n代表是读取到一行
+					if (fileRead.readByte() == '\n') {
+						//使用readLine获取当前行
+						String line = fileRead.readLine();
+						//保存结果
+						result.add(new String(line.getBytes("ISO-8859-1"), "UTF-8"));
+						//打印当前行
+						//System.out.println(line);
+
+						//行数统计，如果到达了numRead指定的行数，就跳出循环
+						count++;
+						if (count == numRead) {
+							break;
+						}
+					}
+				}
+				if (pos == 0) {
+					fileRead.seek(0);
+					result.add(fileRead.readLine());
+				}
+			}
+		}
+		catch (IOException e) {
+			LOGGER.error("读取文件异常: " + e.getMessage());
+		} finally {
+			if (fileRead != null) {
+				try {
+					//关闭资源
+					fileRead.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+		Collections.reverse(result);
+		return result;
+	}
+
+	public static Boolean move(String srcPath, String newDir) {
+		File file = new File(srcPath);
+		createDir(newDir);
+		// Move file to new directory
+		boolean success = file.renameTo(new File(newDir, file.getName()));
+		return success;
+	}
 
 	public static void main(String[] args) {
 		/*String dir = "D:/project/csm/csm-core";
@@ -376,10 +387,13 @@ public class FrameFileUtil {
 		String content = readFileString(path);
 		System.out.println(content);*/
 
-		String url = "http://static.52jingya.com/bbs/talk-cont/2016/01/15/483b39df87a6536b8a4dba2d5892c833.jpg";
+		/*String url = "http://static.52jingya.com/bbs/talk-cont/2016/01/15/483b39df87a6536b8a4dba2d5892c833.jpg";
 		String savePath = "C:\\img\\";
 		String saveName = "a.jpg";
-		readFile(url, savePath, saveName);
-
+		readFile(url, savePath, saveName);*/
+		String srcPath = "C:\\excel\\恒生\\华兴多策略1号估值表.xls";
+		String newPath = "C:\\excel\\恒生\\2017-05-11\\";
+		Boolean res = move(srcPath, newPath);
+		System.out.println("文件移动结果: " + res);
 	}
 }

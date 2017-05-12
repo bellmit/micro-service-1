@@ -3,7 +3,8 @@
 % 启动 %
 echo Starting ...
 
-java -Xms256m -Xmx256m -XX:MaxPermSize=64M -Dproject.dir=${user.dir}/../../ -jar ..\..\project-admin-1.0.0.war
+set project.dir=${user.dir}/../../
+java -Xms256m -Xmx256m -XX:MaxPermSize=64M -Dproject.dir=%project.dir% -jar ..\..\project-admin-1.0.0.war
 
 :end
 pause

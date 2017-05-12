@@ -69,10 +69,14 @@ var info = {
 				success : function(json){
 					if(json.code === 0) {
 						function getResult(obj) {
+							var _isUseCls = '';
+							if(obj.isUse === 1) {
+								_isUseCls = ' class="text-success"';
+							}
 							return ['<tr>',
 							    	'<td>',obj.name,'</td>',
 							    	'<td>',obj.remark,'</td>',
-							    	'<td>',obj.isUseName,'</td>',
+							    	'<td><span ',_isUseCls,'>',obj.isUseName,'</span></td>',
 							    	'<td>',obj.createTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.configId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.configId,')" title="删除"></a>',
