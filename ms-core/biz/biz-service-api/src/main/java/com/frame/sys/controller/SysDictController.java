@@ -33,7 +33,7 @@ public class SysDictController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/sysDict/get")
+	@RequestMapping(name = "字典获取对象", value = "/sysDict/get")
 	public ResponseFrame get(String typeCode, String dictId) {
 		try {
 			ResponseFrame frame = new ResponseFrame();

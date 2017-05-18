@@ -1,10 +1,10 @@
 package com.ms.biz.api.config;
 
-
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,8 +14,8 @@ import com.system.ds.DynamicDataSource;
 
 @Configuration // 该注解类似于spring配置文件
 public class ThreadPoolConfig {
-	
-	private final Logger LOGGER = Logger.getLogger(getClass());
+
+	private final Logger LOGGER = LoggerFactory.getLogger(ThreadPoolConfig.class);
 
     /**
      * 配置事务管理器
