@@ -181,11 +181,6 @@ create unique index unique_username on sys_user
 /* 2017-04-21 新增 版本：1.0.2                                  */
 /*==============================================================*/
 
-
-
-
-
-
 drop table if exists ms_config;
 
 /*==============================================================*/
@@ -222,3 +217,31 @@ create table ms_config_value
 );
 
 alter table ms_config_value comment '配置文件值表';
+
+
+
+
+
+/*==============================================================*/
+/* 2017-05-18 新增 版本：1.0.3                                  */
+/*==============================================================*/
+
+
+drop table if exists prj_api;
+
+/*==============================================================*/
+/* Table: prj_api                                               */
+/*==============================================================*/
+create table prj_api
+(
+   prj_id               int not null comment '项目编号',
+   path                 varchar(255) not null comment '路径',
+   name                 varchar(200) comment '名称',
+   method               varchar(500) not null comment '方法详情',
+   is_use               int not null comment '是否使用',
+   create_time          datetime not null comment '新增时间',
+   update_time          datetime not null comment '更新时间',
+   primary key (prj_id, path)
+);
+
+alter table prj_api comment '项目的API表';

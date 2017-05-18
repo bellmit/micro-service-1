@@ -53,4 +53,6 @@ public interface PrjInfoService {
 	 * @return
 	 */
 	public String getName(Integer prjId);
+
+	public PrjInfo getCode(String code);
 }

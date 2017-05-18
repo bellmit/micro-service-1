@@ -20,8 +20,11 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
+import com.ms.biz.api.utils.MonitorUtil;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
+import com.system.handle.model.ResponseCode;
+import com.system.handle.model.ResponseFrame;
 
 @Configuration // 该注解类似于spring配置文件
 public class MonitorConfig {
@@ -30,23 +33,30 @@ public class MonitorConfig {
 
     @Autowired
     private Environment env;
-    
-    class MonitorCons {
-    	
-    }
 
     /**
      * 配置事务管理器
      */
     @Bean
-    public MonitorCons monitor() throws Exception {
-    	LOGGER.info("发送可请求的方法");
-    	//TODO 待完善
+    public MonitorUtil monitor() throws Exception {
+    	LOGGER.info("发送系统的API可请求的方法");
+    	MonitorUtil.clientId = env.getProperty("client.monitor.id");
+    	MonitorUtil.sercret = env.getProperty("client.monitor.token");
+    	MonitorUtil.serverHost = env.getProperty("client.monitor.server.host");
+    	
+    	String code = env.getProperty("spring.application.name");
     	List<Map<String, String>> data = findAll();
-    	for (Map<String, String> map : data) {
+    	/*for (Map<String, String> map : data) {
 			System.out.println(FrameJsonUtil.toString(map));
-		}
-    	return new MonitorCons();
+		}*/
+    	Map<String, Object> paramsMap = new HashMap<String, Object>();
+    	paramsMap.put("code", code);
+    	paramsMap.put("detailString", FrameJsonUtil.toString(data));
+    	ResponseFrame frame = MonitorUtil.post("/api/prjApi/saveBatch", paramsMap);
+    	if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
+    		LOGGER.info("成功更新API信息到Monitor!");
+    	}
+    	return new MonitorUtil();
     }
     
     /**

@@ -55,6 +55,11 @@ public class PrjInfoServiceImpl implements PrjInfoService {
 	}
 
 	@Override
+	public PrjInfo getCode(String code) {
+		return prjInfoDao.getCode(code);
+	}
+
+	@Override
 	public ResponseFrame pageQuery(PrjInfo prjInfo) {
 		ResponseFrame frame = new ResponseFrame();
 		int total = prjInfoDao.findPrjInfoCount(prjInfo);

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.prj.dao.PrjApiDao">
+
+	<sql id="commCols">
+		prj_id prjId,path path,name name,method method,is_use isUse,create_time createTime,update_time updateTime
+	</sql>
+
+	<insert id="save" parameterType="prjApi" flushCache="true">
+		 insert into prj_api(prj_id,path,name,method,is_use,create_time,update_time)
+		 values(#{prjId},#{path},#{name},#{method},#{isUse},now(),now())
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from prj_api
+		<where>prj_id=#{prjId}</where>
+	</delete>
+	
+	<update id="update" parameterType="prjApi" flushCache="true">
+		update prj_api
+		<set>
+			name=#{name},method=#{method},is_use=#{isUse},update_time=now()
+		</set>
+		<where>prj_id=#{prjId} and path=#{path}</where>
+	</update>
+	<update id="updateIsUse" flushCache="true">
+		update prj_api
+		<set>is_use=#{isUse}</set>
+		<where>prj_id=#{prjId} and path=#{path}</where>
+	</update>
+	
+	<select id="get" resultType="prjApi">
+		select <include refid="commCols"/> from prj_api
+  		<where>prj_id=#{prjId} and path=#{path}</where>
+	</select>
+	
+	<select id="findPrjApi" parameterType="prjApi" resultType="prjApi">
+		select <include refid="commCols"/> from prj_api
+		<where>
+			prj_id=#{prjId}
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjApiCount" parameterType="prjApi" resultType="int">
+		select count(*) from prj_api
+		<where>
+			prj_id=#{prjId}
+		</where>
+	</select>
+</mapper>
