@@ -29,7 +29,7 @@ public class ${table.className}Controller {
 	@Autowired
 	private ${table.className}Service ${table.beanName}Service;
 	
-	@RequestMapping(value = "/${table.beanName}/get")
+	@RequestMapping(name = "获取详细信息", value = "/${table.beanName}/get")
 	public ResponseFrame get(${table.firstKColumn.typeName} ${table.firstKColumn.fieldName}) {
 		try {
 			ResponseFrame frame = new ResponseFrame();
@@ -42,7 +42,7 @@ public class ${table.className}Controller {
 		}
 	}
 
-	@RequestMapping(value = "/${table.beanName}/saveOrUpdate")
+	@RequestMapping(name = "新增或修改", value = "/${table.beanName}/saveOrUpdate")
 	public ResponseFrame saveOrUpdate(${table.className} ${table.beanName}) {
 		try {
 			ResponseFrame frame = ${table.beanName}Service.saveOrUpdate(${table.beanName});
@@ -53,7 +53,7 @@ public class ${table.className}Controller {
 		}
 	}
 
-	@RequestMapping(value = "/${table.beanName}/pageQuery")
+	@RequestMapping(name = "分页查询信息", value = "/${table.beanName}/pageQuery")
 	public ResponseFrame pageQuery(${table.className} ${table.beanName}, String orderby) {
 		try {
 			if(FrameStringUtil.isNotEmpty(orderby)) {
@@ -68,7 +68,7 @@ public class ${table.className}Controller {
 		}
 	}
 
-	@RequestMapping(value = "/${table.beanName}/delete")
+	@RequestMapping(name = "根据主键删除", value = "/${table.beanName}/delete")
 	public ResponseFrame delete(${table.firstKColumn.typeName} ${table.firstKColumn.fieldName}) {
 		try {
 			ResponseFrame frame = ${table.beanName}Service.delete(${table.firstKColumn.fieldName});

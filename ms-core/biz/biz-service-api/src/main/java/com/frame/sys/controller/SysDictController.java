@@ -2,13 +2,16 @@ package com.frame.sys.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.frame.sys.pojo.SysDict;
 import com.frame.sys.service.SysDictService;
+import com.ms.biz.api.monitor.ApiInfo;
+import com.ms.biz.api.monitor.ApiParam;
 import com.system.comm.model.Orderby;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameStringUtil;
@@ -24,7 +27,7 @@ import com.system.handle.model.ResponseFrame;
 @RestController
 public class SysDictController {
 
-	private final static Logger LOGGER = Logger.getLogger(SysDictController.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(SysDictController.class);
 	@Autowired
 	private SysDictService sysDictService;
 
@@ -33,7 +36,9 @@ public class SysDictController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(name = "字典获取对象", value = "/sysDict/get")
+	@RequestMapping(name = "字典-字典获取对象", value = "/sysDict/get")
+	@ApiInfo(params = {@ApiParam(name="类型编码", code="typeCode", clazz=String.class),
+			@ApiParam(name="字典值编码", code="dictId", clazz=String.class)})
 	public ResponseFrame get(String typeCode, String dictId) {
 		try {
 			ResponseFrame frame = new ResponseFrame();
@@ -46,7 +51,7 @@ public class SysDictController {
 		}
 	}
 
-	@RequestMapping(value = "/sysDict/saveOrUpdate")
+	@RequestMapping(name = "字典-保存或修改", value = "/sysDict/saveOrUpdate")
 	public ResponseFrame saveOrUpdate(SysDict sysDict) {
 		try {
 			ResponseFrame frame = sysDictService.saveOrUpdate(sysDict);

@@ -238,6 +238,7 @@ create table prj_api
    path                 varchar(255) not null comment '路径',
    name                 varchar(200) comment '名称',
    method               varchar(500) not null comment '方法详情',
+   params               text comment '参数',
    is_use               int not null comment '是否使用',
    create_time          datetime not null comment '新增时间',
    update_time          datetime not null comment '更新时间',

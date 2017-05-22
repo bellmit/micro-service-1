@@ -4,12 +4,13 @@
 <mapper namespace="com.module.admin.prj.dao.PrjApiDao">
 
 	<sql id="commCols">
-		prj_id prjId,path path,name name,method method,is_use isUse,create_time createTime,update_time updateTime
+		prj_id prjId,path path,name name,method method,is_use isUse,create_time createTime,
+		update_time updateTime,params params
 	</sql>
 
 	<insert id="save" parameterType="prjApi" flushCache="true">
-		 insert into prj_api(prj_id,path,name,method,is_use,create_time,update_time)
-		 values(#{prjId},#{path},#{name},#{method},#{isUse},now(),now())
+		 insert into prj_api(prj_id,path,name,method,is_use,create_time,update_time,params)
+		 values(#{prjId},#{path},#{name},#{method},#{isUse},now(),now(),#{params})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +21,7 @@
 	<update id="update" parameterType="prjApi" flushCache="true">
 		update prj_api
 		<set>
-			name=#{name},method=#{method},is_use=#{isUse},update_time=now()
+			name=#{name},method=#{method},is_use=#{isUse},update_time=now(),params=#{params}
 		</set>
 		<where>prj_id=#{prjId} and path=#{path}</where>
 	</update>

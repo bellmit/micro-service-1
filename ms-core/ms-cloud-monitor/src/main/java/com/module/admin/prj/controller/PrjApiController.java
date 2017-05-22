@@ -67,4 +67,13 @@ public class PrjApiController extends BaseController {
 		}
 		writerJson(response, frame);
 	}
+	
+	@RequestMapping(name = "查看API详情", value = "/prjApi/f-view/dtl")
+	public String dtl(HttpServletRequest request, ModelMap modelMap,
+			Integer prjId, String path) {
+		//获取所有服务
+		PrjApi prjApi = prjApiService.get(prjId, path);
+		modelMap.put("prjApi", prjApi);
+		return "admin/prj/api-dtl";
+	}
 }

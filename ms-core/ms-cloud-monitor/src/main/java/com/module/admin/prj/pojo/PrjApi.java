@@ -27,6 +27,8 @@ public class PrjApi extends BaseEntity implements Serializable {
 	private String name;
 	//方法详情
 	private String method;
+	//参数
+	private String params;
 	//是否使用
 	private Integer isUse;
 	//新增时间
@@ -41,12 +43,13 @@ public class PrjApi extends BaseEntity implements Serializable {
 	public PrjApi() {
 		super();
 	}
-	public PrjApi(Integer prjId, String path, String name, String method) {
+	public PrjApi(Integer prjId, String path, String name, String method, String params) {
 		super();
 		this.prjId = prjId;
 		this.path = path;
 		this.name = name;
 		this.method = method;
+		this.params = params;
 	}
 	public Integer getPrjId() {
 		return prjId;
@@ -62,6 +65,12 @@ public class PrjApi extends BaseEntity implements Serializable {
 		this.path = path;
 	}
 	
+	public String getParams() {
+		return params;
+	}
+	public void setParams(String params) {
+		this.params = params;
+	}
 	public String getName() {
 		return name;
 	}
