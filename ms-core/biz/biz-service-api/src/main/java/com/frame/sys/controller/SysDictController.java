@@ -12,6 +12,7 @@ import com.frame.sys.pojo.SysDict;
 import com.frame.sys.service.SysDictService;
 import com.ms.biz.api.monitor.ApiInfo;
 import com.ms.biz.api.monitor.ApiParam;
+import com.ms.biz.api.monitor.ApiRes;
 import com.system.comm.model.Orderby;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameStringUtil;
@@ -40,7 +41,15 @@ public class SysDictController {
 	@ApiInfo(params = {
 			@ApiParam(name="类型编码", code="typeCode", clazz=String.class, value="ROLE_INFO"),
 			@ApiParam(name="字典值编码", code="dictId", clazz=String.class, value="roleIdClientManager")
-	})
+	},
+	response = {
+			@ApiRes(name="响应码", code="code", clazz=String.class, value="0"),
+			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
+			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
+			@ApiRes(name="字典编号", code="dictId", pCode="body", clazz=String.class, value="roleIdClientManager"),
+			@ApiRes(name="分类编号", code="typeCode", pCode="body", clazz=String.class, value="ROLE_INFO")
+	}
+			)
 	public ResponseFrame get(String typeCode, String dictId) {
 		try {
 			ResponseFrame frame = new ResponseFrame();

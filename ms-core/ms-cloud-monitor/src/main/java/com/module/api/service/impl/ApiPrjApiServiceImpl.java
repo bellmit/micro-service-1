@@ -42,7 +42,8 @@ public class ApiPrjApiServiceImpl implements ApiPrjApiService {
 			PrjApi api = new PrjApi(prjInfo.getPrjId(), FrameMapUtil.getString(map, "path"),
 					FrameMapUtil.getString(map, "name"),
 					FrameMapUtil.getString(map, "method"),
-					FrameMapUtil.getString(map, "params"));
+					FrameMapUtil.getString(map, "params"),
+					FrameMapUtil.getString(map, "response"));
 			prjApis.add(api);
 		}
 		prjApiService.saveBatch(prjApis);

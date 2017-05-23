@@ -90,6 +90,23 @@ public class PrjApiController extends BaseController {
 		if(prjApi != null) {
 			List<Map<String, String>> params = FrameJsonUtil.toList(prjApi.getParams(), Map.class);
 			modelMap.put("params", params);
+			List<Map<String, String>> response = FrameJsonUtil.toList(prjApi.getResponse(), Map.class);
+			/*Map<String, Object> data = new HashMap<String, Object>();
+			for (Map<String, String> map : response) {
+				String code = FrameMapUtil.getString(map, "code");
+				String pCode = FrameMapUtil.getString(map, "pCode");
+				if(FrameStringUtil.isEmpty(pCode)) {
+					for (Map<String, String> cldMap : response) {
+						String cldPCode = FrameMapUtil.getString(cldMap, "pCode");
+						if(code.equals(cldPCode)) {
+							
+						}
+					}
+					//一级类型
+					data.put(code, "");
+				}
+			}*/
+			modelMap.put("response", response);
 		}
 		return "admin/prj/api-dtl";
 	}

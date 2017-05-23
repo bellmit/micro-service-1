@@ -105,6 +105,7 @@ public class MonitorUtil {
 			item.put("required", "true");
 			item.put("isShow", "0");
 			params.add(item);
+			List<Map<String, String>> response = new ArrayList<Map<String, String>>();
 			for (Annotation annotation : anns) {
 				if(annotation instanceof RequestMapping) {
 					RequestMapping rm = (RequestMapping) annotation;
@@ -141,10 +142,22 @@ public class MonitorUtil {
 						item.put("isShow", "1");
 						params.add(item);
 					}
+					
+					ApiRes[] ars = ai.response();
+					for (ApiRes ar : ars) {
+						item = new HashMap<String, String>();
+						item.put("name", ar.name());
+						item.put("code", ar.code());
+						item.put("pCode", ar.pCode());
+						item.put("clazz", ar.clazz().getName());
+						item.put("value", ar.value());
+						response.add(item);
+					}
 				}
 			}
 			if(map.size() > 0) {
 				map.put("params", FrameJsonUtil.toString(params));
+				map.put("response", FrameJsonUtil.toString(response));
 				data.add(map);
 			}
 		}

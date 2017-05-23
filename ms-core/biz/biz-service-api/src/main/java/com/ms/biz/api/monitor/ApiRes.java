@@ -6,18 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.web.bind.annotation.Mapping;
-
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Mapping
-public @interface ApiInfo {
-
-	//@AliasFor("value")
-	ApiParam[] params();
-
-	ApiRes[] response();
-	/*@AliasFor("params")
-	ApiParam[] value();*/
+public @interface ApiRes {
+	String name() default "";
+	String code() default "";
+	Class<?> clazz() default String.class;
+	String value() default "";
+	String pCode() default "";
 }

@@ -76,6 +76,10 @@
 									</table>
 								</div>
 								<hr/>
+								<div class="text-success">响应列表</div>
+								<div id="resTablePanel">
+								</div>
+								<hr/>
 								<div class="form-group">
 						 			<div class="btn-group">
 										<button type="button" id="saveBtn" class="btn btn-success btn-sm">发送请求</button>
@@ -98,8 +102,44 @@
 	<jsp:include page="/WEB-INF/view/inc/js.jsp"></jsp:include>
 <script type="text/javascript" src="${webroot}/resources/json-viewer/jquery.json-viewer.js"></script>
 <script type="text/javascript">
-
+var response = ${prjApi.response};
+var info = {
+		//解析响应结果
+		parseRes : function() {
+			var _info = ['<table class="table table-striped table-hover">',
+							'<thead><tr>',
+	                        '<th width="150">参数</th>',
+	                        '<th width="150">值</th>',
+	                        '<th width="200">描叙</th>',
+	                        '<th>类型</th>',
+	                        '</tr>',
+	                        '</thead>',
+	                        '<tbody>'];
+			$.each(response, function(i, obj) {
+				var _pCode = obj.pCode;
+				if(JUtil.isNotEmpty(_pCode)) {
+					//获取前面的前缀
+					$.each(response, function(j, cld) {
+						if(JUtil.isNotEmpty(cld.pCode) && cld.code === _pCode) {
+							_pCode = cld.pCode + '.' + _pCode;
+						}
+					});
+					_pCode += '.';
+				}
+				_info.push('<tr>',
+	                        '	<td>',_pCode,obj.code,'</td>',
+	                        '	<td>',obj.value,'</td>',
+	                        '	<td>',obj.name,'</td>',
+	                        '	<td>',obj.clazz,'</td>',
+	                        '</tr>');
+			});
+			_info.push('</tbody></table>');
+			
+			$('#resTablePanel').append(_info.join(''));
+		}
+};
 $(function() {
+	info.parseRes();
 	$('#saveBtn').click(function() {
 		var _saveMsg = $('#saveMsg').empty();
 		_saveMsg.attr('class', 'label label-danger');
