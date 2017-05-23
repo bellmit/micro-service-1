@@ -118,10 +118,10 @@ $(function() {
 				if (json.code === 0) {
 					_saveMsg.attr('class', 'label label-success').append('请求成功');
 					var _res = ['<div class="text-success">请求地址</div>'];
-					_res.push('<p class="alert alert-warning" style="padding: 5px;word-wrap: break-word;"><a href="',json.body.requestUrl,'" target="_blank" class="text-warning">',json.body.requestUrl,'</a></p>');
+					_res.push('<p class="alert alert-warning" style="padding: 5px;font-size: 12px;word-wrap: break-word;"><a href="',json.body.requestUrl,'" target="_blank" class="text-warning">',json.body.requestUrl,'</a></p>');
 					_res.push('<div class="text-success">响应结果</div>');
 					_res.push('<div id="resultInfoFormatPanel" class="alert alert-warning" style="padding: 5px 20px;"></div>');
-					_res.push('<p id="resultInfoPanel" class="alert alert-warning" style="padding: 5px;">',JSON.stringify(json.body.result),'</p>');
+					_res.push('<p id="resultInfoPanel" class="alert alert-warning" style="padding: 5px;font-size: 12px;">',JSON.stringify(json.body.result),'</p>');
 					$('#resultPanel').html(_res.join(''));
 					try {
 				      var input = eval('(' + $('#resultInfoPanel').html() + ')');

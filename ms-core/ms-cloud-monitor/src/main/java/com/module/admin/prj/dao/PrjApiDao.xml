@@ -40,6 +40,8 @@
 		select <include refid="commCols"/> from prj_api
 		<where>
 			prj_id=#{prjId}
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			<if test="path!=null and path!=''">and path like concat(concat('%', #{path}), '%')</if>
 		</where>
   		limit #{currentIndex}, #{size}
 	</select>
@@ -47,6 +49,8 @@
 		select count(*) from prj_api
 		<where>
 			prj_id=#{prjId}
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			<if test="path!=null and path!=''">and path like concat(concat('%', #{path}), '%')</if>
 		</where>
 	</select>
 </mapper>
