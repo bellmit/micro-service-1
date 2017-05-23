@@ -64,7 +64,7 @@
 				                        	</c:when>
 				                        	<c:otherwise>
 				                        	<tr>
-				                        		<td>${info.code}</td>
+				                        		<td>${info.code}<c:if test="${info.required=='true'}"> <span class="text-danger">*</span></c:if></td>
 				                        		<td><input type="text" id="${info.code}" name="${info.code}" style="width: 200px;" value="${info.value}"/></td>
 				                        		<td>${info.name}</td>
 				                        		<td>${info.clazz}</td>

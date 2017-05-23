@@ -94,6 +94,7 @@ public class MonitorUtil {
 			item.put("code", "clientId");
 			item.put("value", prjId);
 			item.put("clazz", String.class.getName());
+			item.put("required", "true");
 			item.put("isShow", "0");
 			params.add(item);
 			item = new HashMap<String, String>();
@@ -101,6 +102,7 @@ public class MonitorUtil {
 			item.put("code", "token");
 			item.put("value", prjToken);
 			item.put("clazz", String.class.getName());
+			item.put("required", "true");
 			item.put("isShow", "0");
 			params.add(item);
 			for (Annotation annotation : anns) {
@@ -135,6 +137,7 @@ public class MonitorUtil {
 						item.put("code", ap.code());
 						item.put("clazz", ap.clazz().getName());
 						item.put("value", ap.value());
+						item.put("required", String.valueOf(ap.required()));
 						item.put("isShow", "1");
 						params.add(item);
 					}

@@ -14,4 +14,9 @@ public @interface ApiParam {
 	String code() default "";
 	Class<?> clazz() default String.class;
 	String value() default "";
+	/**
+	 * 是否必填
+	 * @return
+	 */
+	boolean required() default true;
 }
