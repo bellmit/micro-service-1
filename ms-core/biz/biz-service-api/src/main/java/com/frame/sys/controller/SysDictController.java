@@ -37,8 +37,8 @@ public class SysDictController {
 	 * @return
 	 */
 	@RequestMapping(name = "字典-字典获取对象", value = "/sysDict/get")
-	@ApiInfo(params = {@ApiParam(name="类型编码", code="typeCode", clazz=String.class),
-			@ApiParam(name="字典值编码", code="dictId", clazz=String.class)})
+	@ApiInfo(params = {@ApiParam(name="类型编码", code="typeCode", clazz=String.class, value="ROLE_INFO"),
+			@ApiParam(name="字典值编码", code="dictId", clazz=String.class, value="roleIdClientManager")})
 	public ResponseFrame get(String typeCode, String dictId) {
 		try {
 			ResponseFrame frame = new ResponseFrame();

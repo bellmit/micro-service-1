@@ -3,7 +3,8 @@ package com.module.comm.service;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.module.comm.constants.ConfigCons;
 import com.system.auth.AuthUtil;
@@ -12,14 +13,14 @@ import com.system.comm.utils.FrameJsonUtil;
 import com.system.handle.model.ResponseFrame;
 
 /**
- * 牛人牛基api
+ * api
  * @author 岳静
  * @date 2016年3月23日 下午5:26:23 
  * @version V1.0
  */
 public class BaseService {
 	
-	private static final Logger LOGGER = Logger.getLogger(BaseService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BaseService.class);
 	
 	/**
 	 * 请求api

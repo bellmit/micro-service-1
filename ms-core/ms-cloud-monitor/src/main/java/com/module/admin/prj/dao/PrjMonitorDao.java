@@ -33,4 +33,6 @@ public interface PrjMonitorDao {
 	public abstract void updateMonitorFailSendTime(@Param("prjmId")Integer prjmId);
 
 	public abstract PrjMonitor getByPrjIdRemark(@Param("prjId")Integer prjId, @Param("remark")String remark);
+
+	public abstract PrjMonitor getByPrjIdType(@Param("prjId")String prjId, @Param("type")Integer type);
 }

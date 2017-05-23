@@ -56,6 +56,11 @@
   		<where>prj_id=#{prjId} and remark=#{remark}</where>
   		limit 1
 	</select>
+	<select id="getByPrjIdType" resultType="prjMonitor">
+		select <include refid="commCols"/> from prj_monitor
+  		<where>prj_id=#{prjId} and type=#{type} and monitor_status=10</where>
+  		limit 1
+	</select>
 	
 	<select id="findMonitor" resultType="prjMonitor">
 		select <include refid="commCols"/> from prj_monitor

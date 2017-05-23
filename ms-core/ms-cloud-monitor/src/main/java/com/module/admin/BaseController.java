@@ -1,6 +1,10 @@
 package com.module.admin;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -94,5 +98,16 @@ public class BaseController {
 	 */
 	public void removeSession(HttpServletRequest request, String key) {
 		request.getSession().removeAttribute(key);
+	}
+
+	public Map<String, Object> getParamsMap(HttpServletRequest request) {
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		Map<String, String[]> map = request.getParameterMap();
+		Iterator<Entry<String, String[]>> entryKeyIterator = map.entrySet().iterator();
+		while (entryKeyIterator.hasNext()) {
+			Entry<String, String[]> e = entryKeyIterator.next();
+			paramsMap.put(e.getKey(), request.getParameter(e.getKey()));
+		}
+		return paramsMap;
 	}
 }

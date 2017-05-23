@@ -68,4 +68,11 @@ public interface PrjMonitorService {
 	 * @param prjmId
 	 */
 	public void updateMonitorFailSendInfo(Integer prjmId);
+
+	/**
+	 * 获取服务
+	 * @param prjId
+	 * @return
+	 */
+	public PrjMonitor getService(String prjId);
 }

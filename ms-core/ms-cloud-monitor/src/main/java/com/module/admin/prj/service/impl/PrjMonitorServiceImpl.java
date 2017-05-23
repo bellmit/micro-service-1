@@ -132,4 +132,9 @@ public class PrjMonitorServiceImpl implements PrjMonitorService {
 	public void updateMonitorFailSendInfo(Integer prjmId) {
 		prjMonitorDao.updateMonitorFailSendTime(prjmId);
 	}
+
+	@Override
+	public PrjMonitor getService(String prjId) {
+		return prjMonitorDao.getByPrjIdType(prjId, PrjMonitorType.WEB.getCode());
+	}
 }

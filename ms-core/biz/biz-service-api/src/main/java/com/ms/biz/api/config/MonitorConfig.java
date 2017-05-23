@@ -28,6 +28,8 @@ public class MonitorConfig {
     	MonitorUtil.sercret = env.getProperty("client.monitor.token");
     	MonitorUtil.serverHost = env.getProperty("client.monitor.server.host");
     	
+    	MonitorUtil.prjId = "196845682";
+    	MonitorUtil.prjToken = "708c80644e3f868c429c24cd2cdb7c8e";
     	String appName = env.getProperty("spring.application.name");
     	MonitorUtil.init(appName);
     	return new MonitorUtil();

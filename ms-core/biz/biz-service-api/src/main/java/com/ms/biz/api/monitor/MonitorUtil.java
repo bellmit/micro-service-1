@@ -47,6 +47,11 @@ public class MonitorUtil {
 	public static String clientId;
 	public static String sercret;
 	public static String serverHost;
+	
+	/** 当前项目的ClientId */
+	public static String prjId;
+	/** 当前项目的token */
+	public static String prjToken;
 
 	/**
 	 * 请求服务端的api
@@ -84,6 +89,20 @@ public class MonitorUtil {
 			Annotation[] anns = value.getMethod().getDeclaredAnnotations();
 			Map<String, String> map = new HashMap<String, String>();
 			List<Map<String, String>> params = new ArrayList<Map<String, String>>();
+			Map<String, String> item = new HashMap<String, String>();
+			item.put("name", "客户编号");
+			item.put("code", "clientId");
+			item.put("value", prjId);
+			item.put("clazz", String.class.getName());
+			item.put("isShow", "0");
+			params.add(item);
+			item = new HashMap<String, String>();
+			item.put("name", "客户token");
+			item.put("code", "token");
+			item.put("value", prjToken);
+			item.put("clazz", String.class.getName());
+			item.put("isShow", "0");
+			params.add(item);
 			for (Annotation annotation : anns) {
 				if(annotation instanceof RequestMapping) {
 					RequestMapping rm = (RequestMapping) annotation;
@@ -111,10 +130,12 @@ public class MonitorUtil {
 					ApiInfo ai = (ApiInfo) annotation;
 					ApiParam[] aps = ai.params();
 					for (ApiParam ap : aps) {
-						Map<String, String> item = new HashMap<String, String>();
+						item = new HashMap<String, String>();
 						item.put("name", ap.name());
 						item.put("code", ap.code());
 						item.put("clazz", ap.clazz().getName());
+						item.put("value", ap.value());
+						item.put("isShow", "1");
 						params.add(item);
 					}
 				}

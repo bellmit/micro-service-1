@@ -13,4 +13,5 @@ public @interface ApiParam {
 	String name() default "";
 	String code() default "";
 	Class<?> clazz() default String.class;
+	String value() default "";
 }

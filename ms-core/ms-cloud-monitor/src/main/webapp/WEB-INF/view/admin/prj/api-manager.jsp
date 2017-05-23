@@ -84,7 +84,7 @@ var info = {
 							    	'<td>',obj.path,'<br/>',obj.name,'</td>',
 							    	'<td><span',_isUseCls,'>',obj.isUseName,'</span></td>',
 							    	'<td style="word-wrap:break-word;word-break:break-all;">',obj.method,'</td>',
-							    	'<td>',//<a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjmId,')" title="修改"></a>',
+							    	'<td><a class="text-success" href="javascript:info.dtl(',obj.prjId,',\'',obj.path,'\')" title="查看详情">详情</a>',
 							    	//'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjmId,')" title="删除"></a>',
 							    	'</td>',
 								'</tr>'].join('');
@@ -94,6 +94,9 @@ var info = {
 					else alert(JUtil.msg.ajaxErr);
 				}
 			});
+		},
+		dtl : function(prjId, path) {
+			location = '${webroot}/prjApi/f-view/dtl.shtml?prjId=' + prjId + '&path=' + path;
 		}
 };
 $(function() {
