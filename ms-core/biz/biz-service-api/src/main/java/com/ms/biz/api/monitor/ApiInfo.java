@@ -17,7 +17,7 @@ public @interface ApiInfo {
 	//@AliasFor("value")
 	ApiParam[] params();
 
-	ApiRes[] response();
+	ApiRes[] response() default {};
 	/*@AliasFor("params")
 	ApiParam[] value();*/
 }
