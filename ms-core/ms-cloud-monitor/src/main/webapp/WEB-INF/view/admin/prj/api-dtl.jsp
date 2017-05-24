@@ -122,6 +122,12 @@ var info = {
 					$.each(response, function(j, cld) {
 						if(JUtil.isNotEmpty(cld.pCode) && cld.code === _pCode) {
 							_pCode = cld.pCode + '.' + _pCode;
+							//获取前面的前缀
+							$.each(response, function(k, cld2) {
+								if(JUtil.isNotEmpty(cld2.pCode) && cld2.code === cld.pCode) {
+									_pCode = cld2.pCode + '.' + _pCode;
+								}
+							});
 						}
 					});
 					_pCode += '.';
