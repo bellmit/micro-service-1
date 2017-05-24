@@ -21,7 +21,7 @@
 				<div class="panel-heading">项目 / <b>API</b></div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-8">
 							<div class="btn-group">
 							<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control" value="${param.prjId}"/>
 							</div>
@@ -31,7 +31,7 @@
 						  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
 					  		</span>
 						</div>
-						<div class="col-sm-6 text-right">
+						<div class="col-sm-4 text-right">
 						  	<div class="btn-group">
 						  	</div>
 						  	<div class="btn-group">

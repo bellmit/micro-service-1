@@ -1,5 +1,6 @@
 package com.ms.biz.api.config;
 
+
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -7,14 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import com.system.ds.DynamicDataSource;
 
 @Configuration // 该注解类似于spring配置文件
 public class ThreadPoolConfig {
-
+	
 	private final Logger LOGGER = LoggerFactory.getLogger(ThreadPoolConfig.class);
 
     /**
@@ -46,15 +44,5 @@ public class ThreadPoolConfig {
 			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
 		</property>*/
     	return threadPool;
-    }
-    
-    /**
-     * 配置jdbc模板
-     * @param dataSource
-     * @return
-     */
-    @Bean
-    public JdbcTemplate jdbcTemplate(DynamicDataSource dataSource) {
-    	return new JdbcTemplate(dataSource);
     }
 }

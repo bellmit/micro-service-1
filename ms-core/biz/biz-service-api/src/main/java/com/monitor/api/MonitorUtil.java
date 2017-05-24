@@ -21,7 +21,6 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
@@ -47,7 +46,7 @@ public class MonitorUtil {
 	public static String clientId;
 	public static String sercret;
 	public static String serverHost;
-	
+
 	/** 当前项目的ClientId */
 	public static String prjId;
 	/** 当前项目的token */
@@ -142,7 +141,7 @@ public class MonitorUtil {
 						item.put("isShow", "1");
 						params.add(item);
 					}
-					
+
 					ApiRes[] ars = ai.response();
 					for (ApiRes ar : ars) {
 						item = new HashMap<String, String>();
@@ -163,58 +162,58 @@ public class MonitorUtil {
 		}
 		return data;
 	}
-	
+
 	/**
-     * 获取指定类指定方法的参数名
-     * @param clazz 要获取参数名的方法所属的类
-     * @param method 要获取参数名的方法
-     * @return 按参数顺序排列的参数名列表，如果没有参数，则返回null
-     */
-    public static String[] getMethodParameterNamesByAsm4(Class<?> clazz, final Method method) {
-        final Class<?>[] parameterTypes = method.getParameterTypes();
-        if (parameterTypes == null || parameterTypes.length == 0) {
-            return null;
-        }
-        final Type[] types = new Type[parameterTypes.length];
-        for (int i = 0; i < parameterTypes.length; i++) {
-            types[i] = Type.getType(parameterTypes[i]);
-        }
-        final String[] parameterNames = new String[parameterTypes.length];
+	 * 获取指定类指定方法的参数名
+	 * @param clazz 要获取参数名的方法所属的类
+	 * @param method 要获取参数名的方法
+	 * @return 按参数顺序排列的参数名列表，如果没有参数，则返回null
+	 */
+	public static String[] getMethodParameterNamesByAsm4(Class<?> clazz, final Method method) {
+		final Class<?>[] parameterTypes = method.getParameterTypes();
+		if (parameterTypes == null || parameterTypes.length == 0) {
+			return null;
+		}
+		final Type[] types = new Type[parameterTypes.length];
+		for (int i = 0; i < parameterTypes.length; i++) {
+			types[i] = Type.getType(parameterTypes[i]);
+		}
+		final String[] parameterNames = new String[parameterTypes.length];
 
-        String className = clazz.getName();
-        int lastDotIndex = className.lastIndexOf(".");
-        className = className.substring(lastDotIndex + 1) + ".class";
-        InputStream is = clazz.getResourceAsStream(className);
-        try {
-            ClassReader classReader = new ClassReader(is);
-            classReader.accept(new ClassVisitor(Opcodes.ASM4) {
-                @Override
-                public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-                    // 只处理指定的方法
-                    Type[] argumentTypes = Type.getArgumentTypes(desc);
-                    if (!method.getName().equals(name) || !Arrays.equals(argumentTypes, types)) {
-                        return null;
-                    }
-                    return new MethodVisitor(Opcodes.ASM4) {
-                        @Override
-                        public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index) {
-                            // 静态方法第一个参数就是方法的参数，如果是实例方法，第一个参数是this
-                            if (Modifier.isStatic(method.getModifiers())) {
-                                parameterNames[index] = name;
-                            }
-                            else if (index > 0 && index <= parameterNames.length) {
-                                parameterNames[index - 1] = name;
-                            }
-                        }
-                    };
+		String className = clazz.getName();
+		int lastDotIndex = className.lastIndexOf(".");
+		className = className.substring(lastDotIndex + 1) + ".class";
+		InputStream is = clazz.getResourceAsStream(className);
+		try {
+			ClassReader classReader = new ClassReader(is);
+			classReader.accept(new ClassVisitor(Opcodes.ASM4) {
+				@Override
+				public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+					// 只处理指定的方法
+					Type[] argumentTypes = Type.getArgumentTypes(desc);
+					if (!method.getName().equals(name) || !Arrays.equals(argumentTypes, types)) {
+						return null;
+					}
+					return new MethodVisitor(Opcodes.ASM4) {
+						@Override
+						public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index) {
+							// 静态方法第一个参数就是方法的参数，如果是实例方法，第一个参数是this
+							if (Modifier.isStatic(method.getModifiers())) {
+								parameterNames[index] = name;
+							}
+							else if (index > 0 && index <= parameterNames.length) {
+								parameterNames[index - 1] = name;
+							}
+						}
+					};
 
-                }
-            }, 0);
-        } catch (IOException e) {
-            LOGGER.error("获取方法参数名称异常: " + e.getMessage());
-        }
-        return parameterNames;
-    }
+				}
+			}, 0);
+		} catch (IOException e) {
+			LOGGER.error("获取方法参数名称异常: " + e.getMessage());
+		}
+		return parameterNames;
+	}
 
 	/**
 	 * 初始化监控的API
@@ -222,26 +221,20 @@ public class MonitorUtil {
 	 * @throws IOException
 	 */
 	public static void init(final String appName) {
-		ThreadPoolTaskExecutor task = FrameSpringBeanUtil.getBean(ThreadPoolTaskExecutor.class);
-		task.execute(new Runnable() {
-			@Override
-			public void run() {
-				List<Map<String, String>> data = findAll();
-				/*for (Map<String, String> map : data) {
+		List<Map<String, String>> data = findAll();
+		/*for (Map<String, String> map : data) {
 					System.out.println(FrameJsonUtil.toString(map));
 				}*/
-				Map<String, Object> paramsMap = new HashMap<String, Object>();
-				paramsMap.put("code", appName);
-				paramsMap.put("detailString", FrameJsonUtil.toString(data));
-				try {
-					ResponseFrame frame = MonitorUtil.post("/api/prjApi/saveBatch", paramsMap);
-					if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
-						LOGGER.info("成功更新API信息到Monitor!");
-					}
-				} catch (Exception e) {
-					LOGGER.error("更新API信息到Monitor异常: " + e.getMessage(), e);
-				}
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("code", appName);
+		paramsMap.put("detailString", FrameJsonUtil.toString(data));
+		try {
+			ResponseFrame frame = MonitorUtil.post("/api/prjApi/saveBatch", paramsMap);
+			if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
+				LOGGER.info("成功更新API信息到Monitor!");
 			}
-		});
+		} catch (Exception e) {
+			LOGGER.error("更新API信息到Monitor异常: " + e.getMessage(), e);
+		}
 	}
 }
