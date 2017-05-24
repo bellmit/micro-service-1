@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.ms.biz.api.monitor.MonitorUtil;
+import com.monitor.api.MonitorUtil;
 
 @Configuration // 该注解类似于spring配置文件
 public class MonitorConfig {

@@ -1,4 +1,4 @@
-package com.ms.biz.api.monitor;
+package com.monitor.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

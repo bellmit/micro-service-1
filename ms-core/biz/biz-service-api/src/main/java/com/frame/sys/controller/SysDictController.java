@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.frame.sys.pojo.SysDict;
 import com.frame.sys.service.SysDictService;
-import com.ms.biz.api.monitor.ApiInfo;
-import com.ms.biz.api.monitor.ApiParam;
-import com.ms.biz.api.monitor.ApiRes;
+import com.monitor.api.ApiInfo;
+import com.monitor.api.ApiParam;
+import com.monitor.api.ApiRes;
 import com.system.comm.model.Orderby;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameStringUtil;

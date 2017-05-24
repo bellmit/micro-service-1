@@ -1,4 +1,4 @@
-package com.ms.biz.api.monitor;
+package com.monitor.api;
 
 import java.io.IOException;
 import java.io.InputStream;
