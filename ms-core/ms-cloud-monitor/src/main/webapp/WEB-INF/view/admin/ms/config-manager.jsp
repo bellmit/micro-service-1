@@ -107,7 +107,7 @@ var info = {
 			if(confirm('您确定要删除该配置文件吗?')) {
 				JUtil.ajax({
 					url : '${webroot}/msConfig/f-json/delete.shtml',
-					data : { prjId: id },
+					data : { configId: id },
 					success : function(json) {
 						if (json.code === 0) {
 							message('删除成功');

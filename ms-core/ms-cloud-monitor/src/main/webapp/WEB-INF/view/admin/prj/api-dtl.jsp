@@ -47,9 +47,9 @@
 									<table class="table table-striped table-hover">
 										<thead><tr>
 				                        <th width="100">参数</th>
-				                        <th width="300">值</th>
+				                        <th width="250">值</th>
 				                        <th>描叙</th>
-				                        <th width="300">类型</th>
+				                        <th width="250">类型</th>
 				                        </tr>
 				                        </thead>
 				                        <tbody>
