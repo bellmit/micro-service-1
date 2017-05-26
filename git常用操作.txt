@@ -1,0 +1,40 @@
+参考地址：http://www.suyunyou.com/aid4175.html
+
+
+第一次获取代码
+git clone https://git.oschina.net/xxxx/omd.git
+
+更新代码到本地一个新的temp分支
+git fetch origin master:temp
+
+比较分支
+git diff temp
+
+合并temp分支到master分支
+git merge temp
+
+删除temp分支
+git branch -d temp
+
+提交代码到暂存区
+git add *
+commit代码
+git commit -m "注释"
+
+推送代码到自己的远程仓库
+git push origin master
+
+
+
+
+
+git提交忽略文件
+/target/
+
+.classpath
+
+.gitignore
+
+.project
+
+.settings/

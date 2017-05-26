@@ -64,7 +64,7 @@ public class MsCloudMonitorApplication extends SpringBootServletInitializer impl
 	}
 	
 	private static void initAuthClient() {
-		AuthClient client = new AuthClient("196845682", "测试调用", "http://127.0.0.1", "708c80644e3f868c429c24cd2cdb7c8e", "http://127.0.0.1/callback.htm");
+		AuthClient client = new AuthClient("196845682", "测试调用", "http://127.0.0.1", "4e07a39dfc7edb7w3d66f2f44s3911e2", "http://127.0.0.1/callback.htm");
 		AuthUtil.addAuthClient(client);
 		CliInfoService cliInfoService = FrameSpringBeanUtil.getBean(CliInfoService.class);
 		List<CliInfo> cis = cliInfoService.findAll();

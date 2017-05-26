@@ -14,7 +14,7 @@
 	<div class="container">
 		<jsp:include page="/WEB-INF/view/admin/comm/left.jsp">
 			<jsp:param name="first" value="prj"/>
-			<jsp:param name="second" value="prjMonitorManager"/>
+			<jsp:param name="second" value="prjInfoManager"/>
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">

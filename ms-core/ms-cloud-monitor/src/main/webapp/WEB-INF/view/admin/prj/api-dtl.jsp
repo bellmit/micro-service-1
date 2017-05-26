@@ -15,7 +15,7 @@
 	<div class="container">
 		<jsp:include page="/WEB-INF/view/admin/comm/left.jsp">
 			<jsp:param name="first" value="prj"/>
-			<jsp:param name="second" value="prjMonitorManager"/>
+			<jsp:param name="second" value="prjInfoManager"/>
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
@@ -65,7 +65,7 @@
 				                        	<c:otherwise>
 				                        	<tr>
 				                        		<td>${info.code}<c:if test="${info.required=='true'}"> <span class="text-danger">*</span></c:if></td>
-				                        		<td><input type="text" id="${info.code}" name="${info.code}" style="width: 200px;" value="${info.value}"/></td>
+				                        		<td><input type="text" id="${info.code}" name="${info.code}" style="width: 200px;" value="<c:out value="${info.value}"></c:out>"/></td>
 				                        		<td>${info.name}</td>
 				                        		<td>${info.clazz}</td>
 				                        	</tr>

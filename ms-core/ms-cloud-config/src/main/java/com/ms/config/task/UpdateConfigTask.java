@@ -83,7 +83,7 @@ public class UpdateConfigTask {
 			}
 		};
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
-		service.scheduleAtFixedRate(runnable, 15, 45, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(runnable, 40, 45, TimeUnit.SECONDS);
 	}
 
 }
