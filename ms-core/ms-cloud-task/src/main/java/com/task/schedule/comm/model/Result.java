@@ -1,4 +1,4 @@
-package com.jing.system.model;
+package com.task.schedule.comm.model;
 
 import java.io.Serializable;
 

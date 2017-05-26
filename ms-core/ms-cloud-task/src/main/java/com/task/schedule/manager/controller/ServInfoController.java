@@ -12,11 +12,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jing.system.model.MyPage;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameMapUtil;
 import com.task.schedule.comm.controller.BaseController;
 import com.task.schedule.comm.enums.ServInfoStatus;
+import com.task.schedule.comm.model.MyPage;
 import com.task.schedule.manager.pojo.ServInfo;
 import com.task.schedule.manager.service.ServInfoService;
 import com.task.schedule.manager.service.TaskJobService;

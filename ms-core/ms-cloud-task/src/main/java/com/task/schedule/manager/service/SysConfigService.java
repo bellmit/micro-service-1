@@ -6,8 +6,8 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jing.system.model.MyPage;
 import com.task.schedule.comm.enums.Config;
+import com.task.schedule.comm.model.MyPage;
 import com.task.schedule.core.exec.task.CleanTask;
 import com.task.schedule.core.exec.task.MainTask;
 import com.task.schedule.manager.dao.SysConfigDao;

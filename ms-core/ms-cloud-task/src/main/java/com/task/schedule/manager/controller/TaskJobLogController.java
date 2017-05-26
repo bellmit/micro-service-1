@@ -9,8 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jing.system.model.MyPage;
 import com.task.schedule.comm.controller.BaseController;
+import com.task.schedule.comm.model.MyPage;
 import com.task.schedule.manager.pojo.TaskJob;
 import com.task.schedule.manager.pojo.TaskJobLog;
 import com.task.schedule.manager.service.TaskJobLogService;

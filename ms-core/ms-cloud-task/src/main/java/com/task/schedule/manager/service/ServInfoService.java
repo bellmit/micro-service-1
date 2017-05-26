@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.system.comm.enums.Boolean;
-import com.jing.system.model.MyPage;
 import com.system.comm.utils.FrameAddressUtil;
 import com.system.comm.utils.FrameTimeUtil;
 import com.task.schedule.comm.constants.Constant;
 import com.task.schedule.comm.enums.Config;
 import com.task.schedule.comm.enums.ServInfoStatus;
+import com.task.schedule.comm.model.MyPage;
 import com.task.schedule.manager.dao.ServInfoDao;
 import com.task.schedule.manager.pojo.ServInfo;
 

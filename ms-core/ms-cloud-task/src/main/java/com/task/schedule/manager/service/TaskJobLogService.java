@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jing.system.model.MyPage;
 import com.system.comm.utils.FrameStringUtil;
 import com.task.schedule.comm.constants.Constant;
 import com.task.schedule.comm.enums.JobLogStatus;
+import com.task.schedule.comm.model.MyPage;
 import com.task.schedule.manager.dao.TaskJobLogDao;
 import com.task.schedule.manager.pojo.TaskJobLog;
 

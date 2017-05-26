@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jing.system.model.MyPage;
-import com.jing.system.model.Result;
 import com.system.comm.utils.FrameMd5Util;
 import com.system.comm.utils.FrameStringUtil;
 import com.task.schedule.comm.constants.Constant;
 import com.task.schedule.comm.enums.GeneralStatus;
+import com.task.schedule.comm.model.MyPage;
+import com.task.schedule.comm.model.Result;
 import com.task.schedule.manager.dao.SysUserDao;
 import com.task.schedule.manager.pojo.SysUser;
 
