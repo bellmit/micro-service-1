@@ -232,6 +232,8 @@ public class MonitorUtil {
 			ResponseFrame frame = MonitorUtil.post("/api/prjApi/saveBatch", paramsMap);
 			if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
 				LOGGER.info("成功更新API信息到Monitor!");
+			} else {
+				LOGGER.info("更新API信息到Monitor失败: " + frame.getMessage());
 			}
 		} catch (Exception e) {
 			LOGGER.error("更新API信息到Monitor异常: " + e.getMessage(), e);
