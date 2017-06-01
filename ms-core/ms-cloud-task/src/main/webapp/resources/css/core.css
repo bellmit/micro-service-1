@@ -54,9 +54,33 @@ hr{ margin-top: 10px;margin-bottom: 10px; }
 .thumbnail-warning {background: #fcf8e3;border: 1px solid #fcf8e3;}
 .thumbnail-danger {background: #f2dede;border: 1px solid #f2dede;}
 
-.table{margin-bottom: 10px;font-size: 12px;}
+.table{
+	margin-bottom: 10px;
+    background: #FFF;
+    font-size: 12px;
+    border-top: 1px solid #e1e6eb;
+    margin-top: 8px;
+    border: 1px solid #e1e6eb;
+}
 .table>thead{font-size: 14px;}
-.pagination {margin: 0px;}
+.table thead tr th {
+    padding: 9px 9px;
+    font-weight: normal;
+    color: #666;
+    border-bottom: 1px solid #e1e6eb;
+    background-color: #F5F6FA;
+}
+.table tbody tr td {
+    padding: 10px 8px;
+    border-top: 0px;
+    border-bottom: 1px solid #e1e6eb;
+    vertical-align: middle;
+}
+.pagination {
+    margin: 0px;
+    vertical-align: middle;
+}
+
 .alert {margin-bottom: 10px;}
 .popover {max-width: 1024px;}
 
