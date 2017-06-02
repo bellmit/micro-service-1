@@ -57,9 +57,9 @@
 					<div>
 						<a class="btn btn-<c:choose><c:when test="${param.second == 'msConfigManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/msConfig/f-view/manager.shtml">配置文件管理</a>
 					</div>
-					<%-- <div>
-						<a class="btn btn-<c:choose><c:when test="${param.second == 'cliInfoMonitor'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cliInfo/f-view/monitor.shtml">客户端监控</a>
-					</div> --%>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'msSecretManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/msSecret/f-view/manager.shtml">密钥管理</a>
+					</div>
 				</div>
 			</div>
 		</div>
