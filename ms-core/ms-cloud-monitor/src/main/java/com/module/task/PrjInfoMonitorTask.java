@@ -131,7 +131,6 @@ public class PrjInfoMonitorTask {
 						if(LOGGER.isInfoEnabled()) {
 							LOGGER.info("检测【" + pm.getPrjName() + "-" + pm.getTypeName() + "】请求URL[ " + pm.getMonitorUrl() + " ]失败，发送邮件");
 						}
-
 						String time = FrameTimeUtil.getStrTime();
 						//发送失败邮件
 						StringBuilder title = new StringBuilder();

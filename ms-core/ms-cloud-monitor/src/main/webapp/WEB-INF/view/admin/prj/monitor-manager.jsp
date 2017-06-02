@@ -1,3 +1,4 @@
+<%@page import="com.system.comm.enums.Boolean"%>
 <%@page import="com.module.admin.prj.enums.PrjMonitorMonitorStatus"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
@@ -87,21 +88,29 @@ var info = {
 					if(json.code === 0) {
 						function getResult(obj) {
 							var _msCont = [];
-							if(obj.monitorStatus === <%=PrjMonitorMonitorStatus.ERROR.getCode()%>) {
-								_msCont.push('<span class="text-danger">',obj.monitorStatusName,'</span>');
-								_msCont.push('<br>');
-								_msCont.push('<small>检测失败次数：',obj.monitorFailNum,'<br>');
-								_msCont.push('</small>');
+							var _monitorIsCls = '';
+							var _monitorTime = '';
+							if(obj.monitorIs === <%=Boolean.FALSE.getCode()%>) {
+								_monitorIsCls = ' class="text-danger"';
 							} else {
-								_msCont.push('<span class="text-success">',obj.monitorStatusName,'</span>');
+								_monitorIsCls = ' class="text-success"';
+								if(obj.monitorStatus === <%=PrjMonitorMonitorStatus.ERROR.getCode()%>) {
+									_msCont.push('<span class="text-danger">',obj.monitorStatusName,'</span>');
+									_msCont.push('<br>');
+									_msCont.push('<small>检测失败次数：',obj.monitorFailNum,'<br>');
+									_msCont.push('</small>');
+								} else {
+									_msCont.push('<span class="text-success">',obj.monitorStatusName,'</span>');
+								}
+								_monitorTime = obj.monitorTime;
 							}
 							return ['<tr>',
 							    	'<td>',obj.prjName,'</td>',
 							    	'<td>',obj.remark,'</td>',
 							    	'<td>',obj.typeName,'</td>',
-							    	'<td>',obj.monitorIsName,'</td>',
+							    	'<td><span',_monitorIsCls,'>',obj.monitorIsName,'</span></td>',
 							    	'<td>',_msCont.join(''),'</td>',
-							    	'<td>',obj.monitorTime,'</td>',
+							    	'<td>',_monitorTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjmId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjmId,')" title="删除"></a>',
 							    	'</td>',

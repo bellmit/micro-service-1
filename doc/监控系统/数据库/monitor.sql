@@ -247,3 +247,23 @@ create table prj_api
 );
 
 alter table prj_api comment '项目的API表';
+
+
+drop table if exists ms_secret;
+
+/*==============================================================*/
+/* Table: ms_secret                                             */
+/*==============================================================*/
+create table ms_secret
+(
+   cil_id               varchar(32) not null comment '客户端编号',
+   name                 varchar(100) not null comment '名称',
+   remark               varchar(100) comment '备注',
+   token                varchar(100) not null comment '密钥',
+   domain               varchar(200) comment '主路径',
+   is_use               int not null comment '是否使用',
+   create_time          datetime not null comment '创建时间',
+   primary key (cil_id)
+);
+
+alter table ms_secret comment '应用密钥表';
