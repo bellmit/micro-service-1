@@ -101,7 +101,8 @@ var info = {
 			});
 		},
 		dtl : function(prjId, path) {
-			location = '${webroot}/prjApi/f-view/dtl.shtml?prjId=' + prjId + '&path=' + path;
+			var _url = '${webroot}/prjApi/f-view/dtl.shtml?prjId=' + prjId + '&path=' + path;
+			window.open(_url);
 		}
 };
 $(function() {

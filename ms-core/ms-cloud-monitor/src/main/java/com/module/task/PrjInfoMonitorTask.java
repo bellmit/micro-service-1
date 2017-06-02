@@ -25,6 +25,7 @@ import com.module.admin.sys.service.SysConfigService;
 import com.module.api.service.ApiServiceService;
 import com.system.comm.utils.FrameMailUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
+import com.system.comm.utils.FrameStringUtil;
 import com.system.comm.utils.FrameTimeUtil;
 
 /**
@@ -92,7 +93,7 @@ public class PrjInfoMonitorTask {
 						prjmIdMap.put(prjMonitor.getPrjmId(), prjMonitor);
 					}
 				}
-				
+
 				//处理监控的状态
 				for (PrjMonitor pm : pms) {
 					if(prjmIdMap.get(pm.getPrjmId()) != null) {
@@ -124,38 +125,41 @@ public class PrjInfoMonitorTask {
 						( diffNum > pm.getMonitorFailSendInterval().intValue() &&
 								pm.getMonitorFailNum() != null && monitorFailNum >= pm.getMonitorFailNumRemind().intValue()
 								)) {
-
-					if(LOGGER.isInfoEnabled()) {
-						LOGGER.info("检测【" + pm.getPrjName() + "-" + pm.getTypeName() + "】请求URL[ " + pm.getMonitorUrl() + " ]失败，发送邮件");
-					}
-					String time = FrameTimeUtil.getStrTime();
-					//发送失败邮件
-					StringBuilder title = new StringBuilder();
-					title.append("检测项目【").append(pm.getPrjName()).append("-").append(pm.getTypeName()).append("】失败!!!");
-					StringBuilder mailContent = new StringBuilder();
-					mailContent.append("项目名称：").append(pm.getPrjName()).append("<br/>");
-					mailContent.append("监听类型：").append(pm.getTypeName()).append("<br/>");
-					mailContent.append("描述：").append(pm.getRemark()).append("<br/>");
-					mailContent.append("调用时间：").append(time).append("<br/>");
-					mailContent.append("调用地址：").append(link).append("<br/>");
-					mailContent.append("错误原因：可能是接口地址不通，或网络不通");
-
 					String toMails = pm.getMonitorFailEmail();
+					if(FrameStringUtil.isNotEmpty(toMails)) {
 
-					SysConfigService configService = FrameSpringBeanUtil.getBean(SysConfigService.class);
-					FrameMailUtil theMail = new FrameMailUtil(configService.getValue(SysConfigCode.MAIL_SMTP),
-							configService.getValue(SysConfigCode.MAIL_FROM),
-							configService.getValue(SysConfigCode.MAIL_USERNAME),
-							configService.getValue(SysConfigCode.MAIL_PASSWORD));
-					// 抄送人邮件地址
-					String copyto = "";
-					boolean bool = theMail.send(toMails, copyto, title.toString(), mailContent.toString());
-					//设置为发送过邮件
-					failSendEmails.put(pm.getPrjmId(),  true);
+						if(LOGGER.isInfoEnabled()) {
+							LOGGER.info("检测【" + pm.getPrjName() + "-" + pm.getTypeName() + "】请求URL[ " + pm.getMonitorUrl() + " ]失败，发送邮件");
+						}
 
-					if(bool) {
-						//处理其它业务（将monitorFailNum，重置为0，monitorFailSendTime修改为最新时间）
-						monitorService.updateMonitorFailSendInfo(pm.getPrjmId());
+						String time = FrameTimeUtil.getStrTime();
+						//发送失败邮件
+						StringBuilder title = new StringBuilder();
+						title.append("检测项目【").append(pm.getPrjName()).append("-").append(pm.getTypeName()).append("】失败!!!");
+						StringBuilder mailContent = new StringBuilder();
+						mailContent.append("项目名称：").append(pm.getPrjName()).append("<br/>");
+						mailContent.append("监听类型：").append(pm.getTypeName()).append("<br/>");
+						mailContent.append("描述：").append(pm.getRemark()).append("<br/>");
+						mailContent.append("调用时间：").append(time).append("<br/>");
+						mailContent.append("调用地址：").append(link).append("<br/>");
+						mailContent.append("错误原因：可能是接口地址不通，或网络不通");
+
+
+						SysConfigService configService = FrameSpringBeanUtil.getBean(SysConfigService.class);
+						FrameMailUtil theMail = new FrameMailUtil(configService.getValue(SysConfigCode.MAIL_SMTP),
+								configService.getValue(SysConfigCode.MAIL_FROM),
+								configService.getValue(SysConfigCode.MAIL_USERNAME),
+								configService.getValue(SysConfigCode.MAIL_PASSWORD));
+						// 抄送人邮件地址
+						String copyto = "";
+						boolean bool = theMail.send(toMails, copyto, title.toString(), mailContent.toString());
+						//设置为发送过邮件
+						failSendEmails.put(pm.getPrjmId(),  true);
+
+						if(bool) {
+							//处理其它业务（将monitorFailNum，重置为0，monitorFailSendTime修改为最新时间）
+							monitorService.updateMonitorFailSendInfo(pm.getPrjmId());
+						}
 					}
 				}
 			}

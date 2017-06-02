@@ -21,31 +21,37 @@
 			<div class="panel panel-success">
 				<div class="panel-heading">项目 / <b>API</b></div>
 				<div class="panel-body">
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="btn-group">
-							</div>
-						</div>
-						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
-						  	</div>
-						  	<div class="btn-group">
-						  		<a href="${webroot}/prjApi/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>
-						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
-						</div>
-					</div>
-				  	<hr/>
 					<div id="infoPanel">
 						<div class="panel panel-warning">
-							<div class="panel-heading">${prjApi.path} - ${prjApi.name}</div>
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="btn-group text-warning">
+											${prjApi.path} - ${prjApi.name}
+										</div>
+									</div>
+									<div class="col-sm-6 text-right">
+									  	<div class="btn-group">
+									  	</div>
+									  	<div class="btn-group">
+									  		<a href="javascript:window.close()" class="btn btn-default btn-sm">关闭</a>
+									  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
+									  	</div>
+									</div>
+								</div>
+							</div>
 							<div class="panel-body">
+								<div style="padding: 5px;">
+									<span>方法详情</span>
+									<hr/>
+									<p style="font-size: 12px;word-wrap: break-word;">${prjApi.method}</p>
+								</div>
 								<div class="text-success">参数列表</div>
 								<div>
 									<input type="hidden" id="monitorPrjId" name="monitorPrjId" value="${prjApi.prjId}"/>
 									<input type="hidden" id="monitorPath" name="monitorPath" value="${prjApi.path}"/>
 									<table class="table table-striped table-hover">
-										<thead><tr>
+										<thead><tr class="info">
 				                        <th width="100">参数</th>
 				                        <th width="250">值</th>
 				                        <th>描叙</th>
@@ -75,18 +81,15 @@
 										</tbody>
 									</table>
 								</div>
-								<hr/>
 								<div class="text-success">响应列表</div>
 								<div id="resTablePanel">
 								</div>
-								<hr/>
 								<div class="form-group">
 						 			<div class="btn-group">
 										<button type="button" id="saveBtn" class="btn btn-success btn-sm">发送请求</button>
 									</div>
 									<span id="saveMsg" class="label label-danger"></span>
 								</div>
-								<hr/>
 								<div id="resultPanel" class="form-group">
 								</div>
 							</div>
@@ -107,7 +110,7 @@ var info = {
 		//解析响应结果
 		parseRes : function() {
 			var _info = ['<table class="table table-striped table-hover">',
-							'<thead><tr>',
+							'<thead><tr class="info">',
 	                        '<th width="150">参数</th>',
 	                        '<th width="150">值</th>',
 	                        '<th width="200">描叙</th>',
@@ -163,7 +166,7 @@ $(function() {
 			success : function(json) {
 				if (json.code === 0) {
 					_saveMsg.attr('class', 'label label-success').append('请求成功');
-					var _res = ['<div class="text-success">请求地址</div>'];
+					var _res = ['<hr/><div class="text-success">请求地址</div>'];
 					_res.push('<p class="alert alert-warning" style="padding: 5px;font-size: 12px;word-wrap: break-word;"><a href="',json.body.requestUrl,'" target="_blank" class="text-warning">',json.body.requestUrl,'</a></p>');
 					_res.push('<div class="text-success">响应结果</div>');
 					_res.push('<div id="resultInfoFormatPanel" class="alert alert-warning" style="padding: 5px 20px;"></div>');
