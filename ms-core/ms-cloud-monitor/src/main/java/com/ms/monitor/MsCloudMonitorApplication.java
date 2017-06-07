@@ -21,8 +21,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.module.admin.cli.pojo.CliInfo;
 import com.module.admin.cli.service.CliInfoService;
-import com.module.admin.sys.enums.SysConfigCode;
-import com.module.admin.sys.service.SysConfigService;
 import com.ms.monitor.interceptor.AuthSecurityInterceptor;
 import com.ms.monitor.interceptor.UserSecurityInterceptor;
 import com.system.auth.AuthUtil;
@@ -71,12 +69,12 @@ public class MsCloudMonitorApplication extends SpringBootServletInitializer impl
 		for (CliInfo ci : cis) {
 			AuthUtil.addAuthClient(new AuthClient(ci.getClientId(), ci.getName(), "http://" + ci.getIp() + ":" + ci.getPort(), ci.getToken(), "http://127.0.0.1/callback.htm"));
 		}
-		//初始化config的配置
+		/*//初始化config的配置
 		SysConfigService sysConfigService = FrameSpringBeanUtil.getBean(SysConfigService.class);
 		String clientId = sysConfigService.getValue(SysConfigCode.CONFIG_CLIENT_ID);
 		String token = sysConfigService.getValue(SysConfigCode.CONFIG_CLIENT_TOKEN);
 		AuthUtil.addAuthClient(new AuthClient(clientId, SysConfigCode.CONFIG_CLIENT_ID.getName(),
-				"http://xxxx:", token, ""));
+				"http://xxxx:", token, ""));*/
 	}
 	
 	@Override

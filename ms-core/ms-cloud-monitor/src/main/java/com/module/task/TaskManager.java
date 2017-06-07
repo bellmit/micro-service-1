@@ -14,5 +14,8 @@ public class TaskManager {
 		
 		//检测客户端
 		new ClientTask().run();
+
+		//更新密钥
+		new MsSecretTask().run();
 	}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.module.admin.BaseController;
 import com.module.admin.ms.pojo.MsSecret;
 import com.module.admin.ms.service.MsSecretService;
-import com.module.admin.sys.pojo.SysUser;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -57,23 +56,25 @@ public class MsSecretController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/msSecret/f-view/edit")
-	public String manger(HttpServletRequest request, ModelMap modelMap, Integer configId) {
+	public String manger(HttpServletRequest request, ModelMap modelMap, String cliId) {
 		/*List<MsConfigValue> values = msConfigValueService.findByConfigId(configId);
 		modelMap.put("values", values);
 		List<MsConfig> configs = msConfigService.findAll();
 		modelMap.put("configs", configs);*/
+		MsSecret msSecret = msSecretService.get(cliId);
+		modelMap.put("msSecret", msSecret);
 		return "admin/ms/msSecret-edit";
 	}
 
 	@RequestMapping(value = "/msSecret/f-json/save")
 	@ResponseBody
 	public void save(HttpServletRequest request, HttpServletResponse response,
-			Integer configId, String code, String value, String remark, String regex) {
+			MsSecret msSecret) {
 		ResponseFrame frame = null;
 		try {
-			SysUser user = getSessionUser(request);
+			/*SysUser user = getSessionUser(request);
 			Integer userId = user.getUserId();
-			/*List<MsConfigValue> values = new ArrayList<MsConfigValue>();
+			List<MsConfigValue> values = new ArrayList<MsConfigValue>();
 			String[] codeArr = code.split(regex);
 			String[] valueArr = value.split(regex);
 			String[] remarkArr = remark.split(regex);
@@ -81,6 +82,7 @@ public class MsSecretController extends BaseController {
 				values.add(new MsConfigValue(configId, codeArr[i], valueArr[i], remarkArr[i], i, userId));
 			}
 			frame = msSecretService.saveList(configId, values);*/
+			frame = msSecretService.saveOrUpdate(msSecret);
 		} catch (Exception e) {
 			LOGGER.error("保存异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
@@ -90,10 +92,10 @@ public class MsSecretController extends BaseController {
 
 	@RequestMapping(value = "/msSecret/f-json/delete")
 	@ResponseBody
-	public void delete(HttpServletRequest request, HttpServletResponse response, String cilId) {
+	public void delete(HttpServletRequest request, HttpServletResponse response, String cliId) {
 		ResponseFrame frame = null;
 		try {
-			frame = msSecretService.delete(cilId);
+			frame = msSecretService.delete(cliId);
 		} catch (Exception e) {
 			LOGGER.error("删除异常: " + e.getMessage(), e);
 			frame = new ResponseFrame();

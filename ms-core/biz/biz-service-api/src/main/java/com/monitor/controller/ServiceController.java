@@ -9,12 +9,6 @@ import com.netflix.discovery.EurekaClient;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
-/**
- * 部门信息
- * @author yuejing
- * @date 2016年1月29日 下午9:31:59
- * @version V1.0.0
- */
 @RestController
 public class ServiceController {
 

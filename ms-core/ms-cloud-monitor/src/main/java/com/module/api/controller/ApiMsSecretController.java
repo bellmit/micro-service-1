@@ -11,35 +11,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.module.admin.BaseController;
-import com.module.api.service.ApiMsConfigService;
+import com.module.api.service.ApiMsSecretService;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
 /**
- * 客户端调用的接口
+ * 密钥的接口
  * @author 岳静
  * @date 2016年3月4日 下午6:22:39 
  * @version V1.0
  */
 @Controller
-public class ApiMsConfigController extends BaseController {
+public class ApiMsSecretController extends BaseController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ApiMsConfigController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApiMsSecretController.class);
 	
 	@Autowired
-	private ApiMsConfigService apiMsConfigService;
+	private ApiMsSecretService apiMsSecretService;
 
 	/**
-	 * 获取所有的配置文件
+	 * 获取使用的密钥
 	 */
-	@RequestMapping(value = "/api/msConfig/findAll")
+	@RequestMapping(value = "/api/msSecret/findUse")
 	@ResponseBody
-	public void findAll(HttpServletRequest request, HttpServletResponse response) {
+	public void findUse(HttpServletRequest request, HttpServletResponse response) {
 		ResponseFrame frame = null;
 		try {
-			frame = apiMsConfigService.findAll();
+			frame = apiMsSecretService.findUse();
 		} catch (Exception e) {
-			LOGGER.error("获取所有的配置文件异常: " + e.getMessage(), e);
+			LOGGER.error("获取使用的密钥异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
 		}
 		writerJson(response, frame);

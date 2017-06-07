@@ -5,20 +5,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${projectName}-编辑配置文件</title>
+<title>${projectName}-编辑密钥</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
 <body class="cld_body">
 	<div class="enter-panel">
-		<input type="hidden" id="configId" value="${msConfig.configId}">
   		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="名称" value="${msConfig.name}">
+			<input type="text" class="form-control" id="cliId" placeholder="客户编码" value="${msSecret.cliId}"<c:if test="${msSecret.cliId!=null}"> readonly="readonly"</c:if>>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${msConfig.remark}">
+			<input type="text" class="form-control" id="name" placeholder="名称" value="${msSecret.name}">
+		</div>
+  		<div class="form-group">
+			<input type="text" class="form-control" id="token" placeholder="token" value="${msSecret.token}">
+		</div>
+  		<div class="form-group">
+			<input type="text" class="form-control" id="domain" placeholder="host地址" value="${msSecret.domain}">
+		</div>
+  		<div class="form-group">
+			<input type="text" class="form-control" id="remark" placeholder="备注" value="${msSecret.remark}">
 		</div>
 		<div class="form-group">
-			<my:select id="isUse" headerKey="" headerValue="是否使用" dictcode="boolean" value="${msConfig.isUse}" cssCls="form-control" />
+			<my:select id="isUse" headerKey="" headerValue="是否使用" dictcode="boolean" value="${msSecret.isUse}" cssCls="form-control" />
 		</div>
   		<div class="form-group">
  			<div class="btn-group">
@@ -33,13 +41,32 @@
 	$(function() {
 		$('#saveBtn').click(function() {
 			var _saveMsg = $('#saveMsg').empty();
+			var _cliId = $('#cliId');
+			if(JUtil.isEmpty(_cliId.val())) {
+				_saveMsg.append('请输入客户端编码');
+				_cliId.focus();
+				return;
+			}
 			
 			var _name = $('#name');
 			if(JUtil.isEmpty(_name.val())) {
-				_saveMsg.append('请输入文件名称');
+				_saveMsg.append('请输入名称');
 				_name.focus();
 				return;
 			}
+			var _token = $('#token');
+			if(JUtil.isEmpty(_token.val())) {
+				_saveMsg.append('请输入token');
+				_token.focus();
+				return;
+			}
+			var _domain = $('#domain');
+			/* if(JUtil.isEmpty(_domain.val())) {
+				_saveMsg.append('请输入host地址');
+				_domain.focus();
+				return;
+			} */
+			
 			var _isUse = $('#isUse');
 			if(JUtil.isEmpty(_isUse.val())) {
 				_saveMsg.append('请选择是否使用');
@@ -51,10 +78,12 @@
 			var _orgVal = _saveBtn.html();
 			_saveBtn.attr('disabled', 'disabled').html('保存中...');
 			JUtil.ajax({
-				url : '${webroot}/msConfig/f-json/save.shtml',
+				url : '${webroot}/msSecret/f-json/save.shtml',
 				data : {
-					configId: $('#configId').val(),
+					cliId: _cliId.val(),
 					name: _name.val(),
+					token: _token.val(),
+					domain: _domain.val(),
 					remark: $('#remark').val(),
 					isUse: _isUse.val()
 				},

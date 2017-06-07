@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.monitor.api.MonitorUtil;
+import com.monitor.secret.SecretUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
 
 @Configuration // 该注解类似于spring配置文件
@@ -21,7 +22,7 @@ public class MonitorConfig {
 	private Environment env;
 
 	/**
-	 * 配置事务管理器
+	 * 配置API发送信息
 	 */
 	@Bean
 	public MonitorUtil monitorUtil() throws Exception {
@@ -41,5 +42,15 @@ public class MonitorConfig {
 			}
 		});
 		return new MonitorUtil();
+	}
+	
+	/**
+	 * 配置密钥信息
+	 */
+	@Bean
+	public SecretUtil secretUtil() throws Exception {
+		SecretUtil secretUtil = new SecretUtil();
+		secretUtil.init();
+		return secretUtil;
 	}
 }

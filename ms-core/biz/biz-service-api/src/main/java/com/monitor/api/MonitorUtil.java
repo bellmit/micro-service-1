@@ -47,9 +47,9 @@ public class MonitorUtil {
 	public static String sercret;
 	public static String serverHost;
 
-	/** 当前项目的ClientId */
+	/** API测试访问当前项目的ClientId */
 	public static String prjId;
-	/** 当前项目的token */
+	/** API测试访问当前项目的token */
 	public static String prjToken;
 
 	/**

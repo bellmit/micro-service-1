@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.module.admin.ms.dao.MsSecretDao;
 import com.module.admin.ms.pojo.MsSecret;
 import com.module.admin.ms.service.MsSecretService;
+import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
@@ -27,7 +28,8 @@ public class MsSecretServiceImpl implements MsSecretService {
 	@Override
 	public ResponseFrame saveOrUpdate(MsSecret msSecret) {
 		ResponseFrame frame = new ResponseFrame();
-		if(msSecret.getCilId() == null) {
+		MsSecret org = msSecretDao.get(msSecret.getCliId());
+		if(org == null) {
 			msSecretDao.save(msSecret);
 		} else {
 			msSecretDao.update(msSecret);
@@ -37,8 +39,8 @@ public class MsSecretServiceImpl implements MsSecretService {
 	}
 
 	@Override
-	public MsSecret get(String cilId) {
-		return msSecretDao.get(cilId);
+	public MsSecret get(String cliId) {
+		return msSecretDao.get(cliId);
 	}
 
 	@Override
@@ -49,6 +51,9 @@ public class MsSecretServiceImpl implements MsSecretService {
 		List<MsSecret> data = null;
 		if(total > 0) {
 			data = msSecretDao.findMsSecret(msSecret);
+			for (MsSecret ms : data) {
+				ms.setIsUseName(Boolean.getText(ms.getIsUse()));
+			}
 		}
 		Page<MsSecret> page = new Page<MsSecret>(msSecret.getPage(), msSecret.getSize(), total, data);
 		frame.setBody(page);
@@ -57,10 +62,15 @@ public class MsSecretServiceImpl implements MsSecretService {
 	}
 	
 	@Override
-	public ResponseFrame delete(String cilId) {
+	public ResponseFrame delete(String cliId) {
 		ResponseFrame frame = new ResponseFrame();
-		msSecretDao.delete(cilId);
+		msSecretDao.delete(cliId);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public List<MsSecret> findUse() {
+		return msSecretDao.findUse();
 	}
 }

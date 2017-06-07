@@ -24,8 +24,8 @@ public enum SysConfigCode {
 
 	PRJ_MONITOR_FAIL_EMAIL	("prj.monitor.fail.email", "项目检测失败接收的邮箱"),
 
-	CONFIG_CLIENT_ID		("config.client.id", 		"配置文件的客户ID"),
-	CONFIG_CLIENT_TOKEN		("config.client.token", 	"配置文件的token"),
+	/*CONFIG_CLIENT_ID		("config.client.id", 		"配置文件的客户ID"),
+	CONFIG_CLIENT_TOKEN		("config.client.token", 	"配置文件的token"),*/
 	;
 
 	public static final String KEY = "sys_config_code";

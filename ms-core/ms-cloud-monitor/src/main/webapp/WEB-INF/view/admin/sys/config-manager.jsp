@@ -23,7 +23,7 @@
 							<span class="enter-panel">
 								<select id="code" class="form-control" onchange="info.loadInfo(1)">
 									<option value="">所有配置信息</option>
-									<option value="config.">配置系统的信息</option>
+									<!-- <option value="config.">配置系统的信息</option> -->
 									<option value="mail.">发送邮件的配置</option>
 								</select>
 					  		</span>

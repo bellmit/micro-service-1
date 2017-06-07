@@ -24,7 +24,7 @@
 						<div class="col-sm-6 text-right">
 						  	<div class="btn-group">
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增配置文件</a>
-						  		<a href="${webroot}/sysConfig/f-view/manager.shtml?code=config." class="btn btn-default btn-sm">设置配置系统参数</a>
+						  		<%-- <a href="${webroot}/sysConfig/f-view/manager.shtml?code=config." class="btn btn-default btn-sm">设置配置系统参数</a> --%>
 						  	</div>
 						  	<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>

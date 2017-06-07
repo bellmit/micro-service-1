@@ -20,7 +20,7 @@ import com.system.comm.model.BaseEntity;
 @JsonInclude(Include.NON_NULL)
 public class MsSecret extends BaseEntity implements Serializable {
 	//客户端编号
-	private String cilId;
+	private String cliId;
 	//名称
 	private String name;
 	//备注
@@ -34,11 +34,15 @@ public class MsSecret extends BaseEntity implements Serializable {
 	//创建时间
 	private Date createTime;
 	
-	public String getCilId() {
-		return cilId;
+	//======================== 扩展属性
+	//是否使用名称
+	private String isUseName;
+	
+	public String getCliId() {
+		return cliId;
 	}
-	public void setCilId(String cilId) {
-		this.cilId = cilId;
+	public void setCliId(String cliId) {
+		this.cliId = cliId;
 	}
 	
 	public String getName() {
@@ -55,6 +59,12 @@ public class MsSecret extends BaseEntity implements Serializable {
 		this.remark = remark;
 	}
 	
+	public String getIsUseName() {
+		return isUseName;
+	}
+	public void setIsUseName(String isUseName) {
+		this.isUseName = isUseName;
+	}
 	public String getToken() {
 		return token;
 	}

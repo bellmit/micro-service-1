@@ -12,7 +12,7 @@
 	<div class="container">
 		<jsp:include page="/WEB-INF/view/admin/comm/left.jsp">
 			<jsp:param name="first" value="ms"/>
-			<jsp:param name="second" value="msConfigManager"/>
+			<jsp:param name="second" value="msSecretManager"/>
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
@@ -49,11 +49,13 @@ var info = {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th>文件名称</th>',
-				                         '<th>备注</th>',
+				                         '<th>客户端编码</th>',
+				                         '<th>名称</th>',
+				                         '<th>token</th>',
+				                         '<th>host地址</th>',
 				                         '<th>是否使用</th>',
 				                         '<th>创建时间</th>',
-				                         '<th width="150">操作</th>',
+				                         '<th width="120">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -73,13 +75,14 @@ var info = {
 								_isUseCls = ' class="text-success"';
 							}
 							return ['<tr>',
+							    	'<td>',obj.cliId,'</td>',
 							    	'<td>',obj.name,'</td>',
-							    	'<td>',obj.remark,'</td>',
+							    	'<td>',obj.token,'</td>',
+							    	'<td>',obj.domain,'</td>',
 							    	'<td><span ',_isUseCls,'>',obj.isUseName,'</span></td>',
 							    	'<td>',obj.createTime,'</td>',
-							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.configId,')" title="修改"></a>',
-							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.configId,')" title="删除"></a>',
-							    	'&nbsp; | &nbsp; <a class="glyphicon text-success" href="javascript:info.values(',obj.configId,')" title="跳转到属性管理，编辑属性">属性管理</a>',
+							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.cliId,')" title="修改"></a>',
+							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.cliId,')" title="删除"></a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
@@ -93,20 +96,17 @@ var info = {
 		edit : function(id) {
 			dialog({
 				title: '编辑配置文件',
-				url: webroot + '/msConfig/f-view/edit.shtml?configId='+(id?id:''),
+				url: webroot + '/msSecret/f-view/edit.shtml?cliId='+(id?id:''),
 				type: 'iframe',
 				width: 450,
-				height: 280
+				height: 420
 			});
 		},
-		values : function(id) {
-			location = webroot + '/msConfigValue/f-view/edit.shtml?configId='+(id?id:'');
-		},
 		del : function(id) {
-			if(confirm('您确定要删除该配置文件吗?')) {
+			if(confirm('您确定要删除该密钥吗?')) {
 				JUtil.ajax({
-					url : '${webroot}/msConfig/f-json/delete.shtml',
-					data : { configId: id },
+					url : '${webroot}/msSecret/f-json/delete.shtml',
+					data : { cliId: id },
 					success : function(json) {
 						if (json.code === 0) {
 							message('删除成功');

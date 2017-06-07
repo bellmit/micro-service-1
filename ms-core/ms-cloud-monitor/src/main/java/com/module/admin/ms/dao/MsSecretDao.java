@@ -16,11 +16,13 @@ public interface MsSecretDao {
 
 	public abstract void update(MsSecret msSecret);
 
-	public abstract void delete(@Param("cilId")String cilId);
+	public abstract void delete(@Param("cliId")String cliId);
 
-	public abstract MsSecret get(@Param("cilId")String cilId);
+	public abstract MsSecret get(@Param("cliId")String cliId);
 
 	public abstract List<MsSecret> findMsSecret(MsSecret msSecret);
 	
 	public abstract int findMsSecretCount(MsSecret msSecret);
+
+	public abstract List<MsSecret> findUse();
 }

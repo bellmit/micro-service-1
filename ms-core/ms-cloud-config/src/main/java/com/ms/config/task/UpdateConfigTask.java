@@ -78,7 +78,7 @@ public class UpdateConfigTask {
 						LOGGER.error("请求服务端失败");
 					}
 				} catch (Exception e) {
-					LOGGER.error("更新配置文件异常: " + e.getMessage(), e);
+					LOGGER.error("更新配置文件异常: " + e.getMessage());
 				}
 			}
 		};

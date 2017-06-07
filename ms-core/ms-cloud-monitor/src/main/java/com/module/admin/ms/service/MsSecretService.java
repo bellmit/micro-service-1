@@ -24,11 +24,11 @@ public interface MsSecretService {
 	public ResponseFrame saveOrUpdate(MsSecret msSecret);
 	
 	/**
-	 * 根据cilId获取对象
-	 * @param cilId
+	 * 根据cliId获取对象
+	 * @param cliId
 	 * @return
 	 */
-	public MsSecret get(String cilId);
+	public MsSecret get(String cliId);
 
 	/**
 	 * 分页获取对象
@@ -38,9 +38,15 @@ public interface MsSecretService {
 	public ResponseFrame pageQuery(MsSecret msSecret);
 	
 	/**
-	 * 根据cilId删除对象
-	 * @param cilId
+	 * 根据cliId删除对象
+	 * @param cliId
 	 * @return
 	 */
-	public ResponseFrame delete(String cilId);
+	public ResponseFrame delete(String cliId);
+
+	/**
+	 * 获取已经使用的密钥
+	 * @return
+	 */
+	public List<MsSecret> findUse();
 }
