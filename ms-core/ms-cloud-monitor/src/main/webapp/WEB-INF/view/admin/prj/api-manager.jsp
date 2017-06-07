@@ -33,6 +33,7 @@
 						</div>
 						<div class="col-sm-4 text-right">
 						  	<div class="btn-group">
+						  		<a href="${webroot}/msSecret/f-view/manager.shtml" target="_blank" class="btn btn-success btn-sm">设置密钥</a>
 						  	</div>
 						  	<div class="btn-group">
 						  		<a href="${webroot}/prjInfo/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>

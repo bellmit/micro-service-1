@@ -61,9 +61,9 @@ public class PrjMonitorServiceImpl implements PrjMonitorService {
 			if(org.getMonitorFailSendInterval() == null) {
 				prjMonitor.setMonitorFailSendInterval(30);
 			}
-			if(FrameStringUtil.isEmpty(org.getMonitorFailEmail())) {
+			/*if(FrameStringUtil.isEmpty(org.getMonitorFailEmail())) {
 				prjMonitor.setMonitorFailEmail(sysConfigService.getValue(SysConfigCode.PRJ_MONITOR_FAIL_EMAIL));
-			}
+			}*/
 			if(org.getMonitorIs().intValue() == Boolean.FALSE.getCode()) {
 				prjMonitor.setMonitorTime(null);
 			}
