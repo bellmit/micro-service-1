@@ -49,6 +49,7 @@
 			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 			and isdel=0 -->
 		</where>
+		order by status
   		limit #{currentIndex}, #{size}
 	</select>
 	<select id="findPrjInfoCount" parameterType="prjInfo" resultType="int">

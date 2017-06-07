@@ -1,3 +1,4 @@
+<%@page import="com.module.admin.prj.enums.PrjInfoStatus"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -68,10 +69,16 @@ var info = {
 				success : function(json){
 					if(json.code === 0) {
 						function getResult(obj) {
+							var _statusCls = '';
+							if(obj.status === <%=PrjInfoStatus.NORMAL.getCode()%>) {
+								_statusCls = ' class="text-success"';
+							} else {
+								_statusCls = ' class="text-danger"';
+							}
 							return ['<tr>',
 							    	'<td>',obj.code,'</td>',
 							    	'<td>',obj.name,'</td>',
-							    	'<td>',obj.statusName,'</td>',
+							    	'<td><span',_statusCls,'>',obj.statusName,'</span></td>',
 							    	'<td>',obj.createTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,')" title="删除"></a>',
