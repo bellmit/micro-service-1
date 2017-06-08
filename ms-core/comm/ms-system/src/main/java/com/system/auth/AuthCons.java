@@ -1,9 +1,9 @@
 package com.system.auth;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.system.auth.model.AuthClient;
 
@@ -17,9 +17,8 @@ import com.system.auth.model.AuthClient;
  */
 public class AuthCons {
 
-	private static List<AuthClient> clientList = new ArrayList<AuthClient>();
 	protected static Map<String, AuthClient> clientMap = new HashMap<String, AuthClient>();
-	
+
 	/**
 	 * 根据ID获取对象
 	 * @param sercret
@@ -28,16 +27,17 @@ public class AuthCons {
 	public static AuthClient getId(String id) {
 		return clientMap.get(id);
 	}
-	
+
 	/**
-	 * 根据域名获取
-	 * @param domain
+	 * 获取第一项的内容
 	 * @return
 	 */
-	public static AuthClient getDomain(String domain) {
-		for (AuthClient client : clientList) {
-			if(client.getDomain().equals(domain)) {
-				return client;
+	public static AuthClient getFirst() {
+		if(clientMap.size() > 0) {
+			Iterator<Entry<String, AuthClient>> entryKeyIterator = clientMap.entrySet().iterator();
+			while (entryKeyIterator.hasNext()) {
+				Entry<String, AuthClient> e = entryKeyIterator.next();
+				return e.getValue();
 			}
 		}
 		return null;

@@ -49,6 +49,8 @@ public class BizServiceApiApplication extends WebMvcConfigurerAdapter {
 	 * 添加拦截器
 	 */
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthSecurityInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(new AuthSecurityInterceptor())
+		.addPathPatterns("/**");
+		//.excludePathPatterns("/service/*");
 	}
 }

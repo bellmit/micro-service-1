@@ -58,4 +58,12 @@ public class AuthUtil {
 		String newSign = auth(clientId, time, client.getSercret());
 		return newSign.equalsIgnoreCase(sign);
 	}
+	
+	/**
+	 * 获取第一项的内容
+	 * @return
+	 */
+	public static AuthClient getFirst() {
+		return AuthCons.getFirst();
+	}
 }

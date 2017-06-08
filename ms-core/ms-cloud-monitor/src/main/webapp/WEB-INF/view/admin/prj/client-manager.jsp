@@ -19,9 +19,9 @@
 				<div class="panel-heading">项目 / 项目管理 / <b>发布到客户端</b></div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 						</div>
-						<div class="col-sm-6 text-right">
+						<div class="col-sm-8 text-right">
 							<div class="btn-group">
 								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control">
 									<option value="">自动刷新:关闭</option>
@@ -31,9 +31,8 @@
 						  	</div>
 						  	<div class="btn-group">
 						  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="info.releaseAll()">发布项目</a>
-						  	</div>
-						  	<div class="btn-group">
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增客户端</a>
+						  		<a href="${webroot}/prjMonitor/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm" target="_blank">查看服务</a>
 						  	</div>
 						  	<div class="btn-group">
 						  		<a href="${webroot}/prjVersion/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>
@@ -90,7 +89,7 @@ var info = {
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.clientId,'\')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.clientId,'\')" title="删除"></a>',
 							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.shell(\'',obj.clientId,'\')" title="设置发布的Shell">设置执行命令</a>',
-							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.release(\'',obj.clientId,'\')" title="发布到客户端">发布项目</a>',
+							    	'&nbsp; | &nbsp;<a class="glyphicon text-success" href="javascript:info.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">发布项目</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}

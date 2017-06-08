@@ -1,6 +1,8 @@
 package com.module.admin.prj.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +19,11 @@ import com.module.admin.BaseController;
 import com.module.admin.prj.pojo.PrjMonitor;
 import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjMonitorService;
+import com.system.auth.AuthUtil;
+import com.system.auth.model.AuthClient;
 import com.system.comm.model.KvEntity;
+import com.system.comm.utils.FrameHttpUtil;
+import com.system.comm.utils.FrameJsonUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -119,5 +125,41 @@ public class PrjMonitorController extends BaseController {
 			frame.setCode(ResponseCode.FAIL.getCode());
 		}
 		writerJson(response, frame);
+	}
+
+	@RequestMapping(value = "/prjMonitor/f-json/stopSrv")
+	@ResponseBody
+	public void stopSrv(HttpServletRequest request, HttpServletResponse response,
+			Integer prjmId) {
+		ResponseFrame frame = null;
+		try {
+			PrjMonitor monitor = prjMonitorService.get(prjmId);
+			Map<String, Object> paramsMap = new HashMap<String, Object>();
+			String url = "http://" + monitor.getRemark() + "/service/shutdown";
+			
+			AuthClient ac = AuthUtil.getFirst();
+			String clientId = ac.getId();
+			String time = String.valueOf(System.currentTimeMillis());
+			String sercret = ac.getSercret();
+			paramsMap.put("clientId", clientId);
+			paramsMap.put("time", time);
+			paramsMap.put("sign", AuthUtil.auth(clientId, time, sercret));
+			frame = post(url, paramsMap);
+		} catch (Exception e) {
+			LOGGER.error("停止服务异常: " + e.getMessage(), e);
+			frame = new ResponseFrame();
+			frame.setCode(ResponseCode.FAIL.getCode());
+		}
+		writerJson(response, frame);
+	}
+	
+	private static ResponseFrame post(String url, Map<String, Object> params) {
+		try {
+			String result = FrameHttpUtil.post(url, params);
+			return FrameJsonUtil.toObject(result, ResponseFrame.class);
+		} catch (Exception e) {
+			LOGGER.error("调用接口异常: " + e.getMessage(), e);
+		}
+		return null;
 	}
 }

@@ -67,10 +67,9 @@ var info = {
 				                         '<th>项目名称</th>',
 				                         '<th>服务信息</th>',
 				                         '<th>类型</th>',
-				                         '<th>是否开启监控</th>',
-				                         '<th>监控状态</th>',
-				                         '<th>监控时间</th>',
-				                         '<th width="100">操作</th>',
+				                         '<th>开启监控</th>',
+				                         '<th>监控状态 / 控时间</th>',
+				                         '<th width="150">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -90,29 +89,31 @@ var info = {
 							var _msCont = [];
 							var _monitorIsCls = '';
 							var _monitorTime = '';
+							var _stopSrv = [];
 							if(obj.monitorIs === <%=Boolean.FALSE.getCode()%>) {
 								_monitorIsCls = ' class="text-danger"';
 							} else {
 								_monitorIsCls = ' class="text-success"';
 								if(obj.monitorStatus === <%=PrjMonitorMonitorStatus.ERROR.getCode()%>) {
-									_msCont.push('<span class="text-danger">',obj.monitorStatusName,'</span>');
-									_msCont.push('<br>');
-									_msCont.push('<small>检测失败次数：',obj.monitorFailNum,'<br>');
+									_msCont.push('<span class="text-danger">',obj.monitorStatusName,'&nbsp; &nbsp;</span>');
+									_msCont.push('<small class="text-muted">检测失败次数：',obj.monitorFailNum);
 									_msCont.push('</small>');
 								} else {
-									_msCont.push('<span class="text-success">',obj.monitorStatusName,'</span>');
+									_msCont.push('<span class="text-success">',obj.monitorStatusName,'&nbsp; &nbsp;</span>');
+									
+									_stopSrv.push('&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.stopSrv(',obj.prjmId,')" title="停止服务">停止服务</a>');
 								}
-								_monitorTime = obj.monitorTime;
+								_monitorTime = '<br><small class="text-muted">监控时间: ' + obj.monitorTime + '</small>';
 							}
 							return ['<tr>',
 							    	'<td>',obj.prjName,'</td>',
 							    	'<td>',obj.remark,'</td>',
 							    	'<td>',obj.typeName,'</td>',
 							    	'<td><span',_monitorIsCls,'>',obj.monitorIsName,'</span></td>',
-							    	'<td>',_msCont.join(''),'</td>',
-							    	'<td>',_monitorTime,'</td>',
+							    	'<td>',_msCont.join(''),_monitorTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjmId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjmId,')" title="删除"></a>',
+							    	_stopSrv.join(''),
 							    	'</td>',
 								'</tr>'].join('');
 						}
@@ -150,14 +151,33 @@ var info = {
 				});
 			}
 		},
-		//版本管理
+		//停止服务
+		stopSrv : function(prjmId) {
+			if(confirm('您确定要停止该服务吗?')) {
+				JUtil.ajax({
+					url : '${webroot}/prjMonitor/f-json/stopSrv.shtml',
+					data : { prjmId: prjmId },
+					success : function(json) {
+						if (json.code === 0) {
+							message('服务停止成功，过程会有一定的延时');
+							info.loadInfo(1);
+						}
+						else if (json.code === -1)
+							message(JUtil.msg.ajaxErr);
+						else
+							message(json.message);
+					}
+				});
+			}
+		},
+		/* //版本管理
 		version : function(prjId) {
 			location = '${webroot}/prjVersion/f-view/manager.shtml?prjId=' + prjId;
 		},
 		//发布到客户端的管理
 		cli : function(prjId) {
 			location = '${webroot}/prjClient/f-view/manager.shtml?prjId=' + prjId;
-		},
+		}, */
 		refreshChange: function() {
 			if(info.interval) {
 				window.clearInterval(info.interval);
