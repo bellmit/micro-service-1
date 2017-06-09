@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="container">
+<div class="container text-center">
 	<hr />
 	<p><a href="${webroot}/index.jsp" class="text-success">首页</a>
 	&nbsp; 技术支持：<b>岳静</b>

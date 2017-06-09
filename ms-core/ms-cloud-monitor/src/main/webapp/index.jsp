@@ -11,7 +11,7 @@
 	<jsp:include page="/WEB-INF/view/inc/header.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-9">
 				<div class="panel panel-success">
 					<div class="panel-heading">说明</div>
 					<div class="panel-body">
@@ -19,7 +19,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4">
+			<div class="col-sm-3">
 				<div class="panel panel-info">
 					<div class="panel-heading">登录</div>
 					<div class="panel-body">
