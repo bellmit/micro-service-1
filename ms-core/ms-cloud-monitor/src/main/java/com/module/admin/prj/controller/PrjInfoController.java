@@ -73,6 +73,14 @@ public class PrjInfoController extends BaseController {
 		return "admin/prj/info-edit";
 	}
 
+	@RequestMapping(name = "发布等的流程操作", value = "/prjInfo/f-view/process")
+	public String process(HttpServletRequest request, ModelMap modelMap, Integer prjId) {
+		if(prjId != null) {
+			modelMap.put("prjInfo", prjInfoService.get(prjId));
+		}
+		return "admin/prj/info-process";
+	}
+	
 	/**
 	 * 保存
 	 * @return

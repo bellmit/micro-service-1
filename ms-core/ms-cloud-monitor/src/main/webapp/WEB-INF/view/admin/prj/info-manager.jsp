@@ -54,7 +54,7 @@ var info = {
 				                         '<th>名称</th>',
 				                         '<th>状态</th>',
 				                         '<th>创建时间</th>',
-				                         '<th width="230">操作</th>',
+				                         '<th width="300">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -85,6 +85,7 @@ var info = {
 							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.api(',obj.prjId,')" title="API列表">API</a>',
 							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a>',
 							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本发布管理">版本发布</a>',
+							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.process(',obj.prjId,')" title="项目流程">详细</a>',
 							    	//'&nbsp; <a class="glyphicon text-success" href="javascript:info.cli(',obj.prjId,')" title="发到对应的客户端">发布到客户端</a>',
 							    	'</td>',
 								'</tr>'].join('');
@@ -122,6 +123,10 @@ var info = {
 					}
 				});
 			}
+		},
+		//流程
+		process : function(prjId) {
+			location = '${webroot}/prjInfo/f-view/process.shtml?prjId=' + prjId;
 		},
 		//版本管理
 		version : function(prjId) {
