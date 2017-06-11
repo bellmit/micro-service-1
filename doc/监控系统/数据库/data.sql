@@ -13,3 +13,7 @@ insert  into `sys_user`(`user_id`,`username`,`password`,`nickname`,`create_time`
 
 
 
+
+insert into `ms_secret` (`cli_id`, `name`, `remark`, `token`, `domain`, `is_use`, `create_time`) values('143756892','config','配置系统的密钥','4307a39dfc7ecb783d6682f44s3911e2','','1','2017-06-11 12:00:40');
+insert into `ms_secret` (`cli_id`, `name`, `remark`, `token`, `domain`, `is_use`, `create_time`) values('145756897','biz-api','biz-api项目的密钥','6e09a39dfc7edb7w3d66f2f44s3913e2','','1','2017-06-11 12:05:45');
+

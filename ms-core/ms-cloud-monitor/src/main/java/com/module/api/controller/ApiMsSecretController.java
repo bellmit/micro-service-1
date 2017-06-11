@@ -6,11 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.module.admin.BaseController;
 import com.module.api.service.ApiMsSecretService;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -21,8 +20,8 @@ import com.system.handle.model.ResponseFrame;
  * @date 2016年3月4日 下午6:22:39 
  * @version V1.0
  */
-@Controller
-public class ApiMsSecretController extends BaseController {
+@RestController
+public class ApiMsSecretController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApiMsSecretController.class);
 	
@@ -34,7 +33,7 @@ public class ApiMsSecretController extends BaseController {
 	 */
 	@RequestMapping(value = "/api/msSecret/findUse")
 	@ResponseBody
-	public void findUse(HttpServletRequest request, HttpServletResponse response) {
+	public ResponseFrame findUse(HttpServletRequest request, HttpServletResponse response) {
 		ResponseFrame frame = null;
 		try {
 			frame = apiMsSecretService.findUse();
@@ -42,6 +41,6 @@ public class ApiMsSecretController extends BaseController {
 			LOGGER.error("获取使用的密钥异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
 		}
-		writerJson(response, frame);
+		return frame;
 	}
 }

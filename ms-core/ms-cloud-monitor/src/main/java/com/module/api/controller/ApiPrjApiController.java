@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.module.admin.BaseController;
 import com.module.api.service.ApiPrjApiService;
@@ -25,7 +25,7 @@ import com.system.handle.model.ResponseFrame;
  * @date 2016年3月4日 下午6:22:39 
  * @version V1.0
  */
-@Controller
+@RestController
 public class ApiPrjApiController extends BaseController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApiPrjApiController.class);
@@ -35,7 +35,7 @@ public class ApiPrjApiController extends BaseController {
 
 	@RequestMapping(name = "批量保存项目API的功能", value = "/api/prjApi/saveBatch")
 	@ResponseBody
-	public void saveBatch(HttpServletRequest request, HttpServletResponse response,
+	public ResponseFrame saveBatch(HttpServletRequest request, HttpServletResponse response,
 			String code, String detailString) {
 		ResponseFrame frame = null;
 		try {
@@ -45,7 +45,7 @@ public class ApiPrjApiController extends BaseController {
 			LOGGER.error("修改客户端发布项目成功异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
 		}
-		writerJson(response, frame);
+		return frame;
 	}
 
 }

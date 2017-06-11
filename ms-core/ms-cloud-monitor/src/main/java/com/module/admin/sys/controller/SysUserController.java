@@ -60,7 +60,7 @@ public class SysUserController extends BaseController {
 	 */
 	@RequestMapping(value = "/sysUser/f-view/main")
 	public String main(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
-		SysUser userInfo = getSessionUser(request);
+		//SysUser userInfo = getSessionUser(request);
 		/*String menuIds = sysRoleService.get(userInfo.getRoleId()).getGrantids();
 		List<SysMenu> menuList = sysMenuService.findTreeByMenuIds(menuIds);
 		modelMap.put("menuList", menuList);

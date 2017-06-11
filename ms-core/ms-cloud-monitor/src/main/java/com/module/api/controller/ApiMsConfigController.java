@@ -6,11 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.module.admin.BaseController;
 import com.module.api.service.ApiMsConfigService;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -21,8 +20,8 @@ import com.system.handle.model.ResponseFrame;
  * @date 2016年3月4日 下午6:22:39 
  * @version V1.0
  */
-@Controller
-public class ApiMsConfigController extends BaseController {
+@RestController
+public class ApiMsConfigController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApiMsConfigController.class);
 	
@@ -34,7 +33,7 @@ public class ApiMsConfigController extends BaseController {
 	 */
 	@RequestMapping(value = "/api/msConfig/findAll")
 	@ResponseBody
-	public void findAll(HttpServletRequest request, HttpServletResponse response) {
+	public ResponseFrame findAll(HttpServletRequest request, HttpServletResponse response) {
 		ResponseFrame frame = null;
 		try {
 			frame = apiMsConfigService.findAll();
@@ -42,6 +41,6 @@ public class ApiMsConfigController extends BaseController {
 			LOGGER.error("获取所有的配置文件异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);
 		}
-		writerJson(response, frame);
+		return frame;
 	}
 }

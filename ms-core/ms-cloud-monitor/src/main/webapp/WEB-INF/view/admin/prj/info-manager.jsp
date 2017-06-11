@@ -84,9 +84,8 @@ var info = {
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,')" title="删除"></a>',
 							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.api(',obj.prjId,')" title="API列表">API</a>',
 							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a>',
-							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本发布管理">版本发布</a>',
-							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.process(',obj.prjId,')" title="项目流程">详细</a>',
-							    	//'&nbsp; <a class="glyphicon text-success" href="javascript:info.cli(',obj.prjId,')" title="发到对应的客户端">发布到客户端</a>',
+							    	'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本发布管理">版本管理</a>',
+							    	//'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.process(',obj.prjId,')" title="项目流程">详细</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}

@@ -146,10 +146,12 @@
 				success : function(json) {
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
-						setTimeout(function() {
-							parent.info.loadInfo(1);
-							parent.dialog.close();
-						}, 800);
+						if('${param.source}'!='dtl') {
+							setTimeout(function() {
+								parent.info.loadInfo(1);
+								parent.dialog.close();
+							}, 800);
+						}
 					}
 					else if (json.code === -1)
 						_saveMsg.append(JUtil.msg.ajaxErr);

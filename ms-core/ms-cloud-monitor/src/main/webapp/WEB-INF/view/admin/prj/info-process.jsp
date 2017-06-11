@@ -42,7 +42,7 @@
 				  	</div>
 				  	<div class="tab-content" style="padding: 15px;">
 					  	<div role="tabpanel" class="tab-pane fade active in" id="edit">
-					    Shell配置
+					    	<iframe src="${webroot}/prjInfo/f-view/edit.shtml?prjId=${prjInfo.prjId}&source=dtl" width="600px" height="500px" frameborder="0"></iframe>
 					    </div>
 					  	<div role="tabpanel" class="tab-pane fade" id="version">
 					   	 设置发布版本
