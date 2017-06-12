@@ -77,7 +77,7 @@
 			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 			and isdel=0 -->
 		</where>
-		order by monitor_is desc
+		order by monitor_is desc,monitor_status asc
   		limit #{currentIndex}, #{size}
 	</select>
 	<select id="findPrjMonitorCount" parameterType="prjMonitor" resultType="int">

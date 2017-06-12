@@ -1,8 +1,11 @@
 package com.module.admin.prj.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.module.admin.prj.pojo.PrjVersion;
+import com.system.comm.model.KvEntity;
 import com.system.handle.model.ResponseFrame;
 
 /**
@@ -41,4 +44,6 @@ public interface PrjVersionService {
 	 * @return
 	 */
 	public ResponseFrame delete(Integer prjId, String version);
+
+	public List<KvEntity> findKvAll();
 }

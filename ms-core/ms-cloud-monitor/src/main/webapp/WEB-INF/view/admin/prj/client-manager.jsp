@@ -1,3 +1,4 @@
+<%@page import="com.module.admin.prj.enums.PrjClientStatus"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -79,10 +80,22 @@ var info = {
 				success : function(json){
 					if(json.code === 0) {
 						function getResult(obj) {
+							var _statusName = '';
+							if(obj.status === <%=PrjClientStatus.WAIT.getCode()%>) {
+								_statusName = '<span class="text-muted">'+obj.statusName+'</span>';
+							} else if(obj.status === <%=PrjClientStatus.ING.getCode()%>) {
+								_statusName = '<span class="text-warning">'+obj.statusName+'</span>';
+							} else if(obj.status === <%=PrjClientStatus.SUCC.getCode()%>) {
+								_statusName = '<span class="text-success">'+obj.statusName+'</span>';
+							} else if(obj.status === <%=PrjClientStatus.FAIL.getCode()%>) {
+								_statusName = '<span class="text-danger">'+obj.statusName+'</span>';
+							} else {
+								_statusName = '<span class="text-muted">'+obj.statusName+'</span>';
+							}
 							return ['<tr>',
 							    	'<td>',obj.clientId,'</td>',
 							    	'<td>',obj.ip,' : ',obj.port,'</td>',
-							    	'<td>',obj.statusName,(JUtil.isNotEmpty(obj.statusMsg) ? ' | <a href="javascript:info.lookResult(\''+obj.clientId+'\');">结果</a>':''),'<textarea class="hidden" id="statusMsg',obj.clientId,'">',obj.statusMsg,'</textarea></td>',
+							    	'<td>',_statusName,(JUtil.isNotEmpty(obj.statusMsg) ? ' | <a href="javascript:info.lookResult(\''+obj.clientId+'\');">结果</a>':''),'<textarea class="hidden" id="statusMsg',obj.clientId,'">',obj.statusMsg,'</textarea></td>',
 							    	'<td>',obj.releaseTime,'</td>',
 							    	'<td><a class="glyphicon text-success" href="javascript:info.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">查看日志</a>',
 							    	'</td>',

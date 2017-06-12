@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.module.admin.prj.pojo.PrjVersion;
+import com.system.comm.model.KvEntity;
 
 /**
  * prj_version的Dao
@@ -32,4 +33,6 @@ public interface PrjVersionDao {
 	public abstract void updateNotRelease();
 
 	public abstract int getCountByIsRelease(@Param("prjId")Integer prjId, @Param("isRelease")Integer isRelease);
+
+	public abstract List<KvEntity> findKvAll();
 }

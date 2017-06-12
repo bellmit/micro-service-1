@@ -40,6 +40,10 @@
   		<where>prj_id=#{prjId} and is_release=#{isRelease}</where>
 	</select>
 	
+	<select id="findKvAll" resultType="kvEntity">
+		select version code,version value from prj_version
+	</select>
+	
 	<select id="findPrjVersion" parameterType="prjVersion" resultType="prjVersion">
 		select <include refid="commCols"/> from prj_version
 		<where>

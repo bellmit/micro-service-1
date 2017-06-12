@@ -63,7 +63,17 @@
 			<scope>test</scope>
 		</dependency>
 		
-		
+		<!-- auto code
+		<dependency>
+		    <groupId>javax.sql</groupId>
+		    <artifactId>rowset</artifactId>
+		    <version>1.0.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.freemarker</groupId>
+		    <artifactId>freemarker</artifactId>
+		    <version>2.3.23</version>
+		</dependency> -->
 		
 	</dependencies>
 	

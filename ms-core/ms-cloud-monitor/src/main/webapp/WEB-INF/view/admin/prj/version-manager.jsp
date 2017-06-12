@@ -1,3 +1,4 @@
+<%@page import="com.system.comm.enums.Boolean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -68,9 +69,15 @@ var info = {
 				success : function(json){
 					if(json.code === 0) {
 						function getResult(obj) {
+							var _isReleaseName = '';
+							if(obj.isRelease === <%=Boolean.TRUE.getCode()%>) {
+								_isReleaseName = '<span class="text-success">'+obj.isReleaseName+'</span>';
+							} else {
+								_isReleaseName = '<span class="text-danger">'+obj.isReleaseName+'</span>';
+							}
 							return ['<tr>',
 							    	'<td>',obj.version,'</td>',
-							    	'<td>',obj.isReleaseName,'</td>',
+							    	'<td>',_isReleaseName,'</td>',
 							    	'<td><a href="',webroot,'/sysFile/f-view/download.shtml?url=',obj.pathUrl,'" target="_blank">下载项目</a></td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.version,'\')" title="修改"></a> ',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.version,'\')" title="删除"></a>',
@@ -90,7 +97,7 @@ var info = {
 				url: webroot + '/prjVersion/f-view/edit.shtml?prjId=${param.prjId}&version='+(id?id:''),
 				type: 'iframe',
 				width: 400,
-				height: 350
+				height: 390
 			});
 		},
 		del : function(id) {

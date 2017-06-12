@@ -21,6 +21,9 @@
 			<my:select id="isRelease" headerKey="" headerValue="是否发布" dictcode="boolean" value="${prjVersion.isRelease}" cssCls="form-control" />
 		</div>
 		<div class="form-group">
+			<my:select id="isRelease" headerKey="" headerValue="回滚版本" items="${list}" value="${prjVersion.isRelease}" cssCls="form-control" />
+		</div>
+		<div class="form-group">
 			<input type="file" id="files" name="files" onchange="fi.uploadFile()"/><img id="filesLoading" alt="上传中..." src="${webroot}/resources/images/loading.gif" style="display: none;"/>
 			<input type="hidden" id="pathUrl" name="pathUrl" value="${prjVersion.pathUrl}"/>
 		</div>

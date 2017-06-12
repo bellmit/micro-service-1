@@ -267,3 +267,12 @@ create table ms_secret
 );
 
 alter table ms_secret comment '应用密钥表';
+
+
+
+
+/*==============================================================*/
+/* 2017-06-12 新增 项目版本表，新增回滚版本                     */
+/*==============================================================*/
+alter table `monitor`.`prj_version`   
+  add column `rb_version` varchar(50) NULL  COMMENT '回滚版本' after `path_url`;

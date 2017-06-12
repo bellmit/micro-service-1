@@ -10,6 +10,7 @@ import com.module.admin.prj.pojo.PrjVersion;
 import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjVersionService;
 import com.system.comm.enums.Boolean;
+import com.system.comm.model.KvEntity;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -80,5 +81,10 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 		prjVersionDao.delete(prjId, version);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public List<KvEntity> findKvAll() {
+		return prjVersionDao.findKvAll();
 	}
 }
