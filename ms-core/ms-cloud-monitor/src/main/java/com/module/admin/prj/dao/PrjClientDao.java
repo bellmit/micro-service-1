@@ -41,4 +41,7 @@ public interface PrjClientDao {
 
 	public abstract PrjClient getLastByPrjIdClientId(@Param("prjId")Integer prjId,
 			@Param("clientId")String clientId);
+
+	public abstract List<PrjClient> findByPrjIdVersion(@Param("prjId")Integer prjId,
+			@Param("version")String version);
 }

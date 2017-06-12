@@ -32,7 +32,7 @@
 						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增客户端</a>
 						  	</div> -->
 						  	<div class="btn-group">
-								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control">
+								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control input-sm">
 									<option value="">自动刷新:关闭</option>
 									<option value="5">5s刷新一次</option>
 									<option value="10">10s刷新一次</option>

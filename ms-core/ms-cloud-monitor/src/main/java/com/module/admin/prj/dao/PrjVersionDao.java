@@ -35,4 +35,6 @@ public interface PrjVersionDao {
 	public abstract int getCountByIsRelease(@Param("prjId")Integer prjId, @Param("isRelease")Integer isRelease);
 
 	public abstract List<KvEntity> findKvAll();
+
+	public abstract List<PrjVersion> findByPrjId(@Param("prjId")Integer prjId);
 }

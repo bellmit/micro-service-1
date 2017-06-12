@@ -88,4 +88,6 @@ public interface PrjClientService {
 	 * @return
 	 */
 	public PrjClient getLastByPrjIdClientId(Integer prjId, String clientId);
+
+	public List<PrjClient> findByPrjIdVersion(Integer prjId, String version);
 }

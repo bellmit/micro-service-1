@@ -49,6 +49,10 @@ public class CliInfo extends BaseEntity implements Serializable {
 	private String activityStatusName;
 	//搜索字符串
 	private String searchString;
+	//发布时间
+	private Date releaseTime;
+	//日志路径
+	private String logPath;
 	//客户端shell
 	private String shellScript;
 	//版本编号
@@ -166,5 +170,17 @@ public class CliInfo extends BaseEntity implements Serializable {
 	}
 	public void setPathUrl(String pathUrl) {
 		this.pathUrl = pathUrl;
+	}
+	public Date getReleaseTime() {
+		return releaseTime;
+	}
+	public void setReleaseTime(Date releaseTime) {
+		this.releaseTime = releaseTime;
+	}
+	public String getLogPath() {
+		return logPath;
+	}
+	public void setLogPath(String logPath) {
+		this.logPath = logPath;
 	}
 }

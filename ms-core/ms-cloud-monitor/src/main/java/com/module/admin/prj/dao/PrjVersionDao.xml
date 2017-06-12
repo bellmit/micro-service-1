@@ -4,12 +4,13 @@
 <mapper namespace="com.module.admin.prj.dao.PrjVersionDao">
 
 	<sql id="commCols">
-		prj_id prjId,version version,remark remark,create_time createTime,user_id userId,is_release isRelease,path_url pathUrl
+		prj_id prjId,version version,remark remark,create_time createTime,user_id userId,is_release isRelease,path_url pathUrl,
+		rb_version rbVersion
 	</sql>
 
 	<insert id="save" parameterType="prjVersion" flushCache="true">
-		 insert into prj_version(prj_id,version,remark,create_time,user_id,is_release,path_url)
-		 values(#{prjId},#{version},#{remark},now(),#{userId},#{isRelease},#{pathUrl})
+		 insert into prj_version(prj_id,version,remark,create_time,user_id,is_release,path_url,rb_version)
+		 values(#{prjId},#{version},#{remark},now(),#{userId},#{isRelease},#{pathUrl},#{rbVersion})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +21,7 @@
 	<update id="update" parameterType="prjVersion" flushCache="true">
 		update prj_version
 		<set>
-			remark=#{remark},is_release=#{isRelease},path_url=#{pathUrl}
+			remark=#{remark},is_release=#{isRelease},path_url=#{pathUrl},rb_version=#{rbVersion}
 		</set>
 		<where>prj_id=#{prjId} and version=#{version}</where>
 	</update>
@@ -42,6 +43,13 @@
 	
 	<select id="findKvAll" resultType="kvEntity">
 		select version code,version value from prj_version
+	</select>
+	<select id="findByPrjId" resultType="prjVersion">
+		select <include refid="commCols"/> from prj_version
+		<where>
+			prj_id=#{prjId}
+		</where>
+		order by is_release desc,create_time desc
 	</select>
 	
 	<select id="findPrjVersion" parameterType="prjVersion" resultType="prjVersion">

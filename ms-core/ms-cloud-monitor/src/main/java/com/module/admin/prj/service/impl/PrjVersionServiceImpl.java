@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.module.admin.prj.dao.PrjVersionDao;
+import com.module.admin.prj.pojo.PrjClient;
 import com.module.admin.prj.pojo.PrjVersion;
+import com.module.admin.prj.service.PrjClientService;
 import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjVersionService;
 import com.system.comm.enums.Boolean;
@@ -28,6 +30,8 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 	private PrjVersionDao prjVersionDao;
 	@Autowired
 	private PrjInfoService prjInfoService;
+	@Autowired
+	private PrjClientService prjClientService;
 
 	@Override
 	public ResponseFrame saveOrUpdate(PrjVersion prjVersion) {
@@ -38,6 +42,18 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 		}*/
 		if(org == null) {
 			prjVersionDao.save(prjVersion);
+			//根据回滚版本，设置发布到的客户端
+			List<PrjClient> clients = prjClientService.findByPrjIdVersion(prjVersion.getPrjId(), prjVersion.getRbVersion());
+			for (PrjClient client : clients) {
+				PrjClient prjClient = new PrjClient();
+				prjClient.setPrjId(prjVersion.getPrjId());
+				prjClient.setClientId(client.getClientId());
+				prjClient.setReleaseTime(client.getReleaseTime());
+				prjClient.setShellScript(client.getShellScript());
+				prjClient.setVersion(prjVersion.getVersion());
+				prjClient.setLogPath(client.getLogPath());
+				prjClientService.saveOrUpdate(prjClient);
+			}
 		} else {
 			prjVersionDao.update(prjVersion);
 		}
@@ -86,5 +102,10 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 	@Override
 	public List<KvEntity> findKvAll() {
 		return prjVersionDao.findKvAll();
+	}
+
+	@Override
+	public List<PrjVersion> findByPrjId(Integer prjId) {
+		return prjVersionDao.findByPrjId(prjId);
 	}
 }

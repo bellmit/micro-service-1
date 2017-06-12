@@ -9,3 +9,4 @@ h4,h5,h6{font-family: "微软雅黑", Helvetica, Arial, sans-serif;}
 .container .c-left>div{width: 100%;}
 .container .c-left>div button{width: 100%;}
 .container .c-right{width: 80%;float: right;margin-top: 10px;}
+.container .c-right>.panel{min-height: 300px;}

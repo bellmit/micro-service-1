@@ -54,7 +54,7 @@ var info = {
 				                         '<th>名称</th>',
 				                         '<th>状态</th>',
 				                         '<th>创建时间</th>',
-				                         '<th width="300">操作</th>',
+				                         '<th width="280">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}

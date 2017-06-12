@@ -15,7 +15,9 @@ hr{ margin-top: 10px;margin-bottom: 10px; }
 .media-body>p>a>img{max-width: 560px;}
 
 .panel>.panel-heading-tab{padding: 0px;border-bottom: 0px;}
-
+.panel>.panel-heading-tool{padding: 7px 15px;}
+.panel>.panel-heading-tool .btn-sm{padding: 3px 8px;}
+.panel>.panel-heading-tool .title{padding-top: 4px;}
 .panel-heading>.ph-title{font-size: 16px;}
 .panel-body{line-height: 180%;}
 .panel-body>div img{max-width: 650px;}

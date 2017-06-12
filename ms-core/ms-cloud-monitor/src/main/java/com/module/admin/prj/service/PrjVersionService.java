@@ -46,4 +46,6 @@ public interface PrjVersionService {
 	public ResponseFrame delete(Integer prjId, String version);
 
 	public List<KvEntity> findKvAll();
+
+	public List<PrjVersion> findByPrjId(Integer prjId);
 }

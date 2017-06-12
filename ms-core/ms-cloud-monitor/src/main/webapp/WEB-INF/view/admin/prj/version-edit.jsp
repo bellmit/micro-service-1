@@ -18,10 +18,11 @@
 			<input type="text" class="form-control" id="remark" placeholder="备注" value="${prjVersion.remark}">
 		</div>
 		<div class="form-group">
-			<my:select id="isRelease" headerKey="" headerValue="是否发布" dictcode="boolean" value="${prjVersion.isRelease}" cssCls="form-control" />
+			<span>发布：&nbsp;</span><my:radio id="isRelease" dictcode="boolean" value="${prjVersion.isRelease}" defvalue="1"/>
+			<%-- <my:select id="isRelease" headerKey="" headerValue="是否发布" dictcode="boolean" value="${prjVersion.isRelease}" cssCls="form-control" /> --%>
 		</div>
 		<div class="form-group">
-			<my:select id="isRelease" headerKey="" headerValue="回滚版本" items="${list}" value="${prjVersion.isRelease}" cssCls="form-control" />
+			<my:select id="rbVersion" headerKey="" headerValue="参考版本" items="${list}" value="${prjVersion.rbVersion}" cssCls="form-control" />
 		</div>
 		<div class="form-group">
 			<input type="file" id="files" name="files" onchange="fi.uploadFile()"/><img id="filesLoading" alt="上传中..." src="${webroot}/resources/images/loading.gif" style="display: none;"/>
@@ -85,6 +86,8 @@
 				return;
 			}
 			
+			var _rbVersion = $('#rbVersion');
+			
 			var _saveBtn = $('#saveBtn');
 			var _orgVal = _saveBtn.html();
 			_saveBtn.attr('disabled', 'disabled').html('保存中...');
@@ -95,6 +98,7 @@
 					version: _version.val(),
 					remark: $('#remark').val(),
 					isRelease: _isRelease.val(),
+					rbVersion: _rbVersion.val(),
 					pathUrl: _pathUrl.val()
 				},
 				success : function(json) {

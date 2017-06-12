@@ -125,4 +125,9 @@ public class PrjClientServiceImpl implements PrjClientService {
 	public PrjClient getLastByPrjIdClientId(Integer prjId, String clientId) {
 		return prjClientDao.getLastByPrjIdClientId(prjId, clientId);
 	}
+
+	@Override
+	public List<PrjClient> findByPrjIdVersion(Integer prjId, String version) {
+		return prjClientDao.findByPrjIdVersion(prjId, version);
+	}
 }

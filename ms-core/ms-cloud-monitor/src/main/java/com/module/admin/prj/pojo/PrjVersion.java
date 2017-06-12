@@ -33,6 +33,8 @@ public class PrjVersion extends BaseEntity implements Serializable {
 	private Integer isRelease;
 	//版本所在的路径
 	private String pathUrl;
+	//回滚版本
+	private String rbVersion;
 	
 	//========================= 扩展属性
 	//是否发布名称
@@ -59,6 +61,12 @@ public class PrjVersion extends BaseEntity implements Serializable {
 		this.remark = remark;
 	}
 	
+	public String getRbVersion() {
+		return rbVersion;
+	}
+	public void setRbVersion(String rbVersion) {
+		this.rbVersion = rbVersion;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}

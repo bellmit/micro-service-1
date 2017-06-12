@@ -23,15 +23,15 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="btn-group">
-							<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control" value="${param.prjId}"/>
+							<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control input-sm" value="${param.prjId}"/>
 							</div>
 							<div class="btn-group">
-							<my:select id="monitorStatus" headerKey="" headerValue="全部状态" dictcode="prj_monitor_monitor_status" cssCls="form-control" />
+							<my:select id="monitorStatus" headerKey="" headerValue="全部状态" dictcode="prj_monitor_monitor_status" cssCls="form-control input-sm" />
 							</div>
 						</div>
 						<div class="col-sm-6 text-right">
 						  	<div class="btn-group">
-								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control">
+								<select id="refreshInterval" onchange="info.refreshChange()" class="form-control input-sm">
 									<option value="">自动刷新:关闭</option>
 									<option value="5">5s刷新一次</option>
 									<option value="10">10s刷新一次</option>

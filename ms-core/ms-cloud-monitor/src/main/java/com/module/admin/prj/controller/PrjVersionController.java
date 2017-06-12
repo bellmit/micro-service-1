@@ -1,5 +1,6 @@
 package com.module.admin.prj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,7 +74,11 @@ public class PrjVersionController extends BaseController {
 		if(prjId != null) {
 			modelMap.put("prjVersion", prjVersionService.get(prjId, version));
 		}
-		List<KvEntity> list = prjVersionService.findKvAll();
+		List<PrjVersion> versions = prjVersionService.findByPrjId(prjId);
+		List<KvEntity> list = new ArrayList<KvEntity>();
+		for (PrjVersion v : versions) {
+			list.add(new KvEntity(v.getVersion(), v.getVersion()));
+		}
 		modelMap.put("list", list);
 		return "admin/prj/version-edit";
 	}
