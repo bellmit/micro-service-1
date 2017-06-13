@@ -17,6 +17,9 @@ public class ConsConfig {
 	public ConfigCons configCons() {
 		ConfigCons cons = new ConfigCons();
 		ConfigCons.projectName = env.getProperty("project.monitor.name");
+		ConfigCons.clientId = env.getProperty("client.monitor.id");
+		ConfigCons.sercret = env.getProperty("client.monitor.token");
+		ConfigCons.taskServerHost = env.getProperty("client.task.server.host");
 		//ConfigCons.webroot = env.getProperty("project.webroot");
 		return cons;
 	}

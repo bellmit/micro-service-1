@@ -26,6 +26,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
+import com.monitor.MonitorCons;
 import com.system.auth.AuthUtil;
 import com.system.comm.utils.FrameHttpUtil;
 import com.system.comm.utils.FrameJsonUtil;
@@ -39,13 +40,9 @@ import com.system.handle.model.ResponseFrame;
  * @date 2016年10月21日 下午7:57:10
  * @version V1.0.0
  */
-public class MonitorUtil {
+public class ApiUtil {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MonitorUtil.class);
-
-	public static String clientId;
-	public static String sercret;
-	public static String serverHost;
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApiUtil.class);
 
 	/** API测试访问当前项目的ClientId */
 	public static String prjId;
@@ -61,10 +58,10 @@ public class MonitorUtil {
 	 */
 	public static ResponseFrame post(String url, Map<String, Object> paramsMap) throws IOException {
 		String time = String.valueOf(System.currentTimeMillis());
-		paramsMap.put("clientId", clientId);
+		paramsMap.put("clientId", MonitorCons.clientId);
 		paramsMap.put("time", time);
-		paramsMap.put("sign", AuthUtil.auth(clientId, time, sercret));
-		String result = FrameHttpUtil.post(serverHost + url, paramsMap);
+		paramsMap.put("sign", AuthUtil.auth(MonitorCons.clientId, time, MonitorCons.sercret));
+		String result = FrameHttpUtil.post(MonitorCons.serverHost + url, paramsMap);
 		return FrameJsonUtil.toObject(result, ResponseFrame.class);
 	}
 
@@ -229,7 +226,7 @@ public class MonitorUtil {
 		paramsMap.put("code", appName);
 		paramsMap.put("detailString", FrameJsonUtil.toString(data));
 		try {
-			ResponseFrame frame = MonitorUtil.post("/api/prjApi/saveBatch", paramsMap);
+			ResponseFrame frame = ApiUtil.post("/api/prjApi/saveBatch", paramsMap);
 			if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
 				LOGGER.info("成功更新API信息到Monitor!");
 			} else {

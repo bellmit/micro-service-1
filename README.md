@@ -16,3 +16,4 @@ hosts配置
 127.0.0.1	msRc
 127.0.0.1	msZuul
 127.0.0.1	msConfig
+127.0.0.1	msTask

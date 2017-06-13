@@ -14,6 +14,7 @@ import com.module.admin.prj.enums.PrjInfoStatus;
 import com.module.admin.prj.enums.PrjMonitorMonitorStatus;
 import com.module.admin.prj.enums.PrjMonitorType;
 import com.module.admin.sys.enums.SysUserStatus;
+import com.module.admin.tts.enums.ProjectSign;
 import com.system.comm.model.KvEntity;
 
 /**
@@ -43,6 +44,8 @@ public class DictCons {
 		DictCons.addValue(PrjMonitorMonitorStatus.KEY, PrjMonitorMonitorStatus.getList(), servletContext);
 		
 		DictCons.addValue(CliInfoStatus.KEY, 	CliInfoStatus.getList(), servletContext);
+		
+		DictCons.addValue(ProjectSign.KEY, 	ProjectSign.getList(), servletContext);
 		
 		
 		if(LOGGER.isInfoEnabled()) {

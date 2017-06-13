@@ -63,6 +63,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h4 class="panel-title text-center">
+					<a data-toggle="collapse" href="#mlCollapseTask">定时任务<span
+						class="caret" style="border-top-color: #468847;"></span></a>
+				</h4>
+			</div>
+			<div id="mlCollapseTask" class="panel-collapse collapse <c:if test="${param.first == 'tts'}">in</c:if>">
+				<div class="panel-body">
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'taskProjectManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/ttsTaskProject/f-view/manager.shtml">服务管理</a>
+					</div>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'taskProjectManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/ttsTaskProject/f-view/manager.shtml">服务图表</a>
+					</div>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'taskProjectManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/ttsTaskProject/f-view/manager.shtml">项目管理</a>
+					</div>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'taskProjectManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/ttsTaskProject/f-view/manager.shtml">项目图表</a>
+					</div>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'taskProjectManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/ttsTaskProject/f-view/manager.shtml">参数配置</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">

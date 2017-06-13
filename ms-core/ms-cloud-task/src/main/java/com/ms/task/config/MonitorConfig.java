@@ -1,4 +1,4 @@
-package com.ms.biz.api.config;
+package com.ms.task.config;
 
 
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class MonitorConfig {
 
 	@Autowired
 	private Environment env;
-	
+
 	@Bean
 	public MonitorCons monitorCons() throws Exception {
 		LOGGER.info("初始化Monitor的信息");

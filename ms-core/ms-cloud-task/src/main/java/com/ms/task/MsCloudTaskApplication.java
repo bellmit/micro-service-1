@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.ms.task.interceptor.AdminSecurityInterceptor;
+import com.ms.task.interceptor.AuthSecurityInterceptor;
 
 @EnableEurekaClient
 @ComponentScan("com.*")
@@ -83,6 +84,8 @@ public class MsCloudTaskApplication extends SpringBootServletInitializer impleme
 			 */
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
+				registry.addInterceptor(new AuthSecurityInterceptor())
+				.addPathPatterns("/api/*/*");
 				AdminSecurityInterceptor admin = new AdminSecurityInterceptor();
 				admin.setLoginUrl("/index.jsp?errorcode=1");
 				registry.addInterceptor(admin)
