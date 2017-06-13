@@ -16,24 +16,31 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">微服务 / <b>配置文件管理</b></div>
-				<div class="panel-body">
+				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-6">
-						</div>
-						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
-						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增配置文件</a>
-						  		<%-- <a href="${webroot}/sysConfig/f-view/manager.shtml?code=config." class="btn btn-default btn-sm">设置配置系统参数</a> --%>
-						  	</div>
-						  	<div class="btn-group">
+						<div class="col-sm-5 title">微服务 / <b>配置文件管理</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+							</div>
 						</div>
 					</div>
-				  	<hr/>
-					<div id="infoPanel"></div>
-					<div id="infoPage"></div>
+				</div>
+				<div class="panel-body">
+				  	<div class="table-tool-panel">
+						<div class="row">
+							<div class="col-sm-6">
+							</div>
+							<div class="col-sm-6 text-right">
+							  	<div class="btn-group">
+							  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增配置文件</a>
+							  		<%-- <a href="${webroot}/sysConfig/f-view/manager.shtml?code=config." class="btn btn-default btn-sm">设置配置系统参数</a> --%>
+							  	</div>
+							</div>
+						</div>
+				  	</div>
+					<div id="infoPanel" class="table-panel"></div>
+					<div id="infoPage" class="table-page-panel"></div>
 				</div>
 			</div>
 		</div>

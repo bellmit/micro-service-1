@@ -19,7 +19,17 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">项目 / <b>API</b></div>
+				<div class="panel-heading panel-heading-tool">
+					<div class="row">
+						<div class="col-sm-5 title">项目 / API / <b>API详情</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
+						  		<a href="javascript:window.close()" class="btn btn-default btn-sm">关闭</a>
+								<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="panel-body">
 					<div id="infoPanel">
 						<div class="panel panel-warning">
@@ -32,10 +42,6 @@
 									</div>
 									<div class="col-sm-6 text-right">
 									  	<div class="btn-group">
-									  	</div>
-									  	<div class="btn-group">
-									  		<a href="javascript:window.close()" class="btn btn-default btn-sm">关闭</a>
-									  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 									  	</div>
 									</div>
 								</div>
@@ -52,8 +58,8 @@
 									<input type="hidden" id="monitorPath" name="monitorPath" value="${prjApi.path}"/>
 									<table class="table table-striped table-hover">
 										<thead><tr class="info">
-				                        <th width="100">参数</th>
-				                        <th width="250">值</th>
+				                        <th width="130">参数</th>
+				                        <th width="280">值</th>
 				                        <th>描叙</th>
 				                        <th width="250">类型</th>
 				                        </tr>
@@ -64,14 +70,14 @@
 				                        	<c:when test="${info.isShow=='0'}">
 				                        	<tr style="display: none;">
 				                        		<td colspan="4">
-				                        			<input type="hidden" id="${info.code}" name="${info.code}" style="width: 200px;" value="${info.value}"/>
+				                        			<input type="hidden" id="${info.code}" name="${info.code}" value="${info.value}"/>
 				                        		</td>
 				                        	</tr>
 				                        	</c:when>
 				                        	<c:otherwise>
 				                        	<tr>
 				                        		<td>${info.code}<c:if test="${info.required=='true'}"> <span class="text-danger">*</span></c:if></td>
-				                        		<td><input type="text" id="${info.code}" name="${info.code}" style="width: 200px;" value="<c:out value="${info.value}"></c:out>"/></td>
+				                        		<td><input type="text" id="${info.code}" name="${info.code}" style="width: 250px;" value="<c:out value="${info.value}"></c:out>"/></td>
 				                        		<td>${info.name}</td>
 				                        		<td>${info.clazz}</td>
 				                        	</tr>
@@ -111,9 +117,9 @@ var info = {
 		parseRes : function() {
 			var _info = ['<table class="table table-striped table-hover">',
 							'<thead><tr class="info">',
-	                        '<th width="150">参数</th>',
+	                        '<th width="180">参数</th>',
 	                        '<th width="150">值</th>',
-	                        '<th width="200">描叙</th>',
+	                        '<th width="300">描叙</th>',
 	                        '<th>类型</th>',
 	                        '</tr>',
 	                        '</thead>',

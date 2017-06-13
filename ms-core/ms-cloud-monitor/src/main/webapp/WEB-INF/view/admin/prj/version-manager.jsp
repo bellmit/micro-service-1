@@ -32,6 +32,7 @@
 				<div class="panel-body">
 				  	<div class="row">
 				  		<div class="col-sm-5">
+				  			<div class="table-tool-panel">
 				  			<div class="row">
 								<div class="col-sm-6">
 								</div>
@@ -41,32 +42,33 @@
 								  	</div>
 								</div>
 							</div>
-						  	<hr/>
-							<div id="infoPanel"></div>
-							<div id="infoPage"></div>
+							</div>
+							<div id="infoPanel" class="table-panel"></div>
+							<div id="infoPage" class="table-page-panel"></div>
 				  		</div>
 				  		<div class="col-sm-7" id="clientInfo" style="display: none;">
-				  			<div class="row">
-								<div class="col-sm-4 text-muted" id="clientInfoTitle">
+				  			<div class="table-tool-panel">
+					  			<div class="row">
+									<div class="col-sm-4 text-muted" id="clientInfoTitle">
+									</div>
+									<div class="col-sm-8 text-right">
+										<div class="btn-group">
+											<select id="refreshInterval" onchange="client.refreshChange()" class="form-control input-sm">
+												<option value="">自动刷新:关闭</option>
+												<option value="5">5s刷新一次</option>
+												<option value="10">10s刷新一次</option>
+											</select>
+									  	</div>
+									  	<div class="btn-group">
+									  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="client.releaseAll()">全部部署</a>
+									  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="client.edit()">新增客户端</a>
+									  		<a href="${webroot}/prjMonitor/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm" target="_blank">查看服务</a>
+									  	</div>
+									</div>
 								</div>
-								<div class="col-sm-8 text-right">
-									<div class="btn-group">
-										<select id="refreshInterval" onchange="client.refreshChange()" class="form-control input-sm">
-											<option value="">自动刷新:关闭</option>
-											<option value="5">5s刷新一次</option>
-											<option value="10">10s刷新一次</option>
-										</select>
-								  	</div>
-								  	<div class="btn-group">
-								  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="client.releaseAll()">全部部署</a>
-								  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="client.edit()">新增客户端</a>
-								  		<a href="${webroot}/prjMonitor/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm" target="_blank">查看服务</a>
-								  	</div>
-								</div>
-							</div>
-						  	<hr/>
-							<div id="clientPanel"></div>
-							<div id="clientPage"></div>
+						  	</div>
+							<div id="clientPanel" class="table-panel"></div>
+							<div id="clientPage" class="table-page-panel"></div>
 				  		</div>
 				  	</div>
 				</div>

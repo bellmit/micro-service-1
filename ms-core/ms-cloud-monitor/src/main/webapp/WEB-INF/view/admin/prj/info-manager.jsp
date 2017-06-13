@@ -17,23 +17,30 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">项目 / <b>项目管理</b></div>
-				<div class="panel-body">
+				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-6">
-						</div>
-						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
-						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增项目</a>
-						  	</div>
-						  	<div class="btn-group">
+						<div class="col-sm-5 title">项目 / <b>项目管理</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+							</div>
 						</div>
 					</div>
-				  	<hr/>
-					<div id="infoPanel"></div>
-					<div id="infoPage"></div>
+				</div>
+				<div class="panel-body">
+					<div class="table-tool-panel">
+						<div class="row">
+							<div class="col-sm-6">
+							</div>
+							<div class="col-sm-6 text-right">
+							  	<div class="btn-group">
+							  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增项目</a>
+							  	</div>
+							</div>
+						</div>
+				  	</div>
+					<div id="infoPanel" class="table-panel"></div>
+					<div id="infoPage" class="table-page-panel"></div>
 				</div>
 			</div>
 		</div>
@@ -54,7 +61,7 @@ var info = {
 				                         '<th>名称</th>',
 				                         '<th>状态</th>',
 				                         '<th>创建时间</th>',
-				                         '<th width="280">操作</th>',
+				                         '<th width="260">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -102,7 +109,7 @@ var info = {
 				url: webroot + '/prjInfo/f-view/edit.shtml?prjId='+(id?id:''),
 				type: 'iframe',
 				width: 600,
-				height: 580
+				height: 560
 			});
 		},
 		del : function(id) {

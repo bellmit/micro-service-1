@@ -16,27 +16,34 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">系统管理 / <b>系统配置</b></div>
-				<div class="panel-body">
-				  	<div class="row">
-						<div class="col-sm-4">
-							<span class="enter-panel">
-								<select id="code" class="form-control" onchange="info.loadInfo(1)">
-									<option value="">所有配置信息</option>
-									<!-- <option value="config.">配置系统的信息</option> -->
-									<option value="mail.">发送邮件的配置</option>
-								</select>
-					  		</span>
-						</div>
-						<div class="col-sm-8 text-right">
-						  	<div class="btn-group">
+				<div class="panel-heading panel-heading-tool">
+					<div class="row">
+						<div class="col-sm-5 title">系统管理 / <b>系统配置</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+							</div>
 						</div>
 					</div>
-				  	<hr/>
-					<div id="infoPanel"></div>
-					<div id="infoPage"></div>
+				</div>
+				<div class="panel-body">
+				  	<div class="table-tool-panel">
+					  	<div class="row">
+							<div class="col-sm-4">
+								<span class="enter-panel">
+									<select id="code" class="form-control input-sm" onchange="info.loadInfo(1)">
+										<option value="">所有配置信息</option>
+										<!-- <option value="config.">配置系统的信息</option> -->
+										<option value="mail.">发送邮件的配置</option>
+									</select>
+						  		</span>
+							</div>
+							<div class="col-sm-8 text-right">
+							</div>
+						</div>
+				  	</div>
+					<div id="infoPanel" class="table-panel"></div>
+					<div id="infoPage" class="table-page-panel"></div>
 				</div>
 			</div>
 		</div>

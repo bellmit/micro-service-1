@@ -18,32 +18,39 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">项目 / <b>API</b></div>
-				<div class="panel-body">
+				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-8">
+						<div class="col-sm-5 title">项目 / <b>API</b></div>
+						<div class="col-sm-7 text-right">
 							<div class="btn-group">
-							<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control" value="${param.prjId}"/>
-							</div>
-							<span class="enter-panel">
-								<input type="text" style="width: 100px;display: inline;" class="form-control input-sm" id="name" placeholder="名称">
-						  		<input type="text" style="width: 100px;display: inline;" class="form-control input-sm" id="path" placeholder="路径">
-						  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
-					  		</span>
-						</div>
-						<div class="col-sm-4 text-right">
-						  	<div class="btn-group">
-						  		<a href="${webroot}/msSecret/f-view/manager.shtml" target="_blank" class="btn btn-success btn-sm">设置密钥</a>
-						  	</div>
-						  	<div class="btn-group">
 						  		<a href="${webroot}/prjInfo/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+							</div>
 						</div>
 					</div>
-				  	<hr/>
-					<div id="infoPanel"></div>
-					<div id="infoPage"></div>
+				</div>
+				<div class="panel-body">
+				  	<div class="table-tool-panel">
+						<div class="row">
+							<div class="col-sm-8">
+								<div class="btn-group">
+								<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control input-sm" value="${param.prjId}"/>
+								</div>
+								<span class="enter-panel">
+									<input type="text" style="width: 100px;display: inline;" class="form-control input-sm" id="name" placeholder="名称">
+							  		<input type="text" style="width: 100px;display: inline;" class="form-control input-sm" id="path" placeholder="路径">
+							  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
+						  		</span>
+							</div>
+							<div class="col-sm-4 text-right">
+							  	<div class="btn-group">
+							  		<a href="${webroot}/msSecret/f-view/manager.shtml" target="_blank" class="btn btn-success btn-sm">设置密钥</a>
+							  	</div>
+							</div>
+						</div>
+				  	</div>
+					<div id="infoPanel" class="table-panel"></div>
+					<div id="infoPage" class="table-page-panel"></div>
 				</div>
 			</div>
 		</div>
