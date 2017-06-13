@@ -19,7 +19,16 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">任务管理 / <b>项目图表</b></div>
+				<div class="panel-heading panel-heading-tool">
+					<div class="row">
+						<div class="col-sm-5 title">任务管理 / <b>项目图表</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
+						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-sm-6">
@@ -29,12 +38,11 @@
 					  		</span> -->
 						</div>
 						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
+						  	<!-- <div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+						  	</div> -->
 						</div>
 					</div>
-				  	<hr/>
 					<div id="infoPanel">
 						<div id="projectJobPanel" style="width: 100%;height:400px;margin-top: 20px;"></div>
 					</div>

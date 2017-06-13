@@ -17,19 +17,24 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">任务管理 / <b>${taskJob.name}-调用记录</b></div>
+				<div class="panel-heading panel-heading-tool">
+					<div class="row">
+						<div class="col-sm-5 title">任务管理 / <b>${taskJob.name}-调用记录</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
+						  		<a href="${webroot}/taskJobLog/f_view/manager.shtml?projectid=${taskJob.projectid}&jobid=${taskJob.id}" class="btn btn-default btn-sm">返回</a>
+							  	<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-sm-6">
 						</div>
 						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
-								<a href="${webroot}/taskJobLog/f_view/manager.shtml?projectid=${taskJob.projectid}&jobid=${taskJob.id}" class="btn btn-default btn-sm">返回</a>
-							  	<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-							</div>
 						</div>
 					</div>
-					<hr />
 			  		<div class="row">
 			  			<div class="col-sm-2 text-right">执行状态</div>
 			  			<div class="col-sm-10"><span class="label label-success"><my:text id="${taskJobLog.status}" dictcode="job_log_status"/></span></div>

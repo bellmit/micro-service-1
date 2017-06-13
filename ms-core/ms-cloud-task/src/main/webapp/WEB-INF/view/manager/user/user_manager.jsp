@@ -16,23 +16,30 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">系统管理 / <b>用户管理</b></div>
-				<div class="panel-body">
+				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-6">
-						</div>
-						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
-						  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增用户</a>
-						  	</div>
-						  	<div class="btn-group">
+						<div class="col-sm-5 title">系统管理 / <b>用户管理</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+							</div>
 						</div>
 					</div>
-				  	<hr/>
-					<div id="infoPanel"></div>
-					<div id="infoPage"></div>
+				</div>
+				<div class="panel-body">
+				  	<div class="table-tool-panel">
+						<div class="row">
+							<div class="col-sm-6">
+							</div>
+							<div class="col-sm-6 text-right">
+							  	<div class="btn-group">
+							  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增用户</a>
+							  	</div>
+							</div>
+						</div>
+				  	</div>
+					<div id="infoPanel" class="table-panel"></div>
+					<div id="infoPage" class="table-page-panel"></div>
 				</div>
 			</div>
 		</div>
