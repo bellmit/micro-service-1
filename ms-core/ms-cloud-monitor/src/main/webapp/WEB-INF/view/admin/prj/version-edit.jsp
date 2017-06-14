@@ -18,7 +18,7 @@
 			<input type="text" class="form-control" id="remark" placeholder="备注" value="${prjVersion.remark}">
 		</div>
 		<div class="form-group">
-			<span>发布：&nbsp;</span><my:radio id="isRelease" dictcode="boolean" value="${prjVersion.isRelease}" defvalue="1"/>
+			<span>发布：&nbsp;</span><my:radio id="isRelease" name="isRelease" dictcode="boolean" value="${prjVersion.isRelease}" defvalue="1"/>
 			<%-- <my:select id="isRelease" headerKey="" headerValue="是否发布" dictcode="boolean" value="${prjVersion.isRelease}" cssCls="form-control" /> --%>
 		</div>
 		<div class="form-group">
@@ -74,12 +74,12 @@
 				_version.focus();
 				return;
 			}
-			var _isRelease = $('#isRelease');
-			if(JUtil.isEmpty(_isRelease.val())) {
+			var _isRelease = $('input[name="isRelease"]:checked');
+			/* if(JUtil.isEmpty(_isRelease.val())) {
 				_saveMsg.append('请选择是否发布');
 				_isRelease.focus();
 				return;
-			}
+			} */
 			var _pathUrl = $('#pathUrl');
 			if(JUtil.isEmpty(_pathUrl.val())) {
 				_saveMsg.append('请上传项目');
