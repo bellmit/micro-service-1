@@ -80,7 +80,7 @@
 			var _orgVal = _saveBtn.html();
 			_saveBtn.attr('disabled', 'disabled').html('保存中...');
 			JUtil.ajax({
-				url : '${webroot}/taskJob/f_json/save.shtml',
+				url : '${webroot}/ttsTaskJob/f-json/save.shtml',
 				data : {
 					id: $('#id').val(),
 					projectid: $('#projectid').val(),
@@ -92,14 +92,14 @@
 					isfailmail: $('input[name="isfailmail"]:checked').val()
 				},
 				success : function(json) {
-					if (json.result === 'success') {
+					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
 							parent.info.loadInfo(1);
 							parent.dialog.close();
 						}, 800);
 					}
-					else if (json.result === 'error')
+					else if (json.code === -1)
 						_saveMsg.append(JUtil.msg.ajaxErr);
 					else
 						_saveMsg.append(json.msg);

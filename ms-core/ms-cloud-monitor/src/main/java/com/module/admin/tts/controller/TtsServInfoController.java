@@ -1,7 +1,6 @@
 package com.module.admin.tts.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.module.admin.BaseController;
 import com.module.admin.sys.pojo.SysUser;
-import com.module.admin.tts.enums.ProjectSign;
+import com.module.admin.tts.enums.ServInfoStatus;
+import com.module.admin.tts.service.TtsServInfoService;
 import com.module.admin.tts.service.TtsTaskJobService;
-import com.module.admin.tts.service.TtsTaskProjectService;
 import com.module.admin.tts.utils.TaskUtil;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameMapUtil;
-import com.system.comm.utils.FrameStringUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -35,59 +33,43 @@ import com.system.handle.model.ResponseFrame;
  * @version V1.0.0
  */
 @Controller
-public class TtsTaskProjectController extends BaseController {
+public class TtsServInfoController extends BaseController {
 
-	private static final Logger LOGGER = Logger.getLogger(TtsTaskProjectController.class);
+	private static final Logger LOGGER = Logger.getLogger(TtsServInfoController.class);
+	@Autowired
+	private TtsServInfoService ttsServInfoService;
 	@Autowired
 	private TtsTaskJobService ttsTaskJobService;
-	@Autowired
-	private TtsTaskProjectService ttsTaskProjectService;
 	
 	/**
 	 * 跳转到管理页
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/ttsTaskProject/f-view/manager")
-	public String manger(HttpServletRequest request) {
-		return "admin/tts/task/project-manager";
+	@RequestMapping(value = "/ttsServInfo/f-view/manager")
+	public String manger(HttpServletRequest request, ModelMap modelMap) {
+		return "admin/tts/serv/servInfo-manager";
 	}
 
-	@RequestMapping(value = "/ttsTaskProject/f-view/chart")
+	@RequestMapping(value = "/ttsServInfo/f-view/chart")
 	public String chart(HttpServletRequest request, ModelMap modelMap) {
-		List<Map<String, Object>> projects = ttsTaskJobService.findProjectidCount();
-		Map<Integer, String> projectnames = new HashMap<Integer, String>();
-		for (Map<String, Object> map : projects) {
-			Integer projectid = FrameMapUtil.getInteger(map, "projectid");
-			String projectname = FrameMapUtil.getString(projectnames, projectid.toString());
-			if(FrameStringUtil.isEmpty(projectname)) {
-				Map<String, Object> projectMap = ttsTaskProjectService.get(projectid);
-				projectname = FrameMapUtil.getString(projectMap, "name");
-				projectnames.put(projectid, projectname);
+		List<Map<String, Object>> servInfos = ttsServInfoService.findByStatus(ServInfoStatus.NORMAL.getCode());
+		List<Map<String, Object>> servCounts = ttsTaskJobService.findServidCount();
+		for (Map<String, Object> si : servInfos) {
+			//设置任务总数
+			for (Map<String, Object> map : servCounts) {
+				String servid = FrameMapUtil.getString(si, "servid");
+				if(servid.equals(FrameMapUtil.getString(map, "servid"))) {
+					si.put("jobnum", FrameMapUtil.getInteger(map, "total"));
+					break;
+				}
 			}
-			map.put("projectname", projectname);
 		}
-		modelMap.put("projectsJson", FrameJsonUtil.toString(projects));
-		return "admin/tts/task/project-chart";
-	}
-
-	/**
-	 * 跳转到编辑页[包含新增和编辑]
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/ttsTaskProject/f-view/edit")
-	public String edit(HttpServletRequest request, ModelMap modelMap, Integer id) {
-		if(id != null) {
-			Map<String, Object> taskProject = ttsTaskProjectService.get(id);
-			modelMap.put("taskProject", taskProject);
-		}
-		String projectSigns = FrameJsonUtil.toString(ProjectSign.getList());
-		modelMap.put("projectSigns", projectSigns);
-		return "admin/tts/task/project-edit";
+		modelMap.put("servInfosJson", FrameJsonUtil.toString(servInfos));
+		return "admin/tts/serv/servInfo-chart";
 	}
 	
-	@RequestMapping(value = "/ttsTaskProject/f-json/{method}")
+	@RequestMapping(value = "/ttsServInfo/f-json/{method}")
 	@ResponseBody
 	public void method(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("method")String method) {
@@ -106,7 +88,7 @@ public class TtsTaskProjectController extends BaseController {
 		}
 		ResponseFrame frame = null;
 		try {
-			frame = TaskUtil.post("/api/taskProject/" + method, paramsMap);
+			frame = TaskUtil.post("/api/servInfo/" + method, paramsMap);
 		} catch (IOException e) {
 			LOGGER.error("请求异常: " + e.getMessage(), e);
 			frame = new ResponseFrame(ResponseCode.FAIL);

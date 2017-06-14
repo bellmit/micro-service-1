@@ -1,5 +1,8 @@
 package com.task.schedule.api.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +100,54 @@ public class ApiTaskJobController {
 		ResponseFrame frame = new ResponseFrame();
 		try {
 			taskJobService.execJob(id);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("操作异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+			frame.setMessage(ResponseCode.FAIL.getMessage());
+		}
+		return frame;
+	}
+
+	@RequestMapping(name = "taskJob-获取项目状态的任务数目", value = "/api/taskJob/findProjectidCount")
+	@ResponseBody
+	public ResponseFrame findProjectidCount() {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			List<Map<String, Object>> data = taskJobService.findProjectidCount();
+			frame.setBody(data);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("操作异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+			frame.setMessage(ResponseCode.FAIL.getMessage());
+		}
+		return frame;
+	}
+	
+	@RequestMapping(name = "taskJob-get", value = "/api/taskJob/get")
+	@ResponseBody
+	public ResponseFrame get(Integer id) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			TaskJob data = taskJobService.get(id);
+			frame.setBody(data);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("操作异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+			frame.setMessage(ResponseCode.FAIL.getMessage());
+		}
+		return frame;
+	}
+
+	@RequestMapping(name = "taskJob-获取正常执行的任务数目", value = "/api/taskJob/findServidCount")
+	@ResponseBody
+	public ResponseFrame findServidCount() {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			List<Map<String, Object>> data = taskJobService.findServidCount();
+			frame.setBody(data);
 			frame.setSucc();
 		} catch (Exception e) {
 			LOGGER.error("操作异常: " + e.getMessage(), e);

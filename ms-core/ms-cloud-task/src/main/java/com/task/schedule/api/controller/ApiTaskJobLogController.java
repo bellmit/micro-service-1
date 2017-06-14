@@ -35,4 +35,20 @@ public class ApiTaskJobLogController {
 		}
 		return frame;
 	}
+	
+	@RequestMapping(name = "taskJobLog-get", value = "/api/taskJobLog/get")
+	@ResponseBody
+	public ResponseFrame get(Integer id) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			TaskJobLog data = taskJobLogService.get(id);
+			frame.setBody(data);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("操作异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+			frame.setMessage(ResponseCode.FAIL.getMessage());
+		}
+		return frame;
+	}
 }

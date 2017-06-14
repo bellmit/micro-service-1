@@ -1,5 +1,7 @@
 package com.task.schedule.api.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,22 @@ public class ApiServInfoController {
 		try {
 			MyPage<ServInfo> page = servInfoService.pageQuery(servInfo);
 			frame.setBody(page);
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("操作异常: " + e.getMessage(), e);
+			frame.setCode(ResponseCode.FAIL.getCode());
+			frame.setMessage(ResponseCode.FAIL.getMessage());
+		}
+		return frame;
+	}
+	
+	@RequestMapping(name = "servInfo-根据状态获取服务集合", value = "/api/servInfo/findByStatus")
+	@ResponseBody
+	public ResponseFrame findByStatus(Integer status) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			List<ServInfo> data = servInfoService.findByStatus(status);
+			frame.setBody(data);
 			frame.setSucc();
 		} catch (Exception e) {
 			LOGGER.error("操作异常: " + e.getMessage(), e);

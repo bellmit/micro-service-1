@@ -14,6 +14,8 @@ import com.module.admin.prj.enums.PrjInfoStatus;
 import com.module.admin.prj.enums.PrjMonitorMonitorStatus;
 import com.module.admin.prj.enums.PrjMonitorType;
 import com.module.admin.sys.enums.SysUserStatus;
+import com.module.admin.tts.enums.JobLogStatus;
+import com.module.admin.tts.enums.JobStatus;
 import com.module.admin.tts.enums.ProjectSign;
 import com.system.comm.model.KvEntity;
 
@@ -46,7 +48,8 @@ public class DictCons {
 		DictCons.addValue(CliInfoStatus.KEY, 	CliInfoStatus.getList(), servletContext);
 		
 		DictCons.addValue(ProjectSign.KEY, 	ProjectSign.getList(), servletContext);
-		
+		DictCons.addValue(JobStatus.KEY			, JobStatus.getList(), servletContext);
+		DictCons.addValue(JobLogStatus.KEY		, JobLogStatus.getList(), servletContext);
 		
 		if(LOGGER.isInfoEnabled()) {
 			LOGGER.info("========================= 初始化字典信息成功 ===========================");

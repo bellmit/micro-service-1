@@ -22,7 +22,7 @@
 						<div class="col-sm-5 title">任务管理 / <b>${taskJob.name}-调用记录</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
-						  		<a href="${webroot}/taskJobLog/f_view/manager.shtml?projectid=${taskJob.projectid}&jobid=${taskJob.id}" class="btn btn-default btn-sm">返回</a>
+						  		<a href="${webroot}/ttsTaskJobLog/f-view/manager.shtml?projectid=${taskJob.projectid}&jobid=${taskJob.id}" class="btn btn-default btn-sm">返回</a>
 							  	<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 							</div>
 						</div>
@@ -37,12 +37,12 @@
 					</div>
 			  		<div class="row">
 			  			<div class="col-sm-2 text-right">执行状态</div>
-			  			<div class="col-sm-10"><span class="label label-success"><my:text id="${taskJobLog.status}" dictcode="job_log_status"/></span></div>
+			  			<div class="col-sm-10"><span class="label label-success"><my:text value="${taskJobLog.status}" dictcode="job_log_status"/></span></div>
 			  		</div>
 			  		<hr />
 			  		<div class="row">
 			  			<div class="col-sm-2 text-right">调度时间</div>
-			  			<div class="col-sm-10"><my:date value="${taskJobLog.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
+			  			<div class="col-sm-10">${taskJobLog.addtime}</div>
 			  		</div>
 			  		<hr />
 			  		<div class="row">
