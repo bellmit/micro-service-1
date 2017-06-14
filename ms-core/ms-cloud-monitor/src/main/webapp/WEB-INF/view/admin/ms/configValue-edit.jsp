@@ -44,7 +44,7 @@
 	                        </thead>
 	                        <tbody>
 	                        	<c:forEach items="${values}" var="info">
-	                        	<tr>
+	                        	<tr class="value-list">
 	                        		<td>
 	                        			<div class="input-group">
 		                        			<input type="text" name="code" class="form-control input-sm" placeholder="key" value="${info.code}"/>
@@ -71,7 +71,9 @@
 	                        		<td><input type="text" name="value" class="form-control input-sm" placeholder="值" value="${info.value}"/></td>
 	                        		<td><input type="text" name="remark" class="form-control input-sm" placeholder="描叙" value="${info.remark}"/></td>
 	                        		<td>
-	                        			<a href="javascript:;" class="btn btn-link btn-sm" onclick="info.del(this)">删除</a>
+	                        			<a href="javascript:;" class="glyphicon glyphicon-arrow-up text-success" onclick="info.up(this)" title="上移"></a>
+	                        			&nbsp;<a href="javascript:;" class="glyphicon glyphicon-arrow-down text-success" onclick="info.down(this)" title="下移"></a>
+	                        			&nbsp;&nbsp;<a href="javascript:;" class="glyphicon text-success" onclick="info.del(this)">删除</a>
 	                        		</td>
 	                        	</tr>
 	                        	</c:forEach>
@@ -115,7 +117,7 @@ var info = {
 				remark = '暂无';
 			}
 			var _table = $('#infoPanel').find('table');
-			_table.append(['<tr>',
+			_table.append(['<tr class="value-list">',
                    		'<td>',
 			             '  <div class="input-group">',
 							'<input type="text" name="code" class="form-control input-sm" placeholder="key" value="',code,'"/>',
@@ -141,8 +143,69 @@ var info = {
 							'</td>',
                 		'<td><input type="text" name="value" class="form-control input-sm" placeholder="值" value="',value,'"/></td>',
                 		'<td><input type="text" name="remark" class="form-control input-sm" placeholder="描叙" value="',remark,'"/></td>',
-                		'<td><a href="javascript:;" class="btn btn-link btn-sm" onclick="info.del(this)">删除</a></td>',
+                		'<td><a href="javascript:;" class="glyphicon glyphicon-arrow-up text-success" onclick="info.up(this)" title="上移"></a>',
+            			'&nbsp;<a href="javascript:;" class="glyphicon glyphicon-arrow-down text-success" onclick="info.down(this)" title="下移"></a>',
+            			'&nbsp;&nbsp;<a href="javascript:;" class="glyphicon text-success" onclick="info.del(this)">删除</a></td>',
                 	'</tr>'].join(''));
+		},
+		up : function(_this) {
+			var _code = $(_this).parent().parent().find('input[name="code"]');
+			var _value = $(_this).parent().parent().find('input[name="value"]');
+			var _remark = $(_this).parent().parent().find('input[name="remark"]');
+			
+			var _upCode = '';
+			var _upValue = '';
+			var _upRemark = '';
+			$('.value-list').each(function(i, obj) {
+				if($(obj).find('input[name="code"]').val() == _code.val()) {
+					if(_upCode === '') {
+						return false;
+					}
+					var _orgCode = _code.val(), _orgUpCode = _upCode.val();
+					_code.val(_orgUpCode);
+					_upCode.val(_orgCode);
+					var _orgValue = _value.val(), _orgUpValue = _upValue.val();
+					_value.val(_orgUpValue);
+					_upValue.val(_orgValue);
+					var _orgRemark = _remark.val(), _orgUpRemark = _upRemark.val();
+					_remark.val(_orgUpRemark);
+					_upRemark.val(_orgRemark);
+					return false;
+				}
+				_upCode = $(obj).find('input[name="code"]');
+				_upValue = $(obj).find('input[name="value"]');
+				_upRemark = $(obj).find('input[name="remark"]');
+			});
+		},
+		down : function(_this) {
+			var _code = $(_this).parent().parent().find('input[name="code"]');
+			var _value = $(_this).parent().parent().find('input[name="value"]');
+			var _remark = $(_this).parent().parent().find('input[name="remark"]');
+			
+			var _upCode = '';
+			var _upValue = '';
+			var _upRemark = '';
+			var _isUse = false;
+			$('.value-list').each(function(i, obj) {
+				_upCode = $(obj).find('input[name="code"]');
+				_upValue = $(obj).find('input[name="value"]');
+				_upRemark = $(obj).find('input[name="remark"]');
+				if(_isUse) {
+					var _orgCode = _code.val(), _orgUpCode = _upCode.val();
+					_code.val(_orgUpCode);
+					_upCode.val(_orgCode);
+					var _orgValue = _value.val(), _orgUpValue = _upValue.val();
+					_value.val(_orgUpValue);
+					_upValue.val(_orgValue);
+					var _orgRemark = _remark.val(), _orgUpRemark = _upRemark.val();
+					_remark.val(_orgUpRemark);
+					_upRemark.val(_orgRemark);
+					return false;
+				}
+				if($(obj).find('input[name="code"]').val() == _code.val()) {
+					_isUse = true;
+				}
+			});
 		},
 		loadValues : function(configId) {
 			JUtil.ajax({
