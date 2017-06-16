@@ -8,7 +8,6 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -32,7 +31,6 @@ public class DataSourceConfig {
     /**
      * 创建数据源(数据源的名称：方法名可以取为XXXDataSource(),XXX为数据库名称,该名称也就是数据源的名称)
      */
-    @Bean
     public DataSource dataSource1() throws Exception {
         Properties props = new Properties();
         props.put("driverClassName", env.getProperty("jdbc1.driverClassName"));
@@ -42,7 +40,7 @@ public class DataSourceConfig {
         return DruidDataSourceFactory.createDataSource(props);
     }
 
-    /*@Bean
+    /*
     public DataSource dataSource2() throws Exception {
         Properties props = new Properties();
         props.put("driverClassName", env.getProperty("jdbc2.driverClassName"));
@@ -53,13 +51,15 @@ public class DataSourceConfig {
     }*/
 
     /**
+     * @throws Exception 
      * @Primary 该注解表示在同一个接口有多个实现类可以注入的时候，默认选择哪一个，而不是让@autowire注解报错
      * @Qualifier 根据名称进行注入，通常是在具有相同的多个类型的实例的一个注入（例如有多个DataSource类型的实例）
      */
     @Bean
     @Primary
-    public DynamicDataSource dataSource(@Qualifier("dataSource1") DataSource dataSource1) {
-        Map<Object, Object> targetDataSources = new HashMap<>();
+    public DynamicDataSource dataSource() throws Exception {
+    	DataSource dataSource1 = dataSource1();
+        Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
         targetDataSources.put("dataSource1", dataSource1);
 
         DynamicDataSource dataSource = new DynamicDataSource();

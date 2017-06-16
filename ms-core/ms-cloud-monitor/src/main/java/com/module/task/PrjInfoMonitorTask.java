@@ -54,6 +54,7 @@ public class PrjInfoMonitorTask {
 				//获取所有监控的服务
 				List<PrjMonitor> pms = prjMonitorService.findMonitor();
 				Map<Integer, Object> prjmIdMap = new HashMap<Integer, Object>();
+				List<ServiceInstance> siList = serviceService.services();
 				for (String serviceId : list) {
 					//新增项目
 					PrjInfo prjInfo = new PrjInfo();
@@ -72,8 +73,11 @@ public class PrjInfoMonitorTask {
 					//shell脚本
 					//prjInfo.setShellScript("暂无");
 					prjInfoService.saveOrUpdate(prjInfo);
-					List<ServiceInstance> sis = serviceService.serviceList(serviceId);
-					for (ServiceInstance si : sis) {
+					//List<ServiceInstance> sis = serviceService.serviceList(serviceId);
+					for (ServiceInstance si : siList) {
+						if(!serviceId.equalsIgnoreCase(si.getServiceId())) {
+							continue;
+						}
 						//新增监控的服务
 						PrjMonitor prjMonitor = new PrjMonitor();
 						//项目编号
@@ -203,7 +207,7 @@ public class PrjInfoMonitorTask {
 			}
 		};
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
-		service.scheduleAtFixedRate(runnable, 10, 5, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(runnable, 10, 8, TimeUnit.SECONDS);
 	}
 
 }

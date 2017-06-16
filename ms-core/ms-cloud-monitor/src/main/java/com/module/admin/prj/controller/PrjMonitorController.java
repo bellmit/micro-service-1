@@ -145,10 +145,14 @@ public class PrjMonitorController extends BaseController {
 			paramsMap.put("time", time);
 			paramsMap.put("sign", AuthUtil.auth(clientId, time, sercret));
 			frame = post(url, paramsMap);
+			if(ResponseCode.SERVER_ERROR.getCode() == frame.getCode().intValue()) {
+				frame.setMessage("不存在该方法");
+			}
 		} catch (Exception e) {
 			LOGGER.error("停止服务异常: " + e.getMessage(), e);
 			frame = new ResponseFrame();
-			frame.setCode(ResponseCode.FAIL.getCode());
+			frame.setCode(ResponseCode.UNHANDLE_METHOD.getCode());
+			frame.setMessage("不存在该方法");
 		}
 		writerJson(response, frame);
 	}
@@ -160,6 +164,6 @@ public class PrjMonitorController extends BaseController {
 		} catch (Exception e) {
 			LOGGER.error("调用接口异常: " + e.getMessage(), e);
 		}
-		return null;
+		return new ResponseFrame(ResponseCode.SERVER_ERROR);
 	}
 }
