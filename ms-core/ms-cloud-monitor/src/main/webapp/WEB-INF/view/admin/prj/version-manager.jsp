@@ -180,7 +180,7 @@ var client = {
 				                         '<th>客户端编号</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布时间</th>',
-				                         '<th width="220">操作</th>',
+				                         '<th width="150">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				clientPage.endString = '</tbody></table>';
 			}
@@ -215,8 +215,8 @@ var client = {
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:client.edit(\'',obj.clientId,'\')" title="修改"></a>',
 							    	'&nbsp; &nbsp;<a class="glyphicon glyphicon-remove text-success" href="javascript:client.del(\'',obj.clientId,'\')" title="删除"></a>',
 							    	'&nbsp; &nbsp;<a class="glyphicon text-success" href="javascript:client.shell(\'',obj.clientId,'\')" title="设置发布的Shell">设置命令</a>',
-							    	'&nbsp; &nbsp;<a class="glyphicon text-success" href="javascript:client.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">部署</a>',
-							    	'&nbsp; &nbsp;<a class="glyphicon text-success" href="javascript:client.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">看日志</a>',
+							    	'&nbsp; &nbsp;<br/><a class="glyphicon text-success" href="javascript:client.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">看日志</a>',
+							    	'&nbsp; &nbsp;<a class="glyphicon text-success" href="javascript:client.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">部署项目</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
