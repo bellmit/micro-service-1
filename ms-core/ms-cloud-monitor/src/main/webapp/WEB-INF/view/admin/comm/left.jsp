@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld" %>
-<div class="c-left">
+<div class="c-left left-menu">
 	<div class="panel-group">
-		<div class="panel panel-info">
+		<div class="panel panel-info top">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
 					<a href="${webroot}/sysUser/f-view/main.shtml">个人中心</a>
 				</h4>
 			</div>
 		</div>
-		<div class="panel panel-success">
+		<div class="panel panel-success center">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
 					<a data-toggle="collapse" href="#mlCollapseCli">客户端 <span
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel panel-success">
+		<div class="panel panel-success center">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
 					<a data-toggle="collapse" href="#mlCollapsePrj">项目 <span
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel panel-success">
+		<div class="panel panel-success center">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
 					<a data-toggle="collapse" href="#mlCollapseMs">微服务<span
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel panel-success">
+		<div class="panel panel-success center">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
 					<a data-toggle="collapse" href="#mlCollapseTask">定时任务<span
@@ -90,7 +90,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel panel-default">
+		<div class="panel panel-default bottom">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
 					<a data-toggle="collapse" href="#mlCollapseSys">系统管理 <span

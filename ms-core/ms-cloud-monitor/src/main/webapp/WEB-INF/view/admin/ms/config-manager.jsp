@@ -87,7 +87,7 @@ var info = {
 							    	'<td>',obj.createTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.configId,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.configId,')" title="删除"></a>',
-							    	'&nbsp; | &nbsp; <a class="glyphicon text-success" href="javascript:info.values(',obj.configId,')" title="跳转到属性管理，编辑属性">属性管理</a>',
+							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:info.values(',obj.configId,')" title="跳转到属性管理，编辑属性">属性管理</a>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
