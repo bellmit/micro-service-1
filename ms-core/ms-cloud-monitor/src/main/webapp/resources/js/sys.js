@@ -22,6 +22,13 @@ JUtil.sys = {
 					return true;
 				}
 			});
+		},
+		initOptMore : function() {
+			$('.opt-more').mouseover(function() {   
+			    $(this).addClass('open');
+			}).mouseout(function() {
+				$(this).removeClass('open');
+			});
 		}
 };
 
@@ -35,3 +42,6 @@ JUtil.open = {
 			});
 		}
 };
+$(function() {
+	JUtil.sys.initOptMore();
+});

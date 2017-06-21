@@ -89,7 +89,7 @@ var info = {
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
 				                         '<th>版本号</th>',
 				                         '<th>参考版本</th>',
-				                         '<th width="110">操作</th>',
+				                         '<th width="120">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -121,7 +121,7 @@ var info = {
 							    	'<td>',obj.rbVersion,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.version,'\')" title="修改"></a> ',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,',\'',obj.version,'\')" title="删除"></a>',
-							    	' &nbsp; <a class="text-success" href="javascript:info.cli(${param.prjId}, \'',obj.version,'\')" title="发到对应的客户端">去部署</a>',
+							    	' &nbsp; &nbsp;<a class="text-success" href="javascript:info.cli(${param.prjId}, \'',obj.version,'\')" title="发到对应的客户端">去部署</a>',
 								'</tr>'].join('');
 						}
 						infoPage.operate(json.body, { resultFn:getResult, dataNull:'没有记录噢' });
@@ -180,7 +180,7 @@ var client = {
 				                         '<th>客户端编号</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布时间</th>',
-				                         '<th width="150">操作</th>',
+				                         '<th width="145">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				clientPage.endString = '</tbody></table>';
 			}
@@ -214,13 +214,19 @@ var client = {
 							    	'<td>',obj.releaseTime,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:client.edit(\'',obj.clientId,'\')" title="修改"></a>',
 							    	'&nbsp; &nbsp;<a class="glyphicon glyphicon-remove text-success" href="javascript:client.del(\'',obj.clientId,'\')" title="删除"></a>',
-							    	'&nbsp; &nbsp;<a class="glyphicon text-success" href="javascript:client.shell(\'',obj.clientId,'\')" title="设置发布的Shell">设置命令</a>',
-							    	'&nbsp; &nbsp;<br/><a class="glyphicon text-success" href="javascript:client.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">看日志</a>',
-							    	'&nbsp; &nbsp;<a class="glyphicon text-success" href="javascript:client.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">部署项目</a>',
+							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:client.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">部署</a>',
+							    	'&nbsp; &nbsp;<span class="dropdown opt-more">',
+									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多</a>',
+									'<ul class="dropdown-menu" role="menu">',
+									'<li role="presentation"><a href="javascript:client.shell(\'',obj.clientId,'\')" title="设置发布的Shell">设命令</a></li>',
+									'<li role="presentation"><a href="javascript:client.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">看日志</a></li>',
+									'</ul>',
+									'</span>',
 							    	'</td>',
 								'</tr>'].join('');
 						}
 						clientPage.operate(json.body, { resultFn:getResult, dataNull:'没有记录噢' });
+						JUtil.sys.initOptMore();
 					}
 					else alert(JUtil.msg.ajaxErr);
 				}

@@ -276,3 +276,34 @@ alter table ms_secret comment '应用密钥表';
 /*==============================================================*/
 alter table `monitor`.`prj_version`   
   add column `rb_version` varchar(50) NULL  COMMENT '回滚版本' after `path_url`;
+
+  
+
+ 
+/*==============================================================*/
+/* 2017-06-21 新增 项目数据源表				                    */
+/*==============================================================*/
+drop table if exists prj_ds;
+
+/*==============================================================*/
+/* Table: prj_ds                                                */
+/*==============================================================*/
+create table prj_ds
+(
+   code                 varchar(32) not null comment '数据源编码',
+   prj_id               int not null comment '项目编号',
+   type                 varchar(30) not null comment '数据库类型[mysql/oracle]',
+   driver_class         varchar(100) not null comment '驱动类',
+   url                  varchar(100) not null comment 'jdbc的url',
+   username             varchar(50) not null comment '用户名',
+   password             varchar(50) not null comment '密码',
+   initial_size         int not null comment '初始连接数',
+   max_idle             int not null comment '最大连接数',
+   min_idle             int not null comment '最小连接数',
+   test_sql             varchar(200) not null comment '测试的sql语句',
+   user_id              int not null comment '添加人',
+   create_time          datetime not null comment '添加时间',
+   primary key (code)
+);
+
+alter table prj_ds comment '项目数据源表';

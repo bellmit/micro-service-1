@@ -1,7 +1,7 @@
 <%@page import="com.system.comm.enums.Boolean"%>
 <%@page import="com.module.admin.prj.enums.PrjMonitorMonitorStatus"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
+<%@include file="/WEB-INF/view/inc/sys.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,6 +23,7 @@
 						<div class="col-sm-5 title">项目 / <b>服务监控</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
+								<c:if test="${param.prjId!=null}"><a href="${webroot}/prjInfo/f-view/manager.shtml" class="btn btn-default btn-sm">返回</a></c:if>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 							</div>
 						</div>
