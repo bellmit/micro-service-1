@@ -41,10 +41,18 @@ import com.system.dao.utils.DbUtil;
 public class BaseDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseDao.class);
+	
+	private JdbcTemplate jdbcTemplate;
 
 	//采用该方法是为了兼容在其它项目中没有使用SpringJdbcTemplate的情况
 	private JdbcTemplate getJdbcTemplate() {
-		return FrameSpringBeanUtil.getBean(JdbcTemplate.class);
+		if(jdbcTemplate == null) {
+			jdbcTemplate = FrameSpringBeanUtil.getBean(JdbcTemplate.class);
+		}
+		return jdbcTemplate;
+	}
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	/**

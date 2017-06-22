@@ -49,7 +49,7 @@
 		<aspectjrt.version>1.8.9</aspectjrt.version>
 		<aspectjweaver.version>1.8.9</aspectjweaver.version>
 		<springframework.version>4.3.2.RELEASE</springframework.version>
-		<oracle.ojdbc14.version>10.2.0.4</oracle.ojdbc14.version>
+		<oracle.ojdbc5.version>10.2.0.4.0</oracle.ojdbc5.version>
 	</properties>
 
 	<dependencies>

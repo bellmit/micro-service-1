@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.prj.dao.PrjDsDao">
+
+	<sql id="commCols">
+		code code,prj_id prjId,type type,driver_class driverClass,url url,username username,password password,initial_size initialSize,max_idle maxIdle,min_idle minIdle,test_sql testSql,user_id userId,create_time createTime
+	</sql>
+
+	<insert id="save" parameterType="prjDs" flushCache="true">
+		 insert into prj_ds(code,prj_id,type,driver_class,url,username,password,initial_size,max_idle,min_idle,test_sql,user_id,create_time)
+		 values(#{code},#{prjId},#{type},#{driverClass},#{url},#{username},#{password},#{initialSize},#{maxIdle},#{minIdle},#{testSql},#{userId},now())
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from prj_ds
+		<where>code=#{code}</where>
+	</delete>
+	
+	<update id="update" parameterType="prjDs" flushCache="true">
+		update prj_ds
+		<set>
+			type=#{type},driver_class=#{driverClass},url=#{url},username=#{username},password=#{password},initial_size=#{initialSize},max_idle=#{maxIdle},min_idle=#{minIdle},test_sql=#{testSql}
+		</set>
+		<where>code=#{code}</where>
+	</update>
+	
+	<select id="get" resultType="prjDs">
+		select <include refid="commCols"/> from prj_ds
+  		<where>code=#{code}</where>
+	</select>
+	
+	<select id="findPrjDs" parameterType="prjDs" resultType="prjDs">
+		select <include refid="commCols"/> from prj_ds
+		<where>
+			prj_id=#{prjId}
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjDsCount" parameterType="prjDs" resultType="int">
+		select count(*) from prj_ds
+		<where>
+			prj_id=#{prjId}
+		</where>
+	</select>
+</mapper>

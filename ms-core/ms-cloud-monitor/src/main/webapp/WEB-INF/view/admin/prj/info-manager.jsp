@@ -94,7 +94,7 @@ var info = {
 							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
 									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多</a>',
 									'<ul class="dropdown-menu" role="menu">',
-									//'<li role="presentation"><a href="#">数据源</a></li>',
+									'<li role="presentation"><a href="',webroot,'/prjDs/f-view/manager.shtml?prjId=',obj.prjId,'">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a></li>',
 									'</ul>',
 									'</span>',
