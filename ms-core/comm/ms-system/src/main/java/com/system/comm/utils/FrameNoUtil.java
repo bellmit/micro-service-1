@@ -1,8 +1,12 @@
 package com.system.comm.utils;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+
+import com.system.comm.utils.no.SnowflakeIdWorker;
 
 /**
  * 用于生成唯一主键<br>
@@ -20,6 +24,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class FrameNoUtil {
 
+	private static SnowflakeIdWorker idWorker;
+	
 	/**
 	 * 获取没有-号的uuid<br/>
 	 * 例：2fb9b164d1694de08ff479893db3cd63
@@ -46,7 +52,7 @@ public class FrameNoUtil {
 	public static String timeRandom() {
 		return timeRandom(null);
 	}
-	
+
 	/**
 	 * 根据日期和5为随机数生成唯一编号(生成的长度为18位数字)
 	 * @param date
@@ -69,5 +75,32 @@ public class FrameNoUtil {
 		}
 		String no = String.valueOf(time) + random;
 		return no;
+	}
+
+	/**
+	 * Twitter的分布式自增ID算法snowflake
+	 * @return
+	 */
+	public static Long sw() {
+		if(idWorker == null) {
+			idWorker = new SnowflakeIdWorker();
+		}
+		long id = idWorker.nextId();
+		return id;
+	}
+	
+	public static void main(String[] args) {
+		int length = 60000;
+		Map<Long, Integer> data = new HashMap<Long, Integer>();
+		for (int i = 0; i < length; i++) {
+			Long no = FrameNoUtil.sw();
+			if(data.get(no) == null) {
+				data.put(no, 1);
+			} else {
+				data.put(no, data.get(no) + 1);
+				System.out.println(no);
+			}
+		}
+		System.out.println("size = " + data.size());
 	}
 }
