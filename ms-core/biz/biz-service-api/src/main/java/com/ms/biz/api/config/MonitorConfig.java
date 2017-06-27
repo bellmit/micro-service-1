@@ -44,6 +44,11 @@ public class MonitorConfig {
 		task.execute(new Runnable() {
 			@Override
 			public void run() {
+				try {
+					Thread.sleep(60 * 1000);
+				} catch (InterruptedException e) {
+					LOGGER.error(e.getMessage());
+				}
 				ApiUtil.init(appName);
 			}
 		});
