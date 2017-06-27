@@ -16,21 +16,18 @@
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">
-				<div class="panel-heading">微服务 / 配置文件管理 / <b>配置文件属性管理</b></div>
-				<div class="panel-body">
+				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-6">
-						</div>
-						<div class="col-sm-6 text-right">
-						  	<div class="btn-group">
-						  	</div>
-						  	<div class="btn-group">
+						<div class="col-sm-5 title">微服务 / 配置文件管理 / <b>配置文件属性管理</b></div>
+						<div class="col-sm-7 text-right">
+							<div class="btn-group">
 						  		<a href="${webroot}/msConfig/f-view/manager.shtml" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
-						  	</div>
+							</div>
 						</div>
 					</div>
-				  	<hr/>
+				</div>
+				<div class="panel-body">
 					<div id="infoPanel">
 						<input type="hidden" id="configId" value="${param.configId}">
 						<table class="table table-striped table-hover">
