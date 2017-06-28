@@ -37,8 +37,8 @@ public class MonitorConfig {
 	@Bean
 	public ApiUtil monitorUtil() throws Exception {
 		LOGGER.info("发送系统的API可请求的方法");
-		ApiUtil.prjId = "196845682";
-		ApiUtil.prjToken = "708c80644e3f868c429c24cd2cdb7c8e";
+		ApiUtil.prjId = MonitorCons.clientId;
+		ApiUtil.prjToken = MonitorCons.sercret;
 		final String appName = env.getProperty("spring.application.name");
 		ThreadPoolTaskExecutor task = FrameSpringBeanUtil.getBean(ThreadPoolTaskExecutor.class);
 		task.execute(new Runnable() {

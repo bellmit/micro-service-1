@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # 设置启动的jar
-SERVICE_NAME="project.restful-1.0.0.jar"
+SERVICE_NAME="ms-cloud-config-1.0.0.jar"
 
 PRJ_BIN_DIR=$(dirname $(readlink -f "$0"))
 SERVICE_HOME=$(dirname $PRJ_BIN_DIR)
@@ -22,10 +22,10 @@ fi
 JAVA_OPTS="-Dproject.dir=$SERVICE_HOME"
 
 # 默认启动内存配置
-JAVA_MEM_OPTS="-server -Xmx1024m -Xms1024m -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
+JAVA_MEM_OPTS="-server -Xmx256m -Xms256m -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
 
 # 整合JAVA启动参数
-JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME"
+JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME --spring.cloud.config.server.native.searchLocations=/home/ms/ms-cloud-config-1.0.0/config"
 
 #建立日志目录
 mkdir -p $LOGS_DIR
