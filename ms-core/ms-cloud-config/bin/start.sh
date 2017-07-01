@@ -22,7 +22,7 @@ fi
 JAVA_OPTS="-Dproject.dir=$SERVICE_HOME"
 
 # 默认启动内存配置
-JAVA_MEM_OPTS="-server -Xmx256m -Xms256m -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
+JAVA_MEM_OPTS="-server -Xmx512m -Xms512m -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
 
 # 整合JAVA启动参数
 JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME --spring.cloud.config.server.native.searchLocations=/home/ms/ms-cloud-config-1.0.0/config"

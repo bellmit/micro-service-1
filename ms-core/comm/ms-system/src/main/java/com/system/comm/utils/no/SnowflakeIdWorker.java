@@ -1,9 +1,7 @@
 package com.system.comm.utils.no;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,16 +83,18 @@ public class SnowflakeIdWorker {
     	}
     	BaseCache cache = new BaseCache();
     	String key = "snowflakeId";
-    	Map<String, List<Integer>> data = cache.get(key);
-    	if(cache.getRedisClient() == null) {
-    		LOGGER.error("RedisClient异常，请配置Redis信息!");
-    	}
-    	List<Integer> ids = null;
+    	List<Integer> data = null;
+		try {
+			data = cache.get(key);
+			if(cache.getRedisClient() == null) {
+				LOGGER.error("RedisClient异常，请配置Redis信息!");
+			}
+		} catch (Exception e) {
+		}
     	if(data == null) {
-    		data = new HashMap<String, List<Integer>>();
-    		ids = new ArrayList<Integer>();
+    		data = new ArrayList<Integer>();
     	}
-    	workerId = getId(ids);
+    	workerId = getId(data);
     	datacenterId = workerId;
     	cache.set(key, data);
     	

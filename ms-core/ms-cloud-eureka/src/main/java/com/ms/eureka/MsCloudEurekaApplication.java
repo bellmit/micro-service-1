@@ -19,19 +19,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 public class MsCloudEurekaApplication extends WebMvcConfigurerAdapter implements CommandLineRunner {
 
-	private static Logger logger = LoggerFactory.getLogger(MsCloudEurekaApplication.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(MsCloudEurekaApplication.class);
 
 	/*@Autowired
 	RabbitMessagingTemplate rabbitMessagingTemplate;*/
 
 	public static void main(String[] args) {
-		logger.debug("######## SpringCloudEureka应用启动开始 ########");
+		LOGGER.debug("######## SpringCloudEureka应用启动开始 ########");
 		SpringApplication.run(MsCloudEurekaApplication.class, args);
 	}
 	
 	@Override
 	public void run(String... args) throws Exception {
-		logger.debug("######## SpringCloudEureka应用启动完成 ########");
+		LOGGER.debug("######## SpringCloudEureka应用启动完成 ########");
 		/*Map<String,Object> map = new HashMap<>();
 		map.put("msg","SpringCloudEureka应用启动");
 		rabbitMessagingTemplate.convertAndSend("directExchange","queue.foo", JSON.toJSONString(map));

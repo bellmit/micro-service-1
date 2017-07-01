@@ -25,10 +25,10 @@
 					<div class="panel-body">
 						<div class="enter-panel">
 							<div class="form-group">
-								<input type="text" class="form-control" id="loginUname" placeholder="登录名" value="admin">
+								<input type="text" class="form-control" id="loginUname" placeholder="登录名" value="">
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" id="loginUpwd" placeholder="密码" value="123456">
+								<input type="password" class="form-control" id="loginUpwd" placeholder="密码" value="">
 							</div>
 							<div class="form-group">
 								<button type="button" id="loginBtn" class="btn btn-success enter-fn">登录</button>

@@ -30,7 +30,7 @@ public class UpdateConfigTask {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateConfigTask.class);
 
 	public void run() {
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(100);
+		ScheduledExecutorService service = Executors.newScheduledThreadPool(20);
 		//线程，每隔5秒调用一次
 		Runnable runnable = new Runnable() {
 			@SuppressWarnings("unchecked")
