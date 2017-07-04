@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.module.admin.prj.pojo.PrjDs;
+import com.system.comm.model.KvEntity;
 import com.system.handle.model.ResponseFrame;
 
 /**
@@ -25,10 +26,11 @@ public interface PrjDsService {
 	
 	/**
 	 * 根据code获取对象
+	 * @param prjId 
 	 * @param code
 	 * @return
 	 */
-	public PrjDs get(String code);
+	public PrjDs get(Integer prjId, String code);
 
 	/**
 	 * 分页获取对象
@@ -38,9 +40,12 @@ public interface PrjDsService {
 	public ResponseFrame pageQuery(PrjDs prjDs);
 	
 	/**
-	 * 根据code删除对象
+	 * 根据prjId、code删除对象
+	 * @param prjId
 	 * @param code
 	 * @return
 	 */
-	public ResponseFrame delete(String code);
+	public ResponseFrame delete(Integer prjId, String code);
+
+	public List<KvEntity> findKvByPrjId(Integer prjId);
 }

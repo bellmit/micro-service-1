@@ -307,3 +307,31 @@ create table prj_ds
 );
 
 alter table prj_ds comment '项目数据源表';
+
+
+
+
+
+
+
+/*==============================================================*/
+/* 2017-07-04 新增 项目版本脚本表				                */
+/*==============================================================*/
+drop table if exists prj_version_script;
+
+create table prj_version_script
+(
+   pvs_id               int not null auto_increment comment '编号',
+   prj_id               int not null comment '项目编号',
+   version              varchar(32) not null comment '版本号',
+   remark               varchar(100) comment '备注',
+   ds_code              varchar(32) not null comment '数据源编号',
+   up_sql               text not null comment '升级脚本',
+   callback_sql         text comment '回滚脚本',
+   is_up                int not null comment '是否升级',
+   create_time          datetime not null comment '添加时间',
+   user_id              int not null comment '添加人',
+   primary key (pvs_id)
+);
+
+alter table prj_version_script comment '项目版本脚本表';

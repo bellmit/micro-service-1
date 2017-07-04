@@ -108,6 +108,7 @@ var info = {
 			JUtil.ajax({
 				url : '${webroot}/prjDs/f-json/test.shtml',
 				data : {
+					prjId: '${param.prjId}',
 					code: code,
 				},
 				success : function(json) {

@@ -92,7 +92,7 @@ var info = {
 							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:info.api(',obj.prjId,')" title="API列表">API</a>',
 							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本发布管理">版本管理</a>',
 							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
-									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多</a>',
+									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
 									'<ul class="dropdown-menu" role="menu">',
 									'<li role="presentation"><a href="',webroot,'/prjDs/f-view/manager.shtml?prjId=',obj.prjId,'">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a></li>',

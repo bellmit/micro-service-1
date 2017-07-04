@@ -56,7 +56,7 @@
 	var info = {
 			change: function(_this) {
 				var _type = $(_this).val();
-				if(_type == '') {
+				if(!_type || _type == '') {
 					_type = 'mysql';
 				}
 				if(_type === 'mysql') {
@@ -151,6 +151,7 @@
 			JUtil.ajax({
 				url : '${webroot}/prjDs/f-json/test.shtml',
 				data : {
+					prjId: '${param.prjId}',
 					code: _code.val(),
 					type: _type.val(),
 					driverClass: _driverClass.val(),

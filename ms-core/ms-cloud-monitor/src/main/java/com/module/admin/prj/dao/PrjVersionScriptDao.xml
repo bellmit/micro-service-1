@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.prj.dao.PrjVersionScriptDao">
+
+	<sql id="commCols">
+		pvs_id pvsId,prj_id prjId,version version,remark remark,is_up isUp,ds_code dsCode,up_sql upSql,callback_sql callbackSql,create_time createTime,user_id userId
+	</sql>
+
+	<insert id="save" parameterType="prjVersionScript" useGeneratedKeys="true" keyProperty="pvsId" flushCache="true">
+		 insert into prj_version_script(prj_id,version,remark,ds_code,up_sql,callback_sql,create_time,user_id,is_up)
+		 values(#{prjId},#{version},#{remark},#{dsCode},#{upSql},#{callbackSql},now(),#{userId},#{isUp})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from prj_version_script
+		<where>pvs_id=#{pvsId}</where>
+	</delete>
+	
+	<update id="update" parameterType="prjVersionScript" flushCache="true">
+		update prj_version_script
+		<set>
+			remark=#{remark},ds_code=#{dsCode},up_sql=#{upSql},callback_sql=#{callbackSql}
+		</set>
+		<where>pvs_id=#{pvsId}</where>
+	</update>
+	<update id="updateIsUp" flushCache="true">
+		update prj_version_script
+		<set>
+			is_up=#{isUp}
+		</set>
+		<where>pvs_id=#{pvsId}</where>
+	</update>
+	
+	<select id="get" resultType="prjVersionScript">
+		select <include refid="commCols"/> from prj_version_script
+  		<where>pvs_id=#{pvsId}</where>
+	</select>
+	
+	<select id="findPrjVersionScript" parameterType="prjVersionScript" resultType="prjVersionScript">
+		select <include refid="commCols"/> from prj_version_script
+		<where>
+			prj_id=#{prjId} and version=#{version}
+			<if test="dsCode!=null and dsCode!=''">and ds_code like concat(concat('%', #{dsCode}), '%')</if>
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjVersionScriptCount" parameterType="prjVersionScript" resultType="int">
+		select count(*) from prj_version_script
+		<where>
+			prj_id=#{prjId} and version=#{version}
+			<if test="dsCode!=null and dsCode!=''">and ds_code like concat(concat('%', #{dsCode}), '%')</if>
+		</where>
+	</select>
+</mapper>

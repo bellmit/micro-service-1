@@ -89,7 +89,7 @@ var info = {
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
 				                         '<th>版本号</th>',
 				                         '<th>参考版本</th>',
-				                         '<th width="120">操作</th>',
+				                         '<th width="110">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -119,9 +119,15 @@ var info = {
 							    	'<td>',_isReleaseName,'&nbsp;',obj.version,'&nbsp;&nbsp;',
 							    	'<a href="',webroot,'/sysFile/f-view/download.shtml?url=',obj.pathUrl,'" target="_blank">下载</a></td>',
 							    	'<td>',obj.rbVersion,'</td>',
-							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.version,'\')" title="修改"></a> ',
-							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,',\'',obj.version,'\')" title="删除"></a>',
-							    	' &nbsp; &nbsp;<a class="text-success" href="javascript:info.cli(${param.prjId}, \'',obj.version,'\')" title="发到对应的客户端">去部署</a>',
+							    	'<td><a class="text-success" href="javascript:info.cli(${param.prjId}, \'',obj.version,'\')" title="发到对应的客户端">去部署</a>',
+							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
+									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
+									'<ul class="dropdown-menu" role="menu">',
+									'<li role="presentation"><a href="javascript:info.edit(\'',obj.version,'\')" title="修改">修改</a></li>',
+									'<li role="presentation"><a href="javascript:info.del(\'',obj.version,'\')" title="删除">删除</a></li>',
+									'<li role="presentation"><a href="javascript:info.script(\'',obj.version,'\')" title="设置升级的脚本">升级脚本</a></li>',
+									'</ul>',
+									'</span>',
 								'</tr>'].join('');
 						}
 						infoPage.operate(json.body, { resultFn:getResult, dataNull:'没有记录噢' });
@@ -140,11 +146,15 @@ var info = {
 				height: 390
 			});
 		},
-		del : function(prjId, version) {
+		//编辑脚本
+		script: function(version) {
+			location = webroot + '/prjVersionScript/f-view/manager.shtml?prjId=${param.prjId}&version='+(version?version:'');
+		},
+		del : function(version) {
 			if(confirm('您确定要删除该版本吗?')) {
 				JUtil.ajax({
 					url : '${webroot}/prjVersion/f-json/delete.shtml',
-					data : { prjId: prjId, version: version },
+					data : { prjId: '${param.prjId}', version: version },
 					success : function(json) {
 						if (json.code === 0) {
 							message('删除成功');
@@ -180,7 +190,7 @@ var client = {
 				                         '<th>客户端编号</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布时间</th>',
-				                         '<th width="145">操作</th>',
+				                         '<th width="110">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				clientPage.endString = '</tbody></table>';
 			}
@@ -212,12 +222,12 @@ var client = {
 							    	'<span class="text-success">',obj.ip,':',obj.port,'</span></td>',
 							    	'<td>',_statusName,(JUtil.isNotEmpty(obj.statusMsg) ? ' | <a href="javascript:client.lookResult(\''+obj.clientId+'\');">结果</a>':''),'<textarea class="hidden" id="statusMsg',obj.clientId,'">',obj.statusMsg,'</textarea></td>',
 							    	'<td>',obj.releaseTime,'</td>',
-							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:client.edit(\'',obj.clientId,'\')" title="修改"></a>',
-							    	'&nbsp; &nbsp;<a class="glyphicon glyphicon-remove text-success" href="javascript:client.del(\'',obj.clientId,'\')" title="删除"></a>',
-							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:client.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">部署</a>',
-							    	'&nbsp; &nbsp;<span class="dropdown opt-more">',
-									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多</a>',
+							    	'<td><a class="glyphicon text-success" href="javascript:client.release(\'',obj.clientId,'\')" title="发布到客户端(相当于重新发布项目)">部署</a>',
+							    	'&nbsp; &nbsp;&nbsp;<span class="dropdown opt-more">',
+									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
 									'<ul class="dropdown-menu" role="menu">',
+									'<li role="presentation"><a href="javascript:client.edit(\'',obj.clientId,'\')" title="修改">修改</a></li>',
+									'<li role="presentation"><a href="javascript:client.del(\'',obj.clientId,'\')" title="删除">删除</a></li>',
 									'<li role="presentation"><a href="javascript:client.shell(\'',obj.clientId,'\')" title="设置发布的Shell">设命令</a></li>',
 									'<li role="presentation"><a href="javascript:client.lookLog(\'',obj.clientId,'\')" title="查询项目的日志文件">看日志</a></li>',
 									'</ul>',

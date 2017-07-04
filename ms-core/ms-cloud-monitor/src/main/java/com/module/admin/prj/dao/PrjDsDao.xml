@@ -14,7 +14,7 @@
 	
 	<delete id="delete" flushCache="true">
 		delete from prj_ds
-		<where>code=#{code}</where>
+		<where>prj_id=#{prjId} and code=#{code}</where>
 	</delete>
 	
 	<update id="update" parameterType="prjDs" flushCache="true">
@@ -22,12 +22,17 @@
 		<set>
 			type=#{type},driver_class=#{driverClass},url=#{url},username=#{username},password=#{password},initial_size=#{initialSize},max_idle=#{maxIdle},min_idle=#{minIdle},test_sql=#{testSql}
 		</set>
-		<where>code=#{code}</where>
+		<where>prj_id=#{prjId} and code=#{code}</where>
 	</update>
 	
 	<select id="get" resultType="prjDs">
 		select <include refid="commCols"/> from prj_ds
-  		<where>code=#{code}</where>
+  		<where>prj_id=#{prjId} and code=#{code}</where>
+	</select>
+	
+	<select id="findByPrjId" resultType="prjDs">
+		select <include refid="commCols"/> from prj_ds
+  		<where>prj_id=#{prjId}</where>
 	</select>
 	
 	<select id="findPrjDs" parameterType="prjDs" resultType="prjDs">

@@ -1,5 +1,6 @@
 package com.module.admin.prj.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.module.admin.prj.dao.PrjDsDao;
 import com.module.admin.prj.pojo.PrjDs;
 import com.module.admin.prj.service.PrjDsService;
+import com.system.comm.model.KvEntity;
 import com.system.comm.model.Page;
 import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
@@ -27,7 +29,7 @@ public class PrjDsServiceImpl implements PrjDsService {
 	@Override
 	public ResponseFrame saveOrUpdate(PrjDs prjDs) {
 		ResponseFrame frame = new ResponseFrame();
-		PrjDs org = get(prjDs.getCode());
+		PrjDs org = get(prjDs.getPrjId(), prjDs.getCode());
 		if(org == null) {
 			prjDsDao.save(prjDs);
 		} else {
@@ -38,8 +40,8 @@ public class PrjDsServiceImpl implements PrjDsService {
 	}
 
 	@Override
-	public PrjDs get(String code) {
-		return prjDsDao.get(code);
+	public PrjDs get(Integer prjId, String code) {
+		return prjDsDao.get(prjId, code);
 	}
 
 	@Override
@@ -58,10 +60,20 @@ public class PrjDsServiceImpl implements PrjDsService {
 	}
 	
 	@Override
-	public ResponseFrame delete(String code) {
+	public ResponseFrame delete(Integer prjId, String code) {
 		ResponseFrame frame = new ResponseFrame();
-		prjDsDao.delete(code);
+		prjDsDao.delete(prjId, code);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public List<KvEntity> findKvByPrjId(Integer prjId) {
+		List<KvEntity> data = new ArrayList<KvEntity>();
+		List<PrjDs> ds = prjDsDao.findByPrjId(prjId);
+		for (PrjDs prjDs : ds) {
+			data.add(new KvEntity(prjDs.getCode(), prjDs.getCode() + "(" + prjDs.getType() + ")"));
+		}
+		return data;
 	}
 }

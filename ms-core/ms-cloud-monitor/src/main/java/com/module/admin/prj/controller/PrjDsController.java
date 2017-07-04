@@ -68,9 +68,9 @@ public class PrjDsController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/prjDs/f-view/edit")
-	public String edit(HttpServletRequest request, ModelMap modelMap, String code) {
-		if(code != null) {
-			modelMap.put("prjDs", prjDsService.get(code));
+	public String edit(HttpServletRequest request, ModelMap modelMap, Integer prjId, String code) {
+		if(prjId != null && code != null) {
+			modelMap.put("prjDs", prjDsService.get(prjId, code));
 		}
 		return "admin/prj/ds-edit";
 	}
@@ -102,10 +102,10 @@ public class PrjDsController extends BaseController {
 	@RequestMapping(value = "/prjDs/f-json/delete")
 	@ResponseBody
 	public void delete(HttpServletRequest request, HttpServletResponse response,
-			String code) {
+			Integer prjId, String code) {
 		ResponseFrame frame = null;
 		try {
-			frame = prjDsService.delete(code);
+			frame = prjDsService.delete(prjId, code);
 		} catch (Exception e) {
 			LOGGER.error("删除异常: " + e.getMessage(), e);
 			frame = new ResponseFrame();
@@ -121,7 +121,7 @@ public class PrjDsController extends BaseController {
 		ResponseFrame frame = null;
 		try {
 			if(FrameStringUtil.isEmpty(prjDs.getType()) || FrameStringUtil.isEmpty(prjDs.getDriverClass())) {
-				prjDs = prjDsService.get(prjDs.getCode());
+				prjDs = prjDsService.get(prjDs.getPrjId(), prjDs.getCode());
 			}
 			DsUtil ds = new DsUtil();
 			ds.init(prjDs.getDriverClass(), prjDs.getUrl(),

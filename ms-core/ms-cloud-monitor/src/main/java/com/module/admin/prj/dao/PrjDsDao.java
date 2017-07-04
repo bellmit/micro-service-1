@@ -1,7 +1,9 @@
 package com.module.admin.prj.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.module.admin.prj.pojo.PrjDs;
 
 /**
@@ -16,11 +18,13 @@ public interface PrjDsDao {
 
 	public abstract void update(PrjDs prjDs);
 
-	public abstract void delete(@Param("code")String code);
+	public abstract void delete(@Param("prjId")Integer prjId, @Param("code")String code);
 
-	public abstract PrjDs get(@Param("code")String code);
+	public abstract PrjDs get(@Param("prjId")Integer prjId, @Param("code")String code);
 
 	public abstract List<PrjDs> findPrjDs(PrjDs prjDs);
 	
 	public abstract int findPrjDsCount(PrjDs prjDs);
+
+	public abstract List<PrjDs> findByPrjId(@Param("prjId")Integer prjId);
 }

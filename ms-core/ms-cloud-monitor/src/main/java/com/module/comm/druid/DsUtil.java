@@ -16,6 +16,7 @@ public class DsUtil extends BaseDao {
 	
 	private JdbcTemplate jdbcTemplate;
 	private DruidDataSource dataSource;
+	private boolean isInit = false;
 
 	/**
 	 * 初始化信息
@@ -56,6 +57,10 @@ public class DsUtil extends BaseDao {
 	 */
 	private ResponseFrame setDs() {
 		ResponseFrame frame = new ResponseFrame();
+		if(isInit) {
+			frame.setSucc();
+			return frame;
+		}
 		try {
 			dataSource.init();
 		} catch (SQLException e) {
@@ -83,7 +88,28 @@ public class DsUtil extends BaseDao {
 	}
 	
 	/**
-	 * 执行测试语句
+	 * 执行sql
+	 * @param sql
+	 * @return
+	 */
+	public ResponseFrame exec(String sql) {
+		ResponseFrame frame = new ResponseFrame();
+		setDs();
+		if(sql.endsWith(";")) {
+			sql = sql.substring(0, sql.length() - 1);
+		}
+		try {
+			jdbcTemplate.execute(sql);
+			frame.setSucc();
+		} catch (DataAccessException e) {
+			frame.setCode(-2);
+			frame.setMessage(e.getMessage());
+		}
+		return frame;
+	}
+	
+	/**
+	 * 执行测试语句【自带关闭链接】
 	 * @param sql
 	 * @return
 	 */
