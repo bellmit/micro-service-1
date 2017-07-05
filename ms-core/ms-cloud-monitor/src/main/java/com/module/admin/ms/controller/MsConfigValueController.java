@@ -128,8 +128,8 @@ public class MsConfigValueController extends BaseController {
 			List<String> attrs = FrameStringUtil.toArray(content, "#~end@#");
 			int num = 0;
 			for (String attr : attrs) {
-				List<String> fs = FrameStringUtil.toArray(attr, "#~@#");
-				values.add(new MsConfigValue(configId, fs.get(0), fs.get(1), fs.get(2), num, userId));
+				String[] fs = attr.split("#~@#");
+				values.add(new MsConfigValue(configId, fs[0], fs[1], fs[2], num, userId));
 				num ++;
 			}
 			frame = msConfigValueService.saveList(configId, values);
