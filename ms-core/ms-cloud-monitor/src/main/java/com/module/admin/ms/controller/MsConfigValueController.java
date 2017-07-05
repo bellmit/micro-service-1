@@ -20,6 +20,7 @@ import com.module.admin.ms.pojo.MsConfigValue;
 import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
 import com.module.admin.sys.pojo.SysUser;
+import com.system.comm.utils.FrameStringUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -111,6 +112,30 @@ public class MsConfigValueController extends BaseController {
 		} catch (Exception e) {
 			LOGGER.error("获取信息异常: " + e.getMessage(), e);
 			frame.setCode(ResponseCode.FAIL.getCode());
+		}
+		writerJson(response, frame);
+	}
+	
+	@RequestMapping(value = "/msConfigValue/f-json/imp")
+	@ResponseBody
+	public void imp(HttpServletRequest request, HttpServletResponse response,
+			Integer configId, String content) {
+		ResponseFrame frame = null;
+		try {
+			SysUser user = getSessionUser(request);
+			Integer userId = user.getUserId();
+			List<MsConfigValue> values = new ArrayList<MsConfigValue>();
+			List<String> attrs = FrameStringUtil.toArray(content, "#~end@#");
+			int num = 0;
+			for (String attr : attrs) {
+				List<String> fs = FrameStringUtil.toArray(attr, "#~@#");
+				values.add(new MsConfigValue(configId, fs.get(0), fs.get(1), fs.get(2), num, userId));
+				num ++;
+			}
+			frame = msConfigValueService.saveList(configId, values);
+		} catch (Exception e) {
+			LOGGER.error("导入异常: " + e.getMessage(), e);
+			frame = new ResponseFrame(ResponseCode.FAIL);
 		}
 		writerJson(response, frame);
 	}

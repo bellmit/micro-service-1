@@ -76,20 +76,32 @@
 	                        	</c:forEach>
 							</tbody>
 						</table>
-						<div align="center">
-							<div class="btn-group">
-							  <button type="button" class="btn btn-default" onclick="info.add()">新增属性</button>
-							  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    &nbsp;<span class="caret"></span>&nbsp;
-							    <span class="sr-only">Toggle Dropdown</span>
-							  </button>
-							  <ul class="dropdown-menu">
-							  <c:forEach items="${configs}" var="info">
-							  	<li><a href="javascript:info.loadValues(${info.configId});">从${info.name}中加载</a></li>
-							  </c:forEach>
-							  </ul>
+						<div class="row">
+							<div class="col-sm-3 text-left">
+								<div class="btn-group">
+									<button onclick="info.imp()" class="btn btn-default btn-sm" id="impBtn">导入</button>
+									<button onclick="info.exp()" class="btn btn-default btn-sm" id="expBtn">导出</button>
+								</div>
 							</div>
-							<button onclick="info.save()" class="btn btn-success" id="saveBtn">确认保存</button>
+							<div class="col-sm-3 text-right">
+								<div class="btn-group">
+								  <button type="button" class="btn btn-default" onclick="info.add()">新增属性</button>
+								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    &nbsp;<span class="caret"></span>&nbsp;
+								    <span class="sr-only">Toggle Dropdown</span>
+								  </button>
+								  <ul class="dropdown-menu">
+								  <c:forEach items="${configs}" var="info">
+								  	<li><a href="javascript:info.loadValues(${info.configId});">从${info.name}中加载</a></li>
+								  </c:forEach>
+								  </ul>
+								</div>
+							</div>
+							<div class="col-sm-6 text-left">
+								<div class="btn-group">
+							  		<button onclick="info.save()" class="btn btn-success" id="saveBtn">确认保存</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -276,6 +288,82 @@ var info = {
 					else
 						message(json.message);
 					_saveBtn.removeAttr('disabled').html(_orgVal);
+				}
+			});
+		},
+		//导入
+		imp: function() {
+			var _content = ['<div><div class="form-group"><textarea id="impContent" class="form-control" style="width: 350px;height: 230px;"></textarea></div>'];
+			_content.push('<div class="form-group">',
+		 			'<div class="btn-group">',
+					'<button type="button" id="saveImpBtn" class="btn btn-success enter-fn">保存</button>',
+				'</div>&nbsp;',
+				'<span id="saveImpMsg" class="label label-danger"></span>',
+			'</div>');
+			_content.push('</div>');
+			dialog({
+				content: _content.join(''),
+				width: 385,
+				height: 250
+			});
+			$('#saveImpBtn').click(function() {
+				var _saveMsg = $('#saveImpMsg').empty();
+				
+				var _content = $('#impContent');
+				if(JUtil.isEmpty(_content.val())) {
+					_saveMsg.append('请输入内容');
+					_content.focus();
+					return;
+				}
+				var _saveBtn = $('#saveBtn');
+				var _orgVal = _saveBtn.html();
+				_saveBtn.attr('disabled', 'disabled').html('保存中...');
+				JUtil.ajax({
+					url : '${webroot}/msConfigValue/f-json/imp.shtml',
+					data : {
+						configId: $('#configId').val(),
+						content: _content.val()
+					},
+					success : function(json) {
+						if (json.code === 0) {
+							_saveMsg.attr('class', 'label label-success').append('保存成功');
+							setTimeout(function() {
+								location.reload();
+							}, 800);
+						}
+						else if (json.code === -1)
+							_saveMsg.append(JUtil.msg.ajaxErr);
+						else
+							_saveMsg.append(json.message);
+						_saveBtn.removeAttr('disabled').html(_orgVal);
+					}
+				});
+			});
+		},
+		//导出
+		exp: function() {
+			JUtil.ajax({
+				url : '${webroot}/msConfigValue/f-json/findByConfigId.shtml',
+				data : {
+					configId: $('#configId').val()
+				},
+				success : function(json) {
+					if (json.code === 0) {
+						var _content = ['<div><textarea class="form-control" style="width: 350px;height: 230px;" onclick="$(this).select()">'];
+						$.each(json.body, function(i, obj) {
+							_content.push(obj.code, '#~@#', obj.value, '#~@#', obj.remark, '#~end@#');
+						});
+						_content.push('</textarea></div>');
+						dialog({
+							content: _content.join(''),
+							width: 385,
+							height: 250
+						});
+					}
+					else if (json.code === -1)
+						message(JUtil.msg.ajaxErr);
+					else
+						message(json.message);
 				}
 			});
 		}
