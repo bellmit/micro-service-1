@@ -31,6 +31,10 @@
 					<div class="table-tool-panel">
 						<div class="row">
 							<div class="col-sm-6">
+								<span class="enter-panel">
+									<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="项目名称">
+							  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
+						  		</span>
 							</div>
 							<div class="col-sm-6 text-right">
 							  	<div class="btn-group">
@@ -70,7 +74,7 @@ var info = {
 
 			JUtil.ajax({
 				url : '${webroot}/prjInfo/f-json/pageQuery.shtml',
-				data : { page:infoPage.page, size:infoPage.size },
+				data : { page:infoPage.page, size:infoPage.size, name: $('#name').val() },
 				beforeSend: function(){ infoPage.beforeSend('加载信息中...'); },
 				error : function(json){ infoPage.error('加载信息出错了!'); },
 				success : function(json){

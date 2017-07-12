@@ -1,10 +1,11 @@
 package com.system.comm.utils;
 
 import java.security.Key;
-import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -37,8 +38,12 @@ public class FrameDesUtil {
 	public void setKey(String strKey) {
 		try {
 			KeyGenerator _generator = KeyGenerator.getInstance("DES");
-			_generator.init(new SecureRandom(strKey.getBytes()));
-			this.key = _generator.generateKey();
+			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+		    DESKeySpec keySpec = new DESKeySpec(strKey.getBytes());
+		    keyFactory.generateSecret(keySpec);
+
+			//_generator.init(new SecureRandom(strKey.getBytes()));
+			this.key = keyFactory.generateSecret(keySpec);//_generator.generateKey();
 			_generator = null;
 		} catch (Exception e) {
 			throw new RuntimeException(

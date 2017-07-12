@@ -46,8 +46,7 @@
 	<select id="findPrjInfo" parameterType="prjInfo" resultType="prjInfo">
 		select <include refid="commCols"/> from prj_info
 		<where>
-			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
-			and isdel=0 -->
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 		</where>
 		order by status
   		limit #{currentIndex}, #{size}
@@ -55,8 +54,7 @@
 	<select id="findPrjInfoCount" parameterType="prjInfo" resultType="int">
 		select count(*) from prj_info
 		<where>
-			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
-			and isdel=0 -->
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 		</where>
 	</select>
 </mapper>

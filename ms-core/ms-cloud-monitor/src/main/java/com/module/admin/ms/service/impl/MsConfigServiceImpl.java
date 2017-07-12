@@ -1,18 +1,28 @@
 package com.module.admin.ms.service.impl;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Component;
 
 import com.module.admin.ms.dao.MsConfigDao;
 import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
+import com.module.comm.constants.ConfigCons;
+import com.system.auth.AuthUtil;
 import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
-import com.system.handle.model.ResponseFrame;
+import com.system.comm.utils.FrameHttpUtil;
 import com.system.handle.model.ResponseCode;
+import com.system.handle.model.ResponseFrame;
 
 /**
  * ms_config的Service
@@ -23,10 +33,13 @@ import com.system.handle.model.ResponseCode;
 @Component
 public class MsConfigServiceImpl implements MsConfigService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(MsConfigServiceImpl.class);
 	@Autowired
 	private MsConfigDao msConfigDao;
 	@Autowired
 	private MsConfigValueService msConfigValueService;
+	@Autowired
+	private DiscoveryClient discoveryClient;
 	
 	@Override
 	public ResponseFrame saveOrUpdate(MsConfig msConfig) {
@@ -35,6 +48,7 @@ public class MsConfigServiceImpl implements MsConfigService {
 			msConfigDao.save(msConfig);
 		} else {
 			msConfigDao.update(msConfig);
+			refreshCfg(msConfig.getConfigId());
 		}
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
@@ -82,5 +96,43 @@ public class MsConfigServiceImpl implements MsConfigService {
 	@Override
 	public List<MsConfig> findAll() {
 		return msConfigDao.findAll();
+	}
+
+	@Override
+	public void refreshCfg(Integer configId) {
+		MsConfig config = get(configId);
+		if(Boolean.FALSE.getCode() == config.getIsUse().intValue()) {
+			return;
+		}
+		int index = config.getName().indexOf(".");
+		String serviceId = config.getName().substring(0, index);
+		ResponseFrame frame = refresh(serviceId);
+		if(ResponseCode.SUCC.getCode() != frame.getCode().intValue()) {
+			LOGGER.error("刷新服务配置失败!");
+		}
+	}
+	
+	public ResponseFrame refresh(String serviceId) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			List<ServiceInstance> list = discoveryClient.getInstances(serviceId);
+			for (ServiceInstance instance : list) {
+				String baseUrl = instance.getUri().toString();
+				Map<String, Object> params = new HashMap<String, Object>();
+				String time = String.valueOf(System.currentTimeMillis());
+				params.put("clientId", ConfigCons.clientId);
+				params.put("time", time);
+				params.put("sign", AuthUtil.auth(ConfigCons.clientId, time, ConfigCons.sercret));
+				String result = FrameHttpUtil.post(baseUrl + "/refresh", params);
+				if(!"[]".equals(result)) {
+					LOGGER.error(baseUrl + "刷新失败");
+				}
+			}
+			
+			frame.setSucc();
+			return frame;
+		} catch (IOException e) {
+			return new ResponseFrame(ResponseCode.SERVER_ERROR);
+		}
 	}
 }

@@ -51,4 +51,10 @@ public interface MsConfigService {
 	public List<MsConfig> findUse();
 
 	public List<MsConfig> findAll();
+
+	/**
+	 * 根据configId刷新系统的配置文件
+	 * @param configId
+	 */
+	public void refreshCfg(Integer configId);
 }
