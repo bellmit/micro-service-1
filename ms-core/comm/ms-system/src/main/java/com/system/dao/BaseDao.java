@@ -242,15 +242,15 @@ public class BaseDao {
 	 * @return
 	 */
 	public List<Map<String, Object>> queryForList(QuerySql querySql){
-		return queryForList(querySql.getSql());
+		return queryForList(querySql.getSql(), querySql.getParams());
 	}
 	/**
 	 * 获取返回List&lt;Map&gt;的集合
 	 * @param sql
 	 * @return
 	 */
-	public List<Map<String, Object>> queryForList(final String sql){
-		return getJdbcTemplate().queryForList(sql);
+	public List<Map<String, Object>> queryForList(final String sql, final Object ...params){
+		return getJdbcTemplate().queryForList(sql, params);
 	}
 
 	/**

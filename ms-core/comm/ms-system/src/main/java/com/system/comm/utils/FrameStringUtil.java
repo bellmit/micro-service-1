@@ -414,7 +414,7 @@ public class FrameStringUtil {
 	
 	/**
 	 * 将大写字母转为_小写字母<br>
-	 * 如：abcDef -> abc_def
+	 * 如：abc_def -> abcDef
 	 * @param string
 	 * @return
 	 */

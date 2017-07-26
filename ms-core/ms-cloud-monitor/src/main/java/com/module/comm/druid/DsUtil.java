@@ -31,6 +31,22 @@ public class DsUtil extends BaseDao {
 	public void init(String driverClass, String jdbcUrl,
 			String username, String password, Integer initialSize,
 			Integer maxIdle, Integer minIdle) {
+		init(driverClass, jdbcUrl, username, password, initialSize, maxIdle, minIdle, false);
+	}
+	/**
+	 * 初始化信息
+	 * @param driverClass
+	 * @param jdbcUrl
+	 * @param username
+	 * @param password
+	 * @param initialSize
+	 * @param maxIdle
+	 * @param minIdle
+	 * @param isSetDs	是否设置数据源
+	 */
+	public void init(String driverClass, String jdbcUrl,
+			String username, String password, Integer initialSize,
+			Integer maxIdle, Integer minIdle, boolean isSetDs) {
 		if(initialSize == null) {
 			initialSize = 10;
 		}
@@ -49,13 +65,16 @@ public class DsUtil extends BaseDao {
 		dataSource.setMaxActive(maxIdle);
 		//dataSource.setMaxIdle(maxIdle);
 		dataSource.setMinIdle(minIdle);
+		if(isSetDs) {
+			setDs();
+		}
 	}
 	
 	/**
 	 * 设置数据源
 	 * @return
 	 */
-	private ResponseFrame setDs() {
+	public ResponseFrame setDs() {
 		ResponseFrame frame = new ResponseFrame();
 		if(isInit) {
 			frame.setSucc();
