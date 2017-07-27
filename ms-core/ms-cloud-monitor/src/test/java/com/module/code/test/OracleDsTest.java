@@ -9,9 +9,9 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.module.code.core.DbDs;
-import com.module.code.core.OracleDs;
-import com.module.code.pojo.Table;
+import com.module.admin.code.core.DbDs;
+import com.module.admin.code.core.OracleDs;
+import com.module.admin.code.pojo.Table;
 
 @RunWith(SpringJUnit4ClassRunner.class)  
 //@SpringBootTest(classes = MsCloudMonitorApplication.class)  

@@ -1,12 +1,12 @@
-package com.module.code.core;
+package com.module.admin.code.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.module.code.constants.DataType;
-import com.module.code.pojo.Column;
-import com.module.code.pojo.Table;
+import com.module.admin.code.constants.DataType;
+import com.module.admin.code.pojo.Column;
+import com.module.admin.code.pojo.Table;
 import com.system.comm.utils.FrameMapUtil;
 import com.system.comm.utils.FrameStringUtil;
 

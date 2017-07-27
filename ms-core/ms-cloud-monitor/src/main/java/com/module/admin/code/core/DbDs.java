@@ -1,9 +1,9 @@
-package com.module.code.core;
+package com.module.admin.code.core;
 
 import java.util.List;
 
-import com.module.code.pojo.Column;
-import com.module.code.pojo.Table;
+import com.module.admin.code.pojo.Column;
+import com.module.admin.code.pojo.Table;
 import com.module.comm.druid.DsUtil;
 
 public interface DbDs {

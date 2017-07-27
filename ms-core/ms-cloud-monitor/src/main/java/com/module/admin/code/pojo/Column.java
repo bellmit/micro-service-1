@@ -1,6 +1,6 @@
-package com.module.code.pojo;
+package com.module.admin.code.pojo;
 
-import com.module.code.constants.DataType;
+import com.module.admin.code.constants.DataType;
 import com.system.comm.utils.FrameStringUtil;
 
 public class Column {

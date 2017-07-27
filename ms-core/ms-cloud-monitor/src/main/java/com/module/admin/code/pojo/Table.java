@@ -1,4 +1,4 @@
-package com.module.code.pojo;
+package com.module.admin.code.pojo;
 
 import java.util.ArrayList;
 import java.util.List;

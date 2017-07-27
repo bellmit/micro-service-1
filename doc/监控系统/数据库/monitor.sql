@@ -335,3 +335,68 @@ create table prj_version_script
 );
 
 alter table prj_version_script comment '项目版本脚本表';
+
+
+
+
+
+
+/*==============================================================*/
+/* 2017-07-27 新增 生成源码相关的表				                */
+/*==============================================================*/
+drop table if exists code_prj;
+
+/*==============================================================*/
+/* Table: code_prj                                              */
+/*==============================================================*/
+create table code_prj
+(
+   code                 varchar(50) not null comment '编码',
+   name                 int not null comment '名称',
+   create_time          datetime not null comment '创建时间',
+   user_id              int not null comment '创建人',
+   primary key (code)
+);
+
+alter table code_prj comment '项目源码表';
+
+drop table if exists code_template;
+
+/*==============================================================*/
+/* Table: code_template                                         */
+/*==============================================================*/
+create table code_template
+(
+   code                 varchar(50) not null comment '源码编号',
+   type                 int not null comment '类型[10java、20jsp、30其它文件]',
+   name                 varchar(100) not null comment '名称',
+   remark               varchar(200) comment '描叙',
+   package_name         varchar(30) not null comment '包名',
+   content              text not null comment '模板内容',
+   path                 varchar(200) not null comment '模板路劲',
+   primary key (code, name)
+);
+
+alter table code_template comment '项目模板表';
+
+drop table if exists code_create;
+
+/*==============================================================*/
+/* Table: code_create                                           */
+/*==============================================================*/
+create table code_create
+(
+   id                   int not null auto_increment comment '编号',
+   code                 varchar(50) not null comment '源码编号',
+   package_path         varchar(200) not null comment '功能包路径',
+   status               char(10) not null comment '状态[10待生成、20生成中、30生成失败、40生成失败]',
+   download             varchar(200) comment '下载地址',
+   finsh_time           datetime comment '生成完成时间',
+   ds_code              int not null comment '数据源编号',
+   tables               varchar(200) not null comment '生成的表集合[多个,分隔]',
+   create_time          datetime not null comment '创建时间',
+   user_id              int not null comment '创建人',
+   primary key (id)
+);
+
+alter table code_create comment '生成源码表';

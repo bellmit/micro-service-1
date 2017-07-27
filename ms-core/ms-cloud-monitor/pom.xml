@@ -31,6 +31,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
+		
+		<!-- 添加freemarker依赖 -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-freemarker</artifactId>
+	    </dependency>
+	    
 		<dependency>
 			<groupId>ms.system</groupId>
 			<artifactId>ms-system</artifactId>

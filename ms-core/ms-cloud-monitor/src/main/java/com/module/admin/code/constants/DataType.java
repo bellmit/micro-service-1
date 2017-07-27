@@ -1,4 +1,4 @@
-package com.module.code.constants;
+package com.module.admin.code.constants;
 
 import java.util.HashMap;
 /**

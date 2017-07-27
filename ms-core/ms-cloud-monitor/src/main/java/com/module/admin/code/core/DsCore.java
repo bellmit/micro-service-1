@@ -1,4 +1,4 @@
-package com.module.code.core;
+package com.module.admin.code.core;
 
 import java.util.List;
 import java.util.Map;
