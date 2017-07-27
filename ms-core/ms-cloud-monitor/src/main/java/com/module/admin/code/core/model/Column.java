@@ -1,4 +1,4 @@
-package com.module.admin.code.pojo;
+package com.module.admin.code.core.model;
 
 import com.module.admin.code.constants.DataType;
 import com.system.comm.utils.FrameStringUtil;

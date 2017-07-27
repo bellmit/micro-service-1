@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.module.admin.code.core.DbDs;
 import com.module.admin.code.core.MysqlDs;
-import com.module.admin.code.pojo.Table;
+import com.module.admin.code.core.model.Table;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = MsCloudMonitorApplication.class)
