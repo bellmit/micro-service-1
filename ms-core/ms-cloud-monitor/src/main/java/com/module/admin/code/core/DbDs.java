@@ -15,7 +15,7 @@ public interface DbDs {
 	 * 获取所有表名
 	 * @return
 	 */
-	public abstract List<String> getAllTableName();
+	public abstract List<String> findAllTableName();
 	/**
 	 * 获取表注释
 	 * @param tableName

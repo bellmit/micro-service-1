@@ -17,7 +17,7 @@ public class MysqlDs extends DsCore implements DbDs {
 	 * @return
 	 */
 	@Override
-	public List<String> getAllTableName() {
+	public List<String> findAllTableName() {
 		String sql = "select * from information_schema.tables where table_schema=? order by TABLE_NAME";
 		List<Map<String, Object>> data = super.queryForList(sql, getDbName());
 		List<String> list = new ArrayList<String>();

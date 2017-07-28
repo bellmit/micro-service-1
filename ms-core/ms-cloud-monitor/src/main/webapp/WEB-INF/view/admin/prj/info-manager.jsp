@@ -100,6 +100,7 @@ var info = {
 									'<ul class="dropdown-menu" role="menu">',
 									'<li role="presentation"><a href="',webroot,'/prjDs/f-view/manager.shtml?prjId=',obj.prjId,'">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a></li>',
+									'<li role="presentation"><a href="',webroot,'/codePrj/f-view/manager.shtml?prjId=',obj.prjId,'">生成源码</a></li>',
 									'</ul>',
 									'</span>',
 							    	//'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.process(',obj.prjId,')" title="项目流程">详细</a>',

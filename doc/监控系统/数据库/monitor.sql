@@ -352,7 +352,8 @@ drop table if exists code_prj;
 create table code_prj
 (
    code                 varchar(50) not null comment '编码',
-   name                 int not null comment '名称',
+   prj_id               int not null comment '项目编号',
+   name                 varchar(150) not null comment '名称',
    create_time          datetime not null comment '创建时间',
    user_id              int not null comment '创建人',
    primary key (code)
@@ -374,10 +375,12 @@ create table code_template
    package_name         varchar(30) not null comment '包名',
    content              text not null comment '模板内容',
    path                 varchar(200) not null comment '模板路劲',
+   suffix               varchar(50) comment '文件后缀',
    primary key (code, name)
 );
 
 alter table code_template comment '项目模板表';
+
 
 drop table if exists code_create;
 
@@ -389,10 +392,11 @@ create table code_create
    id                   int not null auto_increment comment '编号',
    code                 varchar(50) not null comment '源码编号',
    package_path         varchar(200) not null comment '功能包路径',
-   status               char(10) not null comment '状态[10待生成、20生成中、30生成失败、40生成失败]',
+   status               int not null comment '状态[10待生成、20生成中、30生成失败、40生成成功]',
    download             varchar(200) comment '下载地址',
    finsh_time           datetime comment '生成完成时间',
-   ds_code              int not null comment '数据源编号',
+   ds_code              varchar(100) not null comment '数据源编号',
+   db_name              varchar(100) not null comment '数据库名',
    tables               varchar(200) not null comment '生成的表集合[多个,分隔]',
    create_time          datetime not null comment '创建时间',
    user_id              int not null comment '创建人',

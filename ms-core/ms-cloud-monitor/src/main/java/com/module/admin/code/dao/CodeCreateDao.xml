@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.code.dao.CodeCreateDao">
+
+	<sql id="commCols">
+		id id,code code,package_path packagePath,status status,download download,finsh_time finshTime,ds_code dsCode,db_name dbName,tables tables,create_time createTime,user_id userId
+	</sql>
+
+	<insert id="save" parameterType="codeCreate" useGeneratedKeys="true" keyProperty="id" flushCache="true">
+		 insert into code_create(code,package_path,status,download,finsh_time,ds_code,db_name,tables,create_time,user_id)
+		 values(#{code},#{packagePath},#{status},#{download},#{finshTime},#{dsCode},#{dbName},#{tables},now(),#{userId})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from code_create
+		<where>id=#{id}</where>
+	</delete>
+	
+	<update id="update" parameterType="codeCreate" flushCache="true">
+		update code_create
+		<set>
+			package_path=#{packagePath},status=#{status},download=#{download},ds_code=#{dsCode},db_name=#{dbName},tables=#{tables}
+		</set>
+		<where>id=#{id}</where>
+	</update>
+	<update id="updateFinish" flushCache="true">
+		update code_create
+		<set>
+			download=#{download},finsh_time=now()
+		</set>
+		<where>id=#{id}</where>
+	</update>
+	
+	<select id="get" resultType="codeCreate">
+		select <include refid="commCols"/> from code_create
+  		<where>id=#{id}</where>
+	</select>
+	
+	<select id="findCodeCreate" parameterType="codeCreate" resultType="codeCreate">
+		select <include refid="commCols"/> from code_create
+		<where>
+			code=#{code}
+			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if> -->
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findCodeCreateCount" parameterType="codeCreate" resultType="int">
+		select count(*) from code_create
+		<where>
+			code=#{code}
+		</where>
+	</select>
+</mapper>

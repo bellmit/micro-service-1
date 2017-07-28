@@ -18,7 +18,7 @@ public class OracleDs extends DsCore implements DbDs {
 	 * @return
 	 */
 	@Override
-	public List<String> getAllTableName() {
+	public List<String> findAllTableName() {
 		String sql = "select * from sys.all_tables Where owner=? order by table_name";
 		List<Map<String, Object>> data = super.queryForList(sql, getDbName().toUpperCase());
 		List<String> list = new ArrayList<String>();

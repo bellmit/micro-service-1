@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.code.dao.CodeTemplateDao">
+
+	<sql id="commCols">
+		code code,type type,name name,suffix suffix,remark remark,package_name packageName,content content,path path
+	</sql>
+	<sql id="cpCtCols">
+		ct.code code,ct.type type,ct.name name,ct.suffix suffix,ct.remark remark,ct.package_name packageName,ct.content content,
+		ct.path path
+	</sql>
+
+	<insert id="save" parameterType="codeTemplate" flushCache="true">
+		 insert into code_template(code,type,name,remark,suffix,package_name,content,path)
+		 values(#{code},#{type},#{name},#{remark},#{suffix},#{packageName},#{content},#{path})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from code_template
+		<where>code=#{code} and name=#{name}</where>
+	</delete>
+	
+	<update id="update" parameterType="codeTemplate" flushCache="true">
+		update code_template
+		<set>
+			type=#{type},remark=#{remark},suffix=#{suffix},package_name=#{packageName},content=#{content},path=#{path}
+		</set>
+		<where>code=#{code} and name=#{name}</where>
+	</update>
+	
+	<select id="get" resultType="codeTemplate">
+		select <include refid="commCols"/> from code_template
+  		<where>code=#{code} and name=#{name}</where>
+  		limit 1
+	</select>
+	
+	<select id="findByCode" resultType="codeTemplate">
+		select <include refid="commCols"/> from code_template
+  		<where>code=#{code}</where>
+	</select>
+	
+	<select id="findCodeTemplate" parameterType="codeTemplate" resultType="codeTemplate">
+		select <include refid="cpCtCols"/> from code_template ct
+			inner join code_prj cp on(cp.code=ct.code)
+		<where>
+			ct.code=#{code}
+			<if test="prjId!=null">and cp.prj_id=#{prjId}</if>
+			<!-- <if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if> -->
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findCodeTemplateCount" parameterType="codeTemplate" resultType="int">
+		select count(*) from code_template ct
+			inner join code_prj cp on(cp.code=ct.code)
+		<where>
+			ct.code=#{code}
+			<if test="prjId!=null">and cp.prj_id=#{prjId}</if>
+		</where>
+	</select>
+</mapper>

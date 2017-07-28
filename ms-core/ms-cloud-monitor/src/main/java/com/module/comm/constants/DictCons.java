@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 import org.apache.log4j.Logger;
 
 import com.module.admin.cli.enums.CliInfoStatus;
+import com.module.admin.code.enums.CodeTemplateType;
 import com.module.admin.prj.enums.PrjDsType;
 import com.module.admin.prj.enums.PrjInfoContainer;
 import com.module.admin.prj.enums.PrjInfoStatus;
@@ -53,6 +54,8 @@ public class DictCons {
 		DictCons.addValue(JobLogStatus.KEY		, JobLogStatus.getList(), servletContext);
 		
 		DictCons.addValue(PrjDsType.KEY		, PrjDsType.getList(), servletContext);
+
+		DictCons.addValue(CodeTemplateType.KEY	, CodeTemplateType.getList(), servletContext);
 		
 		if(LOGGER.isInfoEnabled()) {
 			LOGGER.info("========================= 初始化字典信息成功 ===========================");

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.admin.code.dao.CodePrjDao">
+
+	<sql id="commCols">
+		code code,prj_id prjId,name name,create_time createTime,user_id userId
+	</sql>
+
+	<insert id="save" parameterType="codePrj" flushCache="true">
+		 insert into code_prj(code,prj_id,name,create_time,user_id)
+		 values(#{code},#{prjId},#{name},now(),#{userId})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from code_prj
+		<where>code=#{code}</where>
+	</delete>
+	
+	<update id="update" parameterType="codePrj" flushCache="true">
+		update code_prj
+		<set>
+			prj_id=#{prjId},name=#{name},user_id=#{userId}
+		</set>
+		<where>code=#{code}</where>
+	</update>
+	
+	<select id="get" resultType="codePrj">
+		select <include refid="commCols"/> from code_prj
+  		<where>code=#{code}</where>
+	</select>
+	
+	<select id="findCodePrj" parameterType="codePrj" resultType="codePrj">
+		select <include refid="commCols"/> from code_prj
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findCodePrjCount" parameterType="codePrj" resultType="int">
+		select count(*) from code_prj
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+	</select>
+</mapper>
