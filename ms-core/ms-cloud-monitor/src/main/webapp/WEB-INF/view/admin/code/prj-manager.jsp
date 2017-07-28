@@ -79,9 +79,9 @@ var info = {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th width="120">编码</th>',
 				                         '<th width="80">类型</th>',
-				                         '<th>名称</th>',
+				                         '<th width="150">名称</th>',
+				                         '<th>描述</th>',
 				                         '<th width="120">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
@@ -99,9 +99,9 @@ var info = {
 						function getResult(obj) {
 							var _statusName = '';
 							return ['<tr>',
-							    	'<td>',obj.code,'</td>',
 							    	'<td>',obj.typeName,'</td>',
 							    	'<td>',obj.name,'</td>',
+							    	'<td style="word-break:break-all">',obj.remark,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(\'',obj.code,'\',\'',obj.name,'\')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(\'',obj.code,'\',\'',obj.name,'\')" title="删除"></a>',
 							    	'</td>',
@@ -176,7 +176,7 @@ var create = {
 							return ['<tr>',
 							    	'<td>',obj.id,'<br/>',
 							    	'<td>',obj.packagePath,'</td>',
-							    	'<td>',obj.tables,'</td>',
+							    	'<td style="word-break:break-all">',obj.tables,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:create.edit(',obj.id,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:create.del(',obj.id,')" title="删除"></a>',
 							    	_finish,
