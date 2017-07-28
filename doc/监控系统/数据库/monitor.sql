@@ -394,7 +394,7 @@ create table code_create
    package_path         varchar(200) not null comment '功能包路径',
    status               int not null comment '状态[10待生成、20生成中、30生成失败、40生成成功]',
    download             varchar(200) comment '下载地址',
-   finsh_time           datetime comment '生成完成时间',
+   finish_time           datetime comment '生成完成时间',
    ds_code              varchar(100) not null comment '数据源编号',
    db_name              varchar(100) not null comment '数据库名',
    tables               varchar(200) not null comment '生成的表集合[多个,分隔]',

@@ -150,8 +150,9 @@ var create = {
 			if(!createPage) {
 				createPage = new Page('createPage', create.loadInfo, 'createPanel', 'createPage');
 				createPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th>编号</th>',
-				                         '<th>包路径</th>',
+				                         '<th width="80">编号</th>',
+				                         '<th width="120">包路径</th>',
+				                         '<th>表名</th>',
 				                         '<th width="110">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				createPage.endString = '</tbody></table>';
@@ -167,11 +168,18 @@ var create = {
 				success : function(json){
 					if(json.code === 0) {
 						function getResult(obj) {
+							var _finish = '';
+							if(obj.finishTime) {
+								_finish = '&nbsp; <a class="glyphicon text-success" href="javascript:create.download('+obj.id+')" title="点击下载源码">下载源码</a>';
+							}
+							
 							return ['<tr>',
 							    	'<td>',obj.id,'<br/>',
 							    	'<td>',obj.packagePath,'</td>',
+							    	'<td>',obj.tables,'</td>',
 							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:create.edit(',obj.id,')" title="修改"></a>',
 							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:create.del(',obj.id,')" title="删除"></a>',
+							    	_finish,
 							    	'</td>',
 								'</tr>'].join('');
 						}
@@ -208,6 +216,9 @@ var create = {
 					}
 				});
 			}
+		},
+		download: function(id) {
+			window.open(webroot + '/codeCreate/f-view/download?id=' + id);
 		}
 };
 $(function() {

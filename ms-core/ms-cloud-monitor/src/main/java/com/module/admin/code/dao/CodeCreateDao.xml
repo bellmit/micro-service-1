@@ -4,12 +4,12 @@
 <mapper namespace="com.module.admin.code.dao.CodeCreateDao">
 
 	<sql id="commCols">
-		id id,code code,package_path packagePath,status status,download download,finsh_time finshTime,ds_code dsCode,db_name dbName,tables tables,create_time createTime,user_id userId
+		id id,code code,package_path packagePath,status status,download download,finish_time finishTime,ds_code dsCode,db_name dbName,tables tables,create_time createTime,user_id userId
 	</sql>
 
 	<insert id="save" parameterType="codeCreate" useGeneratedKeys="true" keyProperty="id" flushCache="true">
-		 insert into code_create(code,package_path,status,download,finsh_time,ds_code,db_name,tables,create_time,user_id)
-		 values(#{code},#{packagePath},#{status},#{download},#{finshTime},#{dsCode},#{dbName},#{tables},now(),#{userId})
+		 insert into code_create(code,package_path,status,download,finish_time,ds_code,db_name,tables,create_time,user_id)
+		 values(#{code},#{packagePath},#{status},#{download},#{finishTime},#{dsCode},#{dbName},#{tables},now(),#{userId})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -27,7 +27,7 @@
 	<update id="updateFinish" flushCache="true">
 		update code_create
 		<set>
-			download=#{download},finsh_time=now()
+			download=#{download},finish_time=now()
 		</set>
 		<where>id=#{id}</where>
 	</update>

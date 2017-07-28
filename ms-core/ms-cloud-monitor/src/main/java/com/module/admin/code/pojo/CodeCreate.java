@@ -30,7 +30,7 @@ public class CodeCreate extends BaseEntity implements Serializable {
 	//下载地址
 	private String download;
 	//生成完成时间
-	private Date finshTime;
+	private Date finishTime;
 	//数据源编号
 	private String dsCode;
 	//数据库名或sid
@@ -77,11 +77,11 @@ public class CodeCreate extends BaseEntity implements Serializable {
 		this.download = download;
 	}
 	
-	public Date getFinshTime() {
-		return finshTime;
+	public Date getFinishTime() {
+		return finishTime;
 	}
-	public void setFinshTime(Date finshTime) {
-		this.finshTime = finshTime;
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
 	}
 	
 	public String getDsCode() {

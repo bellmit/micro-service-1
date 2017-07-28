@@ -1,5 +1,9 @@
 package com.module.admin.code.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +25,8 @@ import com.module.admin.code.utils.DbDsUtil;
 import com.module.admin.prj.pojo.PrjDs;
 import com.module.admin.prj.service.PrjDsService;
 import com.module.admin.sys.pojo.SysUser;
+import com.module.comm.enums.Env;
+import com.module.comm.utils.EnvUtil;
 import com.system.comm.model.KvEntity;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
@@ -136,5 +142,35 @@ public class CodeCreateController extends BaseController {
 			frame.setCode(ResponseCode.FAIL.getCode());
 		}
 		writerJson(response, frame);
+	}
+	
+	@RequestMapping(value = "/codeCreate/f-view/download")
+	public void download(HttpServletRequest request, HttpServletResponse response, Integer id) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+		CodeCreate cc = codeCreateService.get(id);
+		String url = cc.getDownload();
+		String downLoadPath = EnvUtil.get(Env.CODE_SOURCE_PATH) + url;
+		//String downLoadPath = ctxPath;
+
+		long fileLength = new File(downLoadPath).length();
+		int separator = url.lastIndexOf(File.separator);
+		if(separator == -1) {
+			separator = url.lastIndexOf("/");
+		}
+		response.setHeader("Content-disposition", "attachment; filename=" + url.substring(separator + 1));
+		response.setHeader("Content-Length", String.valueOf(fileLength));
+
+		bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+		bos = new BufferedOutputStream(response.getOutputStream());
+		byte[] buff = new byte[2048];
+		int bytesRead;
+		while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+			bos.write(buff, 0, bytesRead);
+		}
+		bis.close();
+		bos.close();
 	}
 }
