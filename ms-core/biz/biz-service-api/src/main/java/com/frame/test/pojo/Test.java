@@ -5,7 +5,8 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.system.comm.model.BaseEntity;
 import com.system.dao.annotation.ColumnPk;
 
@@ -16,8 +17,8 @@ import com.system.dao.annotation.ColumnPk;
  * @version V1.0.0
  */
 @SuppressWarnings("serial")
-@Alias("test")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@Alias("prodTest")
+@JsonInclude(Include.NON_NULL)
 public class Test extends BaseEntity implements Serializable {
 	//编号
 	@ColumnPk
