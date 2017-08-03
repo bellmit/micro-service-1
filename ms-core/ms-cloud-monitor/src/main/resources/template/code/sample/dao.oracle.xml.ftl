@@ -8,8 +8,8 @@
 	</sql>
 
 	<insert id="save" parameterType="${table.beanName}" flushCache="true">
-		 insert into ${table.name}(<#list table.columns as column><#if (column.fieldName != table.firstKColumn.fieldName)>${column.columnName}<#if column_has_next>,</#if></#if></#list>)
-		 values(<#list table.columns as column><#if (column.fieldName != table.firstKColumn.fieldName)><#if (column.fieldName == "isdel")>0<#elseif (column.fieldName == "addtime")>now()<#else>${r"#{"}${column.fieldName}${r"}"}</#if><#if column_has_next>,</#if></#if></#list>)
+		 insert into ${table.name}(<#list table.columns as column>${column.columnName}<#if column_has_next>,</#if></#list>)
+		 values(<#list table.columns as column><#if (column.fieldName == "isdel")>0<#elseif (column.fieldName == "addtime")>now()<#else>${r"#{"}${column.fieldName}${r"}"}</#if><#if column_has_next>,</#if></#list>)
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -50,7 +50,6 @@
 		select count(*) from ${table.name}
 		<where>
 			<if test="name!=null and name!=''">and name like concat(concat('%', ${r"#{name}"}), '%')</if>
-			and isdel=0
 		</where>
 	</select>
 </mapper>

@@ -29,10 +29,10 @@ public class SnowflakeIdWorker {
     private final long twepoch = 1420041600000L;
 
     /** 机器id所占的位数 */
-    private static final long workerIdBits = 20L;
+    private static final long workerIdBits = 13L;
 
     /** 数据标识id所占的位数 */
-    private static final long datacenterIdBits = 20L;
+    private static final long datacenterIdBits = 13L;
 
     /** 支持的最大机器id，结果是1048575 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
     private static final long maxWorkerId = -1L ^ (-1L << workerIdBits);
@@ -185,9 +185,9 @@ public class SnowflakeIdWorker {
 
     //==============================Test=============================================
     /*public static void main(String[] args) {
-        SnowflakeIdWorker.init(10, 20);
+        SnowflakeIdWorker worker = new SnowflakeIdWorker();
         for (int i = 0; i < 1000; i++) {
-            long id = idWorker.nextId();
+            long id = worker.nextId();
             System.out.println(Long.toBinaryString(id));
             System.out.println(id);
         }
