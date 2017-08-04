@@ -1,8 +1,7 @@
-package com.module.comm.utils;
+package com.ms.env;
 
 import org.springframework.core.env.Environment;
 
-import com.module.comm.enums.Env;
 import com.system.comm.utils.FrameSpringBeanUtil;
 
 public class EnvUtil {
