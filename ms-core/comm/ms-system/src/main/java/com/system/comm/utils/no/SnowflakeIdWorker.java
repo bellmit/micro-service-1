@@ -29,10 +29,10 @@ public class SnowflakeIdWorker {
     private final long twepoch = 1420041600000L;
 
     /** 机器id所占的位数 */
-    private static final long workerIdBits = 13L;
+    private static final long workerIdBits = 10L;
 
     /** 数据标识id所占的位数 */
-    private static final long datacenterIdBits = 13L;
+    private static final long datacenterIdBits = 10L;
 
     /** 支持的最大机器id，结果是1048575 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
     private static final long maxWorkerId = -1L ^ (-1L << workerIdBits);

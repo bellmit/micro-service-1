@@ -25,7 +25,7 @@ import com.system.comm.utils.no.SnowflakeIdWorker;
 public class FrameNoUtil {
 
 	private static SnowflakeIdWorker idWorker;
-	
+
 	/**
 	 * 获取没有-号的uuid<br/>
 	 * 例：2fb9b164d1694de08ff479893db3cd63
@@ -81,26 +81,49 @@ public class FrameNoUtil {
 	 * Twitter的分布式自增ID算法snowflake
 	 * @return
 	 */
-	public static Long sw() {
+	public synchronized static Long sw() {
 		if(idWorker == null) {
 			idWorker = new SnowflakeIdWorker();
 		}
 		long id = idWorker.nextId();
 		return id;
 	}
-	
-	public static void main(String[] args) {
-		int length = 60000;
-		Map<Long, Integer> data = new HashMap<Long, Integer>();
-		for (int i = 0; i < length; i++) {
-			Long no = FrameNoUtil.sw();
-			if(data.get(no) == null) {
-				data.put(no, 1);
-			} else {
-				data.put(no, data.get(no) + 1);
-				System.out.println(no);
+
+	public static void main(String[] args) throws InterruptedException {
+		final int length = 60000;
+		final Map<Long, Integer> data = new HashMap<Long, Integer>();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				for (int i = 0; i < length; i++) {
+					Long no = FrameNoUtil.sw();
+					if(data.get(no) == null) {
+						data.put(no, 1);
+					} else {
+						data.put(no, data.get(no) + 1);
+						System.out.println(no);
+					}
+				}
+				System.out.println("size = " + data.size());
 			}
-		}
-		System.out.println("size = " + data.size());
+		}).start();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				for (int i = 0; i < length; i++) {
+					Long no = FrameNoUtil.sw();
+					if(data.get(no) == null) {
+						data.put(no, 1);
+					} else {
+						data.put(no, data.get(no) + 1);
+						System.out.println(no);
+					}
+				}
+				System.out.println("size = " + data.size());
+			}
+		}).start();
+
 	}
 }
