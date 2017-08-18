@@ -23,7 +23,7 @@
 						<div class="col-sm-5 title">项目 / 项目管理 / <b>版本管理</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
-						  		<a href="${webroot}/prjInfo/f-view/manager.shtml" class="btn btn-default btn-sm">返回</a>
+						  		<a href="${webroot}/prjInfo/f-view/manager.shtml?name=${param.name}" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 							</div>
 						</div>

@@ -52,6 +52,7 @@ public class FrameMailUtil {
 	private String username;
 	private String password;
 	private Multipart mp;
+	private Boolean isSend;
 
 	/**
 	 * 构造函数
@@ -60,9 +61,21 @@ public class FrameMailUtil {
 	 * @param username	用户名
 	 * @param password	密码
 	 */
-	public FrameMailUtil(String smtp, String from, String username, String password) {
+	/*public FrameMailUtil(String smtp, String from, String username, String password) {
+		this(smtp, from, username, password, true);
+	}*/
+	/**
+	 * 构造函数
+	 * @param smtp		smtp
+	 * @param from		发送邮箱
+	 * @param username	用户名
+	 * @param password	密码
+	 * @param isSend	是否打开发送
+	 */
+	public FrameMailUtil(String smtp, String from, String username, String password, Boolean isSend) {
 		this.username = username;
 		this.password = password;
+		this.isSend = isSend;
 		props = System.getProperties();
 		props.put("mail.smtp.host", smtp);
 		props.put("mail.smtp.auth", "true");
@@ -166,6 +179,9 @@ public class FrameMailUtil {
 
 	//发送邮件模块
 	private boolean sendOut() {
+		if(isSend != null && !isSend.booleanValue()) {
+			return false;
+		}
 		try {
 			mimeMsg.setContent(mp);
 			mimeMsg.saveChanges();
@@ -191,6 +207,9 @@ public class FrameMailUtil {
 	 * @return
 	 */
 	public boolean send(String tos, String title, String content) {
+		if(isSend != null && !isSend.booleanValue()) {
+			return false;
+		}
 		if (!setSubject(title)) {
 			return false;
 		}
@@ -215,6 +234,9 @@ public class FrameMailUtil {
 	 * @return
 	 */
 	public boolean send(String tos, String copyto, String title, String content) {
+		if(isSend != null && !isSend.booleanValue()) {
+			return false;
+		}
 		if (!setSubject(title)) {
 			return false;
 		}

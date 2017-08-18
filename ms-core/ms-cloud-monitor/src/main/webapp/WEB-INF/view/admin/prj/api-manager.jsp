@@ -23,7 +23,7 @@
 						<div class="col-sm-5 title">项目 / <b>API</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
-						  		<a href="${webroot}/prjInfo/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm">返回</a>
+						  		<a href="${webroot}/prjInfo/f-view/manager.shtml?prjId=${param.prjId}&name=${param.name}" class="btn btn-default btn-sm">返回</a>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 							</div>
 						</div>

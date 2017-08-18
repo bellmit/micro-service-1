@@ -24,7 +24,7 @@ public class SendMailUtil {
 	public static void sendMail(String smtp, String from, String username, String password, String toMails, String title, String content) {
 		List<String> tos = FrameStringUtil.toArray(toMails, ",");
 		//初始化Email
-		FrameMailUtil mailUtil = new FrameMailUtil(smtp, from, username, password);
+		FrameMailUtil mailUtil = new FrameMailUtil(smtp, from, username, password, true);
 		for (String to : tos) {
 			if(FrameStringUtil.isEmpty(to)) {
 				continue;

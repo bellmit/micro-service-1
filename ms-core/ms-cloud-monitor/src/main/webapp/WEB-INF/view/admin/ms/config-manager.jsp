@@ -31,7 +31,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<span class="enter-panel">
-									<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="文件名称">
+									<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="文件名称" value="${param.name}">
 							  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
 						  		</span>
 							</div>
@@ -112,7 +112,7 @@ var info = {
 			});
 		},
 		values : function(id) {
-			location = webroot + '/msConfigValue/f-view/edit.shtml?configId='+(id?id:'');
+			location = webroot + '/msConfigValue/f-view/edit.shtml?configId='+(id?id:'') + '&name=' + $('#name').val();
 		},
 		del : function(id) {
 			if(confirm('您确定要删除该配置文件吗?')) {

@@ -32,7 +32,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<span class="enter-panel">
-									<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="项目名称">
+									<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="项目名称" value="${param.name}">
 							  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
 						  		</span>
 							</div>
@@ -98,9 +98,9 @@ var info = {
 							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
 									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
 									'<ul class="dropdown-menu" role="menu">',
-									'<li role="presentation"><a href="',webroot,'/prjDs/f-view/manager.shtml?prjId=',obj.prjId,'">数据源</a></li>',
+									'<li role="presentation"><a href="javascript:info.ds(',obj.prjId,')">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a></li>',
-									'<li role="presentation"><a href="',webroot,'/codePrj/f-view/manager.shtml?prjId=',obj.prjId,'">生成源码</a></li>',
+									'<li role="presentation"><a href="javascript:info.autoCode(',obj.prjId,')">生成源码</a></li>',
 									'</ul>',
 									'</span>',
 							    	//'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.process(',obj.prjId,')" title="项目流程">详细</a>',
@@ -148,7 +148,7 @@ var info = {
 		},
 		//版本管理
 		version : function(prjId) {
-			location = '${webroot}/prjVersion/f-view/manager.shtml?prjId=' + prjId;
+			location = '${webroot}/prjVersion/f-view/manager.shtml?prjId=' + prjId + '&name=' + $('#name').val();
 		},
 		//发布到客户端的管理
 		cli : function(prjId) {
@@ -156,11 +156,19 @@ var info = {
 		},
 		//查看项目的api信息
 		api : function(prjId) {
-			location = '${webroot}/prjApi/f-view/manager.shtml?prjId=' + prjId;
+			location = '${webroot}/prjApi/f-view/manager.shtml?prjId=' + prjId + '&name=' + $('#name').val();
 		},
 		//查看监控
 		monitor : function(prjId) {
-			location = '${webroot}/prjMonitor/f-view/manager.shtml?prjId=' + prjId;
+			location = '${webroot}/prjMonitor/f-view/manager.shtml?prjId=' + prjId + '&name=' + $('#name').val();
+		},
+		//数据源
+		ds : function(prjId) {
+			location = '${webroot}/prjDs/f-view/manager.shtml?prjId=' + prjId + '&name=' + $('#name').val();
+		},
+		//生成源码
+		autoCode : function(prjId) {
+			location = '${webroot}/codePrj/f-view/manager.shtml?prjId=' + prjId + '&name=' + $('#name').val();
 		}
 };
 $(function() {
