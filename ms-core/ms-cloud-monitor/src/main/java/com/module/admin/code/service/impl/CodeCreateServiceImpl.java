@@ -95,7 +95,7 @@ public class CodeCreateServiceImpl implements CodeCreateService {
 				} else {
 					curCreatePath += "webapp" + File.separator + table.getBeanName() + "-" + template.getPackageName() + suffix;
 				}
-				CodeFileUtil.process(getDescMap(table, codeCreate.getPackagePath(), template.getPackageName()), EnvUtil.get(Env.CODE_TEMPLATE_PATH) + template.getPath(), createPathDir + curCreatePath);
+				CodeFileUtil.process(getDescMap(table, codeCreate.getPackagePath()), EnvUtil.get(Env.CODE_TEMPLATE_PATH) + template.getPath(), createPathDir + curCreatePath);
 			}
 		}
 		dbDs.close();
@@ -121,7 +121,7 @@ public class CodeCreateServiceImpl implements CodeCreateService {
 	 * @param moduleName 
 	 * @return
 	 */
-	private Map<String, Object> getDescMap(Table table, String packagePath, String moduleName) {
+	private Map<String, Object> getDescMap(Table table, String packagePath) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("user", "autoCode");
 		map.put("dateTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -130,6 +130,7 @@ public class CodeCreateServiceImpl implements CodeCreateService {
 		map.put("className", table.getClassName());
 		map.put("packagePath", packagePath);
 		map.put("table", table);
+		String moduleName = packagePath.substring(packagePath.lastIndexOf('.') + 1);
 		map.put("moduleName", moduleName);
 		map.put("currentDate", FrameTimeUtil.getTime());
 		return map;

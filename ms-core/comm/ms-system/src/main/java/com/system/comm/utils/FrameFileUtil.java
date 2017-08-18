@@ -253,19 +253,19 @@ public class FrameFileUtil {
 	 * @throws IOException 
 	 */
 	private static byte[] readFileBytes(InputStream inputStream) throws IOException {
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
-		//创建一个Buffer字符串  
-		byte[] buffer = new byte[1024];  
-		//每次读取的字符串长度，如果为-1，代表全部读取完毕  
-		int len = 0;  
-		//使用一个输入流从buffer里把数据读取出来  
-		while( (len = inputStream.read(buffer)) != -1 ) {  
-			//用输出流往buffer里写入数据，中间参数代表从哪个位置开始读，len代表读取的长度  
-			outStream.write(buffer, 0, len);  
-		}  
-		//关闭输入流  
-		inputStream.close();  
-		//把outStream里的数据写入内存  
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		//创建一个Buffer字符串
+		byte[] buffer = new byte[1024];
+		//每次读取的字符串长度，如果为-1，代表全部读取完毕
+		int len = 0;
+		//使用一个输入流从buffer里把数据读取出来
+		while( (len = inputStream.read(buffer)) != -1 ) {
+			//用输出流往buffer里写入数据，中间参数代表从哪个位置开始读，len代表读取的长度
+			outStream.write(buffer, 0, len);
+		}
+		//关闭输入流
+		inputStream.close();
+		//把outStream里的数据写入内存
 		return outStream.toByteArray();
 	}
 
@@ -369,14 +369,99 @@ public class FrameFileUtil {
 		return result;
 	}
 
-	public static Boolean move(String srcPath, String newDir) {
-		File file = new File(srcPath);
-		createDir(newDir);
-		// Move file to new directory
-		boolean success = file.renameTo(new File(newDir, file.getName()));
-		return success;
-	}
+	/**
+	 *  复制单个文件
+	 *  @param  oldPath  String  原文件路径  如：c:/fqf.txt
+	 *  @param  newPath  String  复制后路径  如：f:/fqf.txt
+	 *  @return  boolean
+	 */
+	public static void copyFile(String oldPath, String newPath)  {
+		try {
+			//           int  bytesum  =  0;
+			int byteread = 0;
+			File oldfile = new File(oldPath);
+			if  (oldfile.exists()) {  //文件存在时
+				InputStream inStream = new FileInputStream(oldPath);  //读入原文件
+				FileOutputStream fs = new FileOutputStream(newPath);
+				byte[] buffer = new byte[1444];
+				//               int  length;
+				while( (byteread = inStream.read(buffer)) != -1)  {
+					//                   bytesum  +=  byteread;  //字节数  文件大小
+					//                   System.out.println(bytesum);
+					fs.write(buffer,  0,  byteread);
+				}  
+				inStream.close();  
+			}  
+		}  
+		catch (Exception e) {
+			LOGGER.error("复制单个文件操作出错", e);
+		}
+	}  
 
+	/**  
+	 *  复制整个文件夹内容  
+	 *  @param  oldPath  String  原文件路径  如：c:/fqf  
+	 *  @param  newPath  String  复制后路径  如：f:/fqf/ff  
+	 *  @return  boolean  
+	 */  
+	public static void copyFolder(String oldPath, String newPath)  {  
+
+		try {  
+			(new File(newPath)).mkdirs();  //如果文件夹不存在  则建立新文件夹  
+			File a = new File(oldPath);  
+			String[] file = a.list();  
+			File temp = null;  
+			for (int i = 0; i < file.length; i++)  {  
+				if(oldPath.endsWith(File.separator)){  
+					temp = new File(oldPath+file[i]);  
+				}
+				else{  
+					temp = new File(oldPath+File.separator+file[i]);  
+				}
+
+				if(temp.isFile()){
+					FileInputStream input = new FileInputStream(temp);  
+					FileOutputStream output = new FileOutputStream(newPath + "/" + 
+							(temp.getName()).toString());  
+					byte[] b = new byte[1024  *  5];  
+					int len;  
+					while ( (len = input.read(b)) != -1)  {  
+						output.write(b, 0, len);  
+					}
+					output.flush();
+					output.close();
+					input.close();
+				}
+				if(temp.isDirectory()){//如果是子文件夹  
+					copyFolder(oldPath+"/"+file[i],newPath+"/"+file[i]);  
+				}
+			}
+		}
+		catch  (Exception  e)  {  
+			LOGGER.error("复制整个文件夹内容操作出错", e);
+		}  
+	}  
+
+	/**  
+	 *  移动文件到指定目录  
+	 *  @param  oldPath  String  如：c:/fqf.txt  
+	 *  @param  newPath  String  如：d:/fqf.txt  
+	 */  
+	public static void moveFile(String oldPath, String newPath)  {  
+		copyFile(oldPath, newPath);  
+		deleteFile(oldPath);  
+
+	}  
+
+	/**  
+	 *  移动文件到指定目录  
+	 *  @param  oldPath  String  如：c:/fqf.txt  
+	 *  @param  newPath  String  如：d:/fqf.txt  
+	 */
+	public static void moveFolder(String oldPath, String newPath)  {  
+		copyFolder(oldPath, newPath);  
+		deleteDirectory(oldPath);  
+	}  
 
 	/**
 	 * 删除单个文件
@@ -468,5 +553,7 @@ public class FrameFileUtil {
 		Boolean res = move(srcPath, newPath);
 		System.out.println("文件移动结果: " + res);*/
 
+		/*moveFile("E:\\data\\mom\\gzb\\excel\\2017-08-14\\333.xlsx",
+				"E:\\data\\mom\\gzb\\excel\\2017-08-14\\1502690239744.xlsx");*/
 	}
 }

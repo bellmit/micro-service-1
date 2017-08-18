@@ -12,7 +12,7 @@ import com.system.dao.annotation.ColumnIgnore;
 import com.system.dao.annotation.ColumnPk;
 
 /**
- * ${tablename}实体
+ * ${tablename}
  * @author ${user}
  * @date ${dateTime}
  * @version ${version}
@@ -25,11 +25,12 @@ public class ${table.className} extends BaseEntity implements Serializable {
 	<#if (column.fieldName == table.firstKColumn.fieldName)>@ColumnPk(isAuto=true)</#if>//${column.comments}
 	private ${column.typeName} ${column.fieldName};
 </#list>
+
 	//================= Extended attribute
 	@ColumnIgnore
 	private String ext;
-<#list table.columns as column>
 	
+<#list table.columns as column>
 	public ${column.typeName} get${column.fieldName?cap_first}() {
 		return ${column.fieldName};
 	}
