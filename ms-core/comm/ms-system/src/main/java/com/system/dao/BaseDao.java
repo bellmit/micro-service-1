@@ -7,8 +7,6 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -39,9 +37,7 @@ import com.system.dao.utils.DbUtil;
  */
 @Component
 public class BaseDao {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(BaseDao.class);
-	
+	//private static final Logger LOGGER = LoggerFactory.getLogger(BaseDao.class);
 	private JdbcTemplate jdbcTemplate;
 
 	//采用该方法是为了兼容在其它项目中没有使用SpringJdbcTemplate的情况
@@ -195,9 +191,9 @@ public class BaseDao {
 		} catch (CannotGetJdbcConnectionException e) {
 			throw new RuntimeException(e.getLocalizedMessage(), e);
 		} catch (DataAccessException e) {
-			if(LOGGER.isInfoEnabled()) {
+			/*if(LOGGER.isInfoEnabled()) {
 				LOGGER.info("get方法没有获取到记录返回null");
-			}
+			}*/
 			return null;
 		}
 	}

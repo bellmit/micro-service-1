@@ -108,7 +108,10 @@ public class FrameNumberUtil {
 	 * @return
 	 */
 	public static String formatNumber(String value, Integer decimalNum) {
-		return formatNumberObject(value, decimalNum);
+		if(FrameStringUtil.isEmpty(value)) {
+			return null;
+		}
+		return formatNumberObject(Double.valueOf(value), decimalNum);
 	}
 	
 	/**
@@ -182,8 +185,8 @@ public class FrameNumberUtil {
 		return Math.log(value) / Math.log(base);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(isInteger("0012323"));
 		System.out.println(formatNumberRide(0.12345, 1, 2));
-	}
+	}*/
 }

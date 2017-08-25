@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.system.comm.utils.no.ShareCodeCore;
 import com.system.comm.utils.no.SnowflakeIdWorker;
 
 /**
@@ -88,9 +89,27 @@ public class FrameNoUtil {
 		long id = idWorker.nextId();
 		return id;
 	}
+	
+	/**
+	 * 根据ID获取分享码
+	 * @param id
+	 * @return
+	 */
+	public static String shareCode(long id) {
+		return ShareCodeCore.toSerialCode(id);
+	}
+	
+	/**
+	 * 更具code获取源id
+	 * @param code
+	 * @return
+	 */
+	public static long shareId(String code) {
+		return ShareCodeCore.codeToId(code);
+	}
 
 	public static void main(String[] args) throws InterruptedException {
-		final int length = 60000;
+		/*final int length = 60000;
 		final Map<Long, Integer> data = new HashMap<Long, Integer>();
 		new Thread(new Runnable() {
 
@@ -123,7 +142,7 @@ public class FrameNoUtil {
 				}
 				System.out.println("size = " + data.size());
 			}
-		}).start();
+		}).start();*/
 
 	}
 }
