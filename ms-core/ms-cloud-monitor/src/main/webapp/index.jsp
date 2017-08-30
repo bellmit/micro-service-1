@@ -24,6 +24,8 @@
 					<div class="panel-heading">登录</div>
 					<div class="panel-body">
 						<div class="enter-panel">
+							<c:choose>
+							<c:when test="${user==null}">
 							<div class="form-group">
 								<input type="text" class="form-control" id="loginUname" placeholder="登录名" value="">
 							</div>
@@ -34,6 +36,15 @@
 								<button type="button" id="loginBtn" class="btn btn-success enter-fn">登录</button>
 								<span class="text-danger" id="saveMsg"></span>
 							</div>
+							</c:when>
+							<c:otherwise>
+								<div class="form-group">检测到您已经登录，您可以进行如下操作</div>
+								<div class="form-group text-center">
+									<a href="${webroot}/sysUser/f-view/logout.shtml" class="btn btn-danger btn-sm">重新登录</a>
+									&nbsp; <a href="${webroot}/sysUser/f-view/main.shtml" class="btn btn-success btn-sm">个人中心</a>
+								</div>
+							</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
