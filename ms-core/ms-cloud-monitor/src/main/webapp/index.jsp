@@ -40,8 +40,8 @@
 							<c:otherwise>
 								<div class="form-group">检测到您已经登录，您可以进行如下操作</div>
 								<div class="form-group text-center">
-									<a href="${webroot}/sysUser/f-view/logout.shtml" class="btn btn-danger btn-sm">重新登录</a>
-									&nbsp; <a href="${webroot}/sysUser/f-view/main.shtml" class="btn btn-success btn-sm">个人中心</a>
+									<a href="${webroot}/sysUser/f-view/main.shtml" class="btn btn-success btn-sm">个人中心</a>
+									&nbsp; <a href="${webroot}/sysUser/f-view/logout.shtml" class="btn btn-danger btn-sm">重新登录</a>
 								</div>
 							</c:otherwise>
 							</c:choose>

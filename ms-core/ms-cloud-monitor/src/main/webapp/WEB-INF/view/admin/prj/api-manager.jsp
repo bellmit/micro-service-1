@@ -67,10 +67,10 @@ var info = {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
+				                         '<th width="250">方法名称</th>',
 				                         '<th>地址</th>',
-				                         '<th width="80">是否使用</th>',
-				                         '<th width="450">方法详情</th>',
-				                         '<th width="100">操作</th>',
+				                         '<th width="120">是否使用</th>',
+				                         '<th width="120">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
 			}
@@ -94,9 +94,10 @@ var info = {
 								_isUseCls = ' class="text-success"';
 							}
 							return ['<tr>',
-							    	'<td>',obj.path,'<br/>',obj.name,'</td>',
+							    	'<td>',obj.name,'</td>',
+							    	'<td>',obj.path,'</td>',
 							    	'<td><span',_isUseCls,'>',obj.isUseName,'</span></td>',
-							    	'<td style="word-wrap:break-word;word-break:break-all;">',obj.method,'</td>',
+							    	//'<td style="word-wrap:break-word;word-break:break-all;">',obj.method,'</td>',
 							    	'<td><a class="text-success" href="javascript:info.dtl(',obj.prjId,',\'',obj.path,'\')" title="查看详情">详情</a>',
 							    	//'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjmId,')" title="删除"></a>',
 							    	'</td>',
