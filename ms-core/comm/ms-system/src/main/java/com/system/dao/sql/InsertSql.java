@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import com.system.comm.utils.FrameSpringBeanUtil;
 import com.system.comm.utils.FrameStringUtil;
 import com.system.dao.BaseDao;
+import com.system.dao.annotation.ColumnDefault;
 import com.system.dao.annotation.ColumnIgnore;
 import com.system.dao.annotation.ColumnPk;
 
@@ -67,7 +68,14 @@ public class InsertSql extends Sql {
 					field.set(object, sequenceValue);
 					addValue(sequenceValue);
 				} else {
-					addValue(field.get(object));
+					Object value = field.get(object);
+					if(value == null) {
+						ColumnDefault columnDefault = field.getAnnotation(ColumnDefault.class);
+						if(columnDefault != null && FrameStringUtil.isNotEmpty(columnDefault.value())) {
+							value = columnDefault.value();
+						}
+					}
+					addValue(value);
 				}
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException("获取属性异常!", e);
@@ -90,7 +98,7 @@ public class InsertSql extends Sql {
 		sqlStr.setCharAt(sqlStr.length() - 1, ')');
 		return sqlStr.toString();
 	}
-	
+
 	public Integer getSequenceValue() {
 		return this.sequenceValue;
 	}

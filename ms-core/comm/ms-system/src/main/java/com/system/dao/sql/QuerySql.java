@@ -2,6 +2,7 @@ package com.system.dao.sql;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.system.comm.utils.FrameStringUtil;
 import com.system.dao.annotation.ColumnIgnore;
@@ -19,10 +20,14 @@ public class QuerySql extends Sql {
 
 	public QuerySql(Class<?> clazz) {
 		super(clazz, null);
+		conds = new ArrayList<String>();
+		values = new ArrayList<Object>();
 	}
 
 	public QuerySql(Class<?> clazz, String orderby) {
 		super(clazz, null, orderby);
+		conds = new ArrayList<String>();
+		values = new ArrayList<Object>();
 	}
 
 	/**
@@ -34,16 +39,12 @@ public class QuerySql extends Sql {
 		if(value == null || FrameStringUtil.isEmpty(value.toString())) {
 			return;
 		}
-		if(conds == null) {
-			conds = new ArrayList<String>();
-			values = new ArrayList<Object>();
-		}
 		conds.add(cond);
 		values.add(value);
 	}
 
 	/**
-	 * 添加模糊查询条件（在字符串前面和后面补全%）
+	 * 添加模糊查询条件[生成sql条件为：cond like concat(concat(value, ?), '%')]
 	 * @param cond
 	 * @param value
 	 */
@@ -57,7 +58,7 @@ public class QuerySql extends Sql {
 	}
 
 	/**
-	 * 添加模糊查询条件（在字符串后面补全%）
+	 * 添加模糊查询条件[生成sql条件为：cond like concat(value, '%')]
 	 * @param cond
 	 * @param value
 	 */
@@ -71,21 +72,42 @@ public class QuerySql extends Sql {
 	}
 
 	/**
-	 * 添加条件
+	 * 根据日期区间查询[生成sql条件为：cond>=beginTime and cond<=endTime]
+	 * @param cond
+	 * @param beginTime
+	 * @param endTime
+	 */
+	public void addCondDate(String cond, Date beginTime, Date endTime) {
+		if(beginTime == null || endTime == null) {
+			return;
+		}
+		if(beginTime != null) {
+			conds.add(cond + ">=?");
+			values.add(beginTime);
+		}
+		if(endTime != null) {
+			conds.add(cond + "<=?");
+			values.add(endTime);
+		}
+	}
+	
+	/**
+	 * 添加in的查询[生成sql为：cond in(value1,value2,...)]
 	 * @param cond
 	 * @param value
 	 */
-	public void addCond(String cond, Object value1, Object value2) {
-		if(value1 == null || FrameStringUtil.isEmpty(value1.toString()) || value2 == null || FrameStringUtil.isEmpty(value2.toString())) {
+	public void addCondIn(String cond, Object ...value) {
+		if(value == null || value.length == 0) {
 			return;
 		}
-		if(conds == null) {
-			conds = new ArrayList<String>();
-			values = new ArrayList<Object>();
+		StringBuffer condBuffer = new StringBuffer(cond);
+		condBuffer.append(" in (");
+		for (Object obj : value) {
+			condBuffer.append("?,");
+			values.add(obj);
 		}
-		conds.add(cond);
-		values.add(value1);
-		values.add(value2);
+		condBuffer.setCharAt(condBuffer.length() - 1, ')');
+		conds.add(condBuffer.toString());
 	}
 
 	/**
@@ -105,7 +127,7 @@ public class QuerySql extends Sql {
 			sql = getQueryAll();
 		}
 		StringBuffer sqlStr = new StringBuffer(sql);
-		if(conds != null) {
+		if(conds != null && conds.size() > 0) {
 			if(sql.toLowerCase().contains(" where ")) {
 				for (int i = 0; i < conds.size(); i ++) {
 					sqlStr.append(" AND ").append(conds.get(i));

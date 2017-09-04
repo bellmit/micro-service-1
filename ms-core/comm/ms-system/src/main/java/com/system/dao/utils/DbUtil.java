@@ -40,9 +40,9 @@ public class DbUtil {
 		} catch (SQLException e) {
 			LOGGER.error("获取数据库类型异常：" + e.getLocalizedMessage(), e);
 		}
-		if(LOGGER.isInfoEnabled()) {
+		/*if(LOGGER.isInfoEnabled()) {
 			LOGGER.info("数据库类型为：" + DbUtil.dbType);
-		}
+		}*/
 		return dbType.equals(DbUtil.dbType);
 	}
 }
