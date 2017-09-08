@@ -36,6 +36,6 @@ public class ${table.className}Dao extends BaseDao {
 	}
 	
 	public void delete(${table.firstKColumn.typeName} ${table.firstKColumn.fieldName}) {
-		super.delete(${table.firstKColumn.typeName}.class, ${table.firstKColumn.fieldName});
+		super.delete(${table.className}.class, ${table.firstKColumn.fieldName});
 	}
 }
