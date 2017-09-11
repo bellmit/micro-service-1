@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.system.comm.utils.FrameSpringBeanUtil;
+import com.system.comm.utils.FrameStringUtil;
 
 public class DbUtil {
 
@@ -32,17 +33,19 @@ public class DbUtil {
 	 * @return
 	 */
 	private static boolean isType(String dbType) {
-		JdbcTemplate jdbcTemplate = FrameSpringBeanUtil.getBean(JdbcTemplate.class);
-		try {
-			DatabaseMetaData md = jdbcTemplate.getDataSource().getConnection().getMetaData();  
-			DbUtil.dbType = md.getDatabaseProductName().toLowerCase();  
-			DbUtil.dbVersion = md.getDatabaseProductVersion();
-		} catch (SQLException e) {
-			LOGGER.error("获取数据库类型异常：" + e.getLocalizedMessage(), e);
+		if(FrameStringUtil.isEmpty(DbUtil.dbType)) {
+			JdbcTemplate jdbcTemplate = FrameSpringBeanUtil.getBean(JdbcTemplate.class);
+			try {
+				DatabaseMetaData md = jdbcTemplate.getDataSource().getConnection().getMetaData();
+				DbUtil.dbType = md.getDatabaseProductName().toLowerCase();
+				DbUtil.dbVersion = md.getDatabaseProductVersion();
+			} catch (SQLException e) {
+				LOGGER.error("获取数据库类型异常：" + e.getLocalizedMessage(), e);
+			}
+			if(LOGGER.isInfoEnabled()) {
+				LOGGER.info("数据库类型为：" + DbUtil.dbType);
+			}
 		}
-		/*if(LOGGER.isInfoEnabled()) {
-			LOGGER.info("数据库类型为：" + DbUtil.dbType);
-		}*/
 		return dbType.equals(DbUtil.dbType);
 	}
 }
