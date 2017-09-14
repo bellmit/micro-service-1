@@ -1,5 +1,7 @@
 package com.system.ds;
 
+import java.util.Map;
+
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -9,8 +11,19 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
  
+	private Map<Object, Object> targetDataSources;
     @Override
     protected Object determineCurrentLookupKey() {
-        return DbContextHolder.getDbType();
+        return DbContextHolder.getDsName();
     }
+
+	@Override
+	public void setTargetDataSources(Map<Object, Object> targetDataSources) {
+		this.targetDataSources = targetDataSources;
+		super.setTargetDataSources(targetDataSources);
+	}
+
+	public Map<Object, Object> getTargetDataSources() {
+		return targetDataSources;
+	}
 }

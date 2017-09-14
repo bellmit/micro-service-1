@@ -14,7 +14,7 @@ public class DataSourceAspect {
     
     @Before("execution(* com.module.admin.*.dao.*.*(..)) || execution(* com.module.admin.*.service.*.*(..))")
     public void frame() {
-    	DbContextHolder.setDbType("dataSource1");
+    	DbContextHolder.setDsName("dataSource1");
     }
 /*
     @Before("execution(* com.frame.user.dao.*.*(..)) || execution(* com.frame.user.service.*.*(..))")

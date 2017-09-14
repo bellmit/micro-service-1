@@ -24,17 +24,17 @@ public class DataSourceAspect {
     
     @Before("execution(* com.frame.sys.dao.*.*(..)) || execution(* com.frame.sys.service.*.*(..))")
     public void frame() {
-    	DbContextHolder.setDbType("dataSource1");
+    	DbContextHolder.setDsName("dataSource1");
     }
 
     @Before("execution(* com.frame.user.dao.*.*(..)) || execution(* com.frame.user.service.*.*(..))")
     public void user() {
-    	DbContextHolder.setDbType("dataSource2");
+    	DbContextHolder.setDsName("dataSource2");
     }
 
     @Before("execution(* com.frame.test.dao.*.*(..)) || execution(* com.frame.test.service.*.*(..))")
     public void test() {
-    	DbContextHolder.setDbType("dataSource2");
+    	DbContextHolder.setDsName("dataSource2");
     }
     
 //    @Around("execution(* com.xxx.firstboot.dao.*.*(..))")
