@@ -45,12 +45,12 @@
 		</dependency>
 		
 		
-		<!-- oracle -->
+		<!-- oracle
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc5</artifactId>
 			<version>${oracle.ojdbc5.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

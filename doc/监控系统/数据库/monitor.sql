@@ -235,7 +235,7 @@ drop table if exists prj_api;
 create table prj_api
 (
    prj_id               int not null comment '项目编号',
-   path                 varchar(255) not null comment '路径',
+   path                 varchar(150) not null comment '路径',
    name                 varchar(200) comment '名称',
    method               varchar(500) not null comment '方法详情',
    params               text comment '参数',
