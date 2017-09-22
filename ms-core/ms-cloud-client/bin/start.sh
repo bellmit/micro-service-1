@@ -25,7 +25,7 @@ JAVA_OPTS="-Dproject.dir=$SERVICE_HOME"
 JAVA_MEM_OPTS="-server -Xmx512m -Xms512m -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
 
 # 整合JAVA启动参数
-JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME --client.id=C_192_168_37_128"
+JAVA_EXEC="$JAVA_OPTS $JAVA_MEM_OPTS -jar $SERVICE_HOME/$SERVICE_NAME --client.id=C_192_168_37_128 --version.dir=/home/www/client"
 
 #建立日志目录
 mkdir -p $LOGS_DIR

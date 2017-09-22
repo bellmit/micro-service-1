@@ -20,11 +20,13 @@
 					<option value="50">每次加载50行</option>
 					<option value="100">每次加载100行</option>
 					<option value="150">每次加载150行</option>
+					<option value="300">每次加载300行</option>
+					<option value="600">每次加载600行</option>
 				</select>
 				<select id="refreshInterval" onchange="info.refreshChange()" style="display: inline-block;width: auto;" class="form-control">
 					<option value="">自动加载:关闭</option>
-					<option value="2">2s加载一次</option>
-					<option value="5" selected="selected">5s加载一次</option>
+					<option value="2" selected="selected">2s加载一次</option>
+					<option value="5">5s加载一次</option>
 					<option value="10">10s加载一次</option>
 				</select>
 			</div>
