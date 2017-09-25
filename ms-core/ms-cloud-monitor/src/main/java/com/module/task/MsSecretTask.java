@@ -23,8 +23,12 @@ import com.system.comm.utils.FrameSpringBeanUtil;
 public class MsSecretTask {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MsSecretTask.class);
-
-	public void run() {
+	
+	/**
+	 * @param initialDelay	初始执行延迟时间（单位:秒）
+	 * @param period		执行间隔（单位:秒）
+	 */
+	public MsSecretTask run(int initialDelay, int period) {
 		LOGGER.info("========================= 初始化更新Secret的任务 - 成功 ===========================");
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(20);
 		final MsSecretService secretService = FrameSpringBeanUtil.getBean(MsSecretService.class);
@@ -39,7 +43,8 @@ public class MsSecretTask {
 			}
 		};
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
-		service.scheduleAtFixedRate(runnable, 10, 60, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(runnable, initialDelay, period, TimeUnit.SECONDS);
+		return this;
 	}
 
 }

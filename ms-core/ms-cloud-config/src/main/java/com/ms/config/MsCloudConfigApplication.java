@@ -32,7 +32,7 @@ public class MsCloudConfigApplication extends WebMvcConfigurerAdapter {
 		threadPoolTaskExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				new UpdateConfigTask().run();
+				new UpdateConfigTask().run(40, 45);
 			}
 		});
 	}

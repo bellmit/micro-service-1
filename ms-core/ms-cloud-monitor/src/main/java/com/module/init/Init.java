@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import com.module.comm.constants.ConfigCons;
 import com.module.comm.constants.DictCons;
-import com.module.task.TaskManager;
-import com.system.comm.utils.FrameSpringBeanUtil;
 import com.system.comm.utils.FrameTimeUtil;
 
 /**
@@ -49,10 +47,6 @@ public class Init extends HttpServlet {
 		
 		//初始化数据
 		DictCons.init(config.getServletContext());
-		
-		//初始化任务
-		TaskManager taskManager = FrameSpringBeanUtil.getBean(TaskManager.class);
-		taskManager.init();
 		
 		LOGGER.info("初始化资源花费" + (System.currentTimeMillis() - startTime) + "毫秒!");
 	}

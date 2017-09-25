@@ -29,7 +29,7 @@ public class UpdateConfigTask {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateConfigTask.class);
 
-	public void run() {
+	public void run(int initialDelay, int period) {
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(20);
 		//线程，每隔5秒调用一次
 		Runnable runnable = new Runnable() {
@@ -83,7 +83,7 @@ public class UpdateConfigTask {
 			}
 		};
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
-		service.scheduleAtFixedRate(runnable, 40, 45, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(runnable, initialDelay, period, TimeUnit.SECONDS);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.DispatcherType;
 
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -38,13 +39,35 @@ public class BizServiceAdminApplication extends SpringBootServletInitializer {
 	
 
 	@Bean
-    public FilterRegistrationBean basicFilterRegistrationBean() {
+    public FilterRegistrationBean xssFilterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new XssFilter());
         List<String> urlPatterns = new ArrayList<String>();
         urlPatterns.add("/*");
         registrationBean.setUrlPatterns(urlPatterns);
         registrationBean.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD);
+        return registrationBean;
+    }
+	
+	/**
+	 * 处理静态资源
+	 * @return
+	 */
+	@Bean
+    public FilterRegistrationBean expiresFilterRegistrationBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        ExpiresFilter expiresFilter = new ExpiresFilter();
+        registrationBean.setFilter(expiresFilter);
+        int time = 6 * 60;
+        registrationBean.addInitParameter("ExpiresByType image", "access plus " + time + " minutes");
+        registrationBean.addInitParameter("ExpiresByType text/css", "access plus " + time + " minutes");
+        registrationBean.addInitParameter("ExpiresByType text/javascript", "access plus " + time + " minutes");
+        registrationBean.addInitParameter("ExpiresByType application/javascript", "access plus " + time + " minutes");
+        List<String> urlPatterns = new ArrayList<String>();
+        urlPatterns.add("/*");
+        registrationBean.setOrder(0);
+        registrationBean.setUrlPatterns(urlPatterns);
+        registrationBean.setDispatcherTypes(DispatcherType.REQUEST);
         return registrationBean;
     }
 }
