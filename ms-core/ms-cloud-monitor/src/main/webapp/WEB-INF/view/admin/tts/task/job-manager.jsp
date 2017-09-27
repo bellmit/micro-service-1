@@ -69,6 +69,7 @@ var info = {
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
 				                         '<th>编号</th>',
 				                         '<th>任务名称</th>',
+				                         '<th>调度方式</th>',
 				                         '<th width="130">服务编号</th>',
 				                         '<th width="80">状态</th>',
 				                         '<th width="230">操作</th>',
@@ -102,6 +103,7 @@ var info = {
 							return ['<tr>',
 							    	'<td>',obj.id,'</td>',
 							    	'<td>',obj.name,'</td>',
+							    	'<td>',obj.calltypeName,'</td>',
 							    	'<td>',obj.servid,'</td>',
 							    	'<td>',_statusname,'</td>',
 							    	'<td>',_operate.join(''),'</td>',
@@ -158,7 +160,7 @@ var info = {
 				url: webroot + '/ttsTaskJob/f-view/edit.shtml?projectid=${param.projectid}&id='+(id?id:''),
 				type: 'iframe',
 				width: 380,
-				height: 420
+				height: 465
 			});
 		},
 		del : function(id) {

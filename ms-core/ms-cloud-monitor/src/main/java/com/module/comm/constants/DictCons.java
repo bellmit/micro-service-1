@@ -16,6 +16,7 @@ import com.module.admin.prj.enums.PrjInfoStatus;
 import com.module.admin.prj.enums.PrjMonitorMonitorStatus;
 import com.module.admin.prj.enums.PrjMonitorType;
 import com.module.admin.sys.enums.SysUserStatus;
+import com.module.admin.tts.enums.JobCalltype;
 import com.module.admin.tts.enums.JobLogStatus;
 import com.module.admin.tts.enums.JobStatus;
 import com.module.admin.tts.enums.ProjectSign;
@@ -51,6 +52,7 @@ public class DictCons {
 		
 		DictCons.addValue(ProjectSign.KEY, 	ProjectSign.getList(), servletContext);
 		DictCons.addValue(JobStatus.KEY			, JobStatus.getList(), servletContext);
+		DictCons.addValue(JobCalltype.KEY		, JobCalltype.getList(), servletContext);
 		DictCons.addValue(JobLogStatus.KEY		, JobLogStatus.getList(), servletContext);
 		
 		DictCons.addValue(PrjDsType.KEY		, PrjDsType.getList(), servletContext);

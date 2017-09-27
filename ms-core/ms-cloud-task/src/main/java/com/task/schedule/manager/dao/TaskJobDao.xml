@@ -4,8 +4,8 @@
 <mapper namespace="com.task.schedule.manager.dao.TaskJobDao">
 
 	<insert id="save" parameterType="taskJob" useGeneratedKeys="true" keyProperty="id" flushCache="true">
-		 insert into task_job(projectid,name,remark,link,cron,isfailmail,addtime,adduser,status,statusmsg,servid,updatetime)
-		 values(#{projectid},#{name},#{remark},#{link},#{cron},#{isfailmail},now(),#{adduser},#{status},#{statusmsg},#{servid},now())
+		 insert into task_job(projectid,name,remark,link,cron,isfailmail,addtime,adduser,status,statusmsg,servid,updatetime,calltype)
+		 values(#{projectid},#{name},#{remark},#{link},#{cron},#{isfailmail},now(),#{adduser},#{status},#{statusmsg},#{servid},now(),#{calltype})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -21,8 +21,9 @@
 			,link=#{link}
 			,cron=#{cron}
 			,isfailmail=#{isfailmail}
-			,status=#{status},
-			servid=#{servid}
+			,status=#{status}
+			,servid=#{servid}
+			,calltype=#{calltype}
 		</set>
 		<where>id=#{id}</where>
 	</update>

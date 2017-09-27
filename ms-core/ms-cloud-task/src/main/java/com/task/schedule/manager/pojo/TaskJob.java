@@ -41,17 +41,20 @@ public class TaskJob extends BaseEntity implements Serializable {
 	private Integer status;
 	//状态消息
 	private String statusmsg;
-	
 	//服务编号
 	private String servid;
 	//更新时间
 	private Date updatetime;
+	//调用方式[10http或https/20微服务]
+	private Integer calltype;
 	
 	//====================== 扩展属性
 	//状态名称
 	private String statusname;
 	//失败是否发邮件名称
 	private String isfailmailname;
+	//调用方式名称
+	private String calltypeName;
 	
 	public Integer getId() {
 		return id;
@@ -64,6 +67,18 @@ public class TaskJob extends BaseEntity implements Serializable {
 	}
 	public void setProjectid(Integer projectid) {
 		this.projectid = projectid;
+	}
+	public Integer getCalltype() {
+		return calltype;
+	}
+	public void setCalltype(Integer calltype) {
+		this.calltype = calltype;
+	}
+	public String getCalltypeName() {
+		return calltypeName;
+	}
+	public void setCalltypeName(String calltypeName) {
+		this.calltypeName = calltypeName;
 	}
 	public String getName() {
 		return name;

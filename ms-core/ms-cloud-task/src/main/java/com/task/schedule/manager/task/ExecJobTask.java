@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 
+import com.system.comm.enums.Boolean;
 import com.system.comm.utils.FrameHttpUtil;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameMapUtil;
@@ -14,11 +17,11 @@ import com.system.comm.utils.FrameStringUtil;
 import com.system.comm.utils.FrameTimeUtil;
 import com.system.threadpool.FrameThreadAction;
 import com.task.schedule.comm.enums.Config;
+import com.task.schedule.comm.enums.JobCalltype;
 import com.task.schedule.comm.enums.JobLogStatus;
 import com.task.schedule.comm.utils.RuleVerifyUtil;
 import com.task.schedule.comm.utils.SendMailUtil;
 import com.task.schedule.comm.utils.SignUtil;
-import com.system.comm.enums.Boolean;
 import com.task.schedule.manager.pojo.TaskJob;
 import com.task.schedule.manager.pojo.TaskJobLog;
 import com.task.schedule.manager.pojo.TaskProject;
@@ -57,7 +60,25 @@ public class ExecJobTask extends FrameThreadAction {
 			/*if(postParams.length() > 0) {
 				postParams.setCharAt(postParams.length() - 1, ' ');
 			}*/
-			String content = FrameHttpUtil.post(link, params);
+			String content = null;
+			//调用方式
+			if(JobCalltype.MS.getCode() == taskJob.getCalltype().intValue()) {
+				//微服务
+				try {
+					String serviceId = taskJob.getLink().substring(0, taskJob.getLink().indexOf(":"));
+					String url = taskJob.getLink().substring(taskJob.getLink().indexOf(":") + 1);
+					
+					LoadBalancerClient loadBalancer = FrameSpringBeanUtil.getBean(LoadBalancerClient.class);
+					ServiceInstance instance = loadBalancer.choose(serviceId);
+					String baseUri = instance.getUri().toString();
+					link = baseUri + url;
+				} catch (RuntimeException e) {
+					LOGGER.error("微服务未启动或地址有误");
+				}
+			}
+			//http或https的形式
+			content = FrameHttpUtil.post(link, params);
+			
 			if(LOGGER.isInfoEnabled()) {
 				LOGGER.info("\n" + time + "-调用任务 ID【" + taskJob.getId() + "】名称【" + taskJob.getName() + "】\n请求地址: " + link);
 			}

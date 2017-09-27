@@ -48,6 +48,7 @@ CREATE TABLE `task_job` (
   `statusmsg` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '状态消息',
   `servid` varchar(36) COLLATE utf8_bin DEFAULT NULL COMMENT '服务编号',
   `updatetime` datetime NOT NULL COMMENT '跟新时间',
+  `calltype` int(11) NOT NULL COMMENT '调用方式[10http或https/20微服务]',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

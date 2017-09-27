@@ -18,8 +18,11 @@
   		<div class="form-group">
 			<input type="text" class="form-control" id="remark" placeholder="描叙" value="${taskJob.remark}">
 		</div>
+		<div class="form-group">
+			<my:select id="calltype" headerKey="" headerValue="请选择调用方式" dictcode="job_calltype" value="${taskJob.calltype}" cssCls="form-control" />
+		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="link" placeholder="调用链接" value="${taskJob.link}">
+			<input type="text" class="form-control" id="link" placeholder="调用链接(微服务格式:serviceId:地址)" value="${taskJob.link}">
 		</div>
   		<div class="form-group">
 			<input type="text" class="form-control" id="cron" placeholder="任务规则" value="${taskJob.cron}">
@@ -58,6 +61,12 @@
 				_name.focus();
 				return;
 			}
+			var _calltype = $('#calltype');
+			if(JUtil.isEmpty(_calltype.val())) {
+				_saveMsg.append('请选择调用方式');
+				_calltype.focus();
+				return;
+			}
 			var _link = $('#link');
 			if(JUtil.isEmpty(_link.val())) {
 				_saveMsg.append('请输入调用链接');
@@ -86,6 +95,7 @@
 					projectid: $('#projectid').val(),
 					name: _name.val(),
 					remark: $('#remark').val(),
+					calltype: _calltype.val(),
 					link: _link.val(),
 					cron: _cron.val(),
 					status: _status,

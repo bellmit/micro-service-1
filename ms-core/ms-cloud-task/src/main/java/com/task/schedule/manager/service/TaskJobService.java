@@ -12,6 +12,7 @@ import com.system.comm.utils.FrameTimeUtil;
 import com.system.threadpool.FrameThreadPool;
 import com.system.threadpool.FrameThreadPoolUtil;
 import com.task.schedule.comm.enums.Config;
+import com.task.schedule.comm.enums.JobCalltype;
 import com.task.schedule.comm.enums.JobStatus;
 import com.task.schedule.comm.model.MyPage;
 import com.task.schedule.core.exec.JobService;
@@ -122,6 +123,7 @@ public class TaskJobService {
 			for (TaskJob job : rows) {
 				job.setStatusname(JobStatus.getText(job.getStatus()));
 				job.setIsfailmailname(Boolean.getText(job.getIsfailmail()));
+				job.setCalltypeName(JobCalltype.getText(job.getCalltype()));
 			}
 		}
 		MyPage<TaskJob> page = new MyPage<TaskJob>(taskJob.getPage(), taskJob.getSize(), total, rows);

@@ -131,6 +131,7 @@ var info = {
 								'</tr>'].join('');
 						}
 						infoPage.operate(json.body, { resultFn:getResult, dataNull:'没有记录噢' });
+						JUtil.sys.initOptMore();
 					}
 					else alert(JUtil.msg.ajaxErr);
 				}
