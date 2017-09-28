@@ -35,15 +35,15 @@
 			</div>
 		</div>
 		<div class="form-group" id="pathUrlPanel">
-			<c:choose>
-			<c:when test="${prjVersion == null}"><span class="text-info">请上传项目</span></c:when>
-			<c:otherwise>
-				<label for="rbVersion" class="col-sm-4"></label>
-				<div class="col-sm-8">
+			<label for="download" class="col-sm-4"></label>
+			<div class="col-sm-8">
+				<c:choose>
+				<c:when test="${prjVersion == null}"><span class="text-info">请上传项目</span></c:when>
+				<c:otherwise>
 					<a href="${webroot}/sysFile/f-view/download.shtml?url=${prjVersion.pathUrl}" target="_blank">下载项目</a>
-				</div>
-			</c:otherwise>
-			</c:choose>
+				</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		<hr/>
   		<div class="form-group text-right">
@@ -68,7 +68,9 @@
 					},
 					success : function(data) {
 						$('#pathUrl').val(data.body.url);
-						$('#pathUrlPanel').empty().append(['<a href="',webroot,'/sysFile/f-view/download.shtml?url=',data.body.url,'" target="_blank">下载项目</a>'].join(''));
+						$('#pathUrlPanel').empty().append(['<label for="download" class="col-sm-4"></label>',
+						                   					'<div class="col-sm-8"><a href="',webroot,'/sysFile/f-view/download.shtml?url=',data.body.url,'" target="_blank">下载项目</a>',
+						                   					'</div>'].join(''));
 					}
 				});
 			}
