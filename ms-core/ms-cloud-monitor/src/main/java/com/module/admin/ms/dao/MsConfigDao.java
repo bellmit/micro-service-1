@@ -1,7 +1,9 @@
 package com.module.admin.ms.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.module.admin.ms.pojo.MsConfig;
 
 /**
@@ -27,4 +29,6 @@ public interface MsConfigDao {
 	public abstract List<MsConfig> findUse();
 
 	public abstract List<MsConfig> findAll();
+
+	public abstract void updatePrjIdByName(@Param("name")String name, @Param("prjId")Integer prjId);
 }

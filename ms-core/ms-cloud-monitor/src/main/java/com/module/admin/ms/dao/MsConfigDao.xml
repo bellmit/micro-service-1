@@ -25,6 +25,13 @@
 		</set>
 		<where>config_id=#{configId}</where>
 	</update>
+	<update id="updatePrjIdByName" flushCache="true">
+		update ms_config
+		<set>
+			prj_id=#{prjId}
+		</set>
+		<where>name=#{name} and prj_id=0</where>
+	</update>
 	
 	<select id="get" resultType="msConfig">
 		select <include refid="commCols"/> from ms_config

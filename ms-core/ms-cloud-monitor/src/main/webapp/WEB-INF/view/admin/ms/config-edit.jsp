@@ -12,8 +12,8 @@
 	<div class="enter-panel ep-xs">
 		<input type="hidden" id="configId" value="${msConfig.configId}">
 		<div class="form-group">
-			<label for="prjId" class="col-sm-4">项目 <span class="text-danger">*</span></label>
-			<div class="col-sm-8"><my:select id="prjId" headerKey="" headerValue="请选择项目" items="${prjInfos}" value="${msConfig.prjId}" cssCls="form-control" /></div>
+			<label for="prjId" class="col-sm-4">项目</label>
+			<div class="col-sm-8"><my:select id="prjId" headerKey="0" headerValue="请选择项目" items="${prjInfos}" value="${msConfig.prjId}" cssCls="form-control" /></div>
 		</div>
   		<div class="form-group">
 			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
@@ -43,11 +43,11 @@
 			var _saveMsg = $('#saveMsg').empty();
 
 			var _prjId = $('#prjId');
-			if(JUtil.isEmpty(_prjId.val())) {
+			/* if(JUtil.isEmpty(_prjId.val())) {
 				_saveMsg.append('请选择项目');
 				_prjId.focus();
 				return;
-			}
+			} */
 			var _name = $('#name');
 			if(JUtil.isEmpty(_name.val())) {
 				_saveMsg.append('请输入文件名称');

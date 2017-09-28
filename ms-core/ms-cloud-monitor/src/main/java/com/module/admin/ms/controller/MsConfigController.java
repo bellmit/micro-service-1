@@ -48,9 +48,14 @@ public class MsConfigController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/msConfig/f-view/manager")
-	public String manger(HttpServletRequest request, ModelMap modelMap) {
+	public String manger(HttpServletRequest request, ModelMap modelMap,
+			Integer prjId) {
 		List<KvEntity> prjInfos = prjInfoService.findKvAll();
 		modelMap.put("prjInfos", prjInfos);
+		if(prjId != null) {
+			//关联项目和配置文件
+			msConfigService.relationPrjId(prjId);
+		}
 		return "admin/ms/config-manager";
 	}
 

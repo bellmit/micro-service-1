@@ -57,4 +57,10 @@ public interface MsConfigService {
 	 * @param configId
 	 */
 	public void refreshCfg(Integer configId);
+
+	/**
+	 * 自动关联没有指定项目的配置文件
+	 * @param prjId
+	 */
+	public void relationPrjId(Integer prjId);
 }

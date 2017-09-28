@@ -16,6 +16,7 @@ import com.module.admin.ms.dao.MsConfigDao;
 import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
+import com.module.admin.prj.pojo.PrjInfo;
 import com.module.admin.prj.service.PrjInfoService;
 import com.module.comm.constants.ConfigCons;
 import com.system.auth.AuthUtil;
@@ -137,6 +138,14 @@ public class MsConfigServiceImpl implements MsConfigService {
 			return frame;
 		} catch (IOException e) {
 			return new ResponseFrame(ResponseCode.SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public void relationPrjId(Integer prjId) {
+		PrjInfo prjInfo = prjInfoService.get(prjId);
+		if(prjInfo != null) {
+			msConfigDao.updatePrjIdByName(prjInfo.getName() + ".properties", prjInfo.getPrjId());
 		}
 	}
 }
