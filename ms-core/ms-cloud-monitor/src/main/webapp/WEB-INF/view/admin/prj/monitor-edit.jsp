@@ -8,45 +8,54 @@
 <title>编辑项目监控</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-sm">
 		<input type="hidden" id="prjmId" value="${prjMonitor.prjmId}">
 		<div class="form-group">
-			<my:select id="prjId" headerKey="" headerValue="请选择项目" items="${prjInfos}" value="${prjMonitor.prjId}" cssCls="form-control" />
+			<label for="prjId" class="col-sm-4">项目 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="prjId" headerKey="" headerValue="请选择项目" items="${prjInfos}" value="${prjMonitor.prjId}" cssCls="form-control" /></div>
 		</div>
 		<div class="form-group">
-			<my:select id="type" headerKey="" headerValue="请选择监控类型" dictcode="prj_monitor_type" value="${prjMonitor.type}" cssCls="form-control" />
+			<label for="type" class="col-sm-4">监控类型 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="type" headerKey="" headerValue="请选择监控类型" dictcode="prj_monitor_type" value="${prjMonitor.type}" cssCls="form-control" /></div>
 		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="服务信息(备注)" value="${prjMonitor.remark}">
+		<div class="form-group">
+			<label for="remark" class="col-sm-4">服务信息</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="服务信息(备注)" value="${prjMonitor.remark}"></div>
 		</div>
-		<div class="form-group">是否检测：
-			<my:radio id="monitorIs" name="monitorIs" dictcode="boolean" defvalue="1" value="${prjMonitor.monitorIs}" exp="onclick=\"info.monitorIs()\"" />
+		<div class="form-group">
+			<label for="monitorIs" class="col-sm-4">是否检测 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="monitorIs" name="monitorIs" dictcode="boolean" defvalue="1" value="${prjMonitor.monitorIs}" exp="onclick=\"info.monitorIs()\"" /></div>
 		</div>
 		<div id="monitorPanel">
 			<hr/>
 	  		<div class="form-group" style="display: none;">
-				<input type="text" class="form-control" id="monitorSuccStr" placeholder="检测成功的标识符" value="<c:out value="${prjMonitor.monitorSuccStr}"></c:out>">
+				<label for="monitorSuccStr" class="col-sm-4">成功标识</label>
+				<div class="col-sm-8"><input type="text" class="form-control" id="monitorSuccStr" placeholder="检测成功的标识符" value="<c:out value="${prjMonitor.monitorSuccStr}"></c:out>"></div>
 			</div>
 	  		<div class="form-group">
-				<input type="text" class="form-control" id="monitorUrl" placeholder="检测地址" value="${prjMonitor.monitorUrl}">
+				<label for="monitorUrl" class="col-sm-4">检测地址</label>
+				<div class="col-sm-8"><input type="text" class="form-control" id="monitorUrl" placeholder="检测地址" value="${prjMonitor.monitorUrl}"></div>
 			</div>
 	  		<div class="form-group">
-				<input type="text" class="form-control" id="monitorFailNumRemind" placeholder="检测失败达到该次发送提醒" value="${prjMonitor.monitorFailNumRemind}">
+				<label for="monitorFailNumRemind" class="col-sm-4">失败次数</label>
+				<div class="col-sm-8"><input type="text" class="form-control" id="monitorFailNumRemind" placeholder="检测失败达到该次发送提醒" value="${prjMonitor.monitorFailNumRemind}"></div>
 			</div>
 	  		<div class="form-group">
-				<input type="text" class="form-control" id="monitorFailSendInterval" placeholder="检测失败发送信息间隔(单位：分钟)" value="${prjMonitor.monitorFailSendInterval}">
+				<label for="monitorFailSendInterval" class="col-sm-4">失败间隔</label>
+				<div class="col-sm-8"><input type="text" class="form-control" id="monitorFailSendInterval" placeholder="检测失败发送信息间隔(单位：分钟)" value="${prjMonitor.monitorFailSendInterval}"></div>
 			</div>
 	  		<div class="form-group">
-				<input type="text" class="form-control" id="monitorFailEmail" placeholder="检测失败接收邮箱(多个用,分隔)" value="${prjMonitor.monitorFailEmail}">
+				<label for="monitorFailEmail" class="col-sm-4">通知邮箱</label>
+				<div class="col-sm-8"><input type="text" class="form-control" id="monitorFailEmail" placeholder="检测失败接收邮箱(多个用,分隔)" value="${prjMonitor.monitorFailEmail}"></div>
 			</div>
 		</div>
 		<hr/>
-  		<div class="form-group">
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -141,7 +150,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

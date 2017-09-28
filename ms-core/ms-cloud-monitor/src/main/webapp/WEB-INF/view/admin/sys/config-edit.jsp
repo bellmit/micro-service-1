@@ -8,25 +8,30 @@
 <title>${projectName}-编辑参数</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-xs">
 		<div class="form-group">
-			<input type="text" class="form-control" id="code" readonly="readonly" value="${sysConfig.code}">
+			<label for="code" class="col-sm-4">code <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="code" readonly="readonly" value="${sysConfig.code}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="name" readonly="readonly" value="${sysConfig.name}">
+			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" readonly="readonly" value="${sysConfig.name}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="value" placeholder="值" value="${sysConfig.value}">
+			<label for="value" class="col-sm-4">值 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="value" placeholder="值" value="${sysConfig.value}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${sysConfig.remark}">
+			<label for="remark" class="col-sm-4">备注</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="备注" value="${sysConfig.remark}"></div>
 		</div>
-  		<div class="form-group">
+		<hr />
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -57,7 +62,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

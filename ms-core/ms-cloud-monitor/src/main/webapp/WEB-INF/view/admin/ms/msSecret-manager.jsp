@@ -105,7 +105,7 @@ var info = {
 				title: '编辑配置文件',
 				url: webroot + '/msSecret/f-view/edit.shtml?cliId='+(id?id:''),
 				type: 'iframe',
-				width: 450,
+				width: 420,
 				height: 420
 			});
 		},

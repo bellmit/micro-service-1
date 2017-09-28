@@ -8,46 +8,56 @@
 <title>编辑数据源</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-sm">
 		<input type="hidden" id="prjId" value="${param.prjId}">
-  		<div class="form-group">
-			<input type="text" class="form-control" id="code" placeholder="编码" value="${prjDs.code}">
+		<div class="form-group">
+			<label for="code" class="col-sm-4">编码 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="code" placeholder="编码" value="${prjDs.code}"></div>
 		</div>
 		<div class="form-group">
-			<span>类型：&nbsp;</span><my:radio id="type" name="type" dictcode="prj_ds_type" value="${prjDs.type}" defvalue="mysql" exp="onclick=\"info.change(this)\""/>
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="driverClass" placeholder="驱动类" value="${prjDs.driverClass}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="url" placeholder="jdbc的url" value="${prjDs.url}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="username" placeholder="用户名" value="${prjDs.username}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="password" placeholder="密码" value="${prjDs.password}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="initialSize" placeholder="初始连接数" value="${prjDs.initialSize}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="maxIdle" placeholder="最大连接数" value="${prjDs.maxIdle}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="minIdle" placeholder="最小连接数" value="${prjDs.minIdle}">
+			<label for="type" class="col-sm-4">类型 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="type" name="type" dictcode="prj_ds_type" value="${prjDs.type}" defvalue="mysql" exp="onclick=\"info.change(this)\""/></div>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" rows="5" id="testSql" placeholder="测试的sql语句">${prjDs.testSql}</textarea>
+			<label for="driverClass" class="col-sm-4">驱动类 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="driverClass" placeholder="驱动类" value="${prjDs.driverClass}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="url" class="col-sm-4">url <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="url" placeholder="jdbc的url" value="${prjDs.url}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="username" class="col-sm-4">用户名 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="username" placeholder="用户名" value="${prjDs.username}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="password" class="col-sm-4">密码 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="password" placeholder="密码" value="${prjDs.password}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="initialSize" class="col-sm-4">初始链接 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="initialSize" placeholder="初始连接数" value="${prjDs.initialSize}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="maxIdle" class="col-sm-4">最大链接 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="maxIdle" placeholder="最大连接数" value="${prjDs.maxIdle}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="minIdle" class="col-sm-4">最小链接 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="minIdle" placeholder="最小连接数" value="${prjDs.minIdle}"></div>
+		</div>
+		<div class="form-group">
+			<label for="testSql" class="col-sm-4">测试sql <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><textarea class="form-control" rows="3" id="testSql" placeholder="测试的sql语句">${prjDs.testSql}</textarea></div>
 		</div>
 		<hr/>
-  		<div class="form-group">
- 			<div class="btn-group">
-				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
-				<button type="button" id="testBtn" class="btn btn-default enter-fn">测试sql语句</button>
-			</div>
+  		<div class="form-group text-right">
 			<span id="saveMsg" class="label label-danger"></span>
+ 			<div class="btn-group">
+				<button type="button" id="testBtn" class="btn btn-default enter-fn">测试sql语句</button>
+				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
+			</div>
 		</div>
 	</div>
 
@@ -259,7 +269,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

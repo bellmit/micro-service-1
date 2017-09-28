@@ -71,6 +71,7 @@ var info = {
 								    '  &nbsp; <span class="dropdown opt-more">',
 									'<a class="btn btn-default btn-xs dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
 									'<ul class="dropdown-menu" role="menu">',
+									'<li role="presentation"><a href="javascript:info.edit(',obj.prjId,')">修改</a></li>',
 									'<li role="presentation"><a href="javascript:info.ds(',obj.prjId,',\'',obj.name,'\')">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,',\'',obj.name,'\')" title="查看项目的监控">查看监控</a></li>',
 									'<li role="presentation"><a href="javascript:info.autoCode(',obj.prjId,',\'',obj.name,'\')">生成源码</a></li>',
@@ -105,6 +106,16 @@ var info = {
 					}
 					else alert(JUtil.msg.ajaxErr);
 				}
+			});
+		},
+		//编辑项目
+		edit : function(id) {
+			dialog({
+				title: '编辑项目',
+				url: webroot + '/prjInfo/f-view/edit.shtml?prjId='+(id?id:''),
+				type: 'iframe',
+				width: 620,
+				height: 555
 			});
 		},
 		//版本管理

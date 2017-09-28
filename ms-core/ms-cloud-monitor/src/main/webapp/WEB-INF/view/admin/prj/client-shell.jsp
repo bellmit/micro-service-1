@@ -8,23 +8,25 @@
 <title>设置发布的shell</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-lg">
 		<input type="hidden" id="prjId" value="${param.prjId}">
-  		<div class="form-group">
-			<input type="text" class="form-control" id="clientId" placeholder="客户端编码" readonly="readonly" value="${prjClient.clientId}">
+		<div class="form-group">
+			<label for="clientId" class="col-sm-4">客户端 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="clientId" placeholder="客户端编码" readonly="readonly" value="${prjClient.clientId}"></div>
 		</div>
-  		<div class="form-group">
-			<textarea class="form-control" rows="10" id="shellScript" placeholder="发布的shell脚本 (客户端会优先执行这里的shell，如果这里没有设置，则会执行项目的shell)">${prjClient.shellScript}</textarea>
+		<div class="form-group">
+			<label for="shellScript" class="col-sm-4">脚本 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><textarea class="form-control" rows="10" id="shellScript" placeholder="发布的shell脚本 (客户端会优先执行这里的shell，如果这里没有设置，则会执行项目的shell)">${prjClient.shellScript}</textarea></div>
 		</div>
-		<div>
+		<div class="text-right">
 			<small>
 				<a href="javascript:info.loadPrjShell();">加载项目的Shell</a>
 				<textarea class="hidden" rows="5" id="prjShellScript">${prjShellScript}</textarea>
 			</small>
 		</div>
 		<hr/>
-		<div>
+		<div class="text-right">
 			<small>
 				<a href="${webroot}/help.jsp#prjInfoParam" target="_blank">[prj.path]、[prj.name]、[current.date]、[current.time]等参数帮助</a>
 				<span>|</span>
@@ -32,11 +34,11 @@
 			</small>
 		</div>
 		<hr/>
-  		<div class="form-group">
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -76,7 +78,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.client.loadInfo(1);
+							parent.client.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

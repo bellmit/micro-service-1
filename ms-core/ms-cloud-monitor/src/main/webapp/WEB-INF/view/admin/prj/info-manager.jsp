@@ -120,8 +120,8 @@ var info = {
 				title: '编辑项目',
 				url: webroot + '/prjInfo/f-view/edit.shtml?prjId='+(id?id:''),
 				type: 'iframe',
-				width: 600,
-				height: 560
+				width: 620,
+				height: 555
 			});
 		},
 		del : function(id) {

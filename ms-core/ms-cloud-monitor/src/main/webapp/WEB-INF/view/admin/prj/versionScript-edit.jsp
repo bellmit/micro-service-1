@@ -8,29 +8,34 @@
 <title>编辑脚本</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-lg">
 		<input type="hidden" id="pvsId" value="${prjVersionScript.pvsId}">
 		<input type="hidden" id="prjId" value="${param.prjId}">
 		<input type="hidden" id="version" value="${param.version}">
-  		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="名称/描叙" value="${prjVersionScript.remark}">
+		
+		<div class="form-group">
+			<label for="remark" class="col-sm-4">名称描叙 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="名称/描叙" value="${prjVersionScript.remark}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="dsCode" headerKey="" headerValue="请选择数据源" items="${dsList}" value="${prjVersionScript.dsCode}" cssCls="form-control" />
+			<label for="dsCode" class="col-sm-4">数据源 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="dsCode" headerKey="" headerValue="请选择数据源" items="${dsList}" value="${prjVersionScript.dsCode}" cssCls="form-control" /></div>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" rows="5" id="upSql" placeholder="升级的sql语句，多条用;分隔">${prjVersionScript.upSql}</textarea>
+			<label for="upSql" class="col-sm-4">升级脚本 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><textarea class="form-control" rows="5" id="upSql" placeholder="升级的sql语句，多条用;分隔">${prjVersionScript.upSql}</textarea></div>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" rows="5" id="callbackSql" placeholder="回滚的sql语句，多条用;分隔">${prjVersionScript.callbackSql}</textarea>
+			<label for="callbackSql" class="col-sm-4">回滚脚本</label>
+			<div class="col-sm-8"><textarea class="form-control" rows="5" id="callbackSql" placeholder="回滚的sql语句，多条用;分隔">${prjVersionScript.callbackSql}</textarea></div>
 		</div>
 		<hr/>
-  		<div class="form-group">
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -80,7 +85,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

@@ -8,26 +8,32 @@
 <title>编辑项目</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-lg">
 		<input type="hidden" id="prjId" value="${prjInfo.prjId}">
-  		<div class="form-group">
-			<input type="text" class="form-control" id="code" placeholder="编码" value="${prjInfo.code}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="名称" value="${prjInfo.name}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${prjInfo.remark}">
+		<div class="form-group">
+			<label for="code" class="col-sm-4">编码 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="code" placeholder="编码" value="${prjInfo.code}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="status" dictcode="prj_info_status" value="${prjInfo.status}" cssCls="form-control" />
+			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="名称" value="${prjInfo.name}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="container" headerKey="" headerValue="请选择容器类型" dictcode="prj_info_container" value="${prjInfo.container}" cssCls="form-control" />
+			<label for="remark" class="col-sm-4">备注</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="备注" value="${prjInfo.remark}"></div>
 		</div>
-  		<div class="form-group">
-			<textarea class="form-control" rows="6" id="shellScript" placeholder="发布的shell脚本">${prjInfo.shellScript}</textarea>
+		<div class="form-group">
+			<label for="status" class="col-sm-4">状态 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="status" name="status" dictcode="prj_info_status" value="${prjInfo.status}" defvalue="10" /></div>
+		</div>
+		<div class="form-group">
+			<label for="container" class="col-sm-4">容器类型 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="container" headerKey="" headerValue="请选择容器类型" dictcode="prj_info_container" value="${prjInfo.container}" cssCls="form-control" /></div>
+		</div>
+		<div class="form-group">
+			<label for="shellScript" class="col-sm-4">发布脚本 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><textarea class="form-control" rows="6" id="shellScript" placeholder="发布的shell脚本">${prjInfo.shellScript}</textarea></div>
 		</div>
 		<div>
 			<small>
@@ -37,11 +43,11 @@
 			</small>
 		</div>
 		<hr/>
-  		<div class="form-group">
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -139,7 +145,7 @@
 					code: _code.val(),
 					name: _name.val(),
 					remark: $('#remark').val(),
-					status: $('#status').val(),
+					status: $('input[name="status"]:checked').val(),
 					container: _container.val(),
 					shellScript: _shellScript.val()
 				},
@@ -148,7 +154,7 @@
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						if('${param.source}'!='dtl') {
 							setTimeout(function() {
-								parent.info.loadInfo(1);
+								parent.info.loadInfo();
 								parent.dialog.close();
 							}, 800);
 						}

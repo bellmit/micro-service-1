@@ -8,45 +8,58 @@
 <title>定时任务-编辑任务</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-sm">
 		<input type="hidden" id="id" value="${taskJob.id}">
 		<input type="hidden" id="projectid" value="${param.projectid}">
   		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="名称" value="${taskJob.name}">
+			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="名称" value="${taskJob.name}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="描叙" value="${taskJob.remark}">
+			<label for="remark" class="col-sm-4">描述</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="描叙" value="${taskJob.remark}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="calltype" headerKey="" headerValue="请选择调用方式" dictcode="job_calltype" value="${taskJob.calltype}" cssCls="form-control" />
+			<label for="calltype" class="col-sm-4">调用方式 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="calltype" headerKey="" headerValue="请选择调用方式" dictcode="job_calltype" value="${taskJob.calltype}" cssCls="form-control" /></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="link" placeholder="调用链接(微服务格式:serviceId:地址)" value="${taskJob.link}">
+			<label for="link" class="col-sm-4">调用链接 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="link" placeholder="调用链接(微服务格式:serviceId:地址)" value="${taskJob.link}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="cron" placeholder="任务规则" value="${taskJob.cron}">
-			<div class="text-right">
-				<small>
-					<a href="javascript:;" onclick="$('#cron').val('0/3 * * * * ?')" title="每3秒执行">每3秒</a> |
-					<a href="javascript:;" onclick="$('#cron').val('25 0/1 * * * ?')" title="每分钟25秒执行">每分钟</a> |
-					<a href="javascript:;" onclick="$('#cron').val('0 0 0/1 * * ?')" title="每小时0点0分执行">每小时</a> |
-					<a href="javascript:;" onclick="$('#cron').val('0 30 8,9 ? * MON')" title="每周一的8:30和9:30执行">每周一</a>
-				</small>
+			<label for="cron" class="col-sm-4">任务规则 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="cron" placeholder="任务规则" value="${taskJob.cron}"></div>
+		</div>
+		<div class="text-right">
+			<small>
+				<a href="javascript:;" onclick="$('#cron').val('0/3 * * * * ?')" title="每3秒执行">每3秒</a> |
+				<a href="javascript:;" onclick="$('#cron').val('25 0/1 * * * ?')" title="每分钟25秒执行">每分钟</a> |
+				<a href="javascript:;" onclick="$('#cron').val('0 0 0/1 * * ?')" title="每小时0点0分执行">每小时</a> |
+				<a href="javascript:;" onclick="$('#cron').val('0 30 8,9 ? * MON')" title="每周一的8:30和9:30执行">每周一</a>
+			</small>
+		</div>
+		<hr/>
+		<div class="form-group">
+			<label for="cron" class="col-sm-4">执行状态 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="status" name="status" dictcode="job_status" value="${taskJob.status}" defvalue="0" /></div>
+		</div>
+  		<div class="form-group">
+  			<label for="cron" class="col-sm-4">失败通知</label>
+			<div class="col-sm-8">
+			<c:choose>
+			<c:when test="${taskJob == null}"><my:radio id="isfailmail" name="isfailmail" dictcode="boolean" value="${taskProject.isrecemail}" defvalue="0"/></c:when>
+			<c:otherwise><my:radio id="isfailmail" name="isfailmail" dictcode="boolean" value="${taskJob.isfailmail}" defvalue="0"/></c:otherwise>
+			</c:choose>
 			</div>
-		</div>
-		<div class="form-group">任务执行状态：<my:radio id="status" name="status" dictcode="job_status" value="${taskJob.status}" defvalue="0" /></div>
-  		<div class="form-group">
-		<c:choose>
-		<c:when test="${taskJob == null}">失败邮件通知：<my:radio id="isfailmail" name="isfailmail" dictcode="boolean" value="${taskProject.isrecemail}" defvalue="0"/></c:when>
-		<c:otherwise>失败邮件通知：<my:radio id="isfailmail" name="isfailmail" dictcode="boolean" value="${taskJob.isfailmail}" defvalue="0"/></c:otherwise>
-		</c:choose>
   		</div>
-  		<div class="form-group">
+  		<hr/>
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -105,7 +118,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

@@ -28,7 +28,7 @@
 	<update id="updateIsUse" flushCache="true">
 		update prj_api
 		<set>is_use=#{isUse}</set>
-		<where>prj_id=#{prjId} and path=#{path}</where>
+		<where>prj_id=#{prjId}</where>
 	</update>
 	
 	<select id="get" resultType="prjApi">

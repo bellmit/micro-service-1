@@ -7,26 +7,31 @@
 <title>定时任务-编辑用户</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-xs">
 		<input type="hidden" id="userId" value="${sysUser.userId}">
   		<div class="form-group">
-			<input type="text" class="form-control" id="username" placeholder="用户名" value="${sysUser.username}">
+			<label for="username" class="col-sm-4">用户名 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="username" placeholder="用户名" value="${sysUser.username}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="password" placeholder="密码" value="">
+			<label for="password" class="col-sm-4">密码 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="password" placeholder="密码" value=""></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="nickname" placeholder="昵称" value="${sysUser.nickname}">
+			<label for="nickname" class="col-sm-4">昵称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="nickname" placeholder="昵称" value="${sysUser.nickname}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="status" headerKey="" headerValue="请选择状态" dictcode="sys_user_status" value="${sysUser.status}" cssCls="form-control" />
+			<label for="nickname" class="col-sm-4">状态 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="status" name="status" dictcode="sys_user_status" value="${sysUser.status}" defvalue="10" /></div>
 		</div>
-  		<div class="form-group">
+		<hr/>
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -66,13 +71,13 @@
 					username: _username.val(),
 					password: _password.val(),
 					nickname: _nickname.val(),
-					status: $('#status').val()
+					status: $('input[name="status"]:checked').val()
 				},
 				success : function(json) {
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

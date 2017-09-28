@@ -8,31 +8,25 @@
 <title>编辑项目客户端</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-xs">
 		<input type="hidden" id="prjId" value="${param.prjId}">
-		
 		<div class="form-group">
-			<my:select id="clientId" items="${cliInfos}" value="${prjClient.clientId}" cssCls="form-control" />
+			<label for="clientId" class="col-sm-4">客户端 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="clientId" items="${cliInfos}" value="${prjClient.clientId}" cssCls="form-control" /></div>
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" id="logPath" placeholder="查看的日志路径" value="${prjClient.logPath}">
+			<label for="logPath" class="col-sm-4">日志路径 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="logPath" placeholder="查看的日志路径" value="${prjClient.logPath}"></div>
 		</div>
 		<div class="text-right"><small><a href="javascript:info.loadLogPath()">加载上次使用路径</a></small></div>
-		<div class="form-group">
+		<hr/>
+		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
-  		<!-- <div class="input-group has-success publish">
-      		<input type="text" class="form-control" id="searchString" placeholder="输入客户端 [编号/ip地址] 都可搜索"/>
-	      	<span class="input-group-btn">
-	        	<button class="btn btn-success enter-fn" id="queryBtn">搜索</button>
-	      	</span>
-	    </div>
-	    <hr />
-	    <div id="listPanel"></div> -->
 	</div>
 
 	<jsp:include page="/WEB-INF/view/inc/js.jsp"></jsp:include>
@@ -61,20 +55,6 @@
 		$('#saveBtn').click(function() {
 			var _saveMsg = $('#saveMsg').empty();
 			
-			/* var _prjId = $('#prjId').val();
-			var _code = $('#code');
-			if(JUtil.isEmpty(_code.val())) {
-				_saveMsg.append('请输入编码');
-				_code.focus();
-				return;
-			}
-			var _name = $('#name');
-			if(JUtil.isEmpty(_name.val())) {
-				_saveMsg.append('请输入名称');
-				_name.focus();
-				return;
-			} */
-			
 			var _saveBtn = $('#saveBtn');
 			var _orgVal = _saveBtn.html();
 			_saveBtn.attr('disabled', 'disabled').html('保存中...');
@@ -90,7 +70,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.client.loadInfo(1);
+							parent.client.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.module.admin.BaseController;
+import com.module.admin.prj.pojo.PrjInfo;
 import com.module.admin.prj.pojo.PrjVersion;
+import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.prj.service.PrjVersionService;
 import com.module.admin.sys.pojo.SysUser;
 import com.system.comm.model.KvEntity;
@@ -35,6 +37,8 @@ public class PrjVersionController extends BaseController {
 
 	@Autowired
 	private PrjVersionService prjVersionService;
+	@Autowired
+	private PrjInfoService prjInfoService;
 	
 	/**
 	 * 跳转到管理页
@@ -42,7 +46,10 @@ public class PrjVersionController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/prjVersion/f-view/manager")
-	public String manger(HttpServletRequest request) {
+	public String manger(HttpServletRequest request, ModelMap modelMap,
+			Integer prjId) {
+		PrjInfo prjInfo = prjInfoService.get(prjId);
+		modelMap.put("prjInfo", prjInfo);
 		return "admin/prj/version-manager";
 	}
 

@@ -80,6 +80,7 @@ public class PrjClientServiceImpl implements PrjClientService {
 				if(cliInfo != null) {
 					pc.setIp(cliInfo.getIp());
 					pc.setPort(cliInfo.getPort());
+					pc.setClientName(cliInfo.getName());
 				}
 			}
 		}

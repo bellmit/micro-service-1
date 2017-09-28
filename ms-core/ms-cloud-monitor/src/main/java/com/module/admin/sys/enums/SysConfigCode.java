@@ -20,8 +20,10 @@ public enum SysConfigCode {
 	MAIL_FROM			("mail.from", 			"发送邮件的邮箱"),
 	MAIL_USERNAME		("mail.username", 		"发送邮件的用户名"),
 	MAIL_PASSWORD		("mail.password", 		"发送邮件的密码"),
+	MAIL_SEND_IS_OPEN	("mail.send.is.open", 	"是否打开发送邮件的功能[0否、1是]"),
+	
 	PRJ_FILE_PATH		("prj.file.path", 		"项目上传的目录"),
-
+	
 	PRJ_MONITOR_FAIL_EMAIL	("prj.monitor.fail.email", "项目检测失败接收的邮箱"),
 
 	/*CONFIG_CLIENT_ID		("config.client.id", 		"配置文件的客户ID"),

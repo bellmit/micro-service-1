@@ -107,8 +107,8 @@ var info = {
 				title: '编辑配置文件',
 				url: webroot + '/msConfig/f-view/edit.shtml?configId='+(id?id:''),
 				type: 'iframe',
-				width: 450,
-				height: 280
+				width: 420,
+				height: 270
 			});
 		},
 		values : function(id) {

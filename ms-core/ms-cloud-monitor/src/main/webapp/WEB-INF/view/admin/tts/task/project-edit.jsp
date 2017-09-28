@@ -8,33 +8,43 @@
 <title>定时任务-编辑项目</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-lg">
 		<input type="hidden" id="id" value="${taskProject.id}">
   		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="名称" value="${taskProject.name}">
+			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="名称" value="${taskProject.name}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="描叙" value="${taskProject.remark}">
+			<label for="remark" class="col-sm-4">描述</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="描述" value="${taskProject.remark}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="sign" headerKey="" headerValue="请选择加密方式" dictcode="project_sign" value="${taskProject.sign}" cssCls="form-control" />
+			<label for="sign" class="col-sm-4">加密方式 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="sign" headerKey="" headerValue="请选择加密方式" dictcode="project_sign" value="${taskProject.sign}" cssCls="form-control" /></div>
 		</div>
   		<div class="form-group">
-  			<textarea class="form-control" rows="2" id="signstring" placeholder="参数(token不会提交)">${taskProject.signstring}</textarea>
-  			<small class="text-muted">theCurrentTimestamp：代表当前时间戳<br/>encryptionParameters：代表加密参数</small>
+  			<label for="signstring" class="col-sm-4">加密方式 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><textarea class="form-control" rows="2" id="signstring" placeholder="参数(token不会提交)">${taskProject.signstring}</textarea>
+  				<small class="text-muted">theCurrentTimestamp：代表当前时间戳<br/>encryptionParameters：代表加密参数</small>
+  			</div>
 		</div>
-		<div class="form-group">邮件通知：<my:radio id="isrecemail" name="isrecemail" dictcode="boolean" value="${taskProject.isrecemail}" defvalue="0"/>
-			<small class="text-muted">(选"否"，代表所有任务都不发邮件)</small>
+		<div class="form-group">
+			<label for="isrecemail" class="col-sm-4">邮件通知 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="isrecemail" name="isrecemail" dictcode="boolean" value="${taskProject.isrecemail}" defvalue="0"/>
+				<small class="text-muted">(选"否"，代表所有任务都不发邮件)</small>
+			</div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="recemail" placeholder="接收邮箱（多个,分隔）" value="${taskProject.recemail}">
+			<label for="recemail" class="col-sm-4">接收邮箱</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="recemail" placeholder="接收邮箱（多个,分隔）" value="${taskProject.recemail}"></div>
 		</div>
-  		<div class="form-group">
+		<hr/>
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -87,7 +97,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

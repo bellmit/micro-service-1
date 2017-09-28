@@ -8,31 +8,38 @@
 <title>${projectName}-编辑密钥</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-xs">
   		<div class="form-group">
-			<input type="text" class="form-control" id="cliId" placeholder="客户编码" value="${msSecret.cliId}"<c:if test="${msSecret.cliId!=null}"> readonly="readonly"</c:if>>
+			<label for="cliId" class="col-sm-4">编码 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="cliId" placeholder="客户端编码" value="${msSecret.cliId}"<c:if test="${msSecret.cliId!=null}"> readonly="readonly"</c:if>></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="名称" value="${msSecret.name}">
+			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="名称" value="${msSecret.name}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="token" placeholder="token" value="${msSecret.token}">
+			<label for="token" class="col-sm-4">token <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="token" placeholder="token" value="${msSecret.token}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="domain" placeholder="host地址" value="${msSecret.domain}">
+			<label for="domain" class="col-sm-4">domain</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="domain" placeholder="host地址" value="${msSecret.domain}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${msSecret.remark}">
+			<label for="remark" class="col-sm-4">备注</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="备注" value="${msSecret.remark}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="isUse" headerKey="" headerValue="是否使用" dictcode="boolean" value="${msSecret.isUse}" cssCls="form-control" />
+			<label for="isUse" class="col-sm-4">使用 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="isUse" name="isUse" dictcode="boolean" value="${msSecret.isUse}" defvalue="1" /></div>
 		</div>
-  		<div class="form-group">
+		<hr/>
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -61,18 +68,6 @@
 				return;
 			}
 			var _domain = $('#domain');
-			/* if(JUtil.isEmpty(_domain.val())) {
-				_saveMsg.append('请输入host地址');
-				_domain.focus();
-				return;
-			} */
-			
-			var _isUse = $('#isUse');
-			if(JUtil.isEmpty(_isUse.val())) {
-				_saveMsg.append('请选择是否使用');
-				_isUse.focus();
-				return;
-			}
 			
 			var _saveBtn = $('#saveBtn');
 			var _orgVal = _saveBtn.html();
@@ -85,13 +80,13 @@
 					token: _token.val(),
 					domain: _domain.val(),
 					remark: $('#remark').val(),
-					isUse: _isUse.val()
+					isUse: $('input[name="isUse"]:checked').val()
 				},
 				success : function(json) {
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

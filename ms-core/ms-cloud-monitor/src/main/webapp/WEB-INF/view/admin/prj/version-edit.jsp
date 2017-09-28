@@ -8,39 +8,49 @@
 <title>编辑项目版本</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-xs">
 		<input type="hidden" id="prjId" value="${param.prjId}">
-  		<div class="form-group">
-			<input type="text" class="form-control" id="version" placeholder="版本号" value="${prjVersion.version}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${prjVersion.remark}">
+		<div class="form-group">
+			<label for="version" class="col-sm-4">版本号 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="version" placeholder="版本号" value="${prjVersion.version}"></div>
 		</div>
 		<div class="form-group">
-			<span>发布：&nbsp;</span><my:radio id="isRelease" name="isRelease" dictcode="boolean" value="${prjVersion.isRelease}" defvalue="1"/>
-			<%-- <my:select id="isRelease" headerKey="" headerValue="是否发布" dictcode="boolean" value="${prjVersion.isRelease}" cssCls="form-control" /> --%>
+			<label for="remark" class="col-sm-4">备注</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="备注" value="${prjVersion.remark}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="rbVersion" headerKey="" headerValue="参考版本" items="${list}" value="${prjVersion.rbVersion}" cssCls="form-control" />
+			<label for="isRelease" class="col-sm-4">发布 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="isRelease" name="isRelease" dictcode="boolean" value="${prjVersion.isRelease}" defvalue="1"/></div>
 		</div>
 		<div class="form-group">
-			<input type="file" id="files" name="files" onchange="fi.uploadFile()"/><img id="filesLoading" alt="上传中..." src="${webroot}/resources/images/loading.gif" style="display: none;"/>
-			<input type="hidden" id="pathUrl" name="pathUrl" value="${prjVersion.pathUrl}"/>
+			<label for="rbVersion" class="col-sm-4">参考版本 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="rbVersion" headerKey="" headerValue="参考版本" items="${list}" value="${prjVersion.rbVersion}" cssCls="form-control" /></div>
+		</div>
+		<div class="form-group">
+			<label for="rbVersion" class="col-sm-4">版本上传 <span class="text-danger">*</span></label>
+			<div class="col-sm-8">
+				<input type="file" id="files" name="files" onchange="fi.uploadFile()"/><img id="filesLoading" alt="上传中..." src="${webroot}/resources/images/loading.gif" style="display: none;"/>
+				<input type="hidden" id="pathUrl" name="pathUrl" value="${prjVersion.pathUrl}"/>
+			</div>
 		</div>
 		<div class="form-group" id="pathUrlPanel">
 			<c:choose>
 			<c:when test="${prjVersion == null}"><span class="text-info">请上传项目</span></c:when>
 			<c:otherwise>
-				<a href="${webroot}/sysFile/f-view/download.shtml?url=${prjVersion.pathUrl}" target="_blank">下载项目</a>
+				<label for="rbVersion" class="col-sm-4"></label>
+				<div class="col-sm-8">
+					<a href="${webroot}/sysFile/f-view/download.shtml?url=${prjVersion.pathUrl}" target="_blank">下载项目</a>
+				</div>
 			</c:otherwise>
 			</c:choose>
 		</div>
-  		<div class="form-group">
+		<hr/>
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -105,7 +115,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

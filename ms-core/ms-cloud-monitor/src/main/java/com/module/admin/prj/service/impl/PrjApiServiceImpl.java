@@ -74,7 +74,7 @@ public class PrjApiServiceImpl implements PrjApiService {
 	@Override
 	public void saveBatch(List<PrjApi> prjApis) {
 		//将对应的修改为未使用
-		prjApiDao.updateIsUse(prjApis.get(0).getPrjId(), prjApis.get(0).getPath(), Boolean.FALSE.getCode());
+		prjApiDao.updateIsUse(prjApis.get(0).getPrjId(), Boolean.FALSE.getCode());
 		for (PrjApi prjApi : prjApis) {
 			saveOrUpdate(prjApi);
 		}

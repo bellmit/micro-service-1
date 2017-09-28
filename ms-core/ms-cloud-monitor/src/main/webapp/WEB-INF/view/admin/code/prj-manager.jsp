@@ -74,7 +74,6 @@
 <script type="text/javascript">
 var infoPage = undefined;
 var info = {
-		//获取用户信息
 		loadInfo : function(page) {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
@@ -113,14 +112,14 @@ var info = {
 				}
 			});
 		},
-		//编辑数据源
+		//编辑
 		edit : function(code, name) {
 			dialog({
 				title: '编辑数据源',
 				url: webroot + '/codeTemplate/f-view/edit.shtml?prjId=${param.prjId}&code='+(code?code:'') + '&name='+(name?name:''),
 				type: 'iframe',
-				width: 430,
-				height: 500
+				width: 620,
+				height: 510
 			});
 		},
 		del : function(code, name) {
@@ -195,8 +194,8 @@ var create = {
 				title: '编辑生成源码',
 				url: webroot + '/codeCreate/f-view/edit.shtml?prjId=${param.prjId}&code=${param.prjId}&id='+(id?id:''),
 				type: 'iframe',
-				width: 400,
-				height: 350
+				width: 520,
+				height: 380
 			});
 		},
 		del : function(id) {

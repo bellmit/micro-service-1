@@ -99,8 +99,8 @@ var info = {
 				title: '编辑配置',
 				url: webroot + '/sysConfig/f-view/edit.shtml?code='+(id?id:''),
 				type: 'iframe',
-				width: 350,
-				height: 315
+				width: 420,
+				height: 330
 			});
 		}
 };

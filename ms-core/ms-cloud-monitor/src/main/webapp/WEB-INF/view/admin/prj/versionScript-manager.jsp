@@ -114,8 +114,8 @@ var info = {
 				title: '编辑脚本',
 				url: webroot + '/prjVersionScript/f-view/edit.shtml?prjId=${param.prjId}&version=${param.version}&pvsId='+(pvsId?pvsId:''),
 				type: 'iframe',
-				width: 460,
-				height: 490
+				width: 620,
+				height: 510
 			});
 		},
 		del : function(pvsId) {

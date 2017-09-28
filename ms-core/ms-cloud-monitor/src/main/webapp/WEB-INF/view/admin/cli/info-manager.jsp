@@ -108,7 +108,7 @@ var info = {
 				title: '编辑客户端',
 				url: webroot + '/cliInfo/f-view/edit.shtml?clientId='+(id?id:''),
 				type: 'iframe',
-				width: 400,
+				width: 420,
 				height: 470
 			});
 		},

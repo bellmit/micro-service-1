@@ -131,13 +131,13 @@ var info = {
 				}
 			});
 		},
-		//编辑项目
+		//编辑
 		edit : function(id) {
 			dialog({
 				title: '编辑项目监控',
 				url: webroot + '/prjMonitor/f-view/edit.shtml?prjmId='+(id?id:''),
 				type: 'iframe',
-				width: 600,
+				width: 520,
 				height: 530
 			});
 		},

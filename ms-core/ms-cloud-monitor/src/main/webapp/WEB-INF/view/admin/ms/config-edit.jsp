@@ -8,23 +8,27 @@
 <title>${projectName}-编辑配置文件</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-xs">
 		<input type="hidden" id="configId" value="${msConfig.configId}">
   		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="名称" value="${msConfig.name}">
+			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="名称" value="${msConfig.name}"></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="备注" value="${msConfig.remark}">
+			<label for="remark" class="col-sm-4">备注</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="备注" value="${msConfig.remark}"></div>
 		</div>
 		<div class="form-group">
-			<my:select id="isUse" headerKey="" headerValue="是否使用" dictcode="boolean" value="${msConfig.isUse}" cssCls="form-control" />
+			<label for="isUse" class="col-sm-4">使用 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="isUse" name="isUse" dictcode="boolean" value="${msConfig.isUse}" defvalue="1" /></div>
 		</div>
-  		<div class="form-group">
+		<hr/>
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -40,12 +44,6 @@
 				_name.focus();
 				return;
 			}
-			var _isUse = $('#isUse');
-			if(JUtil.isEmpty(_isUse.val())) {
-				_saveMsg.append('请选择是否使用');
-				_isUse.focus();
-				return;
-			}
 			
 			var _saveBtn = $('#saveBtn');
 			var _orgVal = _saveBtn.html();
@@ -56,13 +54,13 @@
 					configId: $('#configId').val(),
 					name: _name.val(),
 					remark: $('#remark').val(),
-					isUse: _isUse.val()
+					isUse: $('input[name="isUse"]:checked').val()
 				},
 				success : function(json) {
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

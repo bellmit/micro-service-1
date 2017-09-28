@@ -159,8 +159,8 @@ var info = {
 				title: '编辑任务',
 				url: webroot + '/ttsTaskJob/f-view/edit.shtml?projectid=${param.projectid}&id='+(id?id:''),
 				type: 'iframe',
-				width: 380,
-				height: 465
+				width: 520,
+				height: 500
 			});
 		},
 		del : function(id) {

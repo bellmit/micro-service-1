@@ -100,7 +100,7 @@ var info = {
 				title: '编辑数据源',
 				url: webroot + '/prjDs/f-view/edit.shtml?prjId=${param.prjId}&code='+(code?code:''),
 				type: 'iframe',
-				width: 430,
+				width: 520,
 				height: 450
 			});
 		},

@@ -20,7 +20,7 @@
 			<div class="panel panel-success">
 				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-5 title">项目 / 项目管理 / <b>版本管理</b></div>
+						<div class="col-sm-5 title">项目 / 项目管理 / <b>版本管理</b> (${prjInfo.name})</div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
 						  		<a href="${webroot}/prjInfo/f-view/manager.shtml?name=${param.name}" class="btn btn-default btn-sm">返回</a>
@@ -46,7 +46,9 @@
 							<div id="infoPanel" class="table-panel"></div>
 							<div id="infoPage" class="table-page-panel"></div>
 				  		</div>
-				  		<div class="col-sm-7" id="clientInfo" style="display: none;">
+				  		<div class="col-sm-7">
+				  			<div id="clientInfoMsg" class="text-center" style="margin-top: 10px;"><label class="label label-warning">暂无需要发布的客户端信息~</label></div>
+				  			<div id="clientInfo" style="display: none;">
 				  			<div class="table-tool-panel">
 					  			<div class="row">
 									<div class="col-sm-4 text-muted" id="clientInfoTitle">
@@ -69,6 +71,7 @@
 						  	</div>
 							<div id="clientPanel" class="table-panel"></div>
 							<div id="clientPage" class="table-page-panel"></div>
+							</div>
 				  		</div>
 				  	</div>
 				</div>
@@ -143,8 +146,8 @@ var info = {
 				title: '编辑项目版本',
 				url: webroot + '/prjVersion/f-view/edit.shtml?prjId=${param.prjId}&version='+(id?id:''),
 				type: 'iframe',
-				width: 400,
-				height: 390
+				width: 420,
+				height: 400
 			});
 		},
 		//编辑脚本
@@ -183,12 +186,13 @@ var client = {
 		loadInfo : function(page) {
 			if(client.version != undefined) {
 				$('#clientInfo').css('display', 'block');
+				$('#clientInfoMsg').css('display', 'none');
 			}
-			$('#clientInfoTitle').html('<small>发布的版本号：</small><span class="label label-warning">' + client.version + '</span>');
+			$('#clientInfoTitle').html('<small>${prjInfo.name}部署版本：</small><span class="label label-warning">' + client.version + '</span>');
 			if(!clientPage) {
 				clientPage = new Page('clientPage', client.loadInfo, 'clientPanel', 'clientPage');
 				clientPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th>客户端编号</th>',
+				                         '<th>客户端</th>',
 				                         '<th>状态</th>',
 				                         '<th>发布时间</th>',
 				                         '<th width="110">操作</th>',
@@ -219,7 +223,7 @@ var client = {
 								_statusName = '<span class="text-muted">'+obj.statusName+'</span>';
 							}
 							return ['<tr>',
-							    	'<td>',obj.clientId,'<br/>',
+							    	'<td>',obj.clientName,'<br/>',
 							    	'<span class="text-success">',obj.ip,':',obj.port,'</span></td>',
 							    	'<td>',_statusName,(JUtil.isNotEmpty(obj.statusMsg) ? ' | <a href="javascript:client.lookResult(\''+obj.clientId+'\');">结果</a>':''),'<textarea class="hidden" id="statusMsg',obj.clientId,'">',obj.statusMsg,'</textarea></td>',
 							    	'<td>',obj.releaseTime,'</td>',
@@ -257,8 +261,8 @@ var client = {
 				title: '编辑发布到的客户端',
 				url: webroot + '/prjClient/f-view/edit.shtml?prjId=${param.prjId}&version='+client.version+'&clientId='+(clientId?clientId:''),
 				type: 'iframe',
-				width: 400,
-				height: 250
+				width: 420,
+				height: 260
 			});
 		},
 		//查看日志
@@ -280,8 +284,8 @@ var client = {
 				title: '设置发布的shell',
 				url: webroot + '/prjClient/f-view/shell.shtml?prjId=${param.prjId}&version='+client.version+'&clientId='+(clientId?clientId:''),
 				type: 'iframe',
-				width: 600,
-				height: 480
+				width: 620,
+				height: 500
 			});
 		},
 		del : function(id) {

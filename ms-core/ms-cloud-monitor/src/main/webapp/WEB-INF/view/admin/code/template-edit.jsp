@@ -8,33 +8,39 @@
 <title>编辑模板</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-lg">
 		<input type="hidden" id="prjId" value="${param.prjId}">
 		<div class="form-group">
-			<span>类型：&nbsp;</span><my:radio id="type" name="type" dictcode="code_template_type" value="${codeTemplate.type}" defvalue="10"/>
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="name" placeholder="文件名" value="${codeTemplate.name}"<c:if test="${codeTemplate!=null}"> readonly="readonly"</c:if>>
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="remark" placeholder="描述" value="${codeTemplate.remark}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="suffix" placeholder="后缀，如ServiceImpl" value="${codeTemplate.suffix}">
-		</div>
-  		<div class="form-group">
-			<input type="text" class="form-control" id="packageName" placeholder="包名" value="${codeTemplate.packageName}">
+			<label for="type" class="col-sm-4">类型 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:radio id="type" name="type" dictcode="code_template_type" value="${codeTemplate.type}" defvalue="10"/></div>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" rows="5" id="content" placeholder="模版内容">${codeTemplate.content}</textarea>
+			<label for="name" class="col-sm-4">文件名 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="文件名" value="${codeTemplate.name}"<c:if test="${codeTemplate!=null}"> readonly="readonly"</c:if>></div>
+		</div>
+  		<div class="form-group">
+			<label for="remark" class="col-sm-4">描述</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="remark" placeholder="描述" value="${codeTemplate.remark}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="suffix" class="col-sm-4">后缀</label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="suffix" placeholder="后缀，如ServiceImpl" value="${codeTemplate.suffix}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="packageName" class="col-sm-4">包名 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="packageName" placeholder="包名" value="${codeTemplate.packageName}"></div>
+		</div>
+		<div class="form-group">
+			<label for="content" class="col-sm-4">模版内容 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><textarea class="form-control" rows="5" id="content" placeholder="模版内容">${codeTemplate.content}</textarea></div>
 		</div>
 		<hr/>
-  		<div class="form-group">
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -90,7 +96,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.info.loadInfo(1);
+							parent.info.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

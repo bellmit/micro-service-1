@@ -102,8 +102,8 @@ var info = {
 				title: '编辑项目',
 				url: webroot + '/ttsTaskProject/f-view/edit.shtml?id='+(id?id:''),
 				type: 'iframe',
-				width: 420,
-				height: 460
+				width: 620,
+				height: 480
 			});
 		},
 		del : function(id) {

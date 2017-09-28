@@ -94,8 +94,8 @@ var info = {
 				title: '编辑配置',
 				url: webroot + '/ttsSysConfig/f-view/edit.shtml?id='+(id?id:''),
 				type: 'iframe',
-				width: 350,
-				height: 315
+				width: 420,
+				height: 330
 			});
 		}
 };

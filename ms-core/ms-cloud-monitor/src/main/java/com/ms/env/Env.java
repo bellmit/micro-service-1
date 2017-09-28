@@ -11,7 +11,6 @@ public enum Env {
 	PROJECT_MODEL		("project.model", "项目模式[dev开发、test测试、release正式]"),
 	CODE_TEMPLATE_PATH	("code.template.path", "模板存放路径"),
 	CODE_SOURCE_PATH	("code.source.path", "源码存放路径"),
-	SEND_EMAIL_IS_OPEN	("send.email.is.open", "是否打开发送邮件的功能[0否、1是]"),
 	;
 	
 	private String code;

@@ -8,28 +8,31 @@
 <title>编辑生成源码</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
-	<div class="enter-panel">
+<body class="cld-body">
+	<div class="enter-panel ep-sm">
 		<input type="hidden" id="id" value="${codeCreate.id}">
 		<input type="hidden" id="code" value="${param.code}">
   		<div class="form-group">
-			<input type="text" class="form-control" id="packagePath" placeholder="功能包路径" value="${codeCreate.packagePath}">
+			<label for="packagePath" class="col-sm-4">包路径 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="packagePath" placeholder="功能包路径" value="${codeCreate.packagePath}"></div>
 		</div>
   		<div class="form-group">
-			<my:select id="dsCode" headerKey="" headerValue="请选择数据源" items="${dsList}" value="${codeCreate.dsCode}" cssCls="form-control"/>
+			<label for="dsCode" class="col-sm-4">数据源 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="dsCode" headerKey="" headerValue="请选择数据源" items="${dsList}" value="${codeCreate.dsCode}" cssCls="form-control"/></div>
 		</div>
   		<div class="form-group">
-			<input type="text" class="form-control" id="dbName" placeholder="数据库名或sid" value="${codeCreate.dbName}">
+			<label for="dbName" class="col-sm-4">数据库名 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="dbName" placeholder="数据库名或sid" value="${codeCreate.dbName}"></div>
 		</div>
 		<div class="text-right"><small><a href="javascript:info.loadTables()">加载所有表</a></small></div>
   		<div class="form-group" id="tablePanel">
 		</div>
 		<hr/>
-  		<div class="form-group">
+  		<div class="form-group text-right">
+			<span id="saveMsg" class="label label-danger"></span>
  			<div class="btn-group">
 				<button type="button" id="saveBtn" class="btn btn-success enter-fn">保存</button>
 			</div>
-			<span id="saveMsg" class="label label-danger"></span>
 		</div>
 	</div>
 
@@ -75,9 +78,9 @@
 							});
 						}
 						else if (json.code === -1)
-							message(JUtil.msg.ajaxErr);
+							_saveMsg.append(JUtil.msg.ajaxErr);
 						else
-							message(json.message);
+							_saveMsg.append(json.message);
 					}
 				});
 			}
@@ -135,7 +138,7 @@
 					if (json.code === 0) {
 						_saveMsg.attr('class', 'label label-success').append('保存成功');
 						setTimeout(function() {
-							parent.create.loadInfo(1);
+							parent.create.loadInfo();
 							parent.dialog.close();
 						}, 800);
 					}

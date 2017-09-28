@@ -103,8 +103,8 @@ var info = {
 				title: '编辑用户',
 				url: webroot + '/sysUser/f-view/edit.shtml?userId='+(id?id:''),
 				type: 'iframe',
-				width: 350,
-				height: 315
+				width: 420,
+				height: 320
 			});
 		},
 		del : function(id) {

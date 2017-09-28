@@ -25,8 +25,6 @@ import com.module.admin.prj.service.PrjMonitorService;
 import com.module.admin.sys.enums.SysConfigCode;
 import com.module.admin.sys.service.SysConfigService;
 import com.module.api.service.ApiServiceService;
-import com.ms.env.Env;
-import com.ms.env.EnvUtil;
 import com.system.auth.AuthUtil;
 import com.system.auth.model.AuthClient;
 import com.system.comm.utils.FrameMailUtil;
@@ -181,9 +179,8 @@ public class PrjInfoMonitorTask {
 				mailContent.append("调用地址：").append(link).append("<br/>");
 				mailContent.append("错误原因：可能是接口地址不通，或网络不通");
 
-
-				String sendEmailIsOpen = EnvUtil.get(Env.SEND_EMAIL_IS_OPEN);
 				SysConfigService configService = FrameSpringBeanUtil.getBean(SysConfigService.class);
+				String sendEmailIsOpen = configService.getValue(SysConfigCode.MAIL_SEND_IS_OPEN);
 				FrameMailUtil theMail = new FrameMailUtil(configService.getValue(SysConfigCode.MAIL_SMTP),
 						configService.getValue(SysConfigCode.MAIL_FROM),
 						configService.getValue(SysConfigCode.MAIL_USERNAME),
@@ -226,8 +223,8 @@ public class PrjInfoMonitorTask {
 
 			String toMails = pm.getMonitorFailEmail();
 
-			String sendEmailIsOpen = EnvUtil.get(Env.SEND_EMAIL_IS_OPEN);
 			SysConfigService configService = FrameSpringBeanUtil.getBean(SysConfigService.class);
+			String sendEmailIsOpen = configService.getValue(SysConfigCode.MAIL_SEND_IS_OPEN);
 			FrameMailUtil theMail = new FrameMailUtil(configService.getValue(SysConfigCode.MAIL_SMTP),
 					configService.getValue(SysConfigCode.MAIL_FROM),
 					configService.getValue(SysConfigCode.MAIL_USERNAME),

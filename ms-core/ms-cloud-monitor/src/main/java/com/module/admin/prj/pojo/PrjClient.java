@@ -43,6 +43,8 @@ public class PrjClient extends BaseEntity implements Serializable {
 	private String ip;
 	//客户端端口
 	private Integer port;
+	//客户端名称
+	private String clientName;
 	
 	public Integer getPrjId() {
 		return prjId;
@@ -58,6 +60,12 @@ public class PrjClient extends BaseEntity implements Serializable {
 		this.clientId = clientId;
 	}
 	
+	public String getClientName() {
+		return clientName;
+	}
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
 	public Integer getStatus() {
 		return status;
 	}
