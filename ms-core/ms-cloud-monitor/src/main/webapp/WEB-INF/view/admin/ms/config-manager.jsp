@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
+<%@ include file="/WEB-INF/view/inc/sys.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,6 +21,7 @@
 						<div class="col-sm-5 title">微服务 / <b>配置文件管理</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
+								<c:if test="${param.prjId!=null}"><a href="${webroot}/prjInfo/f-view/manager.shtml?name=${param.name}" class="btn btn-default btn-sm">返回</a></c:if>
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
 							</div>
 						</div>
@@ -29,11 +30,12 @@
 				<div class="panel-body">
 				  	<div class="table-tool-panel">
 						<div class="row">
-							<div class="col-sm-6">
-								<span class="enter-panel">
-									<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="文件名称" value="${param.name}">
-							  		<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
-						  		</span>
+							<div class="col-sm-6 enter-panel">
+								<div class="btn-group">
+								<my:select id="prjId" items="${prjInfos}" headerKey="" headerValue="全部项目" cssCls="form-control input-sm" value="${param.prjId}"/>
+								</div>
+								<input type="text" style="width: 200px;display: inline;" class="form-control input-sm" id="name" placeholder="文件名称" value="">
+							  	<button type="button" class="btn btn-sm btn-default enter-fn" onclick="info.loadInfo(1)">查询</button>
 							</div>
 							<div class="col-sm-6 text-right">
 							  	<div class="btn-group">
@@ -62,6 +64,7 @@ var info = {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
 				                         '<th>文件名称</th>',
+				                         '<th>所属项目</th>',
 				                         '<th>备注</th>',
 				                         '<th>是否使用</th>',
 				                         '<th>创建时间</th>',
@@ -74,7 +77,7 @@ var info = {
 
 			JUtil.ajax({
 				url : '${webroot}/msConfig/f-json/pageQuery.shtml',
-				data : { page:infoPage.page, size:infoPage.size, name: $('#name').val() },
+				data : { page:infoPage.page, size:infoPage.size, prjId: $('#prjId').val(), name: $('#name').val() },
 				beforeSend: function(){ infoPage.beforeSend('加载信息中...'); },
 				error : function(json){ infoPage.error('加载信息出错了!'); },
 				success : function(json){
@@ -86,6 +89,7 @@ var info = {
 							}
 							return ['<tr>',
 							    	'<td>',obj.name,'</td>',
+							    	'<td>',obj.prjName,'</td>',
 							    	'<td>',obj.remark,'</td>',
 							    	'<td><span ',_isUseCls,'>',obj.isUseName,'</span></td>',
 							    	'<td>',obj.createTime,'</td>',
@@ -108,7 +112,7 @@ var info = {
 				url: webroot + '/msConfig/f-view/edit.shtml?configId='+(id?id:''),
 				type: 'iframe',
 				width: 420,
-				height: 270
+				height: 320
 			});
 		},
 		values : function(id) {

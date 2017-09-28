@@ -4,12 +4,13 @@
 <mapper namespace="com.module.admin.ms.dao.MsConfigDao">
 
 	<sql id="commCols">
-		config_id configId,name name,remark remark,is_use isUse,create_time createTime,user_id userId
+		config_id configId,name name,remark remark,is_use isUse,create_time createTime,user_id userId,
+		prj_id prjId
 	</sql>
 
 	<insert id="save" parameterType="msConfig" flushCache="true">
-		 insert into ms_config(name,remark,is_use,create_time,user_id)
-		 values(#{name},#{remark},#{isUse},now(),#{userId})
+		 insert into ms_config(name,remark,is_use,create_time,user_id,prj_id)
+		 values(#{name},#{remark},#{isUse},now(),#{userId},#{prjId})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +21,7 @@
 	<update id="update" parameterType="msConfig" flushCache="true">
 		update ms_config
 		<set>
-			name=#{name},remark=#{remark},is_use=#{isUse}
+			name=#{name},remark=#{remark},is_use=#{isUse},prj_id=#{prjId}
 		</set>
 		<where>config_id=#{configId}</where>
 	</update>
@@ -41,6 +42,7 @@
 	<select id="findMsConfig" parameterType="msConfig" resultType="msConfig">
 		select <include refid="commCols"/> from ms_config
 		<where>
+			<if test="prjId!=null">and prj_id=#{prjId}</if>
 			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 		</where>
   		limit #{currentIndex}, #{size}
@@ -48,6 +50,7 @@
 	<select id="findMsConfigCount" parameterType="msConfig" resultType="int">
 		select count(*) from ms_config
 		<where>
+			<if test="prjId!=null">and prj_id=#{prjId}</if>
 			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
 		</where>
 	</select>

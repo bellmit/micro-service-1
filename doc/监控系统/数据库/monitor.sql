@@ -194,6 +194,7 @@ create table ms_config
    is_use               int not null comment '是否使用',
    create_time          datetime not null comment '创建日期',
    user_id              int not null comment '添加人',
+   prj_id               int not null comment '项目编号',
    primary key (config_id)
 );
 

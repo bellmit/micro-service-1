@@ -72,6 +72,7 @@ var info = {
 									'<a class="btn btn-default btn-xs dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
 									'<ul class="dropdown-menu" role="menu">',
 									'<li role="presentation"><a href="javascript:info.edit(',obj.prjId,')">修改</a></li>',
+									'<li role="presentation"><a href="javascript:info.config(',obj.prjId,',\'',obj.name,'\')" title="查看配置文件">查看配置</a></li>',
 									'<li role="presentation"><a href="javascript:info.ds(',obj.prjId,',\'',obj.name,'\')">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,',\'',obj.name,'\')" title="查看项目的监控">查看监控</a></li>',
 									'<li role="presentation"><a href="javascript:info.autoCode(',obj.prjId,',\'',obj.name,'\')">生成源码</a></li>',
@@ -80,26 +81,6 @@ var info = {
 									'</div>',
 								    '</div>',
 								  '</div>'].join('');
-							/* return ['<tr>',
-							    	'<td>',obj.code,'</td>',
-							    	'<td>',obj.name,'</td>',
-							    	'<td><span',_statusCls,'>',obj.statusName,'</span></td>',
-							    	'<td>',obj.createTime,'</td>',
-							    	'<td><a class="glyphicon glyphicon-edit text-success" href="javascript:info.edit(',obj.prjId,')" title="修改"></a>',
-							    	'&nbsp; <a class="glyphicon glyphicon-remove text-success" href="javascript:info.del(',obj.prjId,')" title="删除"></a>',
-							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:info.api(',obj.prjId,')" title="API列表">API</a>',
-							    	'&nbsp; &nbsp;&nbsp; <a class="glyphicon text-success" href="javascript:info.version(',obj.prjId,')" title="版本发布管理">版本管理</a>',
-							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
-									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
-									'<ul class="dropdown-menu" role="menu">',
-									'<li role="presentation"><a href="javascript:info.ds(',obj.prjId,')">数据源</a></li>',
-									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a></li>',
-									'<li role="presentation"><a href="javascript:info.autoCode(',obj.prjId,')">生成源码</a></li>',
-									'</ul>',
-									'</span>',
-							    	//'&nbsp; |&nbsp; <a class="glyphicon text-success" href="javascript:info.process(',obj.prjId,')" title="项目流程">详细</a>',
-							    	'</td>',
-								'</tr>'].join(''); */
 						}
 						infoPage.operate(json.body, { resultFn:getResult, dataNull:'没有记录噢' });
 						JUtil.sys.initOptMore();
@@ -120,23 +101,27 @@ var info = {
 		},
 		//版本管理
 		version : function(prjId, name) {
-			location = '${webroot}/prjVersion/f-view/manager.shtml?prjId=' + prjId + '&name=' + name;
+			window.open('${webroot}/prjVersion/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
 		},
 		//查看项目的api信息
 		api : function(prjId, name) {
-			location = '${webroot}/prjApi/f-view/manager.shtml?prjId=' + prjId + '&name=' + name;
+			window.open('${webroot}/prjApi/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
+		},
+		//查看配置文件
+		config : function(prjId, name) {
+			window.open('${webroot}/msConfig/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
 		},
 		//查看监控
 		monitor : function(prjId, name) {
-			location = '${webroot}/prjMonitor/f-view/manager.shtml?prjId=' + prjId + '&name=' + name;
+			window.open('${webroot}/prjMonitor/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
 		},
 		//数据源
 		ds : function(prjId, name) {
-			location = '${webroot}/prjDs/f-view/manager.shtml?prjId=' + prjId + '&name=' + name;
+			window.open('${webroot}/prjDs/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
 		},
 		//生成源码
 		autoCode : function(prjId, name) {
-			location = '${webroot}/codePrj/f-view/manager.shtml?prjId=' + prjId + '&name=' + name;
+			window.open('${webroot}/codePrj/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
 		}
 };
 $(function() {

@@ -98,6 +98,7 @@ var info = {
 							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
 									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
 									'<ul class="dropdown-menu" role="menu">',
+									'<li role="presentation"><a href="javascript:info.config(',obj.prjId,')" title="查看配置文件">查看配置</a></li>',
 									'<li role="presentation"><a href="javascript:info.ds(',obj.prjId,')">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,')" title="查看项目的监控">查看监控</a></li>',
 									'<li role="presentation"><a href="javascript:info.autoCode(',obj.prjId,')">生成源码</a></li>',
@@ -145,6 +146,10 @@ var info = {
 		//流程
 		process : function(prjId) {
 			location = '${webroot}/prjInfo/f-view/process.shtml?prjId=' + prjId;
+		},
+		//查看配置文件
+		config : function(prjId) {
+			location = '${webroot}/msConfig/f-view/manager.shtml?prjId=' + prjId + '&name=' + $('#name').val();
 		},
 		//版本管理
 		version : function(prjId) {

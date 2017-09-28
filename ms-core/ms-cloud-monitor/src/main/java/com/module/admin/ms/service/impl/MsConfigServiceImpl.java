@@ -16,6 +16,7 @@ import com.module.admin.ms.dao.MsConfigDao;
 import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
+import com.module.admin.prj.service.PrjInfoService;
 import com.module.comm.constants.ConfigCons;
 import com.system.auth.AuthUtil;
 import com.system.comm.enums.Boolean;
@@ -38,6 +39,8 @@ public class MsConfigServiceImpl implements MsConfigService {
 	private MsConfigDao msConfigDao;
 	@Autowired
 	private MsConfigValueService msConfigValueService;
+	@Autowired
+	private PrjInfoService prjInfoService;
 	@Autowired
 	private DiscoveryClient discoveryClient;
 	
@@ -69,6 +72,7 @@ public class MsConfigServiceImpl implements MsConfigService {
 			data = msConfigDao.findMsConfig(msConfig);
 			for (MsConfig mc : data) {
 				mc.setIsUseName(Boolean.getText(mc.getIsUse()));
+				mc.setPrjName(prjInfoService.getName(mc.getPrjId()));
 			}
 		}
 		Page<MsConfig> page = new Page<MsConfig>(msConfig.getPage(), msConfig.getSize(), total, data);

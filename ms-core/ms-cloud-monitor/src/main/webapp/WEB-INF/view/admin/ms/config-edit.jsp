@@ -11,6 +11,10 @@
 <body class="cld-body">
 	<div class="enter-panel ep-xs">
 		<input type="hidden" id="configId" value="${msConfig.configId}">
+		<div class="form-group">
+			<label for="prjId" class="col-sm-4">项目 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><my:select id="prjId" headerKey="" headerValue="请选择项目" items="${prjInfos}" value="${msConfig.prjId}" cssCls="form-control" /></div>
+		</div>
   		<div class="form-group">
 			<label for="name" class="col-sm-4">名称 <span class="text-danger">*</span></label>
 			<div class="col-sm-8"><input type="text" class="form-control" id="name" placeholder="名称" value="${msConfig.name}"></div>
@@ -37,7 +41,13 @@
 	$(function() {
 		$('#saveBtn').click(function() {
 			var _saveMsg = $('#saveMsg').empty();
-			
+
+			var _prjId = $('#prjId');
+			if(JUtil.isEmpty(_prjId.val())) {
+				_saveMsg.append('请选择项目');
+				_prjId.focus();
+				return;
+			}
 			var _name = $('#name');
 			if(JUtil.isEmpty(_name.val())) {
 				_saveMsg.append('请输入文件名称');
@@ -52,6 +62,7 @@
 				url : '${webroot}/msConfig/f-json/save.shtml',
 				data : {
 					configId: $('#configId').val(),
+					prjId: _prjId.val(),
 					name: _name.val(),
 					remark: $('#remark').val(),
 					isUse: $('input[name="isUse"]:checked').val()

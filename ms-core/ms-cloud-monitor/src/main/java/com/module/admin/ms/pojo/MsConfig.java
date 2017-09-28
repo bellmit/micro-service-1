@@ -32,12 +32,16 @@ public class MsConfig extends BaseEntity implements Serializable {
 	private Date createTime;
 	//添加人
 	private Integer userId;
+	//项目编号
+	private Integer prjId;
 	
 	//========================== 扩展属性
 	//是否使用显示值
 	private String isUseName;
 	//属性集合
 	private List<MsConfigValue> values;
+	//项目名称
+	private String prjName;
 	
 	public Integer getConfigId() {
 		return configId;
@@ -65,6 +69,12 @@ public class MsConfig extends BaseEntity implements Serializable {
 		this.name = name;
 	}
 	
+	public String getPrjName() {
+		return prjName;
+	}
+	public void setPrjName(String prjName) {
+		this.prjName = prjName;
+	}
 	public String getRemark() {
 		return remark;
 	}
@@ -72,6 +82,12 @@ public class MsConfig extends BaseEntity implements Serializable {
 		this.remark = remark;
 	}
 	
+	public Integer getPrjId() {
+		return prjId;
+	}
+	public void setPrjId(Integer prjId) {
+		this.prjId = prjId;
+	}
 	public Integer getIsUse() {
 		return isUse;
 	}

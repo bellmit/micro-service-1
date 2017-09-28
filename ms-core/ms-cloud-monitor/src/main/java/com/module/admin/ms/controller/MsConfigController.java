@@ -18,7 +18,9 @@ import com.module.admin.ms.pojo.MsConfig;
 import com.module.admin.ms.pojo.MsConfigValue;
 import com.module.admin.ms.service.MsConfigService;
 import com.module.admin.ms.service.MsConfigValueService;
+import com.module.admin.prj.service.PrjInfoService;
 import com.module.admin.sys.pojo.SysUser;
+import com.system.comm.model.KvEntity;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -37,6 +39,8 @@ public class MsConfigController extends BaseController {
 	private MsConfigService msConfigService;
 	@Autowired
 	private MsConfigValueService msConfigValueService;
+	@Autowired
+	private PrjInfoService prjInfoService;
 	
 	/**
 	 * 跳转到管理页
@@ -44,7 +48,9 @@ public class MsConfigController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/msConfig/f-view/manager")
-	public String manger(HttpServletRequest request) {
+	public String manger(HttpServletRequest request, ModelMap modelMap) {
+		List<KvEntity> prjInfos = prjInfoService.findKvAll();
+		modelMap.put("prjInfos", prjInfos);
 		return "admin/ms/config-manager";
 	}
 
@@ -79,6 +85,8 @@ public class MsConfigController extends BaseController {
 			List<MsConfigValue> values = msConfigValueService.findByConfigId(configId);
 			modelMap.put("values", values);
 		}
+		List<KvEntity> prjInfos = prjInfoService.findKvAll();
+		modelMap.put("prjInfos", prjInfos);
 		return "admin/ms/config-edit";
 	}
 
