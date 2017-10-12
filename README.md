@@ -23,5 +23,16 @@ hosts配置
 127.0.0.1	msConfig
 127.0.0.1	msTask
 
-待新增功能
+待新增功能：
 对应用的接口权限管理
+
+
+
+带学习功能：
+Spring Cloud Sleuth：日志收集工具包，封装了Dapper,Zipkin和HTrace操作。
+http://blog.csdn.net/forezp/article/details/70162074
+
+调用连跟踪，图表展示调用时间。 rpc用的什么框架  
+日志管理是怎么排错，比如多个服务调用链  如何排查错误 通过ID标识 架构内部集成
+
+http://blog.csdn.net/pzxwhc/article/details/49873623   api网关

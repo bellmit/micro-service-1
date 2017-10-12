@@ -8,7 +8,7 @@
 <title>查看日志</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
-<body class="cld_body">
+<body class="cld-body">
 	<div class="enter-panel">
   		<div class="form-group">
 			<input type="text" class="form-control" id="logPath" placeholder="日志路径" value="${prjClient.logPath}">

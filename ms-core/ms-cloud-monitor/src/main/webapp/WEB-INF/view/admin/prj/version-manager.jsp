@@ -188,7 +188,7 @@ var client = {
 				$('#clientInfo').css('display', 'block');
 				$('#clientInfoMsg').css('display', 'none');
 			}
-			$('#clientInfoTitle').html('<small>${prjInfo.name}部署版本：</small><span class="label label-warning">' + client.version + '</span>');
+			$('#clientInfoTitle').html('<small>部署版本：</small><span class="label label-warning">' + client.version + '</span>');
 			if(!clientPage) {
 				clientPage = new Page('clientPage', client.loadInfo, 'clientPanel', 'clientPage');
 				clientPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',

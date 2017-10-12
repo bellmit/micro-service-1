@@ -56,10 +56,10 @@ public class SnowflakeIdWorker {
     private final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
     private static boolean isInit = false;
-    /** 工作机器ID(0~1048575) */
+    /** 工作机器ID[通过datacenterId和workerId来做区分,这两个ID,分别是5bit,共10bit,最大值是1024(0-1023)个] */
     private static long workerId;
 
-    /** 数据中心ID(0~1048575) */
+    /** 数据中心ID[通过datacenterId和workerId来做区分,这两个ID,分别是5bit,共10bit,最大值是1024(0-1023)个] */
     private static long datacenterId;
 
     /** 毫秒内序列(0~4095) */
