@@ -1,4 +1,4 @@
-package com.ms.biz.api.config;
+package com.ms.biz.admin.config;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 
 import com.ms.env.Env;
 
-//@Configuration
+@Configuration
 public class HttpsConfig {
 
 	@Autowired

@@ -31,7 +31,6 @@ import com.system.auth.model.AuthClient;
 //@ImportResource(locations={"classpath:applicationContext.xml"})
 public class BizServiceApiApplication extends WebMvcConfigurerAdapter {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(BizServiceApiApplication.class, args);
 

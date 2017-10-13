@@ -30,6 +30,9 @@ public class UpdateConfigTask {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateConfigTask.class);
 
 	public void run(int initialDelay, int period) {
+		if(ConfigCons.configSearchLocations.startsWith("classpath:")) {
+			return;
+		}
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(20);
 		//线程，每隔5秒调用一次
 		Runnable runnable = new Runnable() {

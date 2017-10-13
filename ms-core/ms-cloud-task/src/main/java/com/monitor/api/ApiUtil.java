@@ -1,24 +1,14 @@
 package com.monitor.api;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -165,7 +155,6 @@ public class ApiUtil {
 	 * @param clazz 要获取参数名的方法所属的类
 	 * @param method 要获取参数名的方法
 	 * @return 按参数顺序排列的参数名列表，如果没有参数，则返回null
-	 */
 	public static String[] getMethodParameterNamesByAsm4(Class<?> clazz, final Method method) {
 		final Class<?>[] parameterTypes = method.getParameterTypes();
 		if (parameterTypes == null || parameterTypes.length == 0) {
@@ -215,6 +204,7 @@ public class ApiUtil {
 		}
 		return parameterNames;
 	}
+	 */
 
 	/**
 	 * 初始化监控的API

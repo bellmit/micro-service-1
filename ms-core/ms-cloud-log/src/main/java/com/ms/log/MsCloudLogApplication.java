@@ -1,14 +1,12 @@
 package com.ms.log;
 
-import javax.sql.DataSource;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import zipkin.server.EnableZipkinServer;
-import zipkin.storage.mysql.MySQLStorage;
 
+@EnableEurekaClient
 @SpringBootApplication
 @EnableZipkinServer
 //@EnableZipkinStreamServer

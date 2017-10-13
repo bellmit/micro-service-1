@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.client.RestTemplate;
 
 import com.monitor.MonitorCons;
 import com.monitor.api.ApiUtil;
@@ -21,6 +22,11 @@ public class MonitorConfig {
 
 	@Autowired
 	private Environment env;
+	
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 
 	@Bean
 	public MonitorCons monitorCons() throws Exception {
