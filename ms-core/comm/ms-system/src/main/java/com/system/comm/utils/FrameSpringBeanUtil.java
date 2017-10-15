@@ -23,10 +23,16 @@ public class FrameSpringBeanUtil implements ApplicationContextAware {
 
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String name) {
+		if(applicationContext == null) {
+			return null;
+		}
         return (T) applicationContext.getBean(name);
     }
 
 	public static <T> T getBean(Class<T> cls) {
+		if(applicationContext == null) {
+			return null;
+		}
         return (T) applicationContext.getBean(cls);
     }
 

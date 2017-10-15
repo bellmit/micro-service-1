@@ -2,7 +2,8 @@ package com.frame.test.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ import com.system.handle.model.ResponseFrame;
 @RestController
 public class TestController {
 
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
     
 	@Autowired
 	private TestService testService;
@@ -35,7 +36,8 @@ public class TestController {
 	public ResponseFrame get(HttpServletRequest request, String id) {
 		try {
 			ResponseFrame frame = new ResponseFrame();
-			frame.setBody(testService.get(id));
+			Test data = testService.get(id);
+			frame.setBody(data);
 			frame.setCode(ResponseCode.SUCC.getCode());
 			return frame;
 		} catch (Exception e) {

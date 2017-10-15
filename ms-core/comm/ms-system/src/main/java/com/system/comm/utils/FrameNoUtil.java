@@ -1,8 +1,7 @@
 package com.system.comm.utils;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,6 +42,24 @@ public class FrameNoUtil {
 	 */
 	public static String uuidFull() {
 		return UUID.randomUUID().toString();
+	}
+	
+	/**
+	 * 生成指定位数的数字[可用于手机短信验证码]
+	 * @param charCount
+	 * @return
+	 */
+	public static String getRandNum(int charCount) {
+		String charValue = "";
+		for (int i = 0; i < charCount; i++) {
+			char c = (char) (randomInt(0, 10) + '0');
+			charValue += String.valueOf(c);
+		}
+		return charValue;
+	}
+	private static int randomInt(int from, int to) {
+		Random r = new Random();
+		return from + r.nextInt(to - from);
 	}
 
 	/**
