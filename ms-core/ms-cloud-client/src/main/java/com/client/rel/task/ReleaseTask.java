@@ -33,7 +33,7 @@ public class ReleaseTask {
 	private static final Logger LOGGER = Logger.getLogger(ReleaseTask.class);
 
 	public void run() {
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(100);
+		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 		//线程，每隔5秒调用一次
 		Runnable runnable = new Runnable() {
 			public void run() {

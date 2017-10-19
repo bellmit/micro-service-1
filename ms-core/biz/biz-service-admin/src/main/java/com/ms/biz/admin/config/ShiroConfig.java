@@ -22,16 +22,14 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 
 import com.module.comm.shiro.ShiroDbRealm;
 import com.module.comm.shiro.cache.RedisSessionDao;
 
-@Configuration
-@Lazy(true)
+//@Configuration
+//@Lazy(true)
 public class ShiroConfig {
 
 	@Autowired

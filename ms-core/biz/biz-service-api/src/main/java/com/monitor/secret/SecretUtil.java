@@ -23,7 +23,7 @@ public class SecretUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SecretUtil.class);
 
 	public void init() {
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(10);
+		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 		//线程，每隔60秒调用一次
 		Runnable runnable = new Runnable() {
 			public void run() {

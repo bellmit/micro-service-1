@@ -11,13 +11,20 @@ import com.system.comm.utils.FrameSpringBeanUtil;
 
 public class MsLog {
 	
+	private static final String CONFIG_ERROR = "----->>>>> 请新增LogConfig记录日志的文件 =======";
 	private Logger logger;
 	private Tracer tracer;
 	
 	private MsLog(Logger logger) {
 		super();
 		this.logger = logger;
-		this.tracer = FrameSpringBeanUtil.getBean(Tracer.class);
+	}
+	
+	private Tracer getTracer() {
+		if(this.tracer == null) {
+			this.tracer = FrameSpringBeanUtil.getBean(Tracer.class);
+		}
+		return this.tracer;
 	}
 
 	public static MsLog getMsLog(Class<?> clazz) {
@@ -30,14 +37,18 @@ public class MsLog {
 	}
 	public void info(String msg) {
 		logger.info(msg);
-		if(tracer != null) {
-			tracer.addTag(MsLogLevel.INFO.toString(), msg);
+		if(getTracer() != null) {
+			getTracer().addTag(MsLogLevel.INFO.toString(), msg);
+		} else {
+			logger.error(CONFIG_ERROR);
 		}
 	}
 	public void error(String msg) {
 		logger.error(msg);
-		if(tracer != null) {
-			tracer.addTag(MsLogLevel.ERROR.toString(), msg);
+		if(getTracer() != null) {
+			getTracer().addTag(MsLogLevel.ERROR.toString(), msg);
+		} else {
+			logger.error(CONFIG_ERROR);
 		}
 	}
 	
