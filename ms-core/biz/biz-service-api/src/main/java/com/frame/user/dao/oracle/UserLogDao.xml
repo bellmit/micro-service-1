@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.user.dao.UserLogDao">
+
+	<sql id="commCols">
+		log_id logId,user_id userId,ip ip,type type,remark remark,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+		begin
+			execute immediate 'create table user_log
+			(
+			   log_id             VARCHAR2(32)         not null,
+			   user_id            VARCHAR2(32)         not null,
+			   ip          		  VARCHAR2(50)         not null,
+			   type           	  INTEGER		       not null,
+			   remark             VARCHAR2(255)         not null,
+			   create_time        DATE                 not null
+			)';
+			execute immediate 'comment on table user_log is ''用户日志表''';
+			execute immediate 'comment on column user_log.log_id is ''编号''';
+			execute immediate 'comment on column user_log.user_id is ''用户编号''';
+			execute immediate 'comment on column user_log.ip is ''ip地址''';
+			execute immediate 'comment on column user_log.type is ''类型[10登录、20操作]''';
+			execute immediate 'comment on column user_log.remark is ''备注''';
+			execute immediate 'comment on column user_log.create_time is ''添加时间''';
+			execute immediate 'alter table user_log add constraint pk_log_id primary key (log_id)';
+		end;
+		]]>
+	</update>
+	
+	<select id="isExistTable" resultType="int">
+		select count(*) from user_log
+	</select>
+	
+	<insert id="save" parameterType="userLog" flushCache="true">
+		 insert into user_log(log_id,user_id,ip,type,remark,create_time)
+		 values(#{logId},#{userId},#{ip},#{type},#{remark},sysdate)
+	</insert>
+</mapper>

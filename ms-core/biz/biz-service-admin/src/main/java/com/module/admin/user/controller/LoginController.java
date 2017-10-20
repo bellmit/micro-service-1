@@ -18,6 +18,7 @@ import com.module.admin.user.pojo.LoginUser;
 import com.module.admin.user.service.UserInfoService;
 import com.module.admin.user.utils.UserUtil;
 import com.module.comm.csrf.CsrfToken;
+import com.system.comm.utils.FrameAddressUtil;
 import com.system.handle.model.ResponseCode;
 import com.system.handle.model.ResponseFrame;
 
@@ -45,7 +46,9 @@ public class LoginController extends BaseController {
 		try {
 			Subject user = SecurityUtils.getSubject();
 			String md5Pwd = UserUtil.encryptionPassword(password);
+			String ip = FrameAddressUtil.getIpAddr(request);
 			UsernamePasswordToken token = new UsernamePasswordToken(username, md5Pwd.toCharArray());
+			token.setHost(ip);
 			// 默认设置为记住密码，你可以自己在表单中加一个参数来控制
 			token.setRememberMe(false);
 			user.login(token);

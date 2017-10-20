@@ -50,12 +50,12 @@ public class UserInfoController {
 	}
 
 	@RequestMapping(value = "/userInfo/login")
-	public ResponseFrame login(String userName, String password, Integer isEncryption) {
+	public ResponseFrame login(String userName, String password, String ip, Integer isEncryption) {
 		try {
 			/*String userName = FrameMapUtil.getString(map, "userName");
 			String password = FrameMapUtil.getString(map, "password");
 			Integer isEncryption = FrameMapUtil.getInteger(map, "isEncryption");*/
-			ResponseFrame frame = userInfoService.login(userName, password, isEncryption);
+			ResponseFrame frame = userInfoService.login(userName, password, ip, isEncryption);
 			return frame;
 		} catch (Exception e) {
 			LOGGER.error("处理业务异常: " + e.getMessage(), e);

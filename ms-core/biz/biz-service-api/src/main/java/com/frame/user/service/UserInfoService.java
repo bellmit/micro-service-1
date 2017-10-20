@@ -14,10 +14,11 @@ public interface UserInfoService {
 	 * 登录
 	 * @param userName
 	 * @param password
+	 * @param ip 
 	 * @param isEncryption	密码是否加密[0否、1是]
 	 * @return
 	 */
-	public ResponseFrame login(String userName, String password, Integer isEncryption);
+	public ResponseFrame login(String userName, String password, String ip, Integer isEncryption);
 	public ResponseFrame updatePassword(String userId, String oldPwd, String newPwd, Integer isEncryption);
 	public ResponseFrame pageQuery(UserInfo userInfo);
 	public ResponseFrame updateIsDelete(String userId, Integer isDelete);

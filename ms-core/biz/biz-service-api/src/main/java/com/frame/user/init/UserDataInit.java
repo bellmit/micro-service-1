@@ -3,6 +3,7 @@ package com.frame.user.init;
 import org.apache.log4j.Logger;
 
 import com.frame.user.service.UserInfoService;
+import com.frame.user.service.UserLogService;
 import com.frame.user.service.UserRoleService;
 import com.system.comm.utils.FrameSpringBeanUtil;
 
@@ -23,7 +24,9 @@ public class UserDataInit {
 
 		UserRoleService userRoleService = FrameSpringBeanUtil.getBean(UserRoleService.class);
 		userRoleService.initTable();
-
+		
+		UserLogService userLogService = FrameSpringBeanUtil.getBean(UserLogService.class);
+		userLogService.initTable();
 		LOGGER.info("||===== 初始化 user 模块相关的表结构 全部完成!");
 		LOGGER.info("||==========================================");
 	}

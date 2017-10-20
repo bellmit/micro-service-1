@@ -16,10 +16,11 @@ import com.system.handle.model.ResponseFrame;
 @Component
 public class UserInfoService extends BaseService {
 
-	public ResponseFrame login(String userName, String password) {
+	public ResponseFrame login(String userName, String password, String ip) {
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("userName", userName);
 		paramsMap.put("password", password);
+		paramsMap.put("ip", ip);
 		//标记密码已经加过密了
 		paramsMap.put("isEncryption", 1);
 		ResponseFrame frame = post("/userInfo/login", paramsMap);

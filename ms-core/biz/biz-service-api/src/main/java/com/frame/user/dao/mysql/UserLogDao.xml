@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.user.dao.UserInfoDao">
+
+	<sql id="commCols">
+		log_id logId,user_id userId,ip ip,type type,remark remark,create_time createTime
+	</sql>
+	
+	<update id="createTable" flushCache="true">
+		<![CDATA[
+			CREATE TABLE user_log (
+				log_id varchar(32) NOT NULL COMMENT '编码',
+				user_id varchar(32) NOT NULL COMMENT '用户编码',
+				ip varchar(100) NOT NULL COMMENT 'ip',
+				type int NOT NULL COMMENT '类型[10登录、20操作]',
+				remark varchar(255) NOT NULL COMMENT '备注',
+				create_time datetime NOT NULL COMMENT '添加时间',
+			  	PRIMARY KEY (log_id)
+			) COMMENT='用户日志表'
+		]]>
+	</update>
+	
+	<select id="isExistTable" resultType="int">
+		select count(*) from user_log
+	</select>
+	
+	<insert id="save" parameterType="userLog" flushCache="true">
+		 insert into user_log(log_id,user_id,ip,type,remark,create_time)
+		 values(#{logId},#{userId},#{ip},#{type},#{remark},sysdate)
+	</insert>
+</mapper>

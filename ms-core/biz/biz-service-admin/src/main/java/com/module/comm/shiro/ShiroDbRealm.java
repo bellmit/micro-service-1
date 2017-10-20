@@ -48,7 +48,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         LOGGER.info("Shiro开始登录认证");
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         String password = new String(token.getPassword());
-        ResponseFrame loginFrame = userInfoService.login(token.getUsername(), password);
+        ResponseFrame loginFrame = userInfoService.login(token.getUsername(), password, token.getHost());
         if(ResponseCode.SUCC.getCode() != loginFrame.getCode().intValue()) {
         	throw new AuthenticationException(loginFrame.getMessage());
         }

@@ -8,8 +8,11 @@ import org.springframework.stereotype.Component;
 
 import com.frame.user.dao.UserInfoDao;
 import com.frame.user.enums.UserInfoStatus;
+import com.frame.user.enums.UserLogType;
 import com.frame.user.pojo.UserInfo;
+import com.frame.user.pojo.UserLog;
 import com.frame.user.service.UserInfoService;
+import com.frame.user.service.UserLogService;
 import com.frame.user.utils.UserUtil;
 import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
@@ -24,6 +27,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	private static final Logger LOGGER = Logger.getLogger(UserInfoServiceImpl.class);
 	@Autowired
 	private UserInfoDao userInfoDao;
+	@Autowired
+	private UserLogService userLogService;
 
 	@Override
 	public UserInfo get(String userId) {
@@ -87,7 +92,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public ResponseFrame login(String userName, String password, Integer isEncryption) {
+	public ResponseFrame login(String userName, String password, String ip, Integer isEncryption) {
 		ResponseFrame frame = new ResponseFrame();
 		UserInfo ui = userInfoDao.getByUserName(userName);
 		if(ui == null || Boolean.TRUE.getCode() == ui.getIsDelete().intValue()) {
@@ -111,7 +116,14 @@ public class UserInfoServiceImpl implements UserInfoService {
 			frame.setMessage("密码错误");
 			return frame;
 		}
-		
+
+		//记录登录日志
+		UserLog userLog = new UserLog();
+		userLog.setUserId(ui.getUserId());
+		userLog.setType(UserLogType.LOGIN.getCode());
+		userLog.setRemark(ui.getUserName() + "登录系统");
+		userLog.setIp(ip);
+		userLogService.save(userLog);
 		frame.setBody(ui);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
