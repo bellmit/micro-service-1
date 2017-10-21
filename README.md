@@ -13,13 +13,15 @@
 密钥管理可以设置拥有项目接口所有权限和增加授权接口访问的权限的信息
 
 ### 服务启动顺序
-	1. 启动eureka
-	2. 启动config
-	3. 启动monitor
-	4. 启动zuul
-	5. 启动task
-	6. 启动应用程序
-
+```
+启动eureka
+启动config
+启动monitor
+启动log
+启动zuul
+启动task
+启动应用程序
+```
 
 ### 配置域名映射关系 hosts配置
 ```
