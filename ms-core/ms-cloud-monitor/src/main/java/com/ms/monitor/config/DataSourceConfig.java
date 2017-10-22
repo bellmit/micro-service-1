@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
@@ -75,15 +74,5 @@ public class DataSourceConfig {
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dataSource) throws Exception {
         return new DataSourceTransactionManager(dataSource);
-    }
-    
-    /**
-     * 配置jdbc模板
-     * @param dataSource
-     * @return
-     */
-    @Bean
-    public JdbcTemplate jdbcTemplate(DynamicDataSource dataSource) {
-    	return new JdbcTemplate(dataSource);
     }
 }

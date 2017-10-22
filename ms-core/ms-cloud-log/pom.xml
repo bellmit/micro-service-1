@@ -92,6 +92,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>ms.system</groupId>
+			<artifactId>ms-system</artifactId>
+			<version>${ms.system.version}</version>
+		</dependency>
 	</dependencies>
 
 	<!-- <dependencyManagement>

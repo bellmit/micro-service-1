@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.module.api.dao.ZipkinAnnotationsDao">
+
+	<sql id="commCols">
+		trace_id_high traceIdHigh,trace_id traceId,span_id spanId,a_key aKey,a_value aValue,a_type aType,
+		a_timestamp aTimestamp,endpoint_ipv4 endpointIpv4,endpoint_ipv6 endpointIpv6,endpoint_port endpointPort,endpoint_service_name endpointServiceName
+	</sql>
+
+	<select id="get" resultType="prjDs">
+		select <include refid="commCols"/> from prj_ds
+  		<where>prj_id=#{prjId} and code=#{code}</where>
+	</select>
+	
+	<select id="findByPrjId" resultType="prjDs">
+		select <include refid="commCols"/> from prj_ds
+  		<where>prj_id=#{prjId}</where>
+	</select>
+	
+	<select id="findPrjDs" parameterType="prjDs" resultType="prjDs">
+		select <include refid="commCols"/> from prj_ds
+		<where>
+			prj_id=#{prjId}
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findPrjDsCount" parameterType="prjDs" resultType="int">
+		select count(*) from prj_ds
+		<where>
+			prj_id=#{prjId}
+		</where>
+	</select>
+</mapper>

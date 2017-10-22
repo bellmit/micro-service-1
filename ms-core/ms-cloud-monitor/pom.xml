@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>ms.system</groupId>
 			<artifactId>ms-system</artifactId>
-			<version>1.0.0</version>
+			<version>${ms.system.version}</version>
 		</dependency>
 		
 		
