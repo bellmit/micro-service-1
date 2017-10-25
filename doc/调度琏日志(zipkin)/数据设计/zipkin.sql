@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS zipkin_annotations (
   `trace_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.trace_id',
   `span_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.id',
   `a_key` VARCHAR(255) NOT NULL COMMENT 'BinaryAnnotation.key or Annotation.value if type == -1',
-  `a_value` BLOB COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
+  `a_value` TEXT COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
   `a_type` INT NOT NULL COMMENT 'BinaryAnnotation.type() or -1 if Annotation',
   `a_timestamp` BIGINT COMMENT 'Used to implement TTL; Annotation.timestamp or zipkin_spans.timestamp',
   `endpoint_ipv4` INT COMMENT 'Null when Binary/Annotation.endpoint is null',

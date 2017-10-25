@@ -16,5 +16,10 @@ public class ConfigCons {
 	
 	public static String webroot;
 	public static String realpath;
+
+	/**
+	 * 日志的地址
+	 */
+	public static String logServerHost;
 	
 }

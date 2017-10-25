@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import zipkin.storage.mysql.internal.generated.tables.ZipkinAnnotations;
+import com.module.api.pojo.ZipkinAnnotations;
 
 /**
  * ZipkinAnnotations的Dao
@@ -14,9 +14,6 @@ import zipkin.storage.mysql.internal.generated.tables.ZipkinAnnotations;
  */
 public interface ZipkinAnnotationsDao {
 
-	public abstract ZipkinAnnotations get(@Param("prjId")Integer prjId, @Param("code")String code);
-
-	public abstract List<ZipkinAnnotations> findPrjDs(ZipkinAnnotations zipkinAnnotations);
-	
-	public abstract List<ZipkinAnnotations> findByPrjId(@Param("prjId")Integer prjId);
+	public abstract List<ZipkinAnnotations> findByAKeyATimestamp(
+			@Param("aKey")String aKey, @Param("beginTime")Long beginTime, @Param("endTime")Long endTime);
 }

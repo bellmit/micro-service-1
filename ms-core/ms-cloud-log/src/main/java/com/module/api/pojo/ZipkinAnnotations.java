@@ -1,6 +1,7 @@
 package com.module.api.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
@@ -34,6 +35,10 @@ public class ZipkinAnnotations extends BaseEntity implements Serializable {
 	private Integer endpointPort;
 	//Null when Binary/Annotation.endpoint is null
 	private String endpointServiceName;
+	
+	//==================== 扩展属性
+	//新增时间
+	private Date aTime;
 	
 	public Long getTraceIdHigh() {
 		return traceIdHigh;
@@ -100,5 +105,18 @@ public class ZipkinAnnotations extends BaseEntity implements Serializable {
 	}
 	public void setEndpointServiceName(String endpointServiceName) {
 		this.endpointServiceName = endpointServiceName;
+	}
+	public Date getaTime() {
+		if(aTime == null && aTimestamp != null) {
+			aTime = new Date(aTimestamp / 1000);
+		}
+		return aTime;
+	}
+	public void setaTime(Date aTime) {
+		if(aTime == null && aTimestamp != null) {
+			aTime = new Date(aTimestamp / 1000);
+		} else {
+			this.aTime = aTime;
+		}
 	}
 }

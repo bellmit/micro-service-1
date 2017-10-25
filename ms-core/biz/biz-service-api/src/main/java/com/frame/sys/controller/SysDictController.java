@@ -48,8 +48,7 @@ public class SysDictController {
 			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
 			@ApiRes(name="字典编号", code="dictId", pCode="body", clazz=String.class, value="roleIdClientManager"),
 			@ApiRes(name="分类编号", code="typeCode", pCode="body", clazz=String.class, value="ROLE_INFO")
-	}
-			)
+	})
 	public ResponseFrame get(String typeCode, String dictId) {
 		try {
 			ResponseFrame frame = new ResponseFrame();

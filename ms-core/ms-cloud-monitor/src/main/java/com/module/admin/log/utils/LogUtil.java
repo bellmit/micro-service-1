@@ -1,4 +1,4 @@
-package com.module.admin.tts.utils;
+package com.module.admin.log.utils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,7 +11,7 @@ import com.system.auth.AuthUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
 import com.system.handle.model.ResponseFrame;
 
-public class TaskUtil {
+public class LogUtil {
 
 	public static ResponseFrame post(String url, Map<String, Object> paramsMap) throws IOException {
 		String time = String.valueOf(System.currentTimeMillis());
@@ -21,9 +21,9 @@ public class TaskUtil {
 		//String result = FrameHttpUtil.post(ConfigCons.taskServerHost + url, paramsMap);
 		
 		RestUtil restUtil = FrameSpringBeanUtil.getBean(RestUtil.class);
-		String fallbackUri = ConfigCons.taskServerHost;
-		String serviceId = EnvUtil.get(Env.CLIENT_TASK_SERVER_SERVICEID);
-		return restUtil.request(serviceId, url, paramsMap, fallbackUri );
+		String fallbackUri = ConfigCons.logServerHost;
+		String serviceId = EnvUtil.get(Env.CLIENT_LOG_SERVER_SERVICEID);
+		return restUtil.request(serviceId, url, paramsMap, fallbackUri);
 		//return FrameJsonUtil.toObject(result, ResponseFrame.class);
 	}
 }

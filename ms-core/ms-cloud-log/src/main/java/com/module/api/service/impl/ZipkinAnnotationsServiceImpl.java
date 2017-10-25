@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.module.api.dao.ZipkinAnnotationsDao;
 import com.module.api.pojo.ZipkinAnnotations;
 import com.module.api.service.ZipkinAnnotationsService;
-import com.system.comm.utils.FrameTimeUtil;
 
 @Component
 public class ZipkinAnnotationsServiceImpl implements ZipkinAnnotationsService {
@@ -19,6 +18,6 @@ public class ZipkinAnnotationsServiceImpl implements ZipkinAnnotationsService {
 
 	@Override
 	public List<ZipkinAnnotations> findByAKeyATimestamp(String aKey, Date beginTime, Date endTime) {
-		return null;
+		return zipkinAnnotationsDao.findByAKeyATimestamp(aKey, beginTime.getTime() * 1000, endTime.getTime() * 1000);
 	}
 }

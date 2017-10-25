@@ -8,27 +8,10 @@
 		a_timestamp aTimestamp,endpoint_ipv4 endpointIpv4,endpoint_ipv6 endpointIpv6,endpoint_port endpointPort,endpoint_service_name endpointServiceName
 	</sql>
 
-	<select id="get" resultType="prjDs">
-		select <include refid="commCols"/> from prj_ds
-  		<where>prj_id=#{prjId} and code=#{code}</where>
+	<select id="findByAKeyATimestamp" resultType="zipkinAnnotations">
+		select <include refid="commCols"/> from zipkin_annotations
+  		<where>a_key=#{aKey} and a_timestamp>=#{beginTime} and a_timestamp&lt;=#{endTime}</where>
+  		order by a_timestamp desc
 	</select>
 	
-	<select id="findByPrjId" resultType="prjDs">
-		select <include refid="commCols"/> from prj_ds
-  		<where>prj_id=#{prjId}</where>
-	</select>
-	
-	<select id="findPrjDs" parameterType="prjDs" resultType="prjDs">
-		select <include refid="commCols"/> from prj_ds
-		<where>
-			prj_id=#{prjId}
-		</where>
-  		limit #{currentIndex}, #{size}
-	</select>
-	<select id="findPrjDsCount" parameterType="prjDs" resultType="int">
-		select count(*) from prj_ds
-		<where>
-			prj_id=#{prjId}
-		</where>
-	</select>
 </mapper>

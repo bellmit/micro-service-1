@@ -1,11 +1,11 @@
 package com.ms.log.config;
 
 
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.system.ds.DynamicDataSource;
 
 @Configuration
 public class JdbcTemplateConfig {
@@ -19,7 +19,7 @@ public class JdbcTemplateConfig {
      * @return
      */
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    public JdbcTemplate jdbcTemplate(DynamicDataSource dataSource) {
     	return new JdbcTemplate(dataSource);
     }
 }
