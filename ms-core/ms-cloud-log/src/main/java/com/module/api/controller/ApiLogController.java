@@ -55,7 +55,7 @@ public class ApiLogController {
 	
 	@RequestMapping(name = "获取日志", value = "/api/log/find")
 	@ApiInfo(params = {
-			@ApiParam(name="key的值[INFO/ERROR]", code="key", clazz=String.class, value="INFO"),
+			@ApiParam(name="key的值[ms-cloud-log.INFO/ms-cloud-log.ERROR]", code="key", clazz=String.class, value="INFO"),
 			@ApiParam(name="开始日期", code="beginTime", clazz=String.class, value="2017-10-24 12:12:12"),
 			@ApiParam(name="开始日期", code="endTime", clazz=String.class, value="2017-10-25 12:12:12")
 	},

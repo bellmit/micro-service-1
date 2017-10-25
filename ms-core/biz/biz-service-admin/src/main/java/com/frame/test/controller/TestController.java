@@ -24,6 +24,7 @@ public class TestController {
         return r;
     }*/
     
+    //http://127.0.0.1:7950/test/index
     @RequestMapping(value = "/test/index")
     public String index(ModelMap modelMap) {
         modelMap.addAttribute("message", "您好");

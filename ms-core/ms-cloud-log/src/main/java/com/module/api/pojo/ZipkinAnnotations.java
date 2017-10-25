@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import zipkin.internal.Util;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.system.comm.model.BaseEntity;
@@ -39,6 +41,8 @@ public class ZipkinAnnotations extends BaseEntity implements Serializable {
 	//==================== 扩展属性
 	//新增时间
 	private Date aTime;
+	//Hex
+	private String traceIdHex;
 	
 	public Long getTraceIdHigh() {
 		return traceIdHigh;
@@ -118,5 +122,17 @@ public class ZipkinAnnotations extends BaseEntity implements Serializable {
 		} else {
 			this.aTime = aTime;
 		}
+	}
+	public String getTraceIdHex() {
+		if(traceIdHex == null) {
+			traceIdHex = Util.toLowerHex(traceId);
+		}
+		return traceIdHex;
+	}
+	public void setTraceIdHex(String traceIdHex) {
+		if(traceIdHex == null) {
+			traceIdHex = Util.toLowerHex(traceId);
+		}
+		this.traceIdHex = traceIdHex;
 	}
 }

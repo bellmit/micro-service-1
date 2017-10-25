@@ -12,7 +12,7 @@
 	<div class="container">
 		<jsp:include page="/WEB-INF/view/admin/comm/left.jsp">
 			<jsp:param name="first" value="sys"/>
-			<jsp:param name="second" value="configManager"/>
+			<jsp:param name="second" value="sysConfigManager"/>
 		</jsp:include>
 		<div class="c-right">
 			<div class="panel panel-success">

@@ -209,14 +209,14 @@ JUtil.date = {
 		},
 		//获取指定时间加上指定的小时数 [date:日期 hour:加上的小时]
 		getDateAddHour : function(date, hour) {
-			if(date === undefined || date === '') { date = dateUtil.getDate(); }
+			if(date === undefined || date === '') { date = JUtil.date.getDate(); }
 			if(hour === undefined || hour === '') { hour = 0; }
 			date.setHours(date.getHours() + hour);
 			return date;
 		},
 		//获取指定时间加上指定的分钟数 [date:日期 min:加上的分钟]
 		getDateAddMin : function(date, min) {
-			if(date === undefined || date === '') { date = dateUtil.getDate(); }
+			if(date === undefined || date === '') { date = JUtil.date.getDate(); }
 			if(min === undefined || min === '') { min = 0; }
 			date.setMinutes(date.getMinutes() + min);
 			return date;

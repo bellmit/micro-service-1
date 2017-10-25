@@ -12,6 +12,7 @@
 		select <include refid="commCols"/> from zipkin_annotations
   		<where>a_key=#{aKey} and a_timestamp>=#{beginTime} and a_timestamp&lt;=#{endTime}</where>
   		order by a_timestamp desc
+  		limit 100
 	</select>
 	
 </mapper>

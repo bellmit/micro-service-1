@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.sleuth.Tracer;
 
 import com.monitor.log.core.MsLogLevel;
+import com.ms.env.EnvUtil;
 import com.system.comm.utils.FrameJsonUtil;
 import com.system.comm.utils.FrameSpringBeanUtil;
 
@@ -14,6 +15,7 @@ public class MsLog {
 	private static final String CONFIG_ERROR = "----->>>>> 请新增LogConfig记录日志的文件 =======";
 	private Logger logger;
 	private Tracer tracer;
+	private String serviceId;
 	
 	private MsLog(Logger logger) {
 		super();
@@ -25,6 +27,12 @@ public class MsLog {
 			this.tracer = FrameSpringBeanUtil.getBean(Tracer.class);
 		}
 		return this.tracer;
+	}
+	private String getServiceId() {
+		if(this.serviceId == null) {
+			this.serviceId = EnvUtil.get("spring.application.name");
+		}
+		return this.serviceId;
 	}
 
 	public static MsLog getMsLog(Class<?> clazz) {
@@ -38,7 +46,7 @@ public class MsLog {
 	public void info(String msg) {
 		logger.info(msg);
 		if(getTracer() != null) {
-			getTracer().addTag(MsLogLevel.INFO.toString(), msg);
+			getTracer().addTag(getServiceId() + "." + MsLogLevel.INFO.toString(), msg);
 		} else {
 			logger.error(CONFIG_ERROR);
 		}
@@ -46,7 +54,7 @@ public class MsLog {
 	public void error(String msg) {
 		logger.error(msg);
 		if(getTracer() != null) {
-			getTracer().addTag(MsLogLevel.ERROR.toString(), msg);
+			getTracer().addTag(getServiceId() + "." + MsLogLevel.ERROR.toString(), msg);
 		} else {
 			logger.error(CONFIG_ERROR);
 		}

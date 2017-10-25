@@ -42,6 +42,9 @@
 					<div>
 						<a class="btn btn-<c:choose><c:when test="${param.second == 'prjMonitorManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/prjMonitor/f-view/manager.shtml">服务监控</a>
 					</div>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'logInfoManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/logInfo/f-view/manager.shtml">日志管理</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -100,11 +103,11 @@
 			<div id="mlCollapseSys" class="panel-collapse collapse <c:if test="${param.first == 'sys'}">in</c:if>">
 				<div class="panel-body">
 					<div>
-						<a class="btn btn-<c:choose><c:when test="${param.second == 'userManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block"
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'sysUserManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block"
 							href="${webroot}/sysUser/f-view/manager.shtml">用户管理</a>
 					</div>
 					<div>
-						<a class="btn btn-<c:choose><c:when test="${param.second == 'configManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block"
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'sysConfigManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block"
 							href="${webroot}/sysConfig/f-view/manager.shtml">系统配置</a>
 					</div>
 				</div>
