@@ -29,12 +29,15 @@ public interface PrjVersionDao {
 
 	/**
 	 * 将所有版本修改为未发布
+	 * @param prjId 
 	 */
-	public abstract void updateNotRelease();
+	public abstract void updateNotRelease(@Param("prjId")Integer prjId);
 
-	public abstract int getCountByIsRelease(@Param("prjId")Integer prjId, @Param("isRelease")Integer isRelease);
+	//public abstract int getCountByIsRelease(@Param("prjId")Integer prjId, @Param("isRelease")Integer isRelease);
 
 	public abstract List<KvEntity> findKvAll();
 
 	public abstract List<PrjVersion> findByPrjId(@Param("prjId")Integer prjId);
+
+	public abstract void updateIsRelease(@Param("prjId")Integer prjId, @Param("version")String version);
 }

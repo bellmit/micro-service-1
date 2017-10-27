@@ -41,6 +41,7 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 			prjVersionDao.updateNotRelease();
 		}*/
 		if(org == null) {
+			prjVersionDao.updateNotRelease(prjVersion.getPrjId());
 			prjVersionDao.save(prjVersion);
 			//根据回滚版本，设置发布到的客户端
 			List<PrjClient> clients = prjClientService.findByPrjIdVersion(prjVersion.getPrjId(), prjVersion.getRbVersion());
@@ -107,5 +108,11 @@ public class PrjVersionServiceImpl implements PrjVersionService {
 	@Override
 	public List<PrjVersion> findByPrjId(Integer prjId) {
 		return prjVersionDao.findByPrjId(prjId);
+	}
+
+	@Override
+	public void updateRelease(Integer prjId, String version) {
+		prjVersionDao.updateNotRelease(prjId);
+		prjVersionDao.updateIsRelease(prjId, version);
 	}
 }

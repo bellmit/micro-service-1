@@ -48,4 +48,10 @@ public interface PrjVersionService {
 	public List<KvEntity> findKvAll();
 
 	public List<PrjVersion> findByPrjId(Integer prjId);
+	/**
+	 * 修改为发布版本
+	 * @param prjId
+	 * @param version
+	 */
+	public void updateRelease(Integer prjId, String version);
 }

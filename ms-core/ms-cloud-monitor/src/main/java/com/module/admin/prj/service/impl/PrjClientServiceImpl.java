@@ -106,6 +106,7 @@ public class PrjClientServiceImpl implements PrjClientService {
 	@Override
 	public void updateStatus(String clientId, Integer prjId, String version, Integer status, String statusMsg) {
 		prjClientDao.updateStatus(clientId, prjId, version, status, statusMsg);
+		prjVersionService.updateRelease(prjId, version);
 	}
 
 	@Override

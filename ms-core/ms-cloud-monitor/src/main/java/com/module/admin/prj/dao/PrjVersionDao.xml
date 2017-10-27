@@ -30,16 +30,24 @@
 		<set>
 			is_release=0
 		</set>
+		<where>prj_id=#{prjId}</where>
+	</update>
+	<update id="updateIsRelease" flushCache="true">
+		update prj_version
+		<set>
+			is_release=1
+		</set>
+		<where>prj_id=#{prjId} and version=#{version}</where>
 	</update>
 	
 	<select id="get" resultType="prjVersion">
 		select <include refid="commCols"/> from prj_version
   		<where>prj_id=#{prjId} and version=#{version}</where>
 	</select>
-	<select id="getCountByIsRelease" resultType="int">
+	<!-- <select id="getCountByIsRelease" resultType="int">
 		select count(*) from prj_version
   		<where>prj_id=#{prjId} and is_release=#{isRelease}</where>
-	</select>
+	</select> -->
 	
 	<select id="findKvAll" resultType="kvEntity">
 		select version code,version value from prj_version

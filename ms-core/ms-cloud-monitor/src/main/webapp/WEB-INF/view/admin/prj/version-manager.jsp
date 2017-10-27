@@ -51,20 +51,20 @@
 				  			<div id="clientInfo" style="display: none;">
 				  			<div class="table-tool-panel">
 					  			<div class="row">
-									<div class="col-sm-4 text-muted" id="clientInfoTitle">
+									<div class="col-sm-6 text-muted" id="clientInfoTitle">
 									</div>
-									<div class="col-sm-8 text-right">
+									<div class="col-sm-6 text-right">
 										<div class="btn-group">
-											<select id="refreshInterval" onchange="client.refreshChange()" class="form-control input-sm">
-												<option value="">自动刷新:关闭</option>
+											<select id="refreshInterval" onchange="client.refreshChange()" class="form-control input-sm" style="width: 90px;">
+												<option value="">刷新:关闭</option>
 												<option value="5">5s刷新一次</option>
 												<option value="10">10s刷新一次</option>
 											</select>
 									  	</div>
 									  	<div class="btn-group">
-									  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="client.releaseAll()">全部部署</a>
-									  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="client.edit()">新增客户端</a>
-									  		<a href="${webroot}/prjMonitor/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm" target="_blank">查看服务</a>
+									  		<a href="javascript:;" class="btn btn-info btn-sm" onclick="client.releaseAll()">全部署</a>
+									  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="client.edit()">+ 客户端</a>
+									  		<a href="${webroot}/prjMonitor/f-view/manager.shtml?prjId=${param.prjId}" class="btn btn-default btn-sm" target="_blank">看服务</a>
 									  	</div>
 									</div>
 								</div>
@@ -109,19 +109,22 @@ var info = {
 						function getResult(obj) {
 							var _isReleaseName = '';
 							if(obj.isRelease === <%=Boolean.TRUE.getCode()%>) {
-								_isReleaseName = '<span class="label label-success">发布</span>';
+								_isReleaseName = '<small class="text-success">(发布)</small>';
 								if(client.version === undefined) {
 									//为第一次进来，默认加载发布的项
 									client.version = obj.version;
 									client.loadInfo(1);
 								}
 							} else {
-								_isReleaseName = '<span class="label label-danger">历史</span>';
+								_isReleaseName = '<small class="text-danger">(历史)</small>';
+							}
+							var _rbVersion = obj.rbVersion;
+							if(JUtil.isNotEmpty(_rbVersion) && _rbVersion.length > 10) {
+								_rbVersion = _rbVersion.substring(0, 10) + '...';
 							}
 							return ['<tr>',
-							    	'<td>',_isReleaseName,'&nbsp;',obj.version,'&nbsp;&nbsp;',
-							    	'<a href="',webroot,'/sysFile/f-view/download.shtml?url=',obj.pathUrl,'" target="_blank">下载</a></td>',
-							    	'<td>',obj.rbVersion,'</td>',
+							    	'<td>',obj.version,' ',_isReleaseName,'</td>',
+							    	'<td title="',obj.rbVersion,'">',_rbVersion,'</td>',
 							    	'<td><a class="text-success" href="javascript:info.cli(${param.prjId}, \'',obj.version,'\')" title="发到对应的客户端">去部署</a>',
 							    	'&nbsp; &nbsp;&nbsp; <span class="dropdown opt-more">',
 									'<a class="glyphicon text-success dropdown-toggle" href="javascript:;" data-toggle="dropdown">更多...</a>',
@@ -129,6 +132,7 @@ var info = {
 									'<li role="presentation"><a href="javascript:info.edit(\'',obj.version,'\')" title="修改">修改</a></li>',
 									'<li role="presentation"><a href="javascript:info.del(\'',obj.version,'\')" title="删除">删除</a></li>',
 									'<li role="presentation"><a href="javascript:info.script(\'',obj.version,'\')" title="设置升级的脚本">升级脚本</a></li>',
+									'<li role="presentation"><a href="',webroot,'/sysFile/f-view/download.shtml?url=',obj.pathUrl,'" target="_blank" title="下载发布的包">下载发布包</a></li>',
 									'</ul>',
 									'</span>',
 								'</tr>'].join('');
