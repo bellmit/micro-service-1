@@ -32,16 +32,6 @@ JUtil.sys = {
 		}
 };
 
-JUtil.open = {
-		login : function() {
-			parent.dialog({
-				title: '任务系统-登录',
-				url: webroot+'/view/login.jsp',
-				width: 350,
-				height: 220
-			});
-		}
-};
 $(function() {
 	JUtil.sys.initOptMore();
 });

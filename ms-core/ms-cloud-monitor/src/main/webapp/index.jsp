@@ -55,6 +55,8 @@
 	<jsp:include page="/WEB-INF/view/inc/js.jsp"></jsp:include>
 	<script type="text/javascript">
 	$(function() {
+		var link = location.href;
+		link = link.substring(link.indexOf('link=') + 5);
 		$('#loginBtn').click(function() {
 			var _loginBtn = $('#loginBtn');
 			
@@ -78,7 +80,11 @@
 				data: {username:_username.val(),password:_password.val()},
 				success: function(json) {
 					if(json.code===0) {
-						parent.location = webroot + '/sysUser/f-view/main.shtml';
+						if(JUtil.isNotEmpty(link)) {
+							parent.location = link;
+						} else {
+							parent.location = webroot + '/sysUser/f-view/main.shtml';
+						}
 					}
 					else if(json.code===-1) _saveMsg.append(JUtil.msg.ajaxErr);
 					else _saveMsg.append(json.message);

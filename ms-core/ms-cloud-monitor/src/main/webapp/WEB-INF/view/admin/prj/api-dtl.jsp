@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${projectName}-API</title>
+<title>${projectName}-API: ${prjApi.path}</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="${webroot}/resources/json-viewer/jquery.json-viewer.css">
 </head>
@@ -52,8 +52,14 @@
 									<hr/>
 									<p style="font-size: 12px;word-wrap: break-word;">${prjApi.method}</p>
 								</div>
-								<div class="text-success">参数列表</div>
-								<div>
+								<br/>
+								<div class="row">
+									<div class="col-sm-6 text-success">参数列表</div>
+									<div class="col-sm-6 text-right">
+									  	<small><a href="javascript:;" onclick="info.tableToggle(this, 'reqTablePanel')" class="text-muted">隐藏</a></small>
+									</div>
+								</div>
+								<div id="reqTablePanel">
 									<input type="hidden" id="monitorPrjId" name="monitorPrjId" value="${prjApi.prjId}"/>
 									<input type="hidden" id="monitorPath" name="monitorPath" value="${prjApi.path}"/>
 									<table class="table table-striped table-hover">
@@ -87,9 +93,16 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="text-success">响应列表</div>
+								<br/>
+								<div class="row">
+									<div class="col-sm-6 text-success">响应列表</div>
+									<div class="col-sm-6 text-right">
+									  	<small><a href="javascript:;" onclick="info.tableToggle(this, 'resTablePanel')" class="text-muted">隐藏</a></small>
+									</div>
+								</div>
 								<div id="resTablePanel">
 								</div>
+								<hr />
 								<div class="form-group">
 						 			<div class="btn-group">
 										<button type="button" id="saveBtn" class="btn btn-success btn-sm">发送请求</button>
@@ -113,6 +126,15 @@
 <script type="text/javascript">
 var response = ${prjApi.response};
 var info = {
+		//控制响应结果显示和隐藏
+		tableToggle : function(_this, panelId) {
+			if($(_this).text() === '隐藏') {
+				$(_this).html('显示');
+			} else {
+				$(_this).html('隐藏');
+			}
+			$('#' + panelId).toggle();
+		},
 		//解析响应结果
 		parseRes : function() {
 			var _info = ['<table class="table table-striped table-hover">',

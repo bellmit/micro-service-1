@@ -75,6 +75,7 @@ var info = {
 									'<li role="presentation"><a href="javascript:info.config(',obj.prjId,',\'',obj.name,'\')" title="查看配置文件">查看配置</a></li>',
 									'<li role="presentation"><a href="javascript:info.ds(',obj.prjId,',\'',obj.name,'\')">数据源</a></li>',
 									'<li role="presentation"><a href="javascript:info.monitor(',obj.prjId,',\'',obj.name,'\')" title="查看项目的监控">查看监控</a></li>',
+									'<li role="presentation"><a href="javascript:info.log(',obj.prjId,',\'',obj.name,'\')" title="查看项目的日志">查看日志</a></li>',
 									'<li role="presentation"><a href="javascript:info.autoCode(',obj.prjId,',\'',obj.name,'\')">生成源码</a></li>',
 									'</ul>',
 									'</span></div>',
@@ -118,6 +119,10 @@ var info = {
 		//数据源
 		ds : function(prjId, name) {
 			window.open('${webroot}/prjDs/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
+		},
+		//查看日志
+		log : function(prjId, name) {
+			window.open('${webroot}/logInfo/f-view/manager.shtml?prjId=' + prjId + '&name=' + name);
 		},
 		//生成源码
 		autoCode : function(prjId, name) {

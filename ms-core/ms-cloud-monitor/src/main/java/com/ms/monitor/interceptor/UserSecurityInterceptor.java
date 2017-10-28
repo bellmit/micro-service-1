@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.module.admin.sys.pojo.SysUser;
 import com.module.comm.constants.SessionCons;
+import com.system.comm.utils.FrameStringUtil;
 
 /**
  * 用户Session拦截器
@@ -35,7 +36,13 @@ public class UserSecurityInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		SysUser user = (SysUser) request.getSession().getAttribute(SessionCons.USER);
 		if(user == null) {
-			response.sendRedirect(request.getContextPath() + loginUrl);
+			//获取当前请求的地址
+			String url = request.getRequestURL().toString();
+			String queryString = request.getQueryString();
+			if(FrameStringUtil.isNotEmpty(queryString)) {
+				url = url + "?" + queryString;
+			}
+			response.sendRedirect(request.getContextPath() + loginUrl + "?link=" + url);
 			return false;
 		}
 		return true;
