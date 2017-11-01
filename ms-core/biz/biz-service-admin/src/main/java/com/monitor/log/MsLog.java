@@ -51,6 +51,9 @@ public class MsLog {
 			logger.error(CONFIG_ERROR);
 		}
 	}
+	public void error(Object object) {
+		error(FrameJsonUtil.toString(object));
+	}
 	public void error(String msg) {
 		logger.error(msg);
 		if(getTracer() != null) {

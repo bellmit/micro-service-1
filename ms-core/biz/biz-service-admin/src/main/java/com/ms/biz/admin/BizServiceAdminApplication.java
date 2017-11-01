@@ -2,6 +2,7 @@ package com.ms.biz.admin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.DispatcherType;
 
@@ -14,6 +15,10 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.resource.GzipResourceResolver;
 
 import com.module.comm.xss.XssFilter;
 
@@ -28,6 +33,8 @@ import com.module.comm.xss.XssFilter;
 @SpringBootApplication
 public class BizServiceAdminApplication extends SpringBootServletInitializer {
 
+    private static final int EXPIRES_TIME = 7 * 24 * 60;
+    
 	public static void main(String[] args) {
 		SpringApplication.run(BizServiceAdminApplication.class, args);
 	}
@@ -49,6 +56,42 @@ public class BizServiceAdminApplication extends SpringBootServletInitializer {
         return registrationBean;
     }
 	
+
+	@Bean
+	public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
+		WebMvcConfigurerAdapter wmca = new WebMvcConfigurerAdapter() {
+			
+			/**
+			 * 添加拦截器
+			 */
+			/*@Override
+			public void addInterceptors(InterceptorRegistry registry) {
+				registry.addInterceptor(new CsrfInterceptor()).addPathPatterns("/*");
+			}*/
+			/*@Override
+		    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		        registry.addResourceHandler("/resources/**")
+		                .addResourceLocations("/resources/**")
+		                //http 缓存
+		                .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES).cachePrivate())
+		                .setCachePeriod(604800)
+		                .resourceChain(true)
+		                .addResolver(new CachingResourceResolver(cache))
+		                .addResolver(new GzipResourceResolver());
+		    }*/
+			@Override
+			public void addResourceHandlers(ResourceHandlerRegistry registry) {
+				registry.addResourceHandler("/resources/**").addResourceLocations("/resources/")
+				 //http 缓存
+                .setCacheControl(CacheControl.maxAge(EXPIRES_TIME, TimeUnit.MINUTES).cachePrivate())
+				.resourceChain(true)
+				.addResolver(new GzipResourceResolver());
+				super.addResourceHandlers(registry);
+			}
+		};
+		return wmca;
+	}
+	
 	/**
 	 * 处理静态资源
 	 * @return
@@ -58,11 +101,10 @@ public class BizServiceAdminApplication extends SpringBootServletInitializer {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         ExpiresFilter expiresFilter = new ExpiresFilter();
         registrationBean.setFilter(expiresFilter);
-        int time = 6 * 60;
-        registrationBean.addInitParameter("ExpiresByType image", "access plus " + time + " minutes");
-        registrationBean.addInitParameter("ExpiresByType text/css", "access plus " + time + " minutes");
-        registrationBean.addInitParameter("ExpiresByType text/javascript", "access plus " + time + " minutes");
-        registrationBean.addInitParameter("ExpiresByType application/javascript", "access plus " + time + " minutes");
+        registrationBean.addInitParameter("ExpiresByType image", "access plus " + EXPIRES_TIME + " minutes");
+        registrationBean.addInitParameter("ExpiresByType text/css", "access plus " + EXPIRES_TIME + " minutes");
+        registrationBean.addInitParameter("ExpiresByType text/javascript", "access plus " + EXPIRES_TIME + " minutes");
+        registrationBean.addInitParameter("ExpiresByType application/javascript", "access plus " + EXPIRES_TIME + " minutes");
         List<String> urlPatterns = new ArrayList<String>();
         urlPatterns.add("/*");
         registrationBean.setOrder(0);

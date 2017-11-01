@@ -73,7 +73,9 @@
 			inner join cli_info ci on(pc.client_id=ci.client_id)
 			inner join prj_version pv on(pc.prj_id=pv.prj_id and pc.version=pv.version)
 		<where>
-			pc.prj_id=#{prjId} and pv.is_release=1 and pc.version=#{version}
+			pc.prj_id=#{prjId}
+			<!--  and pv.is_release=1 -->
+			and pc.version=#{version}
 			<if test="clientId!=null and clientId!=''">and ci.client_id=#{clientId}</if>
 		</where>
 	</select>

@@ -1,3 +1,5 @@
+<%@page import="com.ms.env.Env"%>
+<%@page import="com.ms.env.EnvUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -87,7 +89,7 @@ var info = {
 								cont.push('<tr>',
 								    	'<td>',obj.traceId,'</td>',
 								    	'<td>',obj.aKey,'</td>',
-								    	'<td>',obj.aValue,'</td>',
+								    	'<td>',obj.aValue.length>30?obj.aValue.substring(0, 30)+'...':obj.aValue,'</td>',
 								    	'<td>',obj.aTime,'</td>',
 								    	'<td><a class="glyphicon text-success" href="javascript:info.look(\'',obj.traceIdHex,'\')" title="查看调度链">查看</a>',
 								    	'</td>',
@@ -107,7 +109,7 @@ var info = {
 		},
 		//查看
 		look : function(id) {
-			window.open('http://127.0.0.1:7400/traces/'+(id?id:''));
+			window.open('<%=EnvUtil.get(Env.SPRING_ZIPKIN_UI_HOST) %>/traces/'+(id?id:''));
 		}
 };
 $(function() {

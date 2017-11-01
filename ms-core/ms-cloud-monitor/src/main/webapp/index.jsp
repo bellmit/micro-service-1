@@ -56,7 +56,12 @@
 	<script type="text/javascript">
 	$(function() {
 		var link = location.href;
-		link = link.substring(link.indexOf('link=') + 5);
+		var linkLen = link.indexOf('link=');
+		if(linkLen === -1) {
+			link = '';
+		} else if(link.indexOf('/sysUser/f-view/logout.shtml')===-1) {
+			link = link.substring(linkLen + 5);
+		}
 		$('#loginBtn').click(function() {
 			var _loginBtn = $('#loginBtn');
 			

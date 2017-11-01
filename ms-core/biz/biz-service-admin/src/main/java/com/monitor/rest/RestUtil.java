@@ -1,6 +1,7 @@
 package com.monitor.rest;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -76,7 +77,12 @@ public class RestUtil {
 			//String result = FrameHttpUtil.post(baseUrl + url, params);
 			return FrameJsonUtil.toObject(result, ResponseFrame.class);
 		} catch (Exception e) {
-			return new ResponseFrame(ResponseCode.SERVER_ERROR);
+			ResponseFrame frame = new ResponseFrame(ResponseCode.SERVER_ERROR);
+			Map<String, Object> body = new HashMap<String, Object>();
+			body.put("requestParams", params);
+			body.put("exceptionInfo", e.getMessage());
+			frame.setBody(body);
+			return frame;
 		}
 	}
 }

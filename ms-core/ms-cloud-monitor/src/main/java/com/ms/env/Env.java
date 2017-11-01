@@ -12,7 +12,8 @@ public enum Env {
 	CODE_TEMPLATE_PATH			("code.template.path", "模板存放路径"),
 	CODE_SOURCE_PATH			("code.source.path", "源码存放路径"),
 	CLIENT_TASK_SERVER_SERVICEID("client.task.server.serviceId", "task的serviceId"),
-	CLIENT_LOG_SERVER_SERVICEID	("client.log.server.serviceId", "log的serviceId")
+	CLIENT_LOG_SERVER_SERVICEID	("client.log.server.serviceId", "log的serviceId"),
+	SPRING_ZIPKIN_UI_HOST		("spring.zipkin.ui.host", "log的日志查看host")
 	;
 	
 	private String code;

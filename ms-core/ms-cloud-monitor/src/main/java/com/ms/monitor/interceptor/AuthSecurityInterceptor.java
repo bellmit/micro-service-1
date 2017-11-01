@@ -43,7 +43,7 @@ public class AuthSecurityInterceptor implements HandlerInterceptor {
 		String sign = request.getParameter("sign");
 		String time = request.getParameter("time");
 
-		LOGGER.info("{ clientId:" + clientId + ", time:" + time + ", sign:" + sign + " } 请求地址: " + request.getRequestURI());
+		//LOGGER.info("{ clientId:" + clientId + ", time:" + time + ", sign:" + sign + " } 请求地址: " + request.getRequestURI());
 		if(!AuthUtil.authVerify(clientId, time, sign)) {
 			LOGGER.error("非法请求(abnormal signature): { clientId:" + clientId + ", time:" + time + ", sign:" + sign + " } 请求地址: " + request.getRequestURI());
 			ResponseFrame frame = new ResponseFrame();
