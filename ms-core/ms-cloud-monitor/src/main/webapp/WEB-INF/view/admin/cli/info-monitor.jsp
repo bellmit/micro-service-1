@@ -124,7 +124,7 @@ var info = {
 			if(JUtil.isEmpty(_refresh)) {
 				return;
 			}
-			info.interval = window.setInterval('info.loadInfo(1)', _refresh * 1000);
+			info.interval = window.setInterval('info.loadInfo()', _refresh * 1000);
 		}
 };
 $(function() {
