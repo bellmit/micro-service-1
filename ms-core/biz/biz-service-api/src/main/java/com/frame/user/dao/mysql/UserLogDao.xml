@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.frame.user.dao.UserInfoDao">
+<mapper namespace="com.frame.user.dao.UserLogDao">
 
 	<sql id="commCols">
 		log_id logId,user_id userId,ip ip,type type,remark remark,create_time createTime

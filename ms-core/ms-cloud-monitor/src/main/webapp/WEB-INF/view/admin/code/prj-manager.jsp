@@ -115,7 +115,7 @@ var info = {
 		//编辑
 		edit : function(code, name) {
 			dialog({
-				title: '编辑数据源',
+				title: '编辑模板',
 				url: webroot + '/codeTemplate/f-view/edit.shtml?prjId=${param.prjId}&code='+(code?code:'') + '&name='+(name?name:''),
 				type: 'iframe',
 				width: 620,
