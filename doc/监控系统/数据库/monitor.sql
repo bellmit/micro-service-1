@@ -270,6 +270,24 @@ create table ms_secret
 alter table ms_secret comment '应用密钥表';
 
 
+drop table if exists ms_secret_api;
+
+/*==============================================================*/
+/* Table: ms_secret_api                                         */
+/*==============================================================*/
+create table ms_secret_api
+(
+   cli_id               varchar(32) not null comment '客户端编号',
+   prj_id               int not null comment '项目编号',
+   prj_code             varchar(50) not null comment '项目编码',
+   url                  varchar(150) not null comment 'API地址',
+   create_time          datetime not null comment '创建时间',
+   primary key (cli_id, prj_id, url)
+);
+
+alter table ms_secret_api comment '密钥API权限表';
+
+
 
 
 /*==============================================================*/

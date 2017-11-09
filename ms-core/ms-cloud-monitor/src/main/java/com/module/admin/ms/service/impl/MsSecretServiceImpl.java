@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 import com.module.admin.ms.dao.MsSecretDao;
 import com.module.admin.ms.pojo.MsSecret;
 import com.module.admin.ms.service.MsSecretService;
+import com.module.admin.prj.service.PrjInfoService;
 import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
-import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
+import com.system.handle.model.ResponseFrame;
 
 /**
  * ms_secret的Service
@@ -24,6 +25,8 @@ public class MsSecretServiceImpl implements MsSecretService {
 
 	@Autowired
 	private MsSecretDao msSecretDao;
+	@Autowired
+	private PrjInfoService prjInfoService;
 	
 	@Override
 	public ResponseFrame saveOrUpdate(MsSecret msSecret) {

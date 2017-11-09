@@ -8,10 +8,9 @@ import java.util.Map.Entry;
 import com.system.auth.model.AuthClient;
 
 /**
- * 惊讶SSO
+ * SSO
  * @author  yuejing
  * @email   yuejing0129@163.com 
- * @net		www.itoujing.com
  * @date    2015年11月18日 下午3:09:29 
  * @version 1.0.0
  */

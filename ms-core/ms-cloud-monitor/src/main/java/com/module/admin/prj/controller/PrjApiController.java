@@ -80,6 +80,24 @@ public class PrjApiController extends BaseController {
 		}
 		writerJson(response, frame);
 	}
+	/**
+	 * 获取所有
+	 * @return
+	 */
+	@RequestMapping(value = "/prjApi/f-json/findByPrjId")
+	@ResponseBody
+	public void findByPrjId(HttpServletRequest request, HttpServletResponse response,
+			Integer prjId) {
+		ResponseFrame frame = new ResponseFrame();
+		try {
+			frame.setBody(prjApiService.findByPrjId(prjId));
+			frame.setSucc();
+		} catch (Exception e) {
+			LOGGER.error("分页获取信息异常: " + e.getMessage(), e);
+			frame = new ResponseFrame(ResponseCode.FAIL);
+		}
+		writerJson(response, frame);
+	}
 
 	@RequestMapping(name = "查看API详情", value = "/prjApi/f-view/dtl")
 	public String dtl(HttpServletRequest request, ModelMap modelMap,

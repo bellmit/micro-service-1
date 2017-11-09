@@ -26,19 +26,27 @@ public class SecretUtil {
 		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 		//线程，每隔60秒调用一次
 		Runnable runnable = new Runnable() {
+			@SuppressWarnings("unchecked")
 			public void run() {
 				Map<String, Object> paramsMap = new HashMap<String, Object>();
 				try {
 					ResponseFrame frame = ApiUtil.post("/api/msSecret/findUse", paramsMap);
 					if(ResponseCode.SUCC.getCode() == frame.getCode().intValue()) {
-						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> data = (List<Map<String, Object>>) frame.getBody();
 						for (Map<String, Object> map : data) {
 							String cliId = FrameMapUtil.getString(map, "cliId");
 							String name = FrameMapUtil.getString(map, "name");
 							String domain = FrameMapUtil.getString(map, "domain");
 							String sercret = FrameMapUtil.getString(map, "token");
-							AuthUtil.updateAuthClient(new AuthClient(cliId, name, domain, sercret, domain));
+							
+							//获取密钥对应的请求API
+							paramsMap.put("cliId", cliId);
+							ResponseFrame apiFrame = ApiUtil.post("/api/msSecretApi/findByCliId", paramsMap);
+							List<Map<String, Object>> apiData = null;
+							if(ResponseCode.SUCC.getCode() == apiFrame.getCode().intValue()) {
+								apiData = (List<Map<String, Object>>) apiFrame.getBody();
+							}
+							AuthUtil.updateAuthClient(new AuthClient(cliId, name, domain, sercret, domain, apiData));
 						}
 					}
 				} catch (IOException e) {

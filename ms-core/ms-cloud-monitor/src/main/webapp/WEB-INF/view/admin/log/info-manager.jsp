@@ -109,7 +109,7 @@ var info = {
 		},
 		//查看
 		look : function(id) {
-			window.open('<%=EnvUtil.get(Env.SPRING_ZIPKIN_UI_HOST) %>/traces/'+(id?id:''));
+			window.open(webroot + '/logInfo/f-view/traces?id='+(id?id:''));
 		}
 };
 $(function() {

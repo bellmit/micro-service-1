@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>定时任务-用户管理</title>
+<title>${projectName}-定时任务-用户管理</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
 <body>

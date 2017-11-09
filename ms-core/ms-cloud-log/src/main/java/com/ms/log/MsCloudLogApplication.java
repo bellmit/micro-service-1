@@ -6,9 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import zipkin.server.EnableZipkinServer;
 
@@ -36,12 +38,21 @@ public class MsCloudLogApplication {
 		return MySQLStorage.builder().datasource(datasource).executor(Runnable::run).build();
 	}*/
 	
-	/**
-	 * 添加拦截器
-	 */
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthSecurityInterceptor())
-		.addPathPatterns("/api/log/**");
-		//.excludePathPatterns("/service/*");
+	@Bean
+	public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
+		WebMvcConfigurerAdapter wmca = new WebMvcConfigurerAdapter() {
+
+			/**
+			 * 添加拦截器
+			 */
+			@Override
+			public void addInterceptors(InterceptorRegistry registry) {
+				registry.addInterceptor(new AuthSecurityInterceptor())
+				.addPathPatterns("/traces/*", "/api/log/**");
+				//.addPathPatterns("/api/log/**");
+				//.excludePathPatterns("/service/*");
+			}
+		};
+		return wmca;
 	}
 }

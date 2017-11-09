@@ -18,6 +18,10 @@ import com.module.admin.BaseController;
 import com.module.admin.log.utils.LogUtil;
 import com.module.admin.prj.pojo.PrjInfo;
 import com.module.admin.prj.service.PrjInfoService;
+import com.module.comm.constants.ConfigCons;
+import com.ms.env.Env;
+import com.ms.env.EnvUtil;
+import com.system.auth.AuthUtil;
 import com.system.comm.model.KvEntity;
 import com.system.comm.utils.FrameMapUtil;
 import com.system.handle.model.ResponseCode;
@@ -71,4 +75,14 @@ public class LogInfoController extends BaseController {
 		writerJson(response, frame);
 	}
 
+	@RequestMapping(value = "/logInfo/f-view/traces")
+	public String traces(HttpServletRequest request, ModelMap modelMap,
+			String id) {
+		String time = String.valueOf(System.currentTimeMillis());
+		//跳转到查看调度链
+		String host = EnvUtil.get(Env.SPRING_ZIPKIN_UI_HOST);
+		String authString = "?clientId=" + ConfigCons.clientId + "&time=" + time
+			+ "&sign=" + AuthUtil.auth(ConfigCons.clientId, time, ConfigCons.sercret);
+		return "redirect:" + host + "/traces/" + id + authString;
+	}
 }

@@ -46,4 +46,6 @@ public interface PrjApiService {
 	public ResponseFrame delete(Integer prjId);
 
 	public void saveBatch(List<PrjApi> prjApis);
+
+	public List<PrjApi> findByPrjId(Integer prjId);
 }

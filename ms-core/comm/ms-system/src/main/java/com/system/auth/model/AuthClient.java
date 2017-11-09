@@ -1,9 +1,14 @@
 package com.system.auth.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.system.comm.model.BaseEntity;
+import com.system.comm.utils.FrameMapUtil;
 
 /**
  * 客户端实体
@@ -24,14 +29,31 @@ public class AuthClient extends BaseEntity implements Serializable {
 	private String sercret;
 	//回调地址
 	private String redirectUri;
-	
+	//有权访问的地址
+	private Map<String, List<String>> urlMap = new HashMap<String, List<String>>();
+
 	public AuthClient(String id, String name, String domain, String sercret, String redirectUri) {
+		this(id, name, domain, sercret, redirectUri, null);
+	}
+	public AuthClient(String id, String name, String domain, String sercret, String redirectUri, List<Map<String, Object>> urls) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.domain = domain;
 		this.sercret = sercret;
 		this.redirectUri = redirectUri;
+		if(urls != null) {
+			for (Map<String, Object> apiMap : urls) {
+				String prjCode = FrameMapUtil.getString(apiMap, "prjCode");
+				String url = FrameMapUtil.getString(apiMap, "url");
+				List<String> apis = urlMap.get(prjCode);
+				if(apis == null) {
+					apis = new ArrayList<String>();
+				}
+				apis.add(url);
+				urlMap.put(prjCode, apis);
+			}
+		}
 	}
 	public String getId() {
 		return id;
@@ -62,5 +84,11 @@ public class AuthClient extends BaseEntity implements Serializable {
 	}
 	public void setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
+	}
+	public Map<String, List<String>> getUrlMap() {
+		return urlMap;
+	}
+	public void setUrlMap(Map<String, List<String>> urlMap) {
+		this.urlMap = urlMap;
 	}
 }

@@ -52,6 +52,19 @@ public class AccessFilter extends ZuulFilter {
             ctx.setResponseBody(FrameJsonUtil.toString(frame));
 			return null;
 		}
+		//判断请求地址是否通过
+		if(!AuthUtil.authVerifyReqUrl(clientId, request.getRequestURI())) {
+			LOGGER.error("地址: " + request.getRequestURI() + " 没有权限, clientId[" + clientId + "]");
+            ResponseFrame frame = new ResponseFrame();
+			frame.setCode(ResponseCode.ABNORMAL_SIGNATURE.getCode());
+			frame.setMessage(ResponseCode.ABNORMAL_SIGNATURE.getMessage());
+            ctx.getResponse().setContentType("text/html;charset=UTF-8");
+			ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            ctx.setResponseBody(FrameJsonUtil.toString(frame));
+			return null;
+		}
+		
 		//这里return的值没有意义，zuul框架没有使用该返回值
         return null;
     }

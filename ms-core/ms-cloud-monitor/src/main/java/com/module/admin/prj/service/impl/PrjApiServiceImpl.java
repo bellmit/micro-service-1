@@ -79,4 +79,9 @@ public class PrjApiServiceImpl implements PrjApiService {
 			saveOrUpdate(prjApi);
 		}
 	}
+
+	@Override
+	public List<PrjApi> findByPrjId(Integer prjId) {
+		return prjApiDao.findByPrjId(prjId);
+	}
 }

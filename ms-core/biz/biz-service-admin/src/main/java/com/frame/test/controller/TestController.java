@@ -2,6 +2,7 @@ package com.frame.test.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.monitor.log.MsLog;
@@ -28,6 +29,14 @@ public class TestController {
     @RequestMapping(value = "/test/index")
     public String index(ModelMap modelMap) {
         modelMap.addAttribute("message", "您好");
+		MSLOG.info(modelMap);
+        return "index";
+    }
+
+    @RequestMapping(value = "/test/{id}")
+    public String get(ModelMap modelMap,
+    		@PathVariable("id")String id) {
+        modelMap.addAttribute("id", id);
 		MSLOG.info(modelMap);
         return "index";
     }

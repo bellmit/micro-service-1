@@ -36,6 +36,11 @@
   		<where>prj_id=#{prjId} and path=#{path}</where>
 	</select>
 	
+	<select id="findByPrjId" resultType="prjApi">
+		select <include refid="commCols"/> from prj_api
+		<where>prj_id=#{prjId}</where>
+	</select>
+	
 	<select id="findPrjApi" parameterType="prjApi" resultType="prjApi">
 		select <include refid="commCols"/> from prj_api
 		<where>

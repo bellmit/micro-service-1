@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>定时任务-编辑用户</title>
+<title>${projectName}-定时任务-编辑用户</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
 <body class="cld-body">

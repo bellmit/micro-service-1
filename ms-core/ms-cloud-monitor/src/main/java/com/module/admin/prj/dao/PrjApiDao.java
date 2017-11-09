@@ -27,4 +27,6 @@ public interface PrjApiDao {
 	public abstract int findPrjApiCount(PrjApi prjApi);
 
 	public abstract void updateIsUse(@Param("prjId")Integer prjId, @Param("isUse")Integer isUse);
+
+	public abstract List<PrjApi> findByPrjId(@Param("prjId")Integer prjId);
 }
