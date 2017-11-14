@@ -3,6 +3,7 @@ package com.system.cache.redis;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,16 @@ public class BaseCache {
 	private String getKey(String ...strings) {
 		return getRedisClient().getKey(strings);
 	}
+	
+	/**
+	 * 获取key的集合
+	 * @param key	传入：abc*（代表匹配abc开头的key）
+	 * @return
+	 */
+	public Set<String> keys(String key) {
+		return getRedisClient().keys(getKey(key));
+	}
+	
 	public <T> T get(String key) {
 		try {
 			//LOGGER.info("redis: get");
@@ -82,6 +93,18 @@ public class BaseCache {
 			getRedisClient().delete(getKey(key));
 		} catch (Exception e) {
 			LOGGER.error("redis delete 异常: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * 删除数据
+	 * @param key	传入abc* 代表删除adc开头的所有的key和值
+	 */
+	public void deleteBatch(String key) {
+		try {
+			getRedisClient().deleteBatch(getKey(key));
+		} catch (Exception e) {
+			LOGGER.error("redis deleteBatch 异常: " + e.getMessage());
 		}
 	}
 

@@ -27,9 +27,6 @@ import com.system.comm.utils.FrameTimeUtil;
 
 /**
  * Redis客户端<br>
- * 参考地址：https://camel.apache.org/maven/camel-2.11.0/camel-spring-redis/apidocs/src-html/org/apache/camel/component/redis/RedisClient.html
- * <br>
- * 可以考虑：2级缓存 http://www.oschina.net/p/j2cache
  * @author 岳静
  * @date 2016年5月6日 上午10:15:47 
  * @version V1.0
@@ -151,18 +148,20 @@ public class RedisClient {
 		if(!isUse()) {
 			return null;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			byte[] bytes = jedis.get(key.getBytes());
 			@SuppressWarnings("unchecked")
 			T value = (T) unserialize(bytes);
-			returnRes(jedis);
 			return value;
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 		return null;
 	}
@@ -176,20 +175,22 @@ public class RedisClient {
 		if(!isUse()) {
 			return null;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			Collection<Jedis> list = jedis.getAllShards();
 			Set<String> keySets = new HashSet<String>();
 			for (Jedis j : list) {
 				keySets.addAll(j.keys(key));
 			}
-			returnRes(jedis);
-			return keySets;
+			return keySets == null ? new HashSet<String>() : keySets;
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 		return null;
 	}
@@ -200,18 +201,20 @@ public class RedisClient {
 	 * @param value
 	 */
 	public void set(String key, Object value) {
-		if(!isUse()) {
+		if(!isUse() || value == null) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.set(key.getBytes(), serialize(value));
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 
@@ -222,18 +225,20 @@ public class RedisClient {
 	 * @param value
 	 */
 	public void set(String key, Object value, int timeout) {
-		if(!isUse()) {
+		if(!isUse() || value == null) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.setex(key.getBytes(), timeout, serialize(value));
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 
@@ -245,17 +250,31 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.del(key.getBytes());
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
+
+	/**
+	 * 批量删除
+	 * @param key	传入abc* 代表删除adc开头的所有的key和值
+	 */
+	public void deleteBatch(String key) {
+		Set<String> keys = keys(key);
+		for (String cldKey : keys) {
+			delete(cldKey);
+		}
+	}
+	
 	/**
 	 * list: 根据key获取list中指定位置的集合
 	 * @param key
@@ -267,8 +286,9 @@ public class RedisClient {
 		if(!isUse()) {
 			return null;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			List<byte[]> list = jedis.lrange(key.getBytes(), start, end);
 			List<String> resList = new ArrayList<String>();
 			for (byte[] bytes : list) {
@@ -279,13 +299,14 @@ public class RedisClient {
 					LOGGER.error("转换异常: " + e.getMessage());
 				}
 			}
-			returnRes(jedis);
 			return resList;
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 		return null;
 	}
@@ -299,15 +320,17 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.lpush(key.getBytes(), serialize(value));
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 	/**
@@ -319,15 +342,17 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.lrem(key.getBytes(), 0, serialize(value));
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 	
@@ -342,8 +367,9 @@ public class RedisClient {
 		if(!isUse()) {
 			return null;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			Map<String, String> map = jedis.hgetAll(key);
 			returnRes(jedis);
 			return map;
@@ -351,7 +377,9 @@ public class RedisClient {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 		return null;
 	}
@@ -364,15 +392,17 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.hdel(key, fields);
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 
@@ -386,15 +416,17 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.hset(key, field, value);
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 
@@ -407,15 +439,17 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.hmset(key, hash);
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 
@@ -428,16 +462,18 @@ public class RedisClient {
 		if(!isUse()) {
 			return 0;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			String cr = jedis.get(key);
-			returnRes(jedis);
 			return FrameStringUtil.isEmpty(cr) ? 0 : Integer.valueOf(cr);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 		return 0;
 	}
@@ -450,15 +486,17 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.incr(key.getBytes());
-			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 	/**
@@ -469,15 +507,18 @@ public class RedisClient {
 		if(!isUse()) {
 			return;
 		}
+		ShardedJedis jedis = null;
 		try {
-			ShardedJedis jedis = getJedis();
+			jedis = getJedis();
 			jedis.decr(key.getBytes());
 			returnRes(jedis);
 		} catch (JedisConnectionException e) {
 			LOGGER.error("redis 链接异常: " + e.getMessage());
 			counter();
 		} catch (Exception e) {
-			LOGGER.error("redis 异常: " + e.getMessage());
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
 		}
 	}
 
