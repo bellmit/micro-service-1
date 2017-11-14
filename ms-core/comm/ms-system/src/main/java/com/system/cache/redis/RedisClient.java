@@ -119,13 +119,17 @@ public class RedisClient {
 	 * @return
 	 */
 	public String getKey(String ...strings) {
-		StringBuilder builder = new StringBuilder(keyPrefix);
+		StringBuilder builder = new StringBuilder();
 		if(strings != null) {
 			for (String string : strings) {
 				builder.append(string);
 			}
 		}
-		return builder.toString();
+		String builderString = builder.toString();
+		if(builderString.startsWith(keyPrefix)) {
+			return builderString;
+		}
+		return keyPrefix + builderString;
 	}
 
 	/**

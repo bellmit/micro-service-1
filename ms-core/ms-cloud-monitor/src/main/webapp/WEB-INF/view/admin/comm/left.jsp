@@ -45,6 +45,9 @@
 					<div>
 						<a class="btn btn-<c:choose><c:when test="${param.second == 'logInfoManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/logInfo/f-view/manager.shtml">日志管理</a>
 					</div>
+					<div>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'cacheInfoManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cacheInfo/f-view/manager.shtml">缓存管理</a>
+					</div>
 				</div>
 			</div>
 		</div>
