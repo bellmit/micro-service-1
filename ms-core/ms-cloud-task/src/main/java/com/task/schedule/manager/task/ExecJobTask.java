@@ -67,18 +67,21 @@ public class ExecJobTask extends FrameThreadAction {
 				try {
 					String serviceId = taskJob.getLink().substring(0, taskJob.getLink().indexOf(":"));
 					String url = taskJob.getLink().substring(taskJob.getLink().indexOf(":") + 1);
-					
+
 					LoadBalancerClient loadBalancer = FrameSpringBeanUtil.getBean(LoadBalancerClient.class);
 					ServiceInstance instance = loadBalancer.choose(serviceId);
 					String baseUri = instance.getUri().toString();
 					link = baseUri + url;
+					//http或https的形式
+					content = FrameHttpUtil.post(link, params);
 				} catch (RuntimeException e) {
 					LOGGER.error("微服务未启动或地址有误");
 				}
+			} else {
+				//http或https的形式
+				content = FrameHttpUtil.post(link, params);
 			}
-			//http或https的形式
-			content = FrameHttpUtil.post(link, params);
-			
+
 			if(LOGGER.isInfoEnabled()) {
 				LOGGER.info("\n" + time + "-调用任务 ID【" + taskJob.getId() + "】名称【" + taskJob.getName() + "】\n请求地址: " + link);
 			}
