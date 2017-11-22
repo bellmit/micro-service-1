@@ -11,7 +11,6 @@ import com.system.comm.utils.FrameStringUtil;
  * 前面相关的工具类
  * @author  yuejing
  * @email   yuejing0129@163.com 
- * @net		www.itoujing.com
  * @date    2016年3月2日 下午4:20:28 
  * @version 1.0.0
  */
@@ -21,7 +20,7 @@ public class AuthUtil {
 	 * 添加需要授权的客户端
 	 * @param client
 	 */
-	public static void addAuthClient(AuthClient client) {
+	public static synchronized void addAuthClient(AuthClient client) {
 		if(AuthCons.clientMap.get(client.getId()) == null) {
 			AuthCons.clientMap.put(client.getId(), client);
 		}
@@ -31,8 +30,15 @@ public class AuthUtil {
 	 * 跟新需要授权的客户端
 	 * @param client
 	 */
-	public static void updateAuthClient(AuthClient client) {
-		AuthCons.clientMap.put(client.getId(), client);
+	public static synchronized void updateAuthClient(AuthClient client) {
+		AuthClient ac = AuthCons.clientMap.get(client.getId());
+		if(ac == null) {
+			//不存在，执行修改
+			AuthCons.clientMap.put(client.getId(), client);
+		} else if(ac != null && !ac.getSercret().equals(client.getSercret())) {
+			//密钥不一致，执行修改
+			AuthCons.clientMap.put(client.getId(), client);
+		}
 	}
 
 	/**

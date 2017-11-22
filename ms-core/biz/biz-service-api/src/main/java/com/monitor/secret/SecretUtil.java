@@ -27,6 +27,7 @@ public class SecretUtil {
 		//线程，每隔60秒调用一次
 		Runnable runnable = new Runnable() {
 			public void run() {
+				long start = System.currentTimeMillis();
 				Map<String, Object> paramsMap = new HashMap<String, Object>();
 				try {
 					ResponseFrame frame = ApiUtil.post("/api/msSecret/findUse", paramsMap);
@@ -41,12 +42,16 @@ public class SecretUtil {
 							AuthUtil.updateAuthClient(new AuthClient(cliId, name, domain, sercret, domain));
 						}
 					}
+					long diff = System.currentTimeMillis() - start;
+					if(diff > 100) {
+						LOGGER.info("更新应用密钥 - 耗时： " + diff + "ms");
+					}
 				} catch (IOException e) {
 					LOGGER.error("获取密钥异常: " + e.getMessage());
 				}
 			}
 		};
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
-		service.scheduleAtFixedRate(runnable, 10, 60, TimeUnit.SECONDS);
+		service.scheduleAtFixedRate(runnable, 10, 30, TimeUnit.SECONDS);
 	}
 }

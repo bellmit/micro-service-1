@@ -85,6 +85,7 @@ public class FrameHttpUtil {
 			}
 		} finally {
 			response.close();
+			httpClient.close();
 		}
 		return result;
 	}
@@ -115,6 +116,7 @@ public class FrameHttpUtil {
 			}
 		} finally {
 			response.close();
+			httpClient.close();
 		}
 		/*} catch (ClientProtocolException e) {
 			LOGGER.error("异常" + e.getMessage(), e);
@@ -131,7 +133,7 @@ public class FrameHttpUtil {
 		}*/
 		return result;
 	}
-
+	
 	/**
 	 * post方式请求
 	 * @param url			请求地址
@@ -168,6 +170,7 @@ public class FrameHttpUtil {
 			}
 		} finally {
 			response.close();
+			httpClient.close();
 		}
 		return result;
 	}
