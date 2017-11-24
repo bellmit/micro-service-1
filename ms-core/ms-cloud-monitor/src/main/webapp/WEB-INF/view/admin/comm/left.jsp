@@ -12,17 +12,17 @@
 		<div class="panel panel-success center">
 			<div class="panel-heading">
 				<h4 class="panel-title text-center">
-					<a data-toggle="collapse" href="#mlCollapseCli">客户端 <span
+					<a data-toggle="collapse" href="#mlCollapseCli">Agent <span
 						class="caret" style="border-top-color: #468847;"></span></a>
 				</h4>
 			</div>
 			<div id="mlCollapseCli" class="panel-collapse collapse <c:if test="${param.first == 'cli'}">in</c:if>">
 				<div class="panel-body">
 					<div>
-						<a class="btn btn-<c:choose><c:when test="${param.second == 'cliInfoManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cliInfo/f-view/manager.shtml">客户端管理</a>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'cliInfoManager'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cliInfo/f-view/manager.shtml">Agent管理</a>
 					</div>
 					<div>
-						<a class="btn btn-<c:choose><c:when test="${param.second == 'cliInfoMonitor'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cliInfo/f-view/monitor.shtml">客户端监控</a>
+						<a class="btn btn-<c:choose><c:when test="${param.second == 'cliInfoMonitor'}">info</c:when><c:otherwise>link</c:otherwise></c:choose> btn-block" href="${webroot}/cliInfo/f-view/monitor.shtml">Agent监控</a>
 					</div>
 				</div>
 			</div>

@@ -24,7 +24,7 @@
 		<module>ms-cloud-eureka</module>
 		<module>ms-cloud-config</module>
 		<module>ms-cloud-zuul</module>
-		<module>ms-cloud-client</module>
+		<module>ms-cloud-agent</module>
 		<module>ms-cloud-monitor</module>
 		<module>ms-cloud-task</module>
 		<module>ms-cloud-log</module>

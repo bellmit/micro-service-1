@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${projectName}-客户端监控</title>
+<title>${projectName}-Agent监控</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
 <body>
@@ -20,7 +20,7 @@
 			<div class="panel panel-success">
 				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-5 title">客户端 / <b>客户端监控</b></div>
+						<div class="col-sm-5 title">Agent / <b>Agent监控</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
@@ -69,7 +69,7 @@ var info = {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th>客户端编号</th>',
+				                         '<th>编号</th>',
 				                         '<th>名称</th>',
 				                         '<th>IP : 端口</th>',
 				                         '<th>状态</th>',

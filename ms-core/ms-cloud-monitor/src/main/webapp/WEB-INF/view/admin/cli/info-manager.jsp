@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${projectName}-客户端管理</title>
+<title>${projectName}-Agent管理</title>
 <jsp:include page="/WEB-INF/view/inc/css.jsp"></jsp:include>
 </head>
 <body>
@@ -19,7 +19,7 @@
 			<div class="panel panel-success">
 				<div class="panel-heading panel-heading-tool">
 					<div class="row">
-						<div class="col-sm-5 title">客户端 / <b>客户端管理</b></div>
+						<div class="col-sm-5 title">Agent / <b>Agent管理</b></div>
 						<div class="col-sm-7 text-right">
 							<div class="btn-group">
 						  		<a href="javascript:location.reload()" class="btn btn-default btn-sm">刷新</a>
@@ -38,7 +38,7 @@
 							</div>
 							<div class="col-sm-6 text-right">
 							  	<div class="btn-group">
-							  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增客户端</a>
+							  		<a href="javascript:;" class="btn btn-success btn-sm" onclick="info.edit()">新增Agent</a>
 							  	</div>
 							</div>
 						</div>
@@ -61,10 +61,10 @@ var info = {
 			if(!infoPage) {
 				infoPage = new Page('infoPage', info.loadInfo, 'infoPanel', 'infoPage');
 				infoPage.beginString = ['<table class="table table-striped table-hover"><thead><tr class="info">',
-				                         '<th>客户端编号</th>',
+				                         '<th>编号</th>',
 				                         '<th>名称</th>',
 				                         '<th>IP : 端口</th>',
-				                         '<th>状态</th>',
+				                         '<th>使用状态</th>',
 				                         '<th width="150">操作</th>',
 				                         '</tr></thead><tbody>'].join('');
 				infoPage.endString = '</tbody></table>';
