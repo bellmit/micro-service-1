@@ -525,6 +525,36 @@ public class RedisClient {
 			returnRes(jedis);
 		}
 	}
+	
+	public <T> T eval(String script, String key, String arg) {
+		List<String> keys = new ArrayList<String>();
+		keys.add(key);
+		List<String> args = new ArrayList<String>();
+		args.add(arg);
+		return eval(script, key, keys, args);
+	}
+	@SuppressWarnings("unchecked")
+	public <T> T eval(String script, String key, List<String> keys, List<String> args) {
+		if(!isUse()) {
+			return null;
+		}
+		ShardedJedis jedis = null;
+		try {
+			jedis = getJedis();
+			Jedis j = jedis.getShard(key.getBytes());
+			if(j != null) {
+				return (T) j.eval(script, keys, args);
+			}
+		} catch (JedisConnectionException e) {
+			LOGGER.error("redis 链接异常: " + e.getMessage());
+			counter();
+		} catch (Exception e) {
+			LOGGER.error("redis 异常: " + e.getMessage(), e);
+		} finally {
+			returnRes(jedis);
+		}
+		return null;
+	}
 
 	/**
 	 * 序列号

@@ -22,6 +22,9 @@ public class BaseCache {
 		}
 		return redisClient;
 	}
+	public void setRedisClient(RedisClient redisClient) {
+		this.redisClient = redisClient;
+	}
 
 	/**
 	 * 拼装key
@@ -248,5 +251,9 @@ public class BaseCache {
 		} catch (Exception e) {
 			LOGGER.error("redis decr 异常: " + e.getMessage());
 		}
+	}
+	
+	public <T> T eval(String script, String key, String arg) {
+		return getRedisClient().eval(script, key, arg);
 	}
 }
