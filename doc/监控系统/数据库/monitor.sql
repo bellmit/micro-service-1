@@ -264,6 +264,8 @@ create table ms_secret
    domain               varchar(200) comment '主路径',
    is_use               int not null comment '是否使用',
    create_time          datetime not null comment '创建时间',
+   req_max_hour         bigint not null comment '每小时最大请求[0代表不限制]',
+   req_max_second       bigint not null comment '每秒最大请求数[0代表不限制]',
    primary key (cli_id)
 );
 

@@ -29,19 +29,25 @@ public class AuthClient extends BaseEntity implements Serializable {
 	private String sercret;
 	//回调地址
 	private String redirectUri;
+	//每小时最大请求[0代表不限制]
+	private Long reqMaxHour;
+	//每秒最大请求数[0代表不限制]
+	private Long reqMaxSecond;
 	//有权访问的地址
 	private Map<String, List<String>> urlMap = new HashMap<String, List<String>>();
 
 	public AuthClient(String id, String name, String domain, String sercret, String redirectUri) {
-		this(id, name, domain, sercret, redirectUri, null);
+		this(id, name, domain, sercret, redirectUri, null, null, null);
 	}
-	public AuthClient(String id, String name, String domain, String sercret, String redirectUri, List<Map<String, Object>> urls) {
+	public AuthClient(String id, String name, String domain, String sercret, String redirectUri, Long reqMaxHour, Long reqMaxSecond, List<Map<String, Object>> urls) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.domain = domain;
 		this.sercret = sercret;
 		this.redirectUri = redirectUri;
+		this.reqMaxHour = reqMaxHour;
+		this.reqMaxSecond = reqMaxSecond;
 		if(urls != null) {
 			for (Map<String, Object> apiMap : urls) {
 				String prjCode = FrameMapUtil.getString(apiMap, "prjCode");
@@ -90,5 +96,17 @@ public class AuthClient extends BaseEntity implements Serializable {
 	}
 	public void setUrlMap(Map<String, List<String>> urlMap) {
 		this.urlMap = urlMap;
+	}
+	public Long getReqMaxHour() {
+		return reqMaxHour;
+	}
+	public void setReqMaxHour(Long reqMaxHour) {
+		this.reqMaxHour = reqMaxHour;
+	}
+	public Long getReqMaxSecond() {
+		return reqMaxSecond;
+	}
+	public void setReqMaxSecond(Long reqMaxSecond) {
+		this.reqMaxSecond = reqMaxSecond;
 	}
 }

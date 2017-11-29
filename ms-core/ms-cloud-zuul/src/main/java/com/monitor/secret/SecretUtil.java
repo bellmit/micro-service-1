@@ -38,7 +38,10 @@ public class SecretUtil {
 							String name = FrameMapUtil.getString(map, "name");
 							String domain = FrameMapUtil.getString(map, "domain");
 							String sercret = FrameMapUtil.getString(map, "token");
-							
+							//每小时最大请求[0代表不限制]
+							Long reqMaxHour = FrameMapUtil.getLong(map, "reqMaxHour");
+							//每秒最大请求数[0代表不限制]
+							Long reqMaxSecond = FrameMapUtil.getLong(map, "reqMaxSecond");
 							//获取密钥对应的请求API
 							paramsMap.put("cliId", cliId);
 							ResponseFrame apiFrame = ApiUtil.post("/api/msSecretApi/findByCliId", paramsMap);
@@ -46,7 +49,7 @@ public class SecretUtil {
 							if(ResponseCode.SUCC.getCode() == apiFrame.getCode().intValue()) {
 								apiData = (List<Map<String, Object>>) apiFrame.getBody();
 							}
-							AuthUtil.updateAuthClient(new AuthClient(cliId, name, domain, sercret, domain, apiData));
+							AuthUtil.updateAuthClient(new AuthClient(cliId, name, domain, sercret, domain, reqMaxHour, reqMaxSecond, apiData));
 						}
 					}
 				} catch (IOException e) {

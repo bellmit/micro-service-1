@@ -34,6 +34,14 @@
 			<label for="isUse" class="col-sm-4">使用 <span class="text-danger">*</span></label>
 			<div class="col-sm-8"><my:radio id="isUse" name="isUse" dictcode="boolean" value="${msSecret.isUse}" defvalue="1" /></div>
 		</div>
+  		<div class="form-group">
+			<label for="name" class="col-sm-4">小时请求 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="reqMaxHour" placeholder="每小时最大请求数[0代表不限制]" value="${msSecret.reqMaxHour}"></div>
+		</div>
+  		<div class="form-group">
+			<label for="name" class="col-sm-4">每秒请求 <span class="text-danger">*</span></label>
+			<div class="col-sm-8"><input type="text" class="form-control" id="reqMaxSecond" placeholder="每秒最大请求数[0代表不限制]" value="${msSecret.reqMaxSecond}"></div>
+		</div>
 		<hr/>
   		<div class="form-group text-right">
 			<span id="saveMsg" class="label label-danger"></span>
@@ -68,7 +76,19 @@
 				return;
 			}
 			var _domain = $('#domain');
-			
+
+			var _reqMaxHour = $('#reqMaxHour');
+			if(JUtil.isEmpty(_reqMaxHour.val())) {
+				_saveMsg.append('请输入每小时最大请求数');
+				_reqMaxHour.focus();
+				return;
+			}
+			var _reqMaxSecond = $('#reqMaxSecond');
+			if(JUtil.isEmpty(_reqMaxSecond.val())) {
+				_saveMsg.append('请输入每秒钟最大请求数');
+				_reqMaxSecond.focus();
+				return;
+			}
 			var _saveBtn = $('#saveBtn');
 			var _orgVal = _saveBtn.html();
 			_saveBtn.attr('disabled', 'disabled').html('保存中...');
@@ -80,7 +100,9 @@
 					token: _token.val(),
 					domain: _domain.val(),
 					remark: $('#remark').val(),
-					isUse: $('input[name="isUse"]:checked').val()
+					isUse: $('input[name="isUse"]:checked').val(),
+					reqMaxHour: _reqMaxHour.val(),
+					reqMaxSecond: _reqMaxSecond.val()
 				},
 				success : function(json) {
 					if (json.code === 0) {

@@ -78,7 +78,7 @@ var info = {
 
 			JUtil.ajax({
 				url : '${webroot}/msSecretApi/f-json/pageQuery.shtml',
-				data : { page:infoPage.page, size:infoPage.size, prjId: $('#prjId').val(), url: $('#url').val() },
+				data : { page:infoPage.page, size:infoPage.size, cliId: '${param.cliId}', prjId: $('#prjId').val(), url: $('#url').val() },
 				beforeSend: function(){ infoPage.beforeSend('加载信息中...'); },
 				error : function(json){ infoPage.error('加载信息出错了!'); },
 				success : function(json){

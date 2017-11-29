@@ -25,9 +25,15 @@ public enum ResponseCode {
     /** 签名异常 */
     ABNORMAL_SIGNATURE(50001, "abnormal signature"),
     INVALID_REQUEST(50003, "invalid request"),
+    /** 服务异常 */
     INVALID_URL(50005, "server error"),
     INVALID_REQUEST_PARAMETERS(50010, "invalid request parameters"),
+    /** 请求方法不存在 */
     UNHANDLE_METHOD(50020, "request method is not handled"),
+    /** 每小时请求超过最大值 */
+    REQ_MAX_HOUR	(50050, "每小时请求超过最大值"),
+    /** 每秒钟请求超过最大值 */
+    REQ_MAX_SECOND	(50051, "每秒钟请求超过最大值"),
 
     NOT_AUTHOR(-998, "用户没有权限"),
     NOT_LOGIN(-999, "用户没有登录"),

@@ -33,6 +33,10 @@ public class MsSecret extends BaseEntity implements Serializable {
 	private Integer isUse;
 	//创建时间
 	private Date createTime;
+	//每小时最大请求[0代表不限制]
+	private Long reqMaxHour;
+	//每秒最大请求数[0代表不限制]
+	private Long reqMaxSecond;
 	
 	//======================== 扩展属性
 	//是否使用名称
@@ -44,14 +48,12 @@ public class MsSecret extends BaseEntity implements Serializable {
 	public void setCliId(String cliId) {
 		this.cliId = cliId;
 	}
-	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	public String getRemark() {
 		return remark;
 	}
@@ -71,25 +73,34 @@ public class MsSecret extends BaseEntity implements Serializable {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
 	public String getDomain() {
 		return domain;
 	}
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
-	
 	public Integer getIsUse() {
 		return isUse;
 	}
 	public void setIsUse(Integer isUse) {
 		this.isUse = isUse;
 	}
-	
 	public Date getCreateTime() {
 		return createTime;
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public Long getReqMaxHour() {
+		return reqMaxHour;
+	}
+	public void setReqMaxHour(Long reqMaxHour) {
+		this.reqMaxHour = reqMaxHour;
+	}
+	public Long getReqMaxSecond() {
+		return reqMaxSecond;
+	}
+	public void setReqMaxSecond(Long reqMaxSecond) {
+		this.reqMaxSecond = reqMaxSecond;
 	}
 }
