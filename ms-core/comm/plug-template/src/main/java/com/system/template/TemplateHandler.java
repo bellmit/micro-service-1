@@ -1,6 +1,11 @@
 package com.system.template;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +40,42 @@ public class TemplateHandler {
 			templateCore = new FreemarkerTemplate();
 		}
 	}
+	
+	/**
+	 * 创建模版文件到指定路径
+	 * @param templatePath
+	 * @param is
+	 * @return
+	 */
+	public boolean createTemplateFile(String templatePath, InputStream is) {
+		OutputStream os = null;
+		try {
+			File file = new File(templatePath);
+			os = new FileOutputStream(file);
+			int bytesRead = 0;
+			byte[] buffer = new byte[8192];
+			while ((bytesRead = is.read(buffer, 0, 8192)) != -1) {
+				os.write(buffer, 0, bytesRead);
+			}
+			return true;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(os != null) {
+					os.close();
+				}
+				if(is != null) {
+					is.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	/** 
 	 * 根据模板生成word[后缀为：.doc]
@@ -43,7 +84,7 @@ public class TemplateHandler {
 	 * @return
 	 */
 	public File generateWord(String templatePath, String createPath) {
-		if(!createPath.endsWith(".doc")) {
+		if(!createPath.endsWith(".doc") && !createPath.endsWith(".docx")) {
 			throw new RuntimeException("生成了非word文件[" + createPath + "]");
 		}
 		return templateCore.process(dataMap, templatePath, createPath);
@@ -55,7 +96,7 @@ public class TemplateHandler {
 	 * @return
 	 */
 	public File generateExcel(String templatePath, String createPath) {
-		if(!createPath.endsWith(".xls")) {
+		if(!createPath.endsWith(".xls") && !createPath.endsWith(".xlsx")) {
 			throw new RuntimeException("生成了非Excel文件[" + createPath + "]");
 		}
 		return templateCore.process(dataMap, templatePath, createPath);
