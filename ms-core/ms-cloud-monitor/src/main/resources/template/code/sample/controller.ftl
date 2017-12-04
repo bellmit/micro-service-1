@@ -33,7 +33,7 @@ public class ${table.className}Controller {
 	@Autowired
 	private ${table.className}Service ${table.beanName}Service;
 	
-	@RequestMapping(name = "获取详细信息", value = "/${table.beanName}/get")
+	@RequestMapping(name = "${table.beanName}-获取详细信息", value = "/${table.beanName}/get")
 	@ApiInfo(params = {
 			@ApiParam(name="${table.firstKColumn.fieldName}", code="${table.firstKColumn.fieldName}", value=""),
 	}, response = {
@@ -53,7 +53,7 @@ public class ${table.className}Controller {
 		}
 	}
 
-	@RequestMapping(name = "新增或修改", value = "/${table.beanName}/saveOrUpdate")
+	@RequestMapping(name = "${table.beanName}-新增或修改", value = "/${table.beanName}/saveOrUpdate")
 	@ApiInfo(params = {
 			@ApiParam(name="${table.firstKColumn.fieldName}", code="${table.firstKColumn.fieldName}", value=""),
 	}, response = {
@@ -71,9 +71,11 @@ public class ${table.className}Controller {
 		}
 	}
 
-	@RequestMapping(name = "分页查询信息", value = "/${table.beanName}/pageQuery")
+	@RequestMapping(name = "${table.beanName}-分页查询信息", value = "/${table.beanName}/pageQuery")
 	@ApiInfo(params = {
-			@ApiParam(name="${table.firstKColumn.fieldName}", code="${table.firstKColumn.fieldName}", value=""),
+			@ApiParam(name="页面", code="page", value="1"),
+			@ApiParam(name="每页大小", code="size", value="10"),
+			@ApiParam(name="排序[{\"property\": \"createTime\", \"type\":\"desc\", \"order\":1}]", code="orderby", value="", required=false),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
@@ -99,7 +101,7 @@ public class ${table.className}Controller {
 		}
 	}
 
-	@RequestMapping(name = "根据主键删除", value = "/${table.beanName}/delete")
+	@RequestMapping(name = "${table.beanName}-根据主键删除", value = "/${table.beanName}/delete")
 	@ApiInfo(params = {
 			@ApiParam(name="${table.firstKColumn.fieldName}", code="${table.firstKColumn.fieldName}", value=""),
 	}, response = {
