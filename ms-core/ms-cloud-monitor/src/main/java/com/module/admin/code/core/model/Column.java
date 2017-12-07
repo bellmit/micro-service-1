@@ -10,7 +10,7 @@ public class Column {
 	private String fieldName;
 	private int columnType;
 	// 最大长度
-	private int length;
+	private long length;
 	// 0:不能为空 1：可以为空
 	private int nullAble;
 	// 1:是主键
@@ -57,11 +57,11 @@ public class Column {
 		this.setTypeNameFull(DataType.DATA_TYPE_FULL[this.columnType]);
 	}
 
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(long length) {
 		this.length = length;
 	}
 

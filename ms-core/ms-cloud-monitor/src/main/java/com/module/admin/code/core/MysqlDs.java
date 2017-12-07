@@ -59,9 +59,9 @@ public class MysqlDs extends DsCore implements DbDs {
 			if (column.getColumnType() == DataType.DATA_FLOAT
 					|| column.getColumnType() == DataType.DATA_INT
 					|| column.getColumnType() == DataType.DATA_LONG) {//长度
-				column.setLength(FrameMapUtil.getInteger(map, "NUMERIC_PRECISION"));
+				column.setLength(FrameMapUtil.getLong(map, "NUMERIC_PRECISION"));
 			} else if (column.getColumnType() == DataType.DATA_String) {
-				column.setLength(FrameMapUtil.getInteger(map, "CHARACTER_MAXIMUM_LENGTH"));
+				column.setLength(FrameMapUtil.getLong(map, "CHARACTER_MAXIMUM_LENGTH"));
 			}
 			tmp = FrameMapUtil.getString(map, "IS_NULLABLE");//是否允许为空
 			column.setNullAble("NO".equals(tmp)?0:1);
